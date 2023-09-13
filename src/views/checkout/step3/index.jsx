@@ -10,6 +10,7 @@ import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
 import CreditPayment from "./CreditPayment";
 import PayPalPayment from "./PayPalPayment";
+import CODPayment from "./CODPayment";
 import Total from "./Total";
 
 const FormSchema = Yup.object().shape({
@@ -65,6 +66,8 @@ const Payment = ({ shipping, payment, subtotal }) => {
           <Form className="checkout-step-3">
             <CreditPayment />
             <PayPalPayment />
+            <CODPayment />
+
             <Total
               isInternational={shipping.isInternational}
               subtotal={subtotal}
