@@ -42,7 +42,7 @@
         "price": {
           ".validate": "newData.isNumber()"
         },
-        "brand": {
+        "type": {
           ".validate": "newData.isString()"
         },
         "image": {

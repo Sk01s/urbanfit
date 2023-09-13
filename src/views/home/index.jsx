@@ -38,15 +38,11 @@ const Home = () => {
       <div className="home">
         <div className="banner">
           <div className="banner-desc">
-            <h1 className="text-thin">
-              <strong>See</strong>
-              &nbsp;everything with&nbsp;
-              <strong>Clarity</strong>
-            </h1>
+            <h1 className="text-thin">Welcome to Urbenfit</h1>
             <p>
-              Buying eyewear should leave you happy and good-looking, with money
-              in your pocket. Glasses, sunglasses, and contacts—we’ve got your
-              eyes covered.
+              Our collection features unique designs that are sure to make you
+              stand out from the crowd. Whether you’re looking for a casual
+              t-shirt or a cozy hoodie, we’ve got you covered.
             </p>
             <br />
             <Link to={SHOP} className="button">

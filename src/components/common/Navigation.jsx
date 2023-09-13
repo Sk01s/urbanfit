@@ -77,7 +77,11 @@ const Navigation = () => {
         </Link>
       </div>
       <SearchBar />
-      <ul className="navigation-menu-main" ref={navigationMenu}>
+      <ul
+        className="navigation-menu-main"
+        ref={navigationMenu}
+        onClick={toggleLinks}
+      >
         <li>
           <NavLink
             activeClassName="navigation-menu-active"
@@ -108,32 +112,32 @@ const Navigation = () => {
             Recommended
           </NavLink>
         </li>
-          {store.user ? (
-            <div className="navigation-menu-item">
-              <UserAvatar />
-            </div>
-          ) : (
-            <div className="navigation-action">
-              {pathname !== ROUTE.SIGNUP && (
-                <Link
-                  className="button button-small"
-                  onClick={onClickLink}
-                  to={ROUTE.SIGNUP}
-                >
-                  Sign Up
-                </Link>
-              )}
-              {pathname !== ROUTE.SIGNIN && (
-                <Link
-                  className="button button-small button-muted margin-left-s"
-                  onClick={onClickLink}
-                  to={ROUTE.SIGNIN}
-                >
-                  Sign In
-                </Link>
-              )}
-            </div>
-          )}
+        {store.user ? (
+          <div className="navigation-menu-item">
+            <UserAvatar />
+          </div>
+        ) : (
+          <div className="navigation-action">
+            {pathname !== ROUTE.SIGNUP && (
+              <Link
+                className="button button-small"
+                onClick={onClickLink}
+                to={ROUTE.SIGNUP}
+              >
+                Sign Up
+              </Link>
+            )}
+            {pathname !== ROUTE.SIGNIN && (
+              <Link
+                className="button button-small button-muted margin-left-s"
+                onClick={onClickLink}
+                to={ROUTE.SIGNIN}
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
+        )}
       </ul>
       {(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
         <FiltersToggle>

@@ -39,7 +39,7 @@ const BasketItem = ({ product }) => {
               <h5 className="my-0">
                 {product.selectedSize}
                 {' '}
-                mm
+                
               </h5>
             </div>
             <div>
@@ -73,7 +73,7 @@ BasketItem.propTypes = {
   product: PropType.shape({
     id: PropType.string,
     name: PropType.string,
-    brand: PropType.string,
+    type: PropType.string,
     price: PropType.number,
     quantity: PropType.number,
     maxQuantity: PropType.number,

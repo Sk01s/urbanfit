@@ -1,24 +1,24 @@
 /* eslint-disable no-nested-ternary */
-import { useDidMount } from '@/hooks';
-import PropType from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, withRouter } from 'react-router-dom';
-import { applyFilter, resetFilter } from '@/redux/actions/filterActions';
-import { selectMax, selectMin } from '@/selectors/selector';
-import PriceRange from './PriceRange';
+import { useDidMount } from "@/hooks";
+import PropType from "prop-types";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, withRouter } from "react-router-dom";
+import { applyFilter, resetFilter } from "@/redux/actions/filterActions";
+import { selectMax, selectMin } from "@/selectors/selector";
+import PriceRange from "./PriceRange";
 
 const Filters = ({ closeModal }) => {
   const { filter, isLoading, products } = useSelector((state) => ({
     filter: state.filter,
     isLoading: state.app.loading,
-    products: state.products.items
+    products: state.products.items,
   }));
   const [field, setFilter] = useState({
-    brand: filter.brand,
+    type: filter.type,
     minPrice: filter.minPrice,
     maxPrice: filter.maxPrice,
-    sortBy: filter.sortBy
+    sortBy: filter.sortBy,
   });
   const dispatch = useDispatch();
   const history = useHistory();
@@ -29,7 +29,7 @@ const Filters = ({ closeModal }) => {
 
   useEffect(() => {
     if (didMount && window.screen.width <= 480) {
-      history.push('/');
+      history.push("/");
     }
 
     if (didMount && closeModal) closeModal();
@@ -38,15 +38,14 @@ const Filters = ({ closeModal }) => {
     window.scrollTo(0, 0);
   }, [filter]);
 
-
   const onPriceChange = (minVal, maxVal) => {
     setFilter({ ...field, minPrice: minVal, maxPrice: maxVal });
   };
 
-  const onBrandFilterChange = (e) => {
+  const onTypeFilterChange = (e) => {
     const val = e.target.value;
 
-    setFilter({ ...field, brand: val });
+    setFilter({ ...field, type: val });
   };
 
   const onSortFilterChange = (e) => {
@@ -54,7 +53,9 @@ const Filters = ({ closeModal }) => {
   };
 
   const onApplyFilter = () => {
-    const isChanged = Object.keys(field).some((key) => field[key] !== filter[key]);
+    const isChanged = Object.keys(field).some(
+      (key) => field[key] !== filter[key]
+    );
 
     if (field.minPrice > field.maxPrice) {
       return;
@@ -68,7 +69,7 @@ const Filters = ({ closeModal }) => {
   };
 
   const onResetFilter = () => {
-    const filterFields = ['brand', 'minPrice', 'maxPrice', 'sortBy'];
+    const filterFields = ["type", "minPrice", "maxPrice", "sortBy"];
 
     if (filterFields.some((key) => !!filter[key])) {
       dispatch(resetFilter());
@@ -80,19 +81,19 @@ const Filters = ({ closeModal }) => {
   return (
     <div className="filters">
       <div className="filters-field">
-        <span>Brand</span>
+        <span>Type</span>
         <br />
         <br />
         {products.length === 0 && isLoading ? (
           <h5 className="text-subtle">Loading Filter</h5>
         ) : (
           <select
-            className="filters-brand"
-            value={field.brand}
+            className="filters-type"
+            value={field.type}
             disabled={isLoading || products.length === 0}
-            onChange={onBrandFilterChange}
+            onChange={onTypeFilterChange}
           >
-            <option value="">All Brands</option>
+            <option value="">All Types</option>
             <option value="salt">Salt Maalat</option>
             <option value="betsin">Betsin Maalat</option>
             <option value="black">Black Kibal</option>
@@ -160,7 +161,7 @@ const Filters = ({ closeModal }) => {
 };
 
 Filters.propTypes = {
-  closeModal: PropType.func.isRequired
+  closeModal: PropType.func.isRequired,
 };
 
 export default withRouter(Filters);

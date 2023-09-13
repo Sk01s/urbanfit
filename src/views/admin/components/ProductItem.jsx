@@ -54,7 +54,7 @@ const ProductItem = ({ product }) => {
             <span className="text-overflow-ellipsis">{product.name || <Skeleton width={50} />}</span>
           </div>
           <div className="grid-col">
-            <span>{product.brand || <Skeleton width={50} />}</span>
+            <span>{product.type || <Skeleton width={50} />}</span>
           </div>
           <div className="grid-col">
             <span>{product.price ? displayMoney(product.price) : <Skeleton width={30} />}</span>
@@ -114,7 +114,7 @@ ProductItem.propTypes = {
   product: PropType.shape({
     id: PropType.string,
     name: PropType.string,
-    brand: PropType.string,
+    type: PropType.string,
     price: PropType.number,
     maxQuantity: PropType.number,
     description: PropType.string,
