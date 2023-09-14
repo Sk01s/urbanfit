@@ -3,7 +3,7 @@ import { Form, Formik } from "formik";
 import { displayActionMessage } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 import PropType from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import * as Yup from "yup";
 import { StepTracker } from "../components";
@@ -12,6 +12,7 @@ import CreditPayment from "./CreditPayment";
 import PayPalPayment from "./PayPalPayment";
 import CODPayment from "./CODPayment";
 import Total from "./Total";
+import { useSelector } from "react-redux";
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()
@@ -30,6 +31,20 @@ const FormSchema = Yup.object().shape({
 });
 
 const Payment = ({ shipping, payment, subtotal }) => {
+  const [paymentType, setPaymentType] = useState();
+  let state = useSelector((state) => ({
+    items: state.basket,
+    payment: state.checkout.payment.type,
+    address: state.checkout.shipping,
+  }));
+
+  useEffect(() => {
+    state = {
+      ...state,
+      payment: paymentType || state.payment,
+    };
+    console.log(state);
+  }, [paymentType]);
   useDocumentTitle("Check Out Final Step | Urbenfit");
   useScrollTop();
 
@@ -41,8 +56,9 @@ const Payment = ({ shipping, payment, subtotal }) => {
     type: payment.type || "paypal",
   };
 
-  const onConfirm = () => {
-    displayActionMessage("Feature not ready yet :)", "info");
+  const onConfirm = (e) => {
+    e.preventDefault();
+    console.log(state);
   };
 
   if (!shipping || !shipping.isDone) {
@@ -56,22 +72,24 @@ const Payment = ({ shipping, payment, subtotal }) => {
         validateOnChange
         validationSchema={FormSchema}
         validate={(form) => {
-          if (form.type === "paypal") {
+          if (form.type !== "COD") {
             displayActionMessage("Feature not ready yet :)", "info");
           }
         }}
-        onSubmit={onConfirm}
       >
         {() => (
-          <Form className="checkout-step-3">
-            <CreditPayment />
-            <PayPalPayment />
-            <CODPayment />
-
-            <Total
-              isInternational={shipping.isInternational}
-              subtotal={subtotal}
-            />
+          <Form className="checkout-step-3" onSubmit={onConfirm}>
+            <CreditPayment setPaymentType={setPaymentType} />
+            <PayPalPayment setPaymentType={setPaymentType} />
+            <CODPayment setPaymentType={setPaymentType} />
+            {state && (
+              <Total
+                key={state}
+                isInternational={shipping.isInternational}
+                subtotal={subtotal}
+                order={state}
+              />
+            )}
           </Form>
         )}
       </Formik>

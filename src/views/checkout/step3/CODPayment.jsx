@@ -2,7 +2,7 @@
 import { useFormikContext } from "formik";
 import React from "react";
 
-const CODPayment = () => {
+const CODPayment = ({ setPaymentType }) => {
   const { values, setValues } = useFormikContext();
 
   return (
@@ -20,6 +20,7 @@ const CODPayment = () => {
             onChange={(e) => {
               if (e.target.checked) {
                 setValues({ ...values, type: "COD" });
+                setPaymentType("COD");
               }
             }}
             type="radio"
@@ -31,7 +32,6 @@ const CODPayment = () => {
                 Pay easily, fast and secure with Cash on delivery.
               </span>
             </div>
-
           </label>
         </div>
       </div>
