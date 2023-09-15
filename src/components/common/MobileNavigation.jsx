@@ -50,24 +50,6 @@ const Navigation = (props) => {
             />
           </Link>
         </div>
-
-        <BasketToggle>
-          {({ onClickToggle }) => (
-            <button
-              className="button-link navigation-menu-link basket-toggle"
-              onClick={onClickToggle}
-              disabled={disabledPaths.includes(pathname)}
-              type="button"
-            >
-              <Badge count={basketLength}>
-                <i
-                  className="fa fa-shopping-bag"
-                  style={{ fontSize: "2rem" }}
-                />
-              </Badge>
-            </button>
-          )}
-        </BasketToggle>
         <ul className="mobile-navigation-menu">
           {user ? (
             <li className="mobile-navigation-item">
