@@ -24,7 +24,12 @@ const FormSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
     .required("Email is required."),
-  address: Yup.string().required("Shipping address is required."),
+  street: Yup.string().required("Shipping street is required."),
+  city: Yup.string().required("Shipping city is required."),
+  building: Yup.string().required("Shipping building is required."),
+  floor: Yup.number().required("Shipping floor number is required."),
+  nearby: Yup.string().required("Shipping nearby is required."),
+
   mobile: Yup.object()
     .shape({
       country: Yup.string(),
@@ -47,6 +52,11 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
     fullname: shipping.fullname || profile.fullname || "",
     email: shipping.email || profile.email || "",
     address: shipping.address || profile.address || "",
+    street: shipping.street || profile.street || "",
+    city: shipping.city || profile.city || "",
+    building: shipping.building || profile.building || "",
+    floor: shipping.floor || profile.floor || "",
+    nearby: shipping.nearby || profile.nearby || "",
     mobile: shipping.mobile || profile.mobile || {},
     isInternational: shipping.isInternational || false,
     isDone: shipping.isDone || false,
@@ -57,7 +67,11 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       setShippingDetails({
         fullname: form.fullname,
         email: form.email,
-        address: form.address,
+        street: form.street,
+        city: form.city,
+        building: form.building,
+        floor: form.floor,
+        nearby: form.nearby,
         mobile: form.mobile,
         isInternational: form.isInternational,
         isDone: true,

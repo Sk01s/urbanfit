@@ -32,10 +32,50 @@ const ShippingForm = () => {
         <div className="checkout-fieldset">
           <div className="d-block checkout-field">
             <Field
-              name="address"
+              name="street"
               type="text"
-              label="* Shipping Address"
-              placeholder="Enter full shipping address"
+              label="* Shipping Street"
+              placeholder="Enter full shipping street"
+              component={CustomInput}
+            />
+          </div>
+          <div className="d-block checkout-field">
+            <Field
+              name="city"
+              type="text"
+              label="* Shipping City"
+              placeholder="Enter full shipping City"
+              component={CustomInput}
+            />
+          </div>
+        </div>
+        <div className="checkout-fieldset">
+          <div className="d-block checkout-field">
+            <Field
+              name="building"
+              type="text"
+              label="* Shipping Building"
+              placeholder="Enter full shipping Building"
+              component={CustomInput}
+            />
+          </div>
+          <div className="d-block checkout-field">
+            <Field
+              name="floor"
+              type="text"
+              label="* Shipping Floor Number"
+              placeholder="Enter full shipping Floor Number"
+              component={CustomInput}
+            />
+          </div>
+        </div>
+        <div className="checkout-fieldset">
+          <div className="d-block checkout-field">
+            <Field
+              name="nearby"
+              type="text"
+              label="*  Near by"
+              placeholder="Enter full Near by"
               component={CustomInput}
             />
           </div>

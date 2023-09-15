@@ -38,6 +38,7 @@ const CustomMobileInput = (props) => {
         ClassName="input-form d-block"
         onChange={handleChange}
         placeholder={placeholder}
+        required="true"
       />
     </div>
   );
