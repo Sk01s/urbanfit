@@ -21,7 +21,7 @@ const Orders = () => {
     };
     getOrders();
   }, []);
-  useDocumentTitle(" Orders | Urbenfit");
+  useDocumentTitle(" Orders | urbanfit");
   return (
     <Boundary>
       <ProductsNavbar

@@ -11,16 +11,16 @@ const CustomMobileInput = (props) => {
   const { setValue } = helpers;
 
   const handleChange = (value, data) => {
+    if (!value) return;
     const mob = {
-      dialCode: parseInt(value.slice(4)),
+      dialCode: parseInt(value?.slice(4)),
       countryCode: 961,
       country: "lebanon",
-      value: value.slice(4),
+      value,
     };
 
     setValue(mob);
   };
-  console.log(field, touched, error);
   return (
     <div className="input-group">
       {touched && error ? (

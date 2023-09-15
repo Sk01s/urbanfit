@@ -17,7 +17,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  useDocumentTitle("Urbenfit | Home");
+  useDocumentTitle("urbanfit | Home");
   useScrollTop();
 
   const {
@@ -38,7 +38,7 @@ const Home = () => {
       <div className="home">
         <div className="banner">
           <div className="banner-desc">
-            <h1 className="text-thin">Welcome to Urbenfit</h1>
+            <h1 className="text-thin">Welcome to urbanfit</h1>
             <p>
               Our collection features unique designs that are sure to make you
               stand out from the crowd. Whether you’re looking for a casual

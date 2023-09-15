@@ -14,6 +14,7 @@ import Terms from "./../components/terms/index";
 export const history = createBrowserHistory();
 
 const AppRouter = () => {
+  console.log(ROUTES.ORDER_COMPLETED);
   const [accepeted, setAccepeted] = useState(localStorage.getItem("terms"));
   return (
     <Router history={history}>
@@ -40,6 +41,10 @@ const AppRouter = () => {
           <PublicRoute
             component={view.ForgotPassword}
             path={ROUTES.FORGOT_PASSWORD}
+          />
+          <PublicRoute
+            component={view.OrderCompleted}
+            path={ROUTES.ORDER_COMPLETED}
           />
           <Route component={view.ViewProduct} path={ROUTES.VIEW_PRODUCT} />
           <ClientRoute

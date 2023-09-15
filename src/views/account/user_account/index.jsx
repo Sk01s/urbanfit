@@ -17,7 +17,7 @@ const Loader = () => (
 
 const UserAccount = () => {
   useScrollTop();
-  useDocumentTitle("My Account | Urbenfit");
+  useDocumentTitle("My Account | urbanfit");
 
   return (
     <UserTab>

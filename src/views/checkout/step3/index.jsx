@@ -37,6 +37,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     items: state.basket,
     payment: state.checkout.payment.type,
     address: state.checkout.shipping,
+    date: new Date(),
   }));
 
   useEffect(() => {
@@ -44,9 +45,8 @@ const Payment = ({ shipping, payment, subtotal }) => {
       ...state,
       payment: paymentType || state.payment,
     };
-    console.log(state);
   }, [paymentType]);
-  useDocumentTitle("Check Out Final Step | Urbenfit");
+  useDocumentTitle("Check Out Final Step | urbanfit");
   useScrollTop();
 
   const initFormikValues = {

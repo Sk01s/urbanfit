@@ -264,7 +264,8 @@ class Firebase {
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
 
   addOrder = (id, order) => this.db.collection("order").doc(id).set(order);
-  getOrders = (id, order) => this.db.collection("order").get();
+
+  getOrders = () => this.db.collection("order").get();
 }
 
 const firebaseInstance = new Firebase();

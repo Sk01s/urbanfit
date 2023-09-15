@@ -9,7 +9,7 @@ import bannerImg from "@/images/banner-girl-1.png";
 import React from "react";
 
 const RecommendedProducts = () => {
-  useDocumentTitle("Recommended Products | Urbenfit");
+  useDocumentTitle("Recommended Products | urbanfit");
   useScrollTop();
 
   const { recommendedProducts, fetchRecommendedProducts, isLoading, error } =

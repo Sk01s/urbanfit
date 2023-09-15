@@ -33,7 +33,7 @@ const FormSchema = Yup.object().shape({
 });
 
 const EditProfile = () => {
-  useDocumentTitle("Edit Account | Urbenfit");
+  useDocumentTitle("Edit Account | urbanfit");
   useScrollTop();
 
   const modal = useModal();

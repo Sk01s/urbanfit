@@ -28,7 +28,7 @@ const SignIn = ({ history }) => {
   const dispatch = useDispatch();
 
   useScrollTop();
-  useDocumentTitle("Sign In | Urbenfit");
+  useDocumentTitle("Sign In | urbanfit");
 
   useEffect(
     () => () => {
@@ -69,7 +69,7 @@ const SignIn = ({ history }) => {
             }`}
           >
             <div className="auth-main">
-              <h3>Sign in to Urbenfit</h3>
+              <h3>Sign in to urbanfit</h3>
               <br />
               <div className="auth-wrapper">
                 <Formik

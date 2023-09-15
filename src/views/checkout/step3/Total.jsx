@@ -1,25 +1,33 @@
 import { ArrowLeftOutlined, CheckOutlined } from "@ant-design/icons";
-import { CHECKOUT_STEP_2 } from "@/constants/routes";
+import { CHECKOUT_STEP_2, ORDER_COMPLETED } from "@/constants/routes";
 import { useFormikContext } from "formik";
 import { displayMoney, displayActionMessage } from "@/helpers/utils";
 import PropType from "prop-types";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { setPaymentDetails } from "@/redux/actions/checkoutActions";
 import firebase from "@/services/firebase";
+import { clearBasket } from "@/redux/actions/basketActions";
 
 const Total = ({ isInternational, subtotal, order }) => {
-  console.log(firebase);
   const { values, submitForm } = useFormikContext();
+  const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const searchData = new URLSearchParams();
 
   const handleOrder = () => {
     if (order.payment !== "COD")
       return displayActionMessage("Feature not ready yet :)", "info");
     crypto.randomUUID();
+    // Update the Orders date
+
+    order.date = new Date();
+
     firebase.addOrder(crypto.randomUUID(), order);
+    dispatch(clearBasket());
+    history.push(ORDER_COMPLETED, order);
   };
   const onClickBack = () => {
     // destructure to only select left fields omitting cardnumber and ccv

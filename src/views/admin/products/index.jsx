@@ -10,7 +10,7 @@ import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
 
 const Products = () => {
-  useDocumentTitle("Product List | Urbenfit Admin");
+  useDocumentTitle("Product List | urbanfit Admin");
   useScrollTop();
 
   const store = useSelector((state) => ({

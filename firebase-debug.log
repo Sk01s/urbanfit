@@ -118,7 +118,7 @@ Before we get started, keep in mind:
 [debug] [2023-09-11T17:47:19.561Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
 [debug] [2023-09-11T17:47:19.561Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
 [debug] [2023-09-11T17:47:19.563Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
-[debug] [2023-09-11T17:47:19.563Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"urbenfit","name":"urbenfit"}
+[debug] [2023-09-11T17:47:19.563Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"urbanfit","name":"urbanfit"}
 [debug] [2023-09-11T17:47:21.526Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 401
 [debug] [2023-09-11T17:47:21.527Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"method":"google.cloudresourcemanager.v1.Projects.CreateProject","service":"cloudresourcemanager.googleapis.com"}}]}}
 [debug] [2023-09-11T17:47:22.666Z] FirebaseError: HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
