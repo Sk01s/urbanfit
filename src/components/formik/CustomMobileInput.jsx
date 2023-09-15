@@ -1,9 +1,9 @@
 /* eslint-disable react/forbid-prop-types */
-import { useField } from 'formik';
-import PropType from 'prop-types';
-import React from 'react';
-import PhoneInput from 'react-phone-input-2';
-
+import { useField } from "formik";
+import PropType from "prop-types";
+import React from "react";
+import "react-phone-number-input/style.css";
+import PhoneInput, { parsePhoneNumber } from "react-phone-number-input";
 const CustomMobileInput = (props) => {
   const [field, meta, helpers] = useField(props);
   const { label, placeholder, defaultValue } = props;
@@ -12,47 +12,46 @@ const CustomMobileInput = (props) => {
 
   const handleChange = (value, data) => {
     const mob = {
-      dialCode: data.dialCode,
-      countryCode: data.countryCode,
-      country: data.name,
-      value
+      dialCode: parseInt(value.slice(4)),
+      countryCode: 961,
+      country: "lebanon",
+      value: value.slice(4),
     };
 
     setValue(mob);
   };
-
+  console.log(field, touched, error);
   return (
     <div className="input-group">
       {touched && error ? (
-        <span className="label-input label-error">{error?.value || error?.dialCode}</span>
+        <span className="label-input label-error">
+          {error?.value || error?.dialCode}
+        </span>
       ) : (
-        <label className="label-input" htmlFor={field.name}>{label}</label>
+        <label className="label-input" htmlFor={field.name}>
+          {label}
+        </label>
       )}
       <PhoneInput
         name={field.name}
-        country="ph"
-        inputClass="input-form d-block"
-        style={{
-          border: touched && error ? '1px solid red' : '1px solid #cacaca'
-        }}
-        inputExtraProps={{ required: true }}
+        defaultCountry="LB"
+        ClassName="input-form d-block"
         onChange={handleChange}
         placeholder={placeholder}
-        value={defaultValue.value}
       />
     </div>
   );
 };
 
 CustomMobileInput.defaultProps = {
-  label: 'Mobile Number',
-  placeholder: '09254461351'
+  label: "Mobile Number",
+  placeholder: "09254461351",
 };
 
 CustomMobileInput.propTypes = {
   label: PropType.string,
   placeholder: PropType.string,
-  defaultValue: PropType.object.isRequired
+  defaultValue: PropType.object.isRequired,
 };
 
 export default CustomMobileInput;

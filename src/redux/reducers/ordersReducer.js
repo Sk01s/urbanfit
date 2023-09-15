@@ -4,7 +4,6 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case SET_ORDERS:
       return {

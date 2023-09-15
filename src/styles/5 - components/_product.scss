@@ -516,7 +516,7 @@
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 50%));
   grid-gap: 2rem;
 }
 
