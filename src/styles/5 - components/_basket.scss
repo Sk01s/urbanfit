@@ -6,12 +6,11 @@
   top: 0;
   right: 0;
   transform: translateX(100%);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, .08);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
   @include bezier-transition(transform);
-  z-index: map-get($z-index, 'basket');
-
-  @include mobile {
-    width: 100%;
+  z-index: map-get($z-index, "basket");
+  @media (max-width: 728px) {
+    width: 90%;
   }
 }
 
@@ -36,7 +35,7 @@
   border: 1px solid $border-color;
   margin-bottom: $s-size;
   @include bezier-transition();
-  animation: slide-up .5s ease;
+  animation: slide-up 0.5s ease;
 }
 
 .basket-item-wrapper {
@@ -74,13 +73,16 @@
 
 .basket-header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   position: sticky;
   top: -20px;
   background: $white;
-  z-index: map-get($z-index, 'basket');
+  z-index: map-get($z-index, "basket");
 }
-
+.basket-header-btn {
+  display: flex;
+}
 
 .basket-header-title {
   flex-grow: 1;
@@ -112,7 +114,7 @@
   width: 142px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
   position: relative;
 }
 
@@ -136,12 +138,12 @@
   width: 100%;
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     margin: auto;
     width: 93%;
-    height: .5px;
+    height: 0.5px;
     background: $border-color;
   }
 }

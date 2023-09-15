@@ -5,6 +5,7 @@ export const RECOMMENDED_PRODUCTS = "/recommended";
 export const ACCOUNT = "/account";
 export const ACCOUNT_EDIT = "/account/edit";
 export const ADMIN_DASHBOARD = "/admin/dashboard";
+export const ADMIN_ORDERS = "/admin/orders";
 export const ADMIN_PRODUCTS = "/admin/products";
 export const ADMIN_USERS = "/admin/users";
 export const ADD_PRODUCT = "/admin/add";

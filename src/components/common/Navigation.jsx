@@ -112,12 +112,29 @@ const Navigation = () => {
             Recommended
           </NavLink>
         </li>
+      </ul>
+
+      <BasketToggle>
+        {({ onClickToggle }) => (
+          <button
+            className="button-link navigation-menu-link basket-toggle"
+            disabled={basketDisabledpathnames.includes(pathname)}
+            onClick={onClickToggle}
+            type="button"
+          >
+            <Badge count={store.basketLength}>
+              <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
+            </Badge>
+          </button>
+        )}
+      </BasketToggle>
+      <ul className="navigation-menu">
         {store.user ? (
-          <div className="navigation-menu-item">
+          <li className="navigation-menu-item">
             <UserAvatar />
-          </div>
+          </li>
         ) : (
-          <div className="navigation-action">
+          <li className="navigation-action">
             {pathname !== ROUTE.SIGNUP && (
               <Link
                 className="button button-small"
@@ -136,32 +153,9 @@ const Navigation = () => {
                 Sign In
               </Link>
             )}
-          </div>
+          </li>
         )}
       </ul>
-      {(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
-        <FiltersToggle>
-          <button className="button-muted button-small" type="button">
-            Filters &nbsp;
-            <FilterOutlined />
-          </button>
-        </FiltersToggle>
-      )}
-      <BasketToggle>
-        {({ onClickToggle }) => (
-          <button
-            className="button-link navigation-menu-link basket-toggle"
-            disabled={basketDisabledpathnames.includes(pathname)}
-            onClick={onClickToggle}
-            type="button"
-          >
-            <Badge count={store.basketLength}>
-              <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
-            </Badge>
-          </button>
-        )}
-      </BasketToggle>
-      <ul className="navigation-menu"></ul>
       <button className="menu-btn" onClick={toggleLinks}>
         <div />
         <div />

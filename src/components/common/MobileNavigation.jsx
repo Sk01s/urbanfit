@@ -5,8 +5,12 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserNav from "@/views/account/components/UserAvatar";
 import Badge from "./Badge";
+import logo from "@/images/logo-full.png";
 import FiltersToggle from "./FiltersToggle";
+import * as ROUTE from "@/constants/routes";
 import SearchBar from "./SearchBar";
+import { useSelector } from "react-redux";
+import { ShoppingOutlined } from "@ant-design/icons";
 
 const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
@@ -15,13 +19,35 @@ const Navigation = (props) => {
   const onClickLink = (e) => {
     if (isAuthenticating) e.preventDefault();
   };
+  const store = useSelector((state) => ({
+    basketLength: state.basket.length,
+    user: state.auth,
+    isAuthenticating: state.app.isAuthenticating,
+    isLoading: state.app.loading,
+  }));
 
+  const basketDisabledpathnames = [
+    ROUTE.CHECKOUT_STEP_1,
+    ROUTE.CHECKOUT_STEP_2,
+    ROUTE.CHECKOUT_STEP_3,
+    ROUTE.SIGNIN,
+    ROUTE.SIGNUP,
+    ROUTE.FORGOT_PASSWORD,
+  ];
   return (
     <nav className="mobile-navigation">
       <div className="mobile-navigation-main">
         <div className="mobile-navigation-logo">
           <Link onClick={onClickLink} to={HOME}>
-            <h2>Urbenfit</h2>
+            <img
+              alt="Logo"
+              src={logo}
+              style={{
+                width: "8rem",
+                marginLeft: " 2rem",
+                scale: 2,
+              }}
+            />
           </Link>
         </div>
 
@@ -71,6 +97,20 @@ const Navigation = (props) => {
             <i className="fa fa-filter" />
           </button>
         </FiltersToggle>
+        <BasketToggle>
+          {({ onClickToggle }) => (
+            <button
+              className="button-link navigation-menu-link basket-toggle"
+              disabled={basketDisabledpathnames.includes(pathname)}
+              onClick={onClickToggle}
+              type="button"
+            >
+              <Badge count={store.basketLength}>
+                <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
+              </Badge>
+            </button>
+          )}
+        </BasketToggle>
       </div>
     </nav>
   );

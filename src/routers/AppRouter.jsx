@@ -69,6 +69,11 @@ const AppRouter = () => {
             exact
             path={ROUTES.ADMIN_DASHBOARD}
           />
+          <AdminRoute
+            component={view.Orders}
+            exact
+            path={ROUTES.ADMIN_ORDERS}
+          />
           <AdminRoute component={view.Products} path={ROUTES.ADMIN_PRODUCTS} />
           <AdminRoute component={view.AddProduct} path={ROUTES.ADD_PRODUCT} />
           <AdminRoute

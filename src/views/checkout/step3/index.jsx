@@ -33,6 +33,7 @@ const FormSchema = Yup.object().shape({
 const Payment = ({ shipping, payment, subtotal }) => {
   const [paymentType, setPaymentType] = useState();
   let state = useSelector((state) => ({
+    fulfillment: false,
     items: state.basket,
     payment: state.checkout.payment.type,
     address: state.checkout.shipping,
