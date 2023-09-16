@@ -1,5 +1,5 @@
 import { ImageLoader } from "@/components/common";
-import { EDIT_PRODUCT } from "@/constants/routes";
+import { ORDER_DETAILS } from "@/constants/routes";
 import {
   displayActionMessage,
   displayDate,
@@ -10,6 +10,7 @@ import React, { useRef } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderItem = ({ order, index }) => {
   // console.log(order.items);
@@ -17,37 +18,14 @@ const OrderItem = ({ order, index }) => {
     (acc, next) => parseInt(acc) + parseInt(next.price),
     0
   );
-  console.log(price);
   const dispatch = useDispatch();
   const history = useHistory();
   const orderRef = useRef(null);
 
-  const onClickEdit = () => {
-    history.push(`${EDIT_PRODUCT}/${order.id}`);
-  };
-
-  const onDeleteProduct = () => {
-    productRef.current.classList.toggle("item-active");
-  };
-
-  const onConfirmDelete = () => {
-    dispatch(removeProduct(order.id));
-    displayActionMessage("Item successfully deleted");
-    productRef.current.classList.remove("item-active");
-  };
-
-  const onCancelDelete = () => {
-    productRef.current.classList.remove("item-active");
-  };
-
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
-      <div
-        className={`item item-products ${!index && "item-loading"}`}
-        ref={orderRef}
-      >
+      <div className={`item item-products `} ref={orderRef}>
         <div className="grid grid-count-6">
-          <div className="grid-col item-img-wrapper"></div>
           <div className="grid-col">
             <span className="text-overflow-ellipsis">
               {order.payment || <Skeleton width={50} />}
@@ -71,54 +49,17 @@ const OrderItem = ({ order, index }) => {
           </div>
           <div className="grid-col">
             <span>
-              {order.dateAdded ? (
-                displayDate(order.dateAdded)
+              {order.date ? (
+                displayDate(order.date.toDate())
               ) : (
                 <Skeleton width={30} />
               )}
             </span>
           </div>
           <div className="grid-col">
-            <span>{order.maxQuantity || <Skeleton width={20} />}</span>
+            <Link to={ORDER_DETAILS}>View</Link>
           </div>
         </div>
-        {order.id && (
-          <div className="item-action">
-            <button
-              className="button button-border button-small"
-              onClick={onClickEdit}
-              type="button"
-            >
-              Edit
-            </button>
-            &nbsp;
-            <button
-              className="button button-border button-small button-danger"
-              onClick={onDeleteProduct}
-              type="button"
-            >
-              Delete
-            </button>
-            <div className="item-action-confirm">
-              <h5>Are you sure you want to delete this?</h5>
-              <button
-                className="button button-small button-border"
-                onClick={onCancelDelete}
-                type="button"
-              >
-                No
-              </button>
-              &nbsp;
-              <button
-                className="button button-small button-danger"
-                onClick={onConfirmDelete}
-                type="button"
-              >
-                Yes
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </SkeletonTheme>
   );

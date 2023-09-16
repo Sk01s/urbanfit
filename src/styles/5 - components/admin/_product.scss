@@ -2,14 +2,14 @@
   position: relative;
   padding: $s-size;
   border: 1px solid transparent;
-  
+
   &:nth-child(even) {
     background: $white;
   }
-  
+
   &:hover {
-    border: 1px solid $border-color-focus;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, .1);
+    border: 1px solid #cacaca;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
     z-index: 1;
   }
 }
@@ -21,20 +21,6 @@
 .item:hover > .item-action {
   display: flex;
 }
-
-// reset styles for loading item
-.item-loading {
-  &:nth-child(even) {
-    background: none;
-  }
-}
-
-.item-loading:hover {
-  border: none;
-  box-shadow: none;
-}
-
-// ---- 
 
 .item-action {
   position: absolute;
@@ -73,13 +59,13 @@
 }
 
 .item-active:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, rgba(255, 255, 255, .3), $white 90%);
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), $white 90%);
 }
 
 .item-active .item-action-confirm,

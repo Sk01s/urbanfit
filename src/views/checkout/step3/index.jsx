@@ -38,6 +38,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     payment: state.checkout.payment.type,
     address: state.checkout.shipping,
     date: new Date(),
+    uid: state,
   }));
   console.log(state);
   useEffect(() => {

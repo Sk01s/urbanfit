@@ -10,7 +10,8 @@ import { selectFilter } from "@/selectors/selector";
 import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
 import { OrderItem } from "@/views/admin/components";
-
+import { FiltersToggle, SearchBar } from "@/components/common";
+import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
@@ -24,17 +25,17 @@ const Orders = () => {
   useDocumentTitle(" Orders | urbanfit");
   return (
     <Boundary>
-      <ProductsNavbar
-        productsCount={orders.length}
-        totalProductsCount={0}
-        name={"Orders"}
-      />
+      <div className="product-admin-header">
+        <h3 className="product-admin-header-title">
+          Orders &nbsp; ({`${orders.length} / ${0}`})
+        </h3>
+        &nbsp;
+      </div>
       <div className="product-admin-items">
         <Boundary>
           <div>
             {orders.length > 0 && (
               <div className="grid grid-product grid-count-6">
-                <div className="grid-col" />
                 <div className="grid-col">
                   <h5>Payment</h5>
                 </div>
