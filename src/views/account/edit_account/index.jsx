@@ -23,7 +23,11 @@ const FormSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
     .required("Email is required."),
-  address: Yup.string(),
+  street: Yup.string(),
+  city: Yup.string(),
+  building: Yup.string(),
+  floor: Yup.string(),
+  nearby: Yup.string(),
   mobile: Yup.object().shape({
     country: Yup.string(),
     countryCode: Yup.string(),
@@ -70,7 +74,11 @@ const EditProfile = () => {
         updates: {
           fullname: form.fullname,
           email: form.email,
-          address: form.address,
+          street: form.street,
+          city: form.city,
+          building: form.building,
+          floor: form.floor,
+          nearby: form.nearby,
           mobile: form.mobile,
           avatar: profile.avatar,
           banner: profile.banner,

@@ -1,11 +1,11 @@
 /* eslint-disable indent */
-import { ImageLoader } from '@/components/common';
-import { ACCOUNT_EDIT } from '@/constants/routes';
-import { displayDate } from '@/helpers/utils';
-import PropType from 'prop-types';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { ImageLoader } from "@/components/common";
+import { ACCOUNT_EDIT } from "@/constants/routes";
+import { displayDate } from "@/helpers/utils";
+import PropType from "prop-types";
+import React from "react";
+import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const UserProfile = (props) => {
   const profile = useSelector((state) => state.profile);
@@ -41,12 +41,40 @@ const UserProfile = (props) => {
           <span>Email</span>
           <br />
           <h5>{profile.email}</h5>
-          <span>Address</span>
+          <span>Street</span>
           <br />
-          {profile.address ? (
-            <h5>{profile.address}</h5>
+          {profile.street ? (
+            <h5>{profile.street}</h5>
           ) : (
-            <h5 className="text-subtle text-italic">Address not set</h5>
+            <h5 className="text-subtle text-italic">Street not set</h5>
+          )}
+          <span>City</span>
+          <br />
+          {profile.city ? (
+            <h5>{profile.city}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">City not set</h5>
+          )}
+          <span>Building</span>
+          <br />
+          {profile.building ? (
+            <h5>{profile.building}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">Building not set</h5>
+          )}
+          <span>Floor Number</span>
+          <br />
+          {profile.floor ? (
+            <h5>{profile.floor}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">Floor Number not set</h5>
+          )}
+          <span>Nearby</span>
+          <br />
+          {profile.nearby ? (
+            <h5>{profile.nearby}</h5>
+          ) : (
+            <h5 className="text-subtle text-italic">Nearby not set</h5>
           )}
           <span>Mobile</span>
           <br />
@@ -70,8 +98,8 @@ const UserProfile = (props) => {
 
 UserProfile.propTypes = {
   history: PropType.shape({
-    push: PropType.func
-  }).isRequired
+    push: PropType.func,
+  }).isRequired,
 };
 
 export default withRouter(UserProfile);

@@ -24,12 +24,6 @@ class Firebase {
   signInWithGoogle = () =>
     this.auth.signInWithPopup(new app.auth.GoogleAuthProvider());
 
-  signInWithFacebook = () =>
-    this.auth.signInWithPopup(new app.auth.FacebookAuthProvider());
-
-  signInWithGithub = () =>
-    this.auth.signInWithPopup(new app.auth.GithubAuthProvider());
-
   signOut = () => this.auth.signOut();
 
   passwordReset = (email) => this.auth.sendPasswordResetEmail(email);
