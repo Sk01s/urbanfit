@@ -23,7 +23,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
     if (addToBasket)
       addToBasket({ ...product, selectedSize: product.sizes[0] });
   };
-
+  console.log(product.price);
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div

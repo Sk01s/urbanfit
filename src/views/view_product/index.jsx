@@ -15,6 +15,7 @@ import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
 
 const ViewProduct = () => {
+  const sizesBtnsEl = useRef([]);
   const { id } = useParams();
   const { product, isLoading, error } = useProduct(id);
   const { addToBasket, isItemOnBasket } = useBasket(id);
@@ -37,8 +38,11 @@ const ViewProduct = () => {
     setSelectedImage(product?.image);
   }, [product]);
 
-  const onSelectedSizeChange = (newValue) => {
-    setSelectedSize(newValue.value);
+  const onSelectedSizeChange = (index, newValue) => {
+    setSelectedSize(newValue);
+    sizesBtnsEl.current.map((el, i) => {
+      i === index ? el.classList.add("active") : el.classList.remove("active");
+    });
   };
 
   const onSelectedColorChange = (color) => {
@@ -120,14 +124,18 @@ const ViewProduct = () => {
                 <span className="text-subtle">Lens Width and Frame Size</span>
                 <br />
                 <br />
-                <Select
-                  placeholder="--Select Size--"
-                  onChange={onSelectedSizeChange}
-                  options={product.sizes
-                    .sort((a, b) => (a < b ? -1 : 1))
-                    .map((size) => ({ label: `${size} `, value: size }))}
-                  styles={{ menu: (provided) => ({ ...provided, zIndex: 10 }) }}
-                />
+                <div className="product-sizes-container">
+                  {product.sizes.map((size, index) => (
+                    <button
+                      ref={(el) => (sizesBtnsEl.current[index] = el)}
+                      key={index}
+                      className={`product-size ${index === 0 ? "active" : ""}`}
+                      onClick={(e) => onSelectedSizeChange(index, size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
               <br />
               {product.availableColors.length >= 1 && (

@@ -1,4 +1,5 @@
 import { ImageLoader } from "@/components/common";
+import { displayMoney } from "@/helpers/utils";
 import PropType from "prop-types";
 import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -19,6 +20,7 @@ const ProductFeatured = ({ product }) => {
         onClick={onClickItem}
         role="presentation"
       >
+        {product.quantitiy === 0 && <div className="badge">Sold Out</div>}
         <div className="product-display-img">
           {product.image ? (
             <ImageLoader className="product-card-img" src={product.image} />
@@ -27,9 +29,16 @@ const ProductFeatured = ({ product }) => {
           )}
         </div>
         <div className="product-display-details">
-          <h2>{product.name || <Skeleton width={80} />}</h2>
-          <p className="text-subtle text-italic">
-            {product.description || <Skeleton width={40} />}
+          <h4>
+            {`${product.name} ${product.type}` || <Skeleton width={80} />}
+          </h4>
+
+          <p className="product-card-price ">
+            {product.price ? (
+              ` ${displayMoney(product.price)} USD `
+            ) : (
+              <Skeleton width={40} />
+            )}
           </p>
         </div>
       </div>

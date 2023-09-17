@@ -55,8 +55,11 @@ const Navigation = () => {
     ROUTE.SIGNUP,
     ROUTE.FORGOT_PASSWORD,
   ];
-
-  if (store.user && store.user.role === "ADMIN") {
+  if (
+    store.user &&
+    store.user.role === "ADMIN" &&
+    location.pathname.startsWith("/admin")
+  ) {
     return null;
   }
   if (window.screen.width <= 800) {
