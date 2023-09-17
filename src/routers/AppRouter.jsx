@@ -14,7 +14,7 @@ import Terms from "./../components/terms/index";
 export const history = createBrowserHistory();
 
 const AppRouter = () => {
-  console.log(ROUTES.ORDER_COMPLETED);
+  console.log(view.OrderView);
   const [accepeted, setAccepeted] = useState(localStorage.getItem("terms"));
   return (
     <Router history={history}>
@@ -81,6 +81,7 @@ const AppRouter = () => {
           />
           <AdminRoute component={view.Products} path={ROUTES.ADMIN_PRODUCTS} />
           <AdminRoute component={view.AddProduct} path={ROUTES.ADD_PRODUCT} />
+          <AdminRoute component={view.OrderView} path={ROUTES.ORDER_DETAILS} />
           <AdminRoute
             component={view.EditProduct}
             path={`${ROUTES.EDIT_PRODUCT}/:id`}
