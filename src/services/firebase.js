@@ -32,6 +32,8 @@ class Firebase {
 
   getUser = (id) => this.db.collection("users").doc(id).get();
 
+  getCurrentUser = () => this.db.auth?.currentUser;
+
   passwordUpdate = (password) => this.auth.currentUser.updatePassword(password);
 
   changePassword = (currentPassword, newPassword) =>
@@ -260,6 +262,11 @@ class Firebase {
   addOrder = (id, order) => this.db.collection("order").doc(id).set(order);
 
   getOrders = () => this.db.collection("order").get();
+
+  getOrder = (id) => this.db.collection("order").doc(id).get();
+
+  updateOrder = (id, order) =>
+    this.db.collection("order").doc(id).update(order);
 }
 
 const firebaseInstance = new Firebase();

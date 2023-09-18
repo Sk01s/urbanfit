@@ -10,14 +10,14 @@ import React, { useRef } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 const OrderItem = ({ order, index }) => {
-  // console.log(order.items);
   const price = order?.items?.reduce(
     (acc, next) => parseInt(acc) + parseInt(next.price),
     0
   );
+  const totalPrice = order?.address?.isInternational ? price + 50 : price + 5;
   const dispatch = useDispatch();
   const history = useHistory();
   const orderRef = useRef(null);
@@ -34,7 +34,7 @@ const OrderItem = ({ order, index }) => {
           <div className="grid-col">
             <span>
               {Number.isInteger(price) ? (
-                displayMoney(price)
+                displayMoney(totalPrice)
               ) : (
                 <Skeleton width={50} />
               )}
@@ -57,7 +57,9 @@ const OrderItem = ({ order, index }) => {
             </span>
           </div>
           <div className="grid-col">
-            <Link to={ORDER_DETAILS}>View</Link>
+            {order.items && (
+              <Link to={`/admin/orders/${order.id}`}>View details</Link>
+            )}
           </div>
         </div>
       </div>

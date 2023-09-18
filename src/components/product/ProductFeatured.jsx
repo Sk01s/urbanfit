@@ -12,7 +12,6 @@ const ProductFeatured = ({ product }) => {
 
     history.push(`/product/${product.id}`);
   };
-
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div
@@ -20,7 +19,7 @@ const ProductFeatured = ({ product }) => {
         onClick={onClickItem}
         role="presentation"
       >
-        {product.quantitiy === 0 && <div className="badge">Sold Out</div>}
+        {product.quantity === 0 && <div className="badge">Sold Out</div>}
         <div className="product-display-img">
           {product.image ? (
             <ImageLoader className="product-card-img" src={product.image} />

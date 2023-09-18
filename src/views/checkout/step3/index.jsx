@@ -13,6 +13,8 @@ import PayPalPayment from "./PayPalPayment";
 import CODPayment from "./CODPayment";
 import Total from "./Total";
 import { useSelector } from "react-redux";
+import firebase from "@/services/firebase";
+import firebaseInstance from "@/services/firebase";
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()
@@ -38,15 +40,17 @@ const Payment = ({ shipping, payment, subtotal }) => {
     payment: state.checkout.payment.type,
     address: state.checkout.shipping,
     date: new Date(),
-    uid: state,
+    uid: firebase.getCurrentUser(),
+    id: crypto.randomUUID()
   }));
-  console.log(state);
   useEffect(() => {
     state = {
       ...state,
       payment: paymentType || state.payment,
+      uid: firebase.auth.currentUser.uid,
     };
-  }, [paymentType]);
+    console.log(state);
+  }, [paymentType, firebase.auth]);
   useDocumentTitle("Check Out Final Step | urbanfit");
   useScrollTop();
 

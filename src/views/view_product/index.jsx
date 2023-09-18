@@ -13,6 +13,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
+import { Helmet } from "react-helmet";
 
 const ViewProduct = () => {
   const sizesBtnsEl = useRef([]);
@@ -61,133 +62,141 @@ const ViewProduct = () => {
   };
 
   return (
-    <main className="content">
-      {isLoading && (
-        <div className="loader">
-          <h4>Loading Product...</h4>
-          <br />
-          <LoadingOutlined style={{ fontSize: "3rem" }} />
-        </div>
-      )}
-      {error && <MessageDisplay message={error} />}
-      {product && !isLoading && (
-        <div className="product-view">
-          <Link to={SHOP}>
-            <h3 className="button-link d-inline-flex">
-              <ArrowLeftOutlined />
-              &nbsp; Back to shop
-            </h3>
-          </Link>
-          <div className="product-modal">
-            {product.imageCollection.length !== 0 && (
-              <div className="product-modal-image-collection">
-                {product.imageCollection.map((image) => (
-                  <div
-                    className="product-modal-image-collection-wrapper"
-                    key={image.id}
-                    onClick={() => setSelectedImage(image.url)}
-                    role="presentation"
-                  >
-                    <ImageLoader
-                      className="product-modal-image-collection-img"
-                      src={image.url}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-            <div className="product-modal-image-wrapper">
-              {selectedColor && (
-                <input
-                  type="color"
-                  disabled
-                  ref={colorOverlay}
-                  id="color-overlay"
-                />
-              )}
-              <ImageLoader
-                alt={product.name}
-                className="product-modal-image"
-                src={selectedImage}
-              />
-            </div>
-            <div className="product-modal-details">
-              <br />
-              <span className="text-subtle">{product.type}</span>
-              <h1 className="margin-top-0">{product.name}</h1>
-              <span>{product.description}</span>
-              <br />
-              <br />
-              <div className="divider" />
-              <br />
-              <div>
-                <span className="text-subtle">Lens Width and Frame Size</span>
-                <br />
-                <br />
-                <div className="product-sizes-container">
-                  {product.sizes.map((size, index) => (
-                    <button
-                      ref={(el) => (sizesBtnsEl.current[index] = el)}
-                      key={index}
-                      className={`product-size ${index === 0 ? "active" : ""}`}
-                      onClick={(e) => onSelectedSizeChange(index, size)}
+    <>
+      <Helmet>
+        <meta name="description" content={product?.description} />
+      </Helmet>
+
+      <main className="content">
+        {isLoading && (
+          <div className="loader">
+            <h4>Loading Product...</h4>
+            <br />
+            <LoadingOutlined style={{ fontSize: "3rem" }} />
+          </div>
+        )}
+        {error && <MessageDisplay message={error} />}
+        {product && !isLoading && (
+          <div className="product-view">
+            <Link to={SHOP}>
+              <h3 className="button-link d-inline-flex">
+                <ArrowLeftOutlined />
+                &nbsp; Back to shop
+              </h3>
+            </Link>
+            <div className="product-modal">
+              {product.imageCollection.length !== 0 && (
+                <div className="product-modal-image-collection">
+                  {product.imageCollection.map((image) => (
+                    <div
+                      className="product-modal-image-collection-wrapper"
+                      key={image.id}
+                      onClick={() => setSelectedImage(image.url)}
+                      role="presentation"
                     >
-                      {size}
-                    </button>
+                      <ImageLoader
+                        className="product-modal-image-collection-img"
+                        src={image.url}
+                      />
+                    </div>
                   ))}
                 </div>
-              </div>
-              <br />
-              {product.availableColors.length >= 1 && (
-                <div>
-                  <span className="text-subtle">Choose Color</span>
-                  <br />
-                  <br />
-                  <ColorChooser
-                    availableColors={product.availableColors}
-                    onSelectedColorChange={onSelectedColorChange}
-                  />
-                </div>
               )}
-              <h1>{displayMoney(product.price)}</h1>
-              <div className="product-modal-action">
-                <button
-                  className={`button button-small ${
-                    isItemOnBasket(product.id)
-                      ? "button-border button-border-gray"
-                      : ""
-                  }`}
-                  onClick={handleAddToBasket}
-                  type="button"
-                >
-                  {isItemOnBasket(product.id)
-                    ? "Remove From Basket"
-                    : "Add To Basket"}
-                </button>
+              <div className="product-modal-image-wrapper">
+                {selectedColor && (
+                  <input
+                    type="color"
+                    disabled
+                    ref={colorOverlay}
+                    id="color-overlay"
+                  />
+                )}
+                <ImageLoader
+                  alt={product.name}
+                  className="product-modal-image"
+                  src={selectedImage}
+                />
+              </div>
+              <div className="product-modal-details">
+                <br />
+                <span className="text-subtle">{product.type}</span>
+                <h1 className="margin-top-0">{product.name}</h1>
+                <span>{product.description}</span>
+                <br />
+                <br />
+                <div className="divider" />
+                <br />
+                <div>
+                  <span className="text-subtle">Lens Width and Frame Size</span>
+                  <br />
+                  <br />
+                  <div className="product-sizes-container">
+                    {product.sizes.map((size, index) => (
+                      <button
+                        ref={(el) => (sizesBtnsEl.current[index] = el)}
+                        key={index}
+                        className={`product-size ${
+                          index === 0 ? "active" : ""
+                        }`}
+                        onClick={(e) => onSelectedSizeChange(index, size)}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <br />
+                {product.availableColors.length >= 1 && (
+                  <div>
+                    <span className="text-subtle">Choose Color</span>
+                    <br />
+                    <br />
+                    <ColorChooser
+                      availableColors={product.availableColors}
+                      onSelectedColorChange={onSelectedColorChange}
+                    />
+                  </div>
+                )}
+                <h1>{displayMoney(product.price)}</h1>
+                <div className="product-modal-action">
+                  <button
+                    className={`button button-small ${
+                      isItemOnBasket(product.id)
+                        ? "button-border button-border-gray"
+                        : ""
+                    }`}
+                    onClick={handleAddToBasket}
+                    type="button"
+                  >
+                    {isItemOnBasket(product.id)
+                      ? "Remove From Basket"
+                      : "Add To Basket"}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div style={{ marginTop: "10rem" }}>
-            <div className="display-header">
-              <h1>Recommended</h1>
-              <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
+            <div style={{ marginTop: "10rem" }}>
+              <div className="display-header">
+                <h1>Recommended</h1>
+                <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
+              </div>
+              {errorFeatured && !isLoadingFeatured ? (
+                <MessageDisplay
+                  message={error}
+                  action={fetchRecommendedProducts}
+                  buttonLabel="Try Again"
+                />
+              ) : (
+                <ProductShowcaseGrid
+                  products={recommendedProducts}
+                  skeletonCount={3}
+                />
+              )}
             </div>
-            {errorFeatured && !isLoadingFeatured ? (
-              <MessageDisplay
-                message={error}
-                action={fetchRecommendedProducts}
-                buttonLabel="Try Again"
-              />
-            ) : (
-              <ProductShowcaseGrid
-                products={recommendedProducts}
-                skeletonCount={3}
-              />
-            )}
           </div>
-        </div>
-      )}
-    </main>
+        )}
+      </main>
+    </>
   );
 };
 

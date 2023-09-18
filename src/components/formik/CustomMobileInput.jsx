@@ -34,7 +34,7 @@ const CustomMobileInput = (props) => {
       )}
       <PhoneInput
         name={field.name}
-        defaultCountry="LB"
+        value={"+961"}
         ClassName="input-form d-block"
         onChange={handleChange}
         placeholder={placeholder}

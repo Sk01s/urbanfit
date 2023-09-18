@@ -9,6 +9,8 @@ import { useHistory } from "react-router-dom";
 const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
   const history = useHistory();
 
+  console.log(product);
+
   const onClickItem = () => {
     if (!product) return;
 
@@ -23,7 +25,6 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
     if (addToBasket)
       addToBasket({ ...product, selectedSize: product.sizes[0] });
   };
-  console.log(product.price);
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div
@@ -71,6 +72,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
         </div>
         {product.id && (
           <button
+            disabled={product.quantity === 0}
             className={`product-card-button button-small button button-block ${
               itemOnBasket ? "button-border button-border-gray" : ""
             }`}

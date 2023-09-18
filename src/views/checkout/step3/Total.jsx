@@ -20,12 +20,11 @@ const Total = ({ isInternational, subtotal, order }) => {
   const handleOrder = () => {
     if (order.payment !== "COD")
       return displayActionMessage("Feature not ready yet :)", "info");
-    crypto.randomUUID();
     // Update the Orders date
 
     order.date = new Date();
 
-    firebase.addOrder(crypto.randomUUID(), order);
+    firebase.addOrder(order.id, order);
     dispatch(clearBasket());
     history.push(ORDER_COMPLETED, order);
   };

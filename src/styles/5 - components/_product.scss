@@ -570,6 +570,14 @@
       transform: scale(1.1);
     }
   }
+  .badge {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    padding: 1rem 2rem;
+    background-color: #1a1a1a;
+    color: white;
+  }
 }
 
 .product-display-img {
