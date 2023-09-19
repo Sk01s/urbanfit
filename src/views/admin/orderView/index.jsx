@@ -63,7 +63,7 @@ const EditProduct = () => {
             </div>
           }
         >
-          <div style={{ overflowY: "scroll" }}>
+          <div>
             <section className="address">
               <h4>Shipping Address</h4>
               <span>
