@@ -42,9 +42,15 @@ const OrderItem = ({ order, index }) => {
           </div>
           <div className="grid-col">
             <span>
-              {order?.items?.map((item) => (
-                <div key={item.name}>{item.name}</div>
-              )) || <Skeleton width={30} />}
+              {order?.items ? (
+                order?.fulfillment ? (
+                  "Yes"
+                ) : (
+                  "No"
+                )
+              ) : (
+                <Skeleton width={50} />
+              )}
             </span>
           </div>
           <div className="grid-col">

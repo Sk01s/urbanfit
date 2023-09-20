@@ -43,7 +43,7 @@ const Orders = () => {
                   <h5>Price</h5>
                 </div>
                 <div className="grid-col">
-                  <h5>items</h5>
+                  <h5>Delivered ?</h5>
                 </div>
                 <div className="grid-col">
                   <h5>Orders date </h5>
