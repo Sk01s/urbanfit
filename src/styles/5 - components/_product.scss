@@ -193,6 +193,9 @@
 }
 
 // PRODUCT MODAL -------------------------------------------------
+.hidden {
+  display: none;
+}
 .product-view {
   margin: 0 5rem;
 
@@ -262,6 +265,7 @@
 .product-sizes-container {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 .product-sizes-container > .product-size {
   border-color: #cacaca;

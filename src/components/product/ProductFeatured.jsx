@@ -19,7 +19,7 @@ const ProductFeatured = ({ product }) => {
         onClick={onClickItem}
         role="presentation"
       >
-        {product.quantity === 0 && <div className="badge">Sold Out</div>}
+        {product.totalQuantity === 0 && <div className="badge">Sold Out</div>}
         <div className="product-display-img">
           {product.image ? (
             <ImageLoader className="product-card-img" src={product.image} />
@@ -29,7 +29,11 @@ const ProductFeatured = ({ product }) => {
         </div>
         <div className="product-display-details">
           <h4>
-            {`${product.name} ${product.type}` || <Skeleton width={80} />}
+            {product.name ? (
+              `${product.name} ${product.type}`
+            ) : (
+              <Skeleton width={80} />
+            )}
           </h4>
 
           <p className="product-card-price ">

@@ -18,7 +18,7 @@ const typeOptions = [
   { value: "Over Size", label: "Over Size" },
   { value: "Shirts", label: "Shirts" },
   { value: "Polo", label: "Polo" },
-  { value: " Hoodies", label: " Hoodies" },
+  { value: "Hoodies", label: " Hoodies" },
   { value: "Pants", label: "Pants" },
   { value: "Black Kibal", label: "Black Kibal" },
 ];
@@ -33,16 +33,22 @@ const FormSchema = Yup.object().shape({
     .integer("Price should be an integer.")
     .required("Price is required."),
   description: Yup.string().required("Description is required."),
-  maxQuantity: Yup.number()
-    .positive("Max quantity is invalid.")
+  xlQuantity: Yup.number()
+    .integer("Max quantity should be an integer.")
+    .required("Max quantity is required."),
+  lgQuantity: Yup.number()
+    .integer("Max quantity should be an integer.")
+    .required("Max quantity is required."),
+  smQuantity: Yup.number()
+    .integer("Max quantity should be an integer.")
+    .required("Max quantity is required."),
+  xsQuantity: Yup.number()
     .integer("Max quantity should be an integer.")
     .required("Max quantity is required."),
   keywords: Yup.array()
     .of(Yup.string())
     .min(1, "Please enter at least 1 keyword for this product."),
-  sizes: Yup.array()
-    .of(Yup.string())
-    .min(1, "Please enter a size for this product."),
+
   isFeatured: Yup.boolean(),
   isRecommended: Yup.boolean(),
   availableColors: Yup.array()
@@ -55,10 +61,13 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
     name: product?.name || "",
     type: product?.type || "",
     price: product?.price || 0,
-    maxQuantity: product?.maxQuantity || 0,
+    xlQuantity: product?.xlQuantity || 0,
+    lgQuantity: product?.lgQuantity || 0,
+    mdQuantity: product?.mdQuantity || 0,
+    smQuantity: product?.smQuantity || 0,
+    xsQuantity: product?.xsQuantity || 0,
     description: product?.description || "",
     keywords: product?.keywords || [],
-    sizes: product?.sizes || [],
     isFeatured: product?.isFeatured || false,
     isRecommended: product?.isRecommended || false,
     availableColors: product?.availableColors || [],
@@ -74,7 +83,12 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
     if (imageFile.image.file || product.imageUrl) {
       onSubmit({
         ...form,
-        quantity: 1,
+        totalQuantity:
+          form.xlQuantity +
+          form.mdQuantity +
+          form.lgQuantity +
+          form.smQuantity +
+          form.xsQuantity,
         // due to firebase function billing policy, let's add lowercase version
         // of name here instead in firebase functions
         name_lower: form.name.toLowerCase(),
@@ -149,10 +163,56 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                 <div className="product-form-field">
                   <Field
                     disabled={isLoading}
-                    name="maxQuantity"
+                    name="xlQuantity"
                     type="number"
-                    id="maxQuantity"
-                    label="* Max Quantity"
+                    id="xlQuantity"
+                    label="* Xl Quantity"
+                    component={CustomInput}
+                  />
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <Field
+                    disabled={isLoading}
+                    name="lgQuantity"
+                    id="lgQuantity"
+                    type="number"
+                    label="* Lg Quantity"
+                    component={CustomInput}
+                  />
+                </div>
+                &nbsp;
+                <div className="product-form-field">
+                  <Field
+                    disabled={isLoading}
+                    name="mdQuantity"
+                    type="number"
+                    id="mdQuantity"
+                    label="* Md Quantity"
+                    component={CustomInput}
+                  />
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <Field
+                    disabled={isLoading}
+                    name="smQuantity"
+                    id="smQuantity"
+                    type="number"
+                    label="* Sm Quantity"
+                    component={CustomInput}
+                  />
+                </div>
+                &nbsp;
+                <div className="product-form-field">
+                  <Field
+                    disabled={isLoading}
+                    name="xsQuantity"
+                    type="number"
+                    id="xsQuantity"
+                    label="* Xs Quantity"
                     component={CustomInput}
                   />
                 </div>
@@ -173,7 +233,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                   />
                 </div>
                 &nbsp;
-                <div className="product-form-field">
+                {/* <div className="product-form-field">
                   <CustomCreatableSelect
                     defaultValue={values.keywords.map((key) => ({
                       value: key,
@@ -187,7 +247,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                     placeholder="Create/Select Sizes"
                     label="* Sizes (Millimeter)"
                   />
-                </div>
+                </div> */}
               </div>
               <div className="product-form-field">
                 <FieldArray
@@ -332,11 +392,13 @@ ProductForm.propTypes = {
     name: PropType.string,
     type: PropType.string,
     price: PropType.number,
-    maxQuantity: PropType.number,
+    xlQuantity: PropType.number,
+    lgQuantity: PropType.number,
+    smQuantity: PropType.number,
+    xsQuantity: PropType.number,
     description: PropType.string,
     keywords: PropType.arrayOf(PropType.string),
     imageCollection: PropType.arrayOf(PropType.object),
-    sizes: PropType.arrayOf(PropType.string),
     image: PropType.string,
     imageUrl: PropType.string,
     isFeatured: PropType.bool,

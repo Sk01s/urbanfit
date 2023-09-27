@@ -259,7 +259,17 @@ class Firebase {
 
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
 
-  addOrder = (id, order) => this.db.collection("order").doc(id).set(order);
+  addOrder = async (id, order) => {
+    order.items.map(async (item) => {
+      --item.quantity;
+      console.log(item);
+      await this.db
+        .collection("products")
+        .doc(item.id)
+        .set(item, { merge: true });
+    });
+    await products.this.db.collection("order").doc(id).set(order);
+  };
 
   getOrders = () => this.db.collection("order").get();
 

@@ -14,6 +14,7 @@ const AddProduct = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (product) => {
+    console.log(product);
     dispatch(addProduct(product));
   };
 
@@ -36,7 +37,10 @@ const AddProduct = () => {
             name: "",
             type: "",
             price: 0,
-            maxQuantity: 0,
+            xlQuantity: 0,
+            lgQuantity: 0,
+            smQuantity: 0,
+            xsQuantity: 0,
             description: "",
             keywords: [],
             sizes: [],

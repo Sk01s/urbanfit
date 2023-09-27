@@ -22,10 +22,10 @@ const ViewProduct = () => {
   const { addToBasket, isItemOnBasket } = useBasket(id);
   useScrollTop();
   useDocumentTitle(`View ${product?.name || "Item"}`);
-
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  console.log(selectedSize);
 
   const {
     recommendedProducts,
@@ -40,6 +40,7 @@ const ViewProduct = () => {
   }, [product]);
 
   const onSelectedSizeChange = (index, newValue) => {
+    console.log(newValue);
     setSelectedSize(newValue);
     sizesBtnsEl.current.map((el, i) => {
       i === index ? el.classList.add("active") : el.classList.remove("active");
@@ -57,7 +58,8 @@ const ViewProduct = () => {
     addToBasket({
       ...product,
       selectedColor,
-      selectedSize: selectedSize || product.sizes[0],
+      quantity: 1,
+      selectedSize: selectedSize,
     });
   };
 
@@ -131,18 +133,51 @@ const ViewProduct = () => {
                   <br />
                   <br />
                   <div className="product-sizes-container">
-                    {product.sizes.map((size, index) => (
-                      <button
-                        ref={(el) => (sizesBtnsEl.current[index] = el)}
-                        key={index}
-                        className={`product-size ${
-                          index === 0 ? "active" : ""
-                        }`}
-                        onClick={(e) => onSelectedSizeChange(index, size)}
-                      >
-                        {size}
-                      </button>
-                    ))}
+                    <button
+                      ref={(el) => (sizesBtnsEl.current[0] = el)}
+                      className={`product-size  ${
+                        product.xlQuantity || "hidden"
+                      }`}
+                      onClick={(e) => onSelectedSizeChange(0, "xl")}
+                    >
+                      xl
+                    </button>
+                    <button
+                      ref={(el) => (sizesBtnsEl.current[1] = el)}
+                      className={`product-size ${
+                        product.lgQuantity || "hidden"
+                      }`}
+                      onClick={(e) => onSelectedSizeChange(1, "lg")}
+                    >
+                      lg
+                    </button>
+                    <button
+                      ref={(el) => (sizesBtnsEl.current[2] = el)}
+                      className={`product-size ${
+                        product.mdQuantity || "hidden"
+                      }`}
+                      onClick={(e) => onSelectedSizeChange(2, "md")}
+                    >
+                      md
+                    </button>
+                    <button
+                      ref={(el) => (sizesBtnsEl.current[3] = el)}
+                      className={`product-size  ${
+                        product.smQuantity || "hidden"
+                      }`}
+                      onClick={(e) => onSelectedSizeChange(3, "sm")}
+                    >
+                      sm
+                    </button>
+                    <button
+                      ref={(el) => (sizesBtnsEl.current[4] = el)}
+                      className={`product-size ${
+                        product.xsQuantity || "hidden"
+                      }`}
+                      onClick={(e) => onSelectedSizeChange(4, "xs")}
+                    >
+                      xs
+                    </button>
                   </div>
                 </div>
                 <br />
