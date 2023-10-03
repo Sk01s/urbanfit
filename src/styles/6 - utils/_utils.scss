@@ -1,4 +1,3 @@
-//
 // UTILS ---------
 //
 
@@ -252,6 +251,11 @@
 
 .text-thin {
   font-weight: 400;
+}
+.text-thin-light {
+  color: $accent;
+  font-size: inherit;
+  font-weight: 600;
 }
 
 .my-0 {

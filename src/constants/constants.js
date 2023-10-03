@@ -64,3 +64,11 @@ export const EDIT_USER = "EDIT_USER";
 export const LOADING = "LOADING";
 export const IS_AUTHENTICATING = "IS_AUTHENTICATING";
 export const SET_REQUEST_STATUS = "SET_REQUEST_STATUS";
+export const typeOptions = [
+  { value: "Over Size", label: "Over Size" },
+  { value: "Shirts", label: "Shirts" },
+  { value: "Polo", label: "Polo" },
+  { value: "Hoodies", label: " Hoodies" },
+  { value: "Pants", label: "Pants" },
+  { value: "Black Kibal", label: "Black Kibal" },
+];

@@ -1,7 +1,7 @@
 import { BasketToggle } from "@/components/basket";
 import { HOME, SIGNIN } from "@/constants/routes";
 import PropType from "prop-types";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserNav from "@/views/account/components/UserAvatar";
 import Badge from "./Badge";
@@ -10,11 +10,13 @@ import FiltersToggle from "./FiltersToggle";
 import * as ROUTE from "@/constants/routes";
 import SearchBar from "./SearchBar";
 import { useSelector } from "react-redux";
-import { ShoppingOutlined } from "@ant-design/icons";
+import { ShoppingOutlined, SearchOutlined } from "@ant-design/icons";
 
 const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
+  const [isSearching, setIsSearching] = useState(false);
+  const searchEl = useRef();
 
   const onClickLink = (e) => {
     if (isAuthenticating) e.preventDefault();
@@ -25,7 +27,20 @@ const Navigation = (props) => {
     isAuthenticating: state.app.isAuthenticating,
     isLoading: state.app.loading,
   }));
-
+  useEffect(() => {
+    let close = (e) => {
+      if (e.target.nodeName !== "INPUT" && e.target.nodeName !== "svg") {
+        setIsSearching(() => false);
+      } else {
+        document.addEventListener("click", close, { once: true });
+      }
+    };
+    if (isSearching) {
+      document.addEventListener("click", close, { once: true });
+    } else {
+      document.removeEventListener("click", close);
+    }
+  }, [isSearching]);
   const basketDisabledpathnames = [
     ROUTE.CHECKOUT_STEP_1,
     ROUTE.CHECKOUT_STEP_2,
@@ -37,19 +52,20 @@ const Navigation = (props) => {
   return (
     <nav className="mobile-navigation">
       <div className="mobile-navigation-main">
-        <div className="mobile-navigation-logo">
-          <Link onClick={onClickLink} to={HOME}>
-            <img
-              alt="Logo"
-              src={logo}
-              style={{
-                width: "8rem",
-                marginLeft: " 2rem",
-                scale: 2,
-              }}
-            />
-          </Link>
-        </div>
+        <SearchOutlined
+          className="searchbar-icon"
+          onClick={(e) => {
+            e.bubbles = false;
+            setIsSearching((prev) => !prev);
+          }}
+        />
+        <Link
+          className="mobile-navigation-logo"
+          onClick={onClickLink}
+          to={HOME}
+        >
+          <img alt="Logo" src={logo} style={{}} />
+        </Link>
         <ul className="mobile-navigation-menu">
           {user ? (
             <li className="mobile-navigation-item">
@@ -70,30 +86,34 @@ const Navigation = (props) => {
               )}
             </>
           )}
+          <li style={{ listStyle: "none" }}>
+            <BasketToggle>
+              {({ onClickToggle }) => (
+                <button
+                  className="button-link navigation-menu-link basket-toggle"
+                  disabled={basketDisabledpathnames.includes(pathname)}
+                  onClick={onClickToggle}
+                  type="button"
+                >
+                  <Badge count={store.basketLength}>
+                    <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
+                  </Badge>
+                </button>
+              )}
+            </BasketToggle>
+          </li>
         </ul>
       </div>
-      <div className="mobile-navigation-sec">
-        <SearchBar />
-        <FiltersToggle>
-          <button className="button-link button-small" type="button">
-            <i className="fa fa-filter" />
-          </button>
-        </FiltersToggle>
-        <BasketToggle>
-          {({ onClickToggle }) => (
-            <button
-              className="button-link navigation-menu-link basket-toggle"
-              disabled={basketDisabledpathnames.includes(pathname)}
-              onClick={onClickToggle}
-              type="button"
-            >
-              <Badge count={store.basketLength}>
-                <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
-              </Badge>
+      {isSearching && (
+        <div className="mobile-navigation-sec ">
+          <SearchBar ref={searchEl} />
+          <FiltersToggle>
+            <button className="button-link button-small" type="button">
+              <i className="fa fa-filter" />
             </button>
-          )}
-        </BasketToggle>
-      </div>
+          </FiltersToggle>
+        </div>
+      )}
     </nav>
   );
 };

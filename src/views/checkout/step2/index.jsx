@@ -6,7 +6,7 @@ import { CHECKOUT_STEP_1, CHECKOUT_STEP_3 } from "@/constants/routes";
 import { Form, Formik } from "formik";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 import PropType from "prop-types";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setShippingDetails } from "@/redux/actions/checkoutActions";
@@ -15,6 +15,7 @@ import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
 import ShippingForm from "./ShippingForm";
 import ShippingTotal from "./ShippingTotal";
+import firebase from "@/services/firebase";
 
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
@@ -43,11 +44,14 @@ const FormSchema = Yup.object().shape({
 });
 
 const ShippingDetails = ({ profile, shipping, subtotal }) => {
+  const form = useRef();
+  useEffect(() => firebase.generateRecaptcha(), []);
+
   useDocumentTitle("Check Out Step 2 | urbanfit");
   useScrollTop();
+  const [otpModel, setOtpModel] = useState(true);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const initFormikValues = {
     fullname: shipping.fullname || profile.fullname || "",
     email: shipping.email || profile.email || "",
@@ -79,6 +83,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
     );
     history.push(CHECKOUT_STEP_3);
   };
+  const confiremOtp = () => {};
 
   return (
     <Boundary>
@@ -87,6 +92,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
         <div className="checkout-step-2">
           <h3 className="text-center">Shipping Details</h3>
           <Formik
+            innerRef={form}
             initialValues={initFormikValues}
             validateOnChange
             validationSchema={FormSchema}
@@ -109,7 +115,17 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     <ArrowLeftOutlined />
                     &nbsp; Go Back
                   </button>
-                  <button className="button button-icon" type="submit">
+                  <button
+                    className="button button-icon"
+                    type="button"
+                    id="next"
+                    onClick={() => {
+                      firebase.requestPhoneOtp(
+                        form.current.values.mobile.value
+                      );
+                      setOtpModel(true);
+                    }}
+                  >
                     Next Step &nbsp;
                     <ArrowRightOutlined />
                   </button>
@@ -117,6 +133,54 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
               </Form>
             )}
           </Formik>
+          {otpModel && (
+            <section
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%,-50%)",
+                backgroundColor: "white",
+                borderRadius: "1rem",
+                padding: "2rem",
+                width: "clamp(70vw,500px,60vw)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "2rem",
+                alignItems: "center",
+              }}
+            >
+              <div className="text">
+                <h2>We've sent you an OTP</h2>
+                <p>
+                  Your order has been successfully placed. We just need to
+                  confirm your phone number. Please enter the OTP code.{" "}
+                </p>
+              </div>
+              <div>
+                <input
+                  type="number"
+                  style={{
+                    border: "1px solid #ccc",
+                    background:
+                      "linear-gradient(to left, #ccc 1px, transparent 0)",
+                    backgroundSize: "40px 1px",
+                    width: "240px",
+                    font: "24px monaco, monospace",
+                    letterSpacing: "26px",
+                    textIndent: " 4px",
+                    textTransform: "uppercase",
+                  }}
+                  onChange={(otp) =>
+                    otp.currentTarget.value.length === 6
+                      ? confiremOtp(otp.currentTarget.value)
+                      : otp.currentTarget.value
+                  }
+                  required={true}
+                />
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </Boundary>

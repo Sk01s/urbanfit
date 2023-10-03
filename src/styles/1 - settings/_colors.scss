@@ -1,11 +1,11 @@
-// 
+//
 // COLORS ---------
-// 
+//
 
 :root {
   --nav-bg: #f8f8f8;
-  --nav-bg-scrolled: #fff; 
-  --nav-bg-shadow: 0 5px 10px rgba(0, 0, 0, .02);
+  --nav-bg-scrolled: #fff;
+  --nav-bg-shadow: 0 5px 10px rgba(0, 0, 0, 0.02);
 }
 
 $nav-bg: #f8f8f8;
@@ -18,15 +18,16 @@ $background-color-01: #f2f2f2;
 $paragraph-color: #4a4a4a; // base
 
 // Heading
-$heading-color: #1a1a1a;
+$heading-color: #2a2a2a;
 
-// Border 
+// Border
 $border-color: #e1e1e1;
 $border-color-focus: #c5c5c5;
 
 // General
 $white: #fff;
 $black: #000;
+$accent: #ff7332;
 $off-black: #303030;
 $off-white: #f0f0f0;
 $red: rgba(247, 45, 45, 0.986);
@@ -37,7 +38,7 @@ $gray-10: #818181;
 $gray-20: #b6b6b6;
 
 // Buttons
-$button-color: #101010;
+$button-color: #ff7332;
 $button-hover: lighten($button-color, 10%);
 
 // Social
@@ -46,4 +47,4 @@ $color-facebook-hover: darken($color-facebook, 5%);
 $color-github: #24292e;
 $color-github-hover: lighten($color-github, 5%);
 
-$color-success: #000;
+$color-success: #ff7332;

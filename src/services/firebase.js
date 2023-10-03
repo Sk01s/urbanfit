@@ -1,12 +1,12 @@
 import app from "firebase/app";
-import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/auth";
 import firebaseConfig from "./config";
 
 class Firebase {
   constructor() {
-    app.initializeApp(firebaseConfig);
+    this.app = app.initializeApp(firebaseConfig);
 
     this.storage = app.storage();
     this.db = app.firestore();
@@ -20,6 +20,36 @@ class Firebase {
 
   signIn = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
+  generateRecaptcha = () => {
+    window.recaptchaVerifier = new app.auth.RecaptchaVerifier("next", {
+      size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+      },
+    });
+    const recaptchaVerifier = window.recaptchaVerifier;
+    // [START auth_phone_recaptcha_render]
+    recaptchaVerifier.render().then((widgetId) => {
+      window.recaptchaWidgetId = widgetId;
+    });
+  };
+  requestPhoneOtp = (number) => {
+    number;
+    this.auth
+      .signInWithPhoneNumber(number, window.recaptchaVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        console.log("good");
+        window.confirmationResult = confirmationResult;
+        // ...
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        // ...
+        console.error(error);
+      });
+  };
 
   signInWithGoogle = () =>
     this.auth.signInWithPopup(new app.auth.GoogleAuthProvider());
