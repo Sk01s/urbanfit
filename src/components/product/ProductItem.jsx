@@ -9,8 +9,6 @@ import { useHistory } from "react-router-dom";
 const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
   const history = useHistory();
 
-  console.log(product);
-
   const onClickItem = () => {
     if (!product) return;
 

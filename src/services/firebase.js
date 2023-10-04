@@ -33,21 +33,34 @@ class Firebase {
       window.recaptchaWidgetId = widgetId;
     });
   };
+  confiremOtp = (otp) => {
+    return window.confirmationResult
+      .confirm(otp)
+      .then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        // ...
+        console.log("confirmed");
+        return result;
+      })
+      .catch((error) => {
+        // User couldn't sign in (bad verification code?)
+        // ...
+        throw error.message;
+      });
+  };
+  unlinkMobile = () => {
+    this.auth.currentUser.unlink(app.auth.PhoneAuthProvider.PROVIDER_ID);
+  };
   requestPhoneOtp = (number) => {
-    number;
-    this.auth
-      .signInWithPhoneNumber(number, window.recaptchaVerifier)
+    return this.auth.currentUser
+      .linkWithPhoneNumber(number, window.recaptchaVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         console.log("good");
         window.confirmationResult = confirmationResult;
         // ...
-      })
-      .catch((error) => {
-        // Error; SMS not sent
-        // ...
-        console.error(error);
       });
   };
 
@@ -291,19 +304,25 @@ class Firebase {
 
   addOrder = async (id, order) => {
     order.items.map(async (item) => {
-      --item.quantity;
-      console.log(item);
+      item.totalQuantity -= item.quantity;
+      item[`${item.selectedSize}Quantity`] -= item.quantity;
       await this.db
         .collection("products")
         .doc(item.id)
         .set(item, { merge: true });
     });
-    await products.this.db.collection("order").doc(id).set(order);
+    await this.db.collection("order").doc(id).set(order);
   };
 
   getOrders = () => this.db.collection("order").get();
 
   getOrder = (id) => this.db.collection("order").doc(id).get();
+
+  getUserOrders = () =>
+    this.db
+      .collection("order")
+      .where("uid", "==", this.auth.currentUser.uid)
+      .get();
 
   updateOrder = (id, order) =>
     this.db.collection("order").doc(id).update(order);

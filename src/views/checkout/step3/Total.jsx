@@ -25,6 +25,7 @@ const Total = ({ isInternational, subtotal, order }) => {
     order.date = new Date();
 
     firebase.addOrder(order.id, order);
+    firebase.unlinkMobile();
     dispatch(clearBasket());
     history.push(ORDER_COMPLETED, order);
   };

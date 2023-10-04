@@ -1,6 +1,6 @@
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   grid-gap: $s-size;
   justify-content: center;
 
@@ -219,7 +219,7 @@
 }
 
 .product-modal-image-wrapper {
-  width: 45vw;
+  max-width: 45vw;
   // height: 40rem;
   height: inherit;
   flex-grow: 1;
@@ -561,12 +561,20 @@
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   }
 }
-
+.slick-list {
+  height: 35rem;
+}
+.slick-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
 .product-display {
-  width: 100%;
   max-height: 35rem;
   border: 1px solid $border-color;
   position: relative;
+  margin-inline: 1rem;
+  max-width: 300px;
   &:hover {
     cursor: pointer;
 

@@ -22,7 +22,11 @@ const ProductFeatured = ({ product }) => {
         {product.totalQuantity === 0 && <div className="badge">Sold Out</div>}
         <div className="product-display-img">
           {product.image ? (
-            <ImageLoader className="product-card-img" src={product.image} />
+            <ImageLoader
+              className="product-card-img"
+              src={product.image}
+              draggable={false}
+            />
           ) : (
             <Skeleton width="100%" height="100%" />
           )}

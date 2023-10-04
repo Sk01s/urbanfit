@@ -2,7 +2,7 @@ a {
   text-decoration: none;
   color: $gray-01;
 
-  // &:hover {
-  //   text-decoration: underline;
-  // }
+  &:hover {
+    text-decoration: underline;
+  }
 }

@@ -81,16 +81,6 @@ const Home = () => {
             </Link>
           ))}
         </div>
-        <div className="content">
-          <section className="product-list-wrapper">
-            <AppliedFilters
-              filteredProductsCount={store.filteredProducts.length}
-            />
-            <ProductList {...store}>
-              <ProductGrid products={store.filteredProducts} />
-            </ProductList>
-          </section>
-        </div>
         <div className="display">
           <div className="display-header">
             <h1>Featured Products</h1>

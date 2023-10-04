@@ -20,11 +20,12 @@
     display: flex;
     justify-content: left;
     align-items: end;
-    padding: 5rem;
+    padding: 8%;
     background-color: $gray-20;
     color: $white;
     aspect-ratio: 16/9;
     font-size: 2rem;
+    min-height: 100px;
   }
   @media (max-width: 728px) {
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));

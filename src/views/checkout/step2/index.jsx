@@ -45,12 +45,20 @@ const FormSchema = Yup.object().shape({
 
 const ShippingDetails = ({ profile, shipping, subtotal }) => {
   const form = useRef();
-  useEffect(() => firebase.generateRecaptcha(), []);
+  useEffect(() => {
+    firebase.generateRecaptcha();
+    return () => {
+      window.recaptchaVerifier = null;
+    };
+  }, []);
 
   useDocumentTitle("Check Out Step 2 | urbanfit");
   useScrollTop();
-  const [otpModel, setOtpModel] = useState(true);
+  const [otpModel, setOtpModel] = useState(false);
+  const [confroming, setConfroming] = useState(false);
   const dispatch = useDispatch();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const history = useHistory();
   const initFormikValues = {
     fullname: shipping.fullname || profile.fullname || "",
@@ -83,7 +91,19 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
     );
     history.push(CHECKOUT_STEP_3);
   };
-  const confiremOtp = () => {};
+  const confiremOtp = (otp) => {
+    setConfroming(true);
+    firebase
+      .confiremOtp(otp)
+      .then((e) => {
+        setOtpModel(false);
+        form.current.handleSubmit();
+      })
+      .catch((error) => {
+        setConfroming(false);
+        setMessage("invalide code ");
+      });
+  };
 
   return (
     <Boundary>
@@ -120,10 +140,11 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     type="button"
                     id="next"
                     onClick={() => {
-                      firebase.requestPhoneOtp(
-                        form.current.values.mobile.value
-                      );
-                      setOtpModel(true);
+                      firebase
+                        .requestPhoneOtp(form.current.values.mobile.value)
+                        .then(() => setOtpModel(true))
+                        .catch((error) => setError(error));
+                      console.log(error);
                     }}
                   >
                     Next Step &nbsp;
@@ -141,44 +162,64 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                 left: "50%",
                 transform: "translate(-50%,-50%)",
                 backgroundColor: "white",
-                borderRadius: "1rem",
-                padding: "2rem",
-                width: "clamp(70vw,500px,60vw)",
+                borderRadius: "3rem",
+                padding: "3rem 4rem",
+                width: "clamp(80vw,700px,70vw)",
                 display: "flex",
                 flexDirection: "column",
                 gap: "2rem",
                 alignItems: "center",
+                zIndex: "2",
               }}
             >
-              <div className="text">
+              <div style={{ padding: "2rem" }}>
                 <h2>We've sent you an OTP</h2>
-                <p>
-                  Your order has been successfully placed. We just need to
-                  confirm your phone number. Please enter the OTP code.{" "}
-                </p>
+                <p>Confirm your phone number . Please enter the OTP code. </p>
               </div>
               <div>
-                <input
-                  type="number"
-                  style={{
-                    border: "1px solid #ccc",
-                    background:
-                      "linear-gradient(to left, #ccc 1px, transparent 0)",
-                    backgroundSize: "40px 1px",
-                    width: "240px",
-                    font: "24px monaco, monospace",
-                    letterSpacing: "26px",
-                    textIndent: " 4px",
-                    textTransform: "uppercase",
-                  }}
-                  onChange={(otp) =>
-                    otp.currentTarget.value.length === 6
-                      ? confiremOtp(otp.currentTarget.value)
-                      : otp.currentTarget.value
-                  }
-                  required={true}
-                />
+                {confroming ? (
+                  <div
+                    style={{
+                      width: "8rem",
+                      height: "8rem",
+                      borderRadius: "50%",
+                      borderTop: "solid 1px ",
+                      borderRight: "solid 1px",
+                    }}
+                    className="spining"
+                  />
+                ) : (
+                  <input
+                    type="number"
+                    style={{
+                      border: "1px solid #ccc",
+                      background:
+                        "linear-gradient(to left, #ccc 1px, transparent 0)",
+                      backgroundSize: "40px 1px",
+                      width: "240px",
+                      font: "24px monaco, monospace",
+                      letterSpacing: "26.4px",
+                      textIndent: " -2px",
+                      textTransform: "uppercase",
+                    }}
+                    onChange={(otp) =>
+                      otp.currentTarget.value.length === 6
+                        ? confiremOtp(otp?.currentTarget?.value)
+                        : otp.currentTarget.value
+                    }
+                    required={true}
+                  />
+                )}
               </div>
+              <button
+                onClick={() => {
+                  firebase.requestPhoneOtp(form.current.values.mobile.value);
+                }}
+              >
+                Resend OTP
+              </button>
+              <div>{message}</div>
+              <div>{error}</div>
             </section>
           )}
         </div>

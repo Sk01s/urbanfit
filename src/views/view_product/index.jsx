@@ -25,7 +25,6 @@ const ViewProduct = () => {
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-  console.log(selectedSize);
 
   const {
     recommendedProducts,
@@ -136,47 +135,52 @@ const ViewProduct = () => {
                     <button
                       ref={(el) => (sizesBtnsEl.current[0] = el)}
                       className={`product-size  ${
-                        product.xlQuantity || "hidden"
+                        product.xlQuantity || "not-available"
                       }`}
+                      disabled={product.xlQuantity ? false : true}
                       onClick={(e) => onSelectedSizeChange(0, "xl")}
                     >
-                      xl
+                      Xl
                     </button>
                     <button
                       ref={(el) => (sizesBtnsEl.current[1] = el)}
                       className={`product-size ${
-                        product.lgQuantity || "hidden"
+                        product.lgQuantity || "not-available"
                       }`}
+                      disabled={product.lgQuantity ? false : true}
                       onClick={(e) => onSelectedSizeChange(1, "lg")}
                     >
-                      lg
+                      L
                     </button>
                     <button
                       ref={(el) => (sizesBtnsEl.current[2] = el)}
                       className={`product-size ${
-                        product.mdQuantity || "hidden"
+                        product.mdQuantity || "not-available"
                       }`}
+                      disabled={product.mdQuantity ? false : true}
                       onClick={(e) => onSelectedSizeChange(2, "md")}
                     >
-                      md
+                      M
                     </button>
                     <button
                       ref={(el) => (sizesBtnsEl.current[3] = el)}
                       className={`product-size  ${
-                        product.smQuantity || "hidden"
+                        product.smQuantity || "not-available"
                       }`}
+                      disabled={product.smQuantity ? false : true}
                       onClick={(e) => onSelectedSizeChange(3, "sm")}
                     >
-                      sm
+                      S
                     </button>
                     <button
                       ref={(el) => (sizesBtnsEl.current[4] = el)}
                       className={`product-size ${
-                        product.xsQuantity || "hidden"
+                        product.xsQuantity || "not-available"
                       }`}
+                      disabled={product.xsQuantity ? false : true}
                       onClick={(e) => onSelectedSizeChange(4, "xs")}
                     >
-                      xs
+                      Xs
                     </button>
                   </div>
                 </div>

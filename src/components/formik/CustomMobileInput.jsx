@@ -2,23 +2,23 @@
 import { useField } from "formik";
 import PropType from "prop-types";
 import React from "react";
-import "react-phone-number-input/style.css";
-import PhoneInput, { parsePhoneNumber } from "react-phone-number-input";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 const CustomMobileInput = (props) => {
   const [field, meta, helpers] = useField(props);
   const { label, placeholder, defaultValue } = props;
   const { touched, error } = meta;
   const { setValue } = helpers;
 
-  const handleChange = (value, data) => {
+  const handleChange = (value) => {
     if (!value) return;
     const mob = {
-      dialCode: parseInt(value?.slice(4)),
-      countryCode: 961,
+      dialCode: value.split(" ")[1],
+      countryCode: value.split(" ")[0],
       country: "lebanon",
       value,
     };
-
+    console.log(mob);
     setValue(mob);
   };
   return (
@@ -33,12 +33,13 @@ const CustomMobileInput = (props) => {
         </label>
       )}
       <PhoneInput
-        name={field.name}
-        value={"+961"}
-        ClassName="input-form d-block"
-        onChange={handleChange}
-        placeholder={placeholder}
-        required="true"
+        defaultCountry="lb"
+        inputStyle={{
+          width: "100%",
+          backgroundColor: "#f9f9f9",
+          borderRadius: 0,
+        }}
+        onChange={(phone) => handleChange(phone)}
       />
     </div>
   );
