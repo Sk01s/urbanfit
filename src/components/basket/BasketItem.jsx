@@ -11,9 +11,17 @@ import { removeFromBasket } from "@/redux/actions/basketActions";
 const BasketItem = ({ product }) => {
   const dispatch = useDispatch();
   const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
+  const displaySizeForOmar = (size) => {
+    if (size === "lg") return "L";
+    if (size === "md") return "M";
+    if (size === "sm") {
+      return "S";
+    } else {
+      return size.toLocaleUpperCase();
+    }
+  };
   return (
     <div className="basket-item">
-      <BasketItemControl product={product} />
       <div className="basket-item-wrapper">
         <div className="basket-item-img-wrapper">
           <ImageLoader
@@ -23,47 +31,71 @@ const BasketItem = ({ product }) => {
           />
         </div>
         <div className="basket-item-details">
-          <Link
-            to={`/product/${product.id}`}
-            onClick={() => document.body.classList.remove("is-basket-open")}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              justifyContent: "space-between",
+            }}
           >
-            <h4 className="underline basket-item-name">{product.name}</h4>
-          </Link>
-          <div className="basket-item-specs">
-            <div>
-              <span className="spec-title">Quantity</span>
-              <h5 className="my-0">{product.quantity}</h5>
-            </div>
-            <div>
-              <span className="spec-title">Size</span>
-              <h5 className="my-0">{product.selectedSize} </h5>
-            </div>
-            <div>
-              <span className="spec-title">Color</span>
-              <div
-                style={{
-                  backgroundColor:
-                    product.selectedColor || product.availableColors[0],
-                  width: "15px",
-                  height: "15px",
-                  borderRadius: "50%",
-                }}
-              />
+            <Link
+              to={`/product/${product.id}`}
+              onClick={() => document.body.classList.remove("is-basket-open")}
+            >
+              <h4 className="basket-item-name">{product.name}</h4>
+            </Link>
+            <div className="basket-item-price">
+              <h4 className="my-0">{displayMoney(product.price)}</h4>
             </div>
           </div>
+          <div className="basket-item-specs">
+            <div>
+              <div style={{ display: "flex", gap: "0.8rem" }}>
+                <span className="spec-title">Color : </span>
+                <div
+                  style={{
+                    backgroundColor:
+                      product.selectedColor || product.availableColors[0],
+                    width: "11px",
+                    height: "11px",
+                    borderRadius: "50%",
+                    translate: " -3px 1.5px",
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", gap: "0.8rem" }}>
+                <span className="spec-title">Size : </span>
+                <h5 className="my-0" style={{ fontSize: "1.125rem" }}>
+                  {displaySizeForOmar(product.selectedSize)}{" "}
+                </h5>
+              </div>
+
+              <div>
+                <span className="spec-title"></span>
+                {/* <h5 className="my-0">{product.quantity}</h5> */}
+                <BasketItemControl product={product} />
+              </div>
+            </div>
+            <button
+              onClick={onRemoveFromBasket}
+              type="button"
+              style={{
+                all: "unset",
+                cursor: "pointer",
+                fontSize: "1rem",
+                textDecoration: "underline",
+                color: "#000",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              Remove
+            </button>
+          </div>
         </div>
-        <div className="basket-item-price">
-          <h4 className="my-0">
-            {displayMoney(product.price * product.quantity)}
-          </h4>
-        </div>
-        <button
-          className="basket-item-remove button button-border button-border-gray button-small"
-          onClick={onRemoveFromBasket}
-          type="button"
-        >
-          <CloseOutlined />
-        </button>
       </div>
     </div>
   );

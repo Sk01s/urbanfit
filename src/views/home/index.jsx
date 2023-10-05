@@ -81,6 +81,7 @@ const Home = () => {
             </Link>
           ))}
         </div>
+
         <div className="display">
           <div className="display-header">
             <h1>Featured Products</h1>

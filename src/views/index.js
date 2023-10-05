@@ -21,3 +21,8 @@ export { default as Shop } from "./shop";
 export { default as ViewProduct } from "./view_product";
 export { default as Terms } from "./terms/index";
 export { default as OrderCompleted } from "./OrderCompleted/index";
+export { default as Tops } from "./tops/index";
+export { default as Bottoms } from "./bottoms/index";
+export { default as Hoodies } from "./hoodies_sweats/index";
+export { default as Jackets } from "./jackects/index";
+export { default as Sets } from "./sets/index";

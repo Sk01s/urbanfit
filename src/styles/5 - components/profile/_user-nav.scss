@@ -7,7 +7,7 @@
   border-bottom: 2px solid transparent;
   display: flex;
   justify-content: center;
-  
+
   @include mobile {
     width: 100%;
   }
@@ -19,8 +19,8 @@
 }
 
 .user-nav-img-wrapper {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   overflow: hidden;
   margin-left: 10px;
@@ -28,7 +28,7 @@
   background: $border-color-focus;
 
   &:after {
-    content: attr('data-alt');
+    content: attr("data-alt");
     position: absolute;
     left: 0;
     right: 0;
@@ -52,7 +52,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, .1);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
   display: none;
 }
 
@@ -70,7 +70,7 @@
   }
 
   &:first-child {
-    border-bottom: .5px solid $background-color;
+    border-bottom: 0.5px solid $background-color;
   }
 }
 

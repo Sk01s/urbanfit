@@ -218,17 +218,18 @@
   }
 }
 
-.product-modal-image-wrapper {
-  max-width: 45vw;
-  // height: 40rem;
+.product-image-wrapper .slick-slider {
+  width: 45vw;
+  overflow-y: hidden;
   height: inherit;
   flex-grow: 1;
   position: relative;
   background: #f8f8f8;
+  display: flex;
+  overflow-x: hidden;
 
   @include mobile {
     width: 100%;
-    height: 20rem;
     margin: auto;
   }
 
@@ -239,6 +240,9 @@
     width: 100%;
     height: 100%;
     mix-blend-mode: hue;
+  }
+  .slick-list {
+    width: 100%;
   }
 }
 
@@ -268,7 +272,8 @@
   flex-wrap: wrap;
 }
 .product-sizes-container > .product-size {
-  border-color: #cacaca;
+  border-color: $gray-01;
+  color: $gray-01;
   background-color: white;
   border-style: solid;
   text-transform: capitalize;
@@ -280,7 +285,8 @@
   -o-transition: ease-in-out 200ms;
 }
 .product-sizes-container > .product-size.active {
-  border-color: #1a1a1a;
+  border-color: $accent;
+  color: $accent;
 }
 
 .product-modal-image-collection::-webkit-scrollbar {
@@ -333,6 +339,8 @@
 .product-modal-image {
   width: 100%;
   height: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
   object-fit: cover;
 }
 
@@ -544,7 +552,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  h1 {
+    font-size: 1.7rem;
+    width: 50%;
+  }
   a {
     text-decoration: underline;
     font-size: 1.8rem;
@@ -571,16 +582,13 @@
 }
 .product-display {
   max-height: 35rem;
-  border: 1px solid $border-color;
   position: relative;
   margin-inline: 1rem;
   max-width: 300px;
+  transition-duration: 200ms;
   &:hover {
     cursor: pointer;
-
-    .product-display-img img {
-      transform: scale(1.1);
-    }
+    transform: scale(1.1);
   }
   .badge {
     position: absolute;
@@ -595,6 +603,7 @@
 .product-display-img {
   width: 100%;
   height: 25rem;
+  // aspect-ratio: 12/16;
   background: #f1f1f1;
   position: relative;
   overflow: hidden;
@@ -608,14 +617,17 @@
 }
 
 .product-display-details {
-  padding: 2rem;
+  padding-top: 0.7rem;
 
   h4 {
     margin: 0;
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 1.325rem;
   }
 
   p {
-    margin: 2.2rem 0;
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 400;
   }
 }

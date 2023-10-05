@@ -189,35 +189,48 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     className="spining"
                   />
                 ) : (
-                  <input
-                    type="number"
-                    style={{
-                      border: "1px solid #ccc",
-                      background:
-                        "linear-gradient(to left, #ccc 1px, transparent 0)",
-                      backgroundSize: "40px 1px",
-                      width: "240px",
-                      font: "24px monaco, monospace",
-                      letterSpacing: "26.4px",
-                      textIndent: " -2px",
-                      textTransform: "uppercase",
-                    }}
-                    onChange={(otp) =>
-                      otp.currentTarget.value.length === 6
-                        ? confiremOtp(otp?.currentTarget?.value)
-                        : otp.currentTarget.value
-                    }
-                    required={true}
-                  />
+                  <>
+                    <input
+                      type="number"
+                      style={{
+                        border: "1px solid #ccc",
+                        background:
+                          "linear-gradient(to left, #ccc 1px, transparent 0)",
+                        backgroundSize: "40px 1px",
+                        width: "240px",
+                        font: "24px monaco, monospace",
+                        letterSpacing: "26.4px",
+                        textIndent: " -2px",
+                        textTransform: "uppercase",
+                      }}
+                      onChange={(otp) =>
+                        otp.currentTarget.value.length === 6
+                          ? confiremOtp(otp?.currentTarget?.value)
+                          : otp.currentTarget.value
+                      }
+                      required={true}
+                    />
+                    <button
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: "1rem",
+                        border: "solid #333 1px ",
+                        marginTop: "1rem",
+                        padding: "1rem",
+                        color: "#cacaa",
+                      }}
+                      onClick={() => {
+                        firebase.requestPhoneOtp(
+                          form.current.values.mobile.value
+                        );
+                      }}
+                    >
+                      Resend OTP
+                    </button>
+                  </>
                 )}
               </div>
-              <button
-                onClick={() => {
-                  firebase.requestPhoneOtp(form.current.values.mobile.value);
-                }}
-              >
-                Resend OTP
-              </button>
+
               <div>{message}</div>
               <div>{error}</div>
             </section>

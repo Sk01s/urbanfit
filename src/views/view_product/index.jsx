@@ -13,6 +13,10 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Select from "react-select";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import { Helmet } from "react-helmet";
 
 const ViewProduct = () => {
@@ -62,6 +66,14 @@ const ViewProduct = () => {
     });
   };
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   return (
     <>
       <Helmet>
@@ -86,37 +98,47 @@ const ViewProduct = () => {
               </h3>
             </Link>
             <div className="product-modal">
-              {product.imageCollection.length !== 0 && (
-                <div className="product-modal-image-collection">
-                  {product.imageCollection.map((image) => (
-                    <div
-                      className="product-modal-image-collection-wrapper"
-                      key={image.id}
-                      onClick={() => setSelectedImage(image.url)}
-                      role="presentation"
-                    >
-                      <ImageLoader
-                        className="product-modal-image-collection-img"
-                        src={image.url}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="product-modal-image-wrapper">
-                {selectedColor && (
+              {/* {product.imageCollection.length !== 0 && (
+                  <div className="product-modal-image-collection">
+                    {product.imageCollection.map((image) => (
+                      <div
+                        className="product-modal-image-collection-wrapper"
+                        key={image.id}
+                        onClick={() => setSelectedImage(image.url)}
+                        role="presentation"
+                      >
+                        <ImageLoader
+                          className="product-modal-image-collection-img"
+                          src={image.url}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )} */}
+              <div className="product-image-wrapper">
+                <Slider {...settings} nextArrow={<></>} prevArrow={<></>}>
+                  {/* {selectedColor && (
                   <input
                     type="color"
                     disabled
                     ref={colorOverlay}
                     id="color-overlay"
                   />
-                )}
-                <ImageLoader
+                )} */}
+                  {/* <ImageLoader
                   alt={product.name}
                   className="product-modal-image"
                   src={selectedImage}
-                />
+                /> */}
+                  {product.imageCollection.map((image, index) => (
+                    <ImageLoader
+                      className="product-modal-image"
+                      src={image.url}
+                      key={index}
+                      draggable={false}
+                    />
+                  ))}
+                </Slider>
               </div>
               <div className="product-modal-details">
                 <br />
@@ -128,29 +150,19 @@ const ViewProduct = () => {
                 <div className="divider" />
                 <br />
                 <div>
-                  <span className="text-subtle">Lens Width and Frame Size</span>
                   <br />
                   <br />
                   <div className="product-sizes-container">
+                 
                     <button
-                      ref={(el) => (sizesBtnsEl.current[0] = el)}
+                      ref={(el) => (sizesBtnsEl.current[3] = el)}
                       className={`product-size  ${
-                        product.xlQuantity || "not-available"
+                        product.smQuantity || "not-available"
                       }`}
-                      disabled={product.xlQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(0, "xl")}
+                      disabled={product.smQuantity ? false : true}
+                      onClick={(e) => onSelectedSizeChange(3, "sm")}
                     >
-                      Xl
-                    </button>
-                    <button
-                      ref={(el) => (sizesBtnsEl.current[1] = el)}
-                      className={`product-size ${
-                        product.lgQuantity || "not-available"
-                      }`}
-                      disabled={product.lgQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(1, "lg")}
-                    >
-                      L
+                      S
                     </button>
                     <button
                       ref={(el) => (sizesBtnsEl.current[2] = el)}
@@ -163,16 +175,26 @@ const ViewProduct = () => {
                       M
                     </button>
                     <button
-                      ref={(el) => (sizesBtnsEl.current[3] = el)}
-                      className={`product-size  ${
-                        product.smQuantity || "not-available"
+                      ref={(el) => (sizesBtnsEl.current[1] = el)}
+                      className={`product-size ${
+                        product.lgQuantity || "not-available"
                       }`}
-                      disabled={product.smQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(3, "sm")}
+                      disabled={product.lgQuantity ? false : true}
+                      onClick={(e) => onSelectedSizeChange(1, "lg")}
                     >
-                      S
+                      L
                     </button>
                     <button
+                      ref={(el) => (sizesBtnsEl.current[0] = el)}
+                      className={`product-size  ${
+                        product.xlQuantity || "not-available"
+                      }`}
+                      disabled={product.xlQuantity ? false : true}
+                      onClick={(e) => onSelectedSizeChange(0, "xl")}
+                    >
+                      XL
+                    </button>
+                    {/* <button
                       ref={(el) => (sizesBtnsEl.current[4] = el)}
                       className={`product-size ${
                         product.xsQuantity || "not-available"
@@ -181,7 +203,7 @@ const ViewProduct = () => {
                       onClick={(e) => onSelectedSizeChange(4, "xs")}
                     >
                       Xs
-                    </button>
+                    </button> */}
                   </div>
                 </div>
                 <br />

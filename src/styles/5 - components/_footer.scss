@@ -1,8 +1,23 @@
-.footer {
-  position: relative;
+footer {
   padding: 0 $xxl-size;
   margin-top: $xl-size;
-  background: $off-white;
+  background: $background-color-01;
+
+  a {
+    text-decoration: none;
+  }
+  li {
+    list-style: none;
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+    font-weight: 200;
+  }
+  ul {
+    padding: 0;
+  }
+}
+.list {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -13,10 +28,6 @@
     flex-direction: column;
     text-align: center;
   }
-
-  a {
-    text-decoration: underline;
-  }
 }
 
 .footer-logo {
@@ -26,12 +37,12 @@
 }
 
 .footer-col-1 {
-  flex-basis: 40%; 
+  flex-basis: 40%;
 
   @include mobile {
     flex-basis: none;
     order: 1;
-    text-align: center;
+    text-align: left;
   }
 }
 
@@ -43,6 +54,7 @@
   @include mobile {
     flex-basis: none;
     order: 3;
+    text-align: left;
     padding-bottom: 0;
     margin-bottom: 0;
   }
@@ -55,7 +67,7 @@
   @include mobile {
     flex-basis: none;
     order: 2;
-    text-align: center;
+    text-align: left;
   }
 }
 

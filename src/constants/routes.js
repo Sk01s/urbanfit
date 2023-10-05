@@ -1,5 +1,10 @@
 export const HOME = "/";
 export const SHOP = "/shop";
+export const TOPS = "/category/tops";
+export const BOTTOMS = "/category/bottoms";
+export const HOODIES_SWEATS = "/category/hoodies-sweats";
+export const JACKETS = "/category/jackets";
+export const SETS = "/category/sets";
 export const FEATURED_PRODUCTS = "/featured";
 export const RECOMMENDED_PRODUCTS = "/recommended";
 export const ACCOUNT = "/account";
@@ -20,5 +25,5 @@ export const CHECKOUT_STEP_1 = "/checkout/step1";
 export const CHECKOUT_STEP_2 = "/checkout/step2";
 export const CHECKOUT_STEP_3 = "/checkout/step3";
 export const VIEW_PRODUCT = "/product/:id";
-export const TERMS = "/terms";
+export const TERMS = "/terms-conditions";
 export const ORDER_COMPLETED = "/order-completed";

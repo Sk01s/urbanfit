@@ -99,14 +99,6 @@ const Basket = () => {
                   </span>
                 )}
               </BasketToggle>
-              <button
-                className="basket-clear button button-border button-border-gray button-small"
-                disabled={basket.length === 0}
-                onClick={onClearBasket}
-                type="button"
-              >
-                <span>Clear Basket</span>
-              </button>
             </div>
           </div>
           {basket.length <= 0 && (

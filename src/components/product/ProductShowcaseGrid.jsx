@@ -14,6 +14,8 @@ const ProductShowcase = ({ products, skeletonCount }) => {
     slidesToShow: 1,
     speed: 500,
     variableWidth: true,
+    prevArrow: <></>,
+    nextArrow: <></>,
   };
 
   return (

@@ -5,17 +5,7 @@
   position: relative;
   overflow: hidden;
   opacity: 0.5;
-}
-.not-available::after {
-  content: "";
-  position: absolute;
-  width: 0.4rem;
-  height: 500%;
-  background-color: black;
-  left: 0;
-  top: 0;
-  rotate: -50deg;
-  transform-origin: 0 0;
+  cursor: not-allowed !important;
 }
 
 .w-100 {

@@ -12,16 +12,8 @@ import { useFileHandler } from "@/hooks";
 import PropType from "prop-types";
 import React from "react";
 import * as Yup from "yup";
-
+import { typeOptions } from "@/constants/constants";
 // Default type names that I used. You can use what you want
-const typeOptions = [
-  { value: "Over Size", label: "Over Size" },
-  { value: "Shirts", label: "Shirts" },
-  { value: "Polo", label: "Polo" },
-  { value: "Hoodies", label: " Hoodies" },
-  { value: "Pants", label: "Pants" },
-  { value: "Black Kibal", label: "Black Kibal" },
-];
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()

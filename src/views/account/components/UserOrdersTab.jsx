@@ -11,19 +11,18 @@ const UserOrdersTab = () => {
       .getUserOrders()
       .then((res) => res.docs.map((doc) => doc.data()))
       .then((orders) => setOrders(orders));
-    console.log(orders);
   }, []);
   return (
     <div className="loader" style={{ minHeight: "80vh" }}>
       <h3>My Orders</h3>
       {orders ? (
         orders?.map((item) => {
-          console.log(item);
           return <div>hi</div>;
         })
       ) : (
         <strong>
           <span className="text-subtle">You don&apos;t have any orders</span>
+          <button>shop now</button>
         </strong>
       )}
     </div>

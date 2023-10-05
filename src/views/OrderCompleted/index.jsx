@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import party from "party-js";
 import firebase from "@/services/firebase";
 
 const Index = () => {
@@ -9,12 +8,7 @@ const Index = () => {
   const address = data?.state?.address;
   const items = data?.state?.items;
   const payment = data?.state?.payment;
-  useEffect(() => {
-    const celebration = setInterval(() => {
-      party.confetti(document.body);
-    }, 3000);
-    return () => clearInterval(celebration);
-  }, []);
+
   return (
     <main style={{ marginTop: "4rem" }}>
       <div

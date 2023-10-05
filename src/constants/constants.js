@@ -65,10 +65,9 @@ export const LOADING = "LOADING";
 export const IS_AUTHENTICATING = "IS_AUTHENTICATING";
 export const SET_REQUEST_STATUS = "SET_REQUEST_STATUS";
 export const typeOptions = [
-  { value: "Over Size", label: "Over Size" },
-  { value: "Shirts", label: "Shirts" },
-  { value: "Polo", label: "Polo" },
-  { value: "Hoodies", label: " Hoodies" },
-  { value: "Pants", label: "Pants" },
-  { value: "Black Kibal", label: "Black Kibal" },
+  { value: "Tops", label: "Tops" },
+  { value: "Bottoms", label: "Bottoms" },
+  { value: "Hoodies & Sweats", label: "Hoodies & Sweats" },
+  { value: "Jackets", label: " Jackets" },
+  { value: "Sets", label: "Sets" },
 ];
