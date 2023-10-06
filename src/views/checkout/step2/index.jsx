@@ -143,8 +143,10 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                       firebase
                         .requestPhoneOtp(form.current.values.mobile.value)
                         .then(() => setOtpModel(true))
-                        .catch((error) => setError(error));
-                      console.log(error);
+                        .catch((error) => {
+                          setOtpModel(false);
+                          setError(error);
+                        });
                     }}
                   >
                     Next Step &nbsp;
@@ -176,7 +178,13 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                 <h2>We've sent you an OTP</h2>
                 <p>Confirm your phone number . Please enter the OTP code. </p>
               </div>
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
                 {confroming ? (
                   <div
                     style={{
@@ -219,7 +227,8 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                         padding: "1rem",
                         color: "#cacaa",
                       }}
-                      onClick={() => {
+                      onClick={({ currentTarget }) => {
+                        currentTarget.disabled = true;
                         firebase.requestPhoneOtp(
                           form.current.values.mobile.value
                         );

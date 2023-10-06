@@ -6,6 +6,7 @@ import {
   useScrollTop,
 } from "@/hooks";
 import bannerImg from "@/images/banner-girl-1.png";
+import { ProductGrid } from "@/components/product";
 import React from "react";
 
 const RecommendedProducts = () => {
@@ -27,20 +28,15 @@ const RecommendedProducts = () => {
           </div>
         </div>
         <div className="display">
-          <div className="product-display-grid">
-            {error && !isLoading ? (
-              <MessageDisplay
-                message={error}
-                action={fetchRecommendedProducts}
-                buttonLabel="Try Again"
-              />
-            ) : (
-              <ProductShowcaseGrid
-                products={recommendedProducts}
-                skeletonCount={6}
-              />
-            )}
-          </div>
+          {error && !isLoading ? (
+            <MessageDisplay
+              message={error}
+              action={fetchRecommendedProducts}
+              buttonLabel="Try Again"
+            />
+          ) : (
+            <ProductGrid products={recommendedProducts} skeletonCount={6} />
+          )}
         </div>
       </div>
     </main>

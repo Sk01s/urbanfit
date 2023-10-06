@@ -9,7 +9,7 @@ const ProductShowcase = ({ products, skeletonCount }) => {
   const settings = {
     className: "center",
     centerMode: true,
-    infinite: false,
+    infinite: true,
     centerPadding: "0",
     slidesToShow: 1,
     speed: 500,

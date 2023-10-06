@@ -2,6 +2,7 @@ import { MessageDisplay } from "@/components/common";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "@/hooks";
 import bannerImg from "@/images/banner-guy.png";
+import { ProductGrid } from "@/components/product";
 import React from "react";
 
 const FeaturedProducts = () => {
@@ -23,20 +24,15 @@ const FeaturedProducts = () => {
           </div>
         </div>
         <div className="display">
-          <div className="product-display-grid">
-            {error && !isLoading ? (
-              <MessageDisplay
-                message={error}
-                action={fetchFeaturedProducts}
-                buttonLabel="Try Again"
-              />
-            ) : (
-              <ProductShowcaseGrid
-                products={featuredProducts}
-                skeletonCount={6}
-              />
-            )}
-          </div>
+          {error && !isLoading ? (
+            <MessageDisplay
+              message={error}
+              action={fetchFeaturedProducts}
+              buttonLabel="Try Again"
+            />
+          ) : (
+            <ProductGrid products={featuredProducts} skeletonCount={6} />
+          )}
         </div>
       </div>
     </main>

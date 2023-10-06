@@ -32,6 +32,7 @@ const ViewProduct = () => {
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantitiy] = useState(1);
   const isOverSized = () => {
     // Search in the name if there is nama has the word over
 
@@ -76,7 +77,7 @@ const ViewProduct = () => {
     addToBasket({
       ...product,
       selectedColor,
-      quantity: 1,
+      quantity,
       selectedSize: selectedSize,
     });
   };
@@ -93,7 +94,7 @@ const ViewProduct = () => {
         <meta name="description" content={product?.description} />
       </Helmet>
 
-      <main className="content">
+      <main>
         {isLoading && (
           <div className="loader">
             <h4>Loading Product...</h4>
@@ -104,12 +105,6 @@ const ViewProduct = () => {
         {error && <MessageDisplay message={error} />}
         {product && !isLoading && (
           <div className="product-view">
-            <Link to={SHOP}>
-              <h3 className="button-link d-inline-flex">
-                <ArrowLeftOutlined />
-                &nbsp; Back to shop
-              </h3>
-            </Link>
             <div className="product-modal">
               {product.imageCollection.length !== 0 && (
                 <CustomDots
@@ -138,54 +133,86 @@ const ViewProduct = () => {
                 <br />
                 <span className="text-subtle">{product.type}</span>
                 <h1 className="margin-top-0">{product.name}</h1>
-                <br />
-                <br />
+                <p style={{ fontWeight: "300 ", fontSize: "19px" }}>
+                  {displayMoney(product.price)}
+                </p>
                 <div className="divider" />
                 <br />
+                {product.availableColors.length >= 1 && (
+                  <div>
+                    <span
+                      style={{
+                        color: "#343120",
+                        fontWeight: "700",
+                        fontSize: "1.2rem",
+                      }}
+                    >
+                      Color
+                    </span>
+                    <br />
+                    <br />
+                    <ColorChooser
+                      availableColors={product.availableColors}
+                      onSelectedColorChange={onSelectedColorChange}
+                    />
+                  </div>
+                )}
                 <div>
                   <br />
                   <br />
-                  <div className="product-sizes-container">
-                    <button
-                      ref={(el) => (sizesBtnsEl.current[3] = el)}
-                      className={`product-size  ${
-                        product.smQuantity || "not-available"
-                      }`}
-                      disabled={product.smQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(3, "sm")}
+                  <div>
+                    <div
+                      style={{
+                        color: "#343120",
+                        fontWeight: "700",
+                        fontSize: "1.2rem",
+                        marginBottom: "2rem",
+                      }}
                     >
-                      S
-                    </button>
-                    <button
-                      ref={(el) => (sizesBtnsEl.current[2] = el)}
-                      className={`product-size ${
-                        product.mdQuantity || "not-available"
-                      }`}
-                      disabled={product.mdQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(2, "md")}
-                    >
-                      M
-                    </button>
-                    <button
-                      ref={(el) => (sizesBtnsEl.current[1] = el)}
-                      className={`product-size ${
-                        product.lgQuantity || "not-available"
-                      }`}
-                      disabled={product.lgQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(1, "lg")}
-                    >
-                      L
-                    </button>
-                    <button
-                      ref={(el) => (sizesBtnsEl.current[0] = el)}
-                      className={`product-size  ${
-                        product.xlQuantity || "not-available"
-                      }`}
-                      disabled={product.xlQuantity ? false : true}
-                      onClick={(e) => onSelectedSizeChange(0, "xl")}
-                    >
-                      XL
-                    </button>
+                      Size (UK)
+                    </div>
+                    <div className="product-sizes-container">
+                      <button
+                        ref={(el) => (sizesBtnsEl.current[3] = el)}
+                        className={`product-size  ${
+                          product.smQuantity || "not-available"
+                        }`}
+                        disabled={product.smQuantity ? false : true}
+                        onClick={(e) => onSelectedSizeChange(3, "sm")}
+                      >
+                        S
+                      </button>
+                      <button
+                        ref={(el) => (sizesBtnsEl.current[2] = el)}
+                        className={`product-size ${
+                          product.mdQuantity || "not-available"
+                        }`}
+                        disabled={product.mdQuantity ? false : true}
+                        onClick={(e) => onSelectedSizeChange(2, "md")}
+                      >
+                        M
+                      </button>
+                      <button
+                        ref={(el) => (sizesBtnsEl.current[1] = el)}
+                        className={`product-size ${
+                          product.lgQuantity || "not-available"
+                        }`}
+                        disabled={product.lgQuantity ? false : true}
+                        onClick={(e) => onSelectedSizeChange(1, "lg")}
+                      >
+                        L
+                      </button>
+                      <button
+                        ref={(el) => (sizesBtnsEl.current[0] = el)}
+                        className={`product-size  ${
+                          product.xlQuantity || "not-available"
+                        }`}
+                        disabled={product.xlQuantity ? false : true}
+                        onClick={(e) => onSelectedSizeChange(0, "xl")}
+                      >
+                        XL
+                      </button>
+                    </div>
                     {/* <button
                       ref={(el) => (sizesBtnsEl.current[4] = el)}
                       className={`product-size ${
@@ -199,18 +226,7 @@ const ViewProduct = () => {
                   </div>
                 </div>
                 <br />
-                {product.availableColors.length >= 1 && (
-                  <div>
-                    <span className="text-subtle">Choose Color</span>
-                    <br />
-                    <br />
-                    <ColorChooser
-                      availableColors={product.availableColors}
-                      onSelectedColorChange={onSelectedColorChange}
-                    />
-                  </div>
-                )}
-                <h1>{displayMoney(product.price)}</h1>
+
                 <div className="product-modal-action">
                   <button
                     className={`button button-small ${

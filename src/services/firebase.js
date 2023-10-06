@@ -58,7 +58,7 @@ class Firebase {
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
-        console.log("good");
+        console.log("good", confirmationResult);
         window.confirmationResult = confirmationResult;
         // ...
       });

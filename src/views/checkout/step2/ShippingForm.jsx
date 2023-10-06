@@ -34,8 +34,8 @@ const ShippingForm = () => {
             <Field
               name="street"
               type="text"
-              label="* Shipping Street"
-              placeholder="Enter full shipping street"
+              label="* Street"
+              placeholder="Enter street"
               component={CustomInput}
             />
           </div>
@@ -43,8 +43,8 @@ const ShippingForm = () => {
             <Field
               name="city"
               type="text"
-              label="* Shipping City"
-              placeholder="Enter full shipping City"
+              label="* City"
+              placeholder="Enter City"
               component={CustomInput}
             />
           </div>
@@ -54,8 +54,8 @@ const ShippingForm = () => {
             <Field
               name="building"
               type="text"
-              label="* Shipping Building"
-              placeholder="Enter full shipping Building"
+              label="* Building"
+              placeholder="Enter full Building Name"
               component={CustomInput}
             />
           </div>
@@ -63,8 +63,8 @@ const ShippingForm = () => {
             <Field
               name="floor"
               type="text"
-              label="* Shipping Floor Number"
-              placeholder="Enter full shipping Floor Number"
+              label="* Floor Number"
+              placeholder="Enter Floor Number"
               component={CustomInput}
             />
           </div>
