@@ -1,12 +1,8 @@
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: $s-size;
   justify-content: center;
-
-  @include mobile {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
 }
 
 .product-list-header {
@@ -198,7 +194,7 @@
 }
 .product-view {
   margin: 0 5rem;
-
+  max-width: 95%;
   @include tablet {
     width: 100%;
     margin: 0;
@@ -218,20 +214,11 @@
   }
 }
 
-.product-image-wrapper .slick-slider {
+.product-image-wrapper {
   width: 45vw;
-  overflow-y: hidden;
   height: inherit;
-  flex-grow: 1;
   position: relative;
-  background: #f8f8f8;
   display: flex;
-  overflow-x: hidden;
-
-  @include mobile {
-    width: 100%;
-    margin: auto;
-  }
 
   input[type="color"] {
     position: absolute;
@@ -243,9 +230,16 @@
   }
   .slick-list {
     width: 100%;
+    height: 100% !important;
   }
 }
-
+@media (max-width: 800px) {
+  .product-image-wrapper {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 0.2rem;
+  }
+}
 .product-modal-image-collection {
   width: 12vw;
   height: inherit;
@@ -338,10 +332,9 @@
 
 .product-modal-image {
   width: 100%;
-  height: 100%;
-  flex-grow: 0;
-  flex-shrink: 0;
+  height: 99%;
   object-fit: cover;
+  user-select: none;
 }
 
 .product-modal-details {
@@ -573,7 +566,7 @@
   }
 }
 .slick-list {
-  height: 35rem;
+  // height: 35rem;
 }
 .slick-slide {
   display: flex !important;
@@ -581,14 +574,18 @@
   align-items: center;
 }
 .product-display {
-  max-height: 35rem;
+  // max-height: 50rem;
   position: relative;
   margin-inline: 1rem;
   max-width: 300px;
   transition-duration: 200ms;
   &:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.01);
+    -webkit-transform: scale(1.01);
+    -moz-transform: scale(1.01);
+    -ms-transform: scale(1.01);
+    -o-transform: scale(1.01);
   }
   .badge {
     position: absolute;
@@ -602,7 +599,7 @@
 
 .product-display-img {
   width: 100%;
-  height: 25rem;
+  height: 40rem;
   // aspect-ratio: 12/16;
   background: #f1f1f1;
   position: relative;
