@@ -20,6 +20,7 @@ import Dotdotdot from "react-dotdotdot";
 import { Helmet } from "react-helmet";
 import CustomDots from "@/components/product/CustomDotes";
 import InfoBox from "@/components/product/InfoBox";
+import QuantitySelector from "@/components/product/QuantitySelecter";
 
 const ViewProduct = () => {
   const slider = useRef();
@@ -33,6 +34,7 @@ const ViewProduct = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantitiy] = useState(1);
+  const [maxQuantity, setMaxQuantity] = useState(10);
   const isOverSized = () => {
     // Search in the name if there is nama has the word over
 
@@ -88,6 +90,10 @@ const ViewProduct = () => {
     setCurrentIndex(index);
   };
 
+  useEffect(() => {
+    setQuantitiy(1);
+    setMaxQuantity(product?.[`${selectedSize}Quantity`]);
+  }, [selectedSize]);
   return (
     <>
       <Helmet>
@@ -106,18 +112,12 @@ const ViewProduct = () => {
         {product && !isLoading && (
           <div className="product-view">
             <div className="product-modal">
-              {product.imageCollection.length !== 0 && (
-                <CustomDots
-                  currentSlide={currentIndex}
-                  onDotClick={setCurrentIndex} // Handle dot click
-                  imageCollection={product.imageCollection}
-                />
-              )}
               <div className="product-image-wrapper">
                 <SwipeableViews
                   index={currentIndex}
                   onChangeIndex={handleChangeIndex}
                   enableMouseEvents
+                  height={"90vh"}
                 >
                   {product.imageCollection.map((image, index) => (
                     <ImageLoader
@@ -128,11 +128,18 @@ const ViewProduct = () => {
                     />
                   ))}
                 </SwipeableViews>
+                {product.imageCollection.length !== 0 && (
+                  <CustomDots
+                    currentSlide={currentIndex}
+                    onDotClick={setCurrentIndex} // Handle dot click
+                    imageCollection={product.imageCollection}
+                  />
+                )}
               </div>
               <div className="product-modal-details">
                 <br />
                 <span className="text-subtle">{product.type}</span>
-                <h1 className="margin-top-0">{product.name}</h1>
+                <h2>{product.name}</h2>
                 <p style={{ fontWeight: "300 ", fontSize: "19px" }}>
                   {displayMoney(product.price)}
                 </p>
@@ -226,133 +233,173 @@ const ViewProduct = () => {
                   </div>
                 </div>
                 <br />
-
-                <div className="product-modal-action">
+                <br />
+                <div
+                  style={{
+                    color: "#343120",
+                    fontWeight: "700",
+                    fontSize: "1.2rem",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  Quantity
+                </div>
+                <QuantitySelector
+                  maxQuantity={maxQuantity}
+                  setQuantity={setQuantitiy}
+                  quantity={quantity}
+                />
+                <div
+                  className="product-modal-action"
+                  style={{ marginBlock: "5.6rem" }}
+                >
                   <button
-                    className={`button button-small ${
+                    className={`button ${
                       isItemOnBasket(product.id)
                         ? "button-border button-border-gray"
                         : ""
                     }`}
+                    style={{
+                      background: isItemOnBasket(product.id) && "#6f6f6f",
+                      border: "1.5px solid rgb(151, 81, 7)",
+                      color: "#fff",
+                      lineHeight: "1em",
+                      height: "auto",
+                      margin: "0",
+                      textDecoration: "none !important",
+                      cursor: "pointer",
+                      padding: "1.2em 25px",
+                      verticalAlign: "middle",
+                      textAlign: "center",
+                      borderRadius: "3px",
+                      transition:
+                        "background-color .1s,color .1s,border-color .1s,opacity .1s",
+                      display: "inline-block",
+                      fontWeight: "400",
+                      fontStyle: "normal",
+                      letterSpacing: ".08em",
+                      textTransform: "uppercase",
+                      padding: "15px 25px",
+                      fontSize: "14px;",
+                      width: "100%",
+                    }}
                     onClick={handleAddToBasket}
                     type="button"
                   >
                     {isItemOnBasket(product.id)
-                      ? "Remove From Basket"
-                      : "Add To Basket"}
+                      ? "Remove From Cart"
+                      : "Add To Cart"}
                   </button>
                 </div>
+                <InfoBox
+                  open={true}
+                  title={
+                    <>
+                      <svg
+                        class="icon icon--small icon--type-eye"
+                        stroke-width="1"
+                        aria-hidden="true"
+                        focusable="false"
+                        role="presentation"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={15}
+                        height={15}
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M8 10a2 2 0 100-4 2 2 0 000 4zm0 1a3 3 0 100-6 3 3 0 000 6z"
+                          fill-rule="evenodd"
+                        ></path>
+                        <path
+                          fill="currentColor"
+                          d="M15.79 8.62L15 8l.79-.62a1 1 0 010 1.24zM1 8l-.79.62.02.02a5.56 5.56 0 00.15.18 15.16 15.16 0 002.05 1.96C3.77 11.84 5.73 13 8 13c2.26 0 4.23-1.16 5.57-2.22a15.17 15.17 0 002.2-2.14l.01-.02L15 8l.79-.62-.02-.02a6.17 6.17 0 00-.6-.67c-.37-.4-.92-.94-1.6-1.47C12.23 4.16 10.27 3 8 3 5.73 3 3.77 4.16 2.43 5.22a15.16 15.16 0 00-2.2 2.14l-.01.02L1 8zm0 0l-.79.62a1 1 0 010-1.24L1 8zm0 0s3.13-4 7-4 7 4 7 4-3.13 4-7 4-7-4-7-4z"
+                          fill-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <h5>Desciption</h5>
+                    </>
+                  }
+                  description={product.description}
+                />
+                <InfoBox
+                  title={
+                    <>
+                      <svg
+                        class="icon icon--small icon--type-ruler"
+                        stroke-width="1"
+                        aria-hidden="true"
+                        focusable="false"
+                        role="presentation"
+                        viewBox="0 0 16 16"
+                        width={15}
+                        height={15}
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M14.93 4.11L12.1 1.28a1 1 0 00-1.41 0L6.8 5.17.78 11.18a1 1 0 000 1.42l2.82 2.82a1 1 0 001.42 0l9.9-9.9a1 1 0 000-1.4zm-10.6 10.6L1.48 11.9l1.41-1.41 1.06 1.06a.5.5 0 00.71-.71L3.61 9.77l1.42-1.42 1.05 1.06a.5.5 0 00.71-.7L5.73 7.65l1.42-1.42L8.2 7.3c.2.2.5.2.7 0s.2-.5 0-.7L7.85 5.53 9.27 4.1l1.06 1.06a.5.5 0 00.71-.7L9.98 3.4 11.39 2l2.83 2.83-9.9 9.9z"
+                        ></path>
+                      </svg>
+                      <h5>Fit</h5>
+                    </>
+                  }
+                  description={
+                    isOverSized
+                      ? "This item is designed to have a regular fit and should correspond accurately to standard sizing."
+                      : "This item is designed to be oversized for a regular fit."
+                  }
+                />
+                <InfoBox
+                  title={
+                    <>
+                      <svg
+                        class="icon icon--small icon--type-truck"
+                        stroke-width="1"
+                        aria-hidden="true"
+                        focusable="false"
+                        role="presentation"
+                        width={15}
+                        height={15}
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M15.64 6.92L9.5 5.12V4a.5.5 0 00-.5-.5H1a.5.5 0 00-.5.5v8.5c0 .28.22.5.5.5h1.27a2.1 2.1 0 004.06 0h3.94a2.1 2.1 0 004.06 0h1.17a.5.5 0 00.5-.5V7.4a.5.5 0 00-.36-.48zM4.3 13.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM6.33 12a2.1 2.1 0 00-4.06 0H1.5V4.5h7V12H6.33zm5.97 1.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM15 12h-.67a2.1 2.1 0 00-4.06 0H9.5V6.17l5.5 1.6V12z"
+                        ></path>
+                      </svg>
+                      <h5>Shipping</h5>
+                    </>
+                  }
+                  description={""}
+                />
+                <InfoBox
+                  title={
+                    <>
+                      <svg
+                        class="icon icon--small icon--type-box"
+                        stroke-width="1"
+                        aria-hidden="true"
+                        focusable="false"
+                        role="presentation"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width={15}
+                        height={15}
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M14.41 3.37L8.27 1.41a1 1 0 00-.61 0L1.52 3.37a1 1 0 00-.7.95v7.86c0 .41.25.78.63.93l6.14 2.46c.24.1.5.1.75 0l6.14-2.46a1 1 0 00.62-.93V4.32a1 1 0 00-.69-.95zM7.96 2.36l6.05 1.93-2.7.9L5.35 3.2l2.63-.84zm-.46 12.1l-5.68-2.28V5.3L7.5 7.2v7.26zM8 6.3L1.96 4.28l2.58-.82 5.99 2L8 6.3zm6.1 5.89l-5.6 2.24V7.19l5.6-1.87v6.87z"
+                        ></path>
+                      </svg>
+                      <h5>Shipping</h5>
+                    </>
+                  }
+                  description={""}
+                />
               </div>
             </div>
-            <InfoBox
-              title={
-                <>
-                  <svg
-                    class="icon icon--small icon--type-eye"
-                    stroke-width="1"
-                    aria-hidden="true"
-                    focusable="false"
-                    role="presentation"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={15}
-                    height={15}
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M8 10a2 2 0 100-4 2 2 0 000 4zm0 1a3 3 0 100-6 3 3 0 000 6z"
-                      fill-rule="evenodd"
-                    ></path>
-                    <path
-                      fill="currentColor"
-                      d="M15.79 8.62L15 8l.79-.62a1 1 0 010 1.24zM1 8l-.79.62.02.02a5.56 5.56 0 00.15.18 15.16 15.16 0 002.05 1.96C3.77 11.84 5.73 13 8 13c2.26 0 4.23-1.16 5.57-2.22a15.17 15.17 0 002.2-2.14l.01-.02L15 8l.79-.62-.02-.02a6.17 6.17 0 00-.6-.67c-.37-.4-.92-.94-1.6-1.47C12.23 4.16 10.27 3 8 3 5.73 3 3.77 4.16 2.43 5.22a15.16 15.16 0 00-2.2 2.14l-.01.02L1 8zm0 0l-.79.62a1 1 0 010-1.24L1 8zm0 0s3.13-4 7-4 7 4 7 4-3.13 4-7 4-7-4-7-4z"
-                      fill-rule="evenodd"
-                    ></path>
-                  </svg>
-                  <h5>Desciption</h5>
-                </>
-              }
-              description={product.description}
-            />
-            <InfoBox
-              title={
-                <>
-                  <svg
-                    class="icon icon--small icon--type-ruler"
-                    stroke-width="1"
-                    aria-hidden="true"
-                    focusable="false"
-                    role="presentation"
-                    viewBox="0 0 16 16"
-                    width={15}
-                    height={15}
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M14.93 4.11L12.1 1.28a1 1 0 00-1.41 0L6.8 5.17.78 11.18a1 1 0 000 1.42l2.82 2.82a1 1 0 001.42 0l9.9-9.9a1 1 0 000-1.4zm-10.6 10.6L1.48 11.9l1.41-1.41 1.06 1.06a.5.5 0 00.71-.71L3.61 9.77l1.42-1.42 1.05 1.06a.5.5 0 00.71-.7L5.73 7.65l1.42-1.42L8.2 7.3c.2.2.5.2.7 0s.2-.5 0-.7L7.85 5.53 9.27 4.1l1.06 1.06a.5.5 0 00.71-.7L9.98 3.4 11.39 2l2.83 2.83-9.9 9.9z"
-                    ></path>
-                  </svg>
-                  <h5>Fit</h5>
-                </>
-              }
-              description={
-                isOverSized
-                  ? "This item is designed to have a regular fit and should correspond accurately to standard sizing."
-                  : "This item is designed to be oversized for a regular fit."
-              }
-            />
-            <InfoBox
-              title={
-                <>
-                  <svg
-                    class="icon icon--small icon--type-truck"
-                    stroke-width="1"
-                    aria-hidden="true"
-                    focusable="false"
-                    role="presentation"
-                    width={15}
-                    height={15}
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M15.64 6.92L9.5 5.12V4a.5.5 0 00-.5-.5H1a.5.5 0 00-.5.5v8.5c0 .28.22.5.5.5h1.27a2.1 2.1 0 004.06 0h3.94a2.1 2.1 0 004.06 0h1.17a.5.5 0 00.5-.5V7.4a.5.5 0 00-.36-.48zM4.3 13.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM6.33 12a2.1 2.1 0 00-4.06 0H1.5V4.5h7V12H6.33zm5.97 1.6a1.1 1.1 0 110-2.2 1.1 1.1 0 010 2.2zM15 12h-.67a2.1 2.1 0 00-4.06 0H9.5V6.17l5.5 1.6V12z"
-                    ></path>
-                  </svg>
-                  <h5>Shipping</h5>
-                </>
-              }
-              description={""}
-            />
-            <InfoBox
-              title={
-                <>
-                  <svg
-                    class="icon icon--small icon--type-box"
-                    stroke-width="1"
-                    aria-hidden="true"
-                    focusable="false"
-                    role="presentation"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={15}
-                    height={15}
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M14.41 3.37L8.27 1.41a1 1 0 00-.61 0L1.52 3.37a1 1 0 00-.7.95v7.86c0 .41.25.78.63.93l6.14 2.46c.24.1.5.1.75 0l6.14-2.46a1 1 0 00.62-.93V4.32a1 1 0 00-.69-.95zM7.96 2.36l6.05 1.93-2.7.9L5.35 3.2l2.63-.84zm-.46 12.1l-5.68-2.28V5.3L7.5 7.2v7.26zM8 6.3L1.96 4.28l2.58-.82 5.99 2L8 6.3zm6.1 5.89l-5.6 2.24V7.19l5.6-1.87v6.87z"
-                    ></path>
-                  </svg>
-                  <h5>Shipping</h5>
-                </>
-              }
-              description={""}
-            />
+
             <div style={{ marginTop: "10rem" }}>
-              <div className="display-header">
-                <h1>Recommended</h1>
-                <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
-              </div>
               {errorFeatured && !isLoadingFeatured ? (
                 <MessageDisplay
                   message={error}
@@ -362,6 +409,7 @@ const ViewProduct = () => {
               ) : (
                 <ProductShowcaseGrid
                   products={recommendedProducts}
+                  title={"Recommended"}
                   skeletonCount={3}
                 />
               )}

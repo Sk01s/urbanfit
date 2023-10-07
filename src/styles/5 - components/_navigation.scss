@@ -58,13 +58,13 @@
     // margin-left: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.4rem;
     background-color: transparent;
     border: none;
     div {
       width: 2rem;
       height: 0.2rem;
-      background-color: $gray-10;
+      background-color: #626262;
     }
   }
 }

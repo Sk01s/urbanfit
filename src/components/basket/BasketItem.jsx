@@ -35,13 +35,13 @@ const BasketItem = ({ product }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "1rem",
               justifyContent: "space-between",
             }}
           >
             <Link
               to={`/product/${product.id}`}
               onClick={() => document.body.classList.remove("is-basket-open")}
+              style={{ maxWidth: "30vw" }}
             >
               <h4 className="basket-item-name">{product.name}</h4>
             </Link>

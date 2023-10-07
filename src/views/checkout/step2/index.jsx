@@ -153,6 +153,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     <ArrowRightOutlined />
                   </button>
                 </div>
+                <div>{error}</div>
               </Form>
             )}
           </Formik>

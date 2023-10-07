@@ -70,23 +70,16 @@ const Home = () => {
             <img src={bannerImg} alt="" />
           </div>
         </div>
-        <div className="category-container">
-          {typeOptions.map(({ value }, index) => (
-            <Link
-              to={"/category/" + value}
-              className="category-card"
-              key={index}
-            >
-              {value}
-            </Link>
-          ))}
-        </div>
 
-        <div className="display">
-          <div className="display-header">
-            <h1>Featured Products</h1>
-            <Link to={FEATURED_PRODUCTS}>See All</Link>
-          </div>
+        <div
+          className="display product-display-grid"
+          style={{
+            marginTop: "4rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
           {errorFeatured && !isLoadingFeatured ? (
             <MessageDisplay
               message={errorFeatured}
@@ -95,16 +88,21 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
+              title={"Featured Products"}
               products={featuredProducts}
               skeletonCount={6}
             />
           )}
         </div>
-        <div className="display">
-          <div className="display-header">
-            <h1>Recommended Products</h1>
-            <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
-          </div>
+        <div
+          className="display "
+          style={{
+            marginTop: "8rem",
+            display: "flex",
+            gap: "1rem",
+            flexDirection: "column",
+          }}
+        >
           {errorRecommended && !isLoadingRecommended ? (
             <MessageDisplay
               message={errorRecommended}
@@ -113,6 +111,7 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
+              title={"Recommended Products"}
               products={recommendedProducts}
               skeletonCount={6}
             />

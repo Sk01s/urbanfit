@@ -1,5 +1,6 @@
 export const HOME = "/";
 export const SHOP = "/shop";
+export const CATEGORIES = "/category";
 export const TOPS = "/category/tops";
 export const BOTTOMS = "/category/bottoms";
 export const HOODIES_SWEATS = "/category/hoodies-sweats";

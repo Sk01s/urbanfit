@@ -1,6 +1,6 @@
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: $s-size;
   justify-content: center;
 }
@@ -192,7 +192,7 @@
 .back-btn {
   margin: 15% 0 0 0;
 }
-@media (max-width: 728px) {
+@media (max-width: 800px) {
   .back-btn {
     margin: 0 0 0;
   }
@@ -201,15 +201,13 @@
   display: none;
 }
 .product-view {
-  margin: 0 5rem;
-  max-width: 95%;
-  @include tablet {
-    width: 100%;
-    margin: 0;
-  }
+  margin: 10rem 0rem;
+  max-width: 90%;
+  margin-inline: auto;
 }
-@media (max-width: 728px) {
+@media (max-width: 800px) {
   .product-view {
+    margin: 0;
     max-width: 100%;
   }
 }
@@ -218,14 +216,13 @@
   width: 100%;
   display: flex;
   background: #fff;
-  border: 1px solid #e1e1e1;
 
   @include tablet {
     flex-direction: column;
     margin: 0;
   }
 }
-@media (max-width: 728px) {
+@media (max-width: 800px) {
   .product-modal {
     border-left: transparent;
     border-right: transparent;
@@ -233,11 +230,9 @@
 }
 
 .product-image-wrapper {
-  width: 45vw;
   height: inherit;
   position: relative;
-  display: flex;
-
+  width: 40vw;
   input[type="color"] {
     position: absolute;
     top: 0;
@@ -245,10 +240,6 @@
     width: 100%;
     height: 100%;
     mix-blend-mode: hue;
-  }
-  .slick-list {
-    width: 100%;
-    height: 100% !important;
   }
 }
 @media (max-width: 800px) {
@@ -259,23 +250,20 @@
   }
 }
 .product-modal-image-collection {
-  width: 12vw;
   height: inherit;
   background: #fff;
   display: flex;
-  flex-direction: column;
-  padding: 0.5rem;
   overflow-y: scroll;
   position: relative;
   gap: 1rem;
-
+  width: 100%;
+  height: auto;
+  order: 2;
+  overflow-x: scroll;
+  overflow-y: unset;
+  margin-top: 2rem;
   @include tablet {
-    width: 100%;
-    height: auto;
-    order: 2;
-    overflow-x: scroll;
-    overflow-y: unset;
-    flex-direction: row;
+    padding-inline: 0.7rem;
   }
 }
 .product-sizes-container {
@@ -317,23 +305,16 @@
 
 .product-modal-image-collection-wrapper {
   width: 100%;
-  height: 100px;
-  border: 1px solid #e1e1e1;
   margin-bottom: 5px;
   position: relative;
-  border-radius: 1rem;
-  -webkit-border-radius: 1rem;
-  -moz-border-radius: 1rem;
-  -ms-border-radius: 1rem;
-  -o-border-radius: 1rem;
-
+  aspect-ratio: 9/16;
+  width: 5rem;
   &:hover {
     cursor: pointer;
     background: #fff;
   }
   @include tablet {
     order: 1;
-    width: 100px;
   }
 }
 
@@ -341,22 +322,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 1rem;
-  -webkit-border-radius: 1rem;
-  -moz-border-radius: 1rem;
-  -ms-border-radius: 1rem;
-  -o-border-radius: 1rem;
 }
 
 .product-modal-image {
   width: 100%;
-  height: 99%;
+  height: 100%;
   object-fit: cover;
   user-select: none;
 }
 
 .product-modal-details {
-  width: 25vw;
   padding: $l-size;
 
   @include tablet {
@@ -551,7 +526,7 @@
 
 // ---------------------------- FEATURED PRODUCTS ----------------------------
 .display {
-  margin: 5rem;
+  margin: 2rem;
   margin-top: 10rem;
 
   @include mobile {
@@ -561,11 +536,16 @@
 
 .display-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 2;
   h1 {
     font-size: 1.7rem;
-    width: 50%;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
   }
   a {
     text-decoration: underline;
@@ -579,7 +559,7 @@
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 30%));
-  @media (max-width: 728px) {
+  @media (max-width: 800px) {
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   }
 }
@@ -637,11 +617,19 @@
     margin: 0;
     font-weight: 400;
     font-size: 1.325rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 96%;
   }
 
   p {
     margin: 0;
     font-size: 1.125rem;
-    font-weight: 400;
+  }
+}
+@media (max-width: 320px) {
+  .product-display-details {
+    translate: 3%;
   }
 }

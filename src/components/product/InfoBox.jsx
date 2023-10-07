@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const InfoBox = ({ title, description }) => {
-  const [expanded, setExpanded] = useState(false);
+const InfoBox = ({ title, description, open }) => {
+  const [expanded, setExpanded] = useState(() => open);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
