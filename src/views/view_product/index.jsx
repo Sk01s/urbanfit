@@ -138,7 +138,7 @@ const ViewProduct = () => {
               </div>
               <div className="product-modal-details">
                 <br />
-                <span className="text-subtle">{product.type}</span>
+                <span className="text-subtle">{product.categories}</span>
                 <h2>{product.name}</h2>
                 <p style={{ fontWeight: "300 ", fontSize: "19px" }}>
                   {displayMoney(product.price)}

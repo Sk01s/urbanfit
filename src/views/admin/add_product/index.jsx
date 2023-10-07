@@ -35,7 +35,9 @@ const AddProduct = () => {
           onSubmit={onSubmit}
           product={{
             name: "",
-            type: "",
+            categories: "",
+            // type: { name: "", categories: "" },
+            sex: "",
             price: 0,
             xlQuantity: 0,
             lgQuantity: 0,

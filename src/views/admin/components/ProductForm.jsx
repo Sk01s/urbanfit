@@ -12,17 +12,21 @@ import { useFileHandler } from "@/hooks";
 import PropType from "prop-types";
 import React from "react";
 import * as Yup from "yup";
-import { typeOptions } from "@/constants/constants";
+import { categories, type } from "@/constants/constants";
 // Default type names that I used. You can use what you want
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()
     .required("Product name is required.")
     .max(60, "Product name must only be less than 60 characters."),
-  type: Yup.string().required("Type name is required."),
+  categories: Yup.string().required("Categories name is required."),
+  type: Yup.object().shape({
+    name: Yup.string().required("name is required"),
+    categories: Yup.string().required("categories is required"),
+  }),
+  sex: Yup.string().required(" Sex is required.  😉"),
   price: Yup.number()
     .positive("Price is invalid.")
-    .integer("Price should be an integer.")
     .required("Price is required."),
   description: Yup.string().required("Description is required."),
   xlQuantity: Yup.number()
@@ -51,7 +55,9 @@ const FormSchema = Yup.object().shape({
 const ProductForm = ({ product, onSubmit, isLoading }) => {
   const initFormikValues = {
     name: product?.name || "",
-    type: product?.type || "",
+    categories: product?.categories || "",
+    type: product?.type || { name: "", categories: "" },
+    sex: product?.sex || "",
     price: product?.price || 0,
     xlQuantity: product?.xlQuantity || 0,
     lgQuantity: product?.lgQuantity || 0,
@@ -72,7 +78,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
     });
 
   const onSubmitForm = (form) => {
-    if (imageFile.image.file || product.imageUrl) {
+    if (imageFile.image.file || product.imageUr) {
       onSubmit({
         ...form,
         totalQuantity:
@@ -112,33 +118,73 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                     name="name"
                     type="text"
                     label="* Product Name"
-                    placeholder="Gago"
+                    placeholder="fuck you omar"
                     style={{ textTransform: "capitalize" }}
                     component={CustomInput}
                   />
                 </div>
                 &nbsp;
+              </div>
+              <div className="d-flex">
                 <div className="product-form-field">
                   <CustomCreatableSelect
-                    defaultValue={{ label: values.type, value: values.type }}
-                    name="type"
-                    iid="type"
-                    options={typeOptions}
+                    defaultValue={{
+                      label: values.categories,
+                      value: values.categories,
+                    }}
+                    name="categories"
+                    iid="categories"
+                    options={categories}
                     disabled={isLoading}
-                    placeholder="Select/Create type"
-                    label="* type"
+                    placeholder="Select/Create Categories"
+                    label="* Categories"
                   />
                 </div>
               </div>
-              <div className="product-form-field">
-                <Field
-                  disabled={isLoading}
-                  name="description"
-                  id="description"
-                  rows={3}
-                  label="* Product Description"
-                  component={CustomTextarea}
-                />
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <CustomCreatableSelect
+                    defaultValue={{
+                      label: values.type.name,
+                      value: values.type,
+                    }}
+                    name="type"
+                    iid="type"
+                    options={type}
+                    disabled={isLoading}
+                    placeholder="Select/Create Type"
+                    label="* Type"
+                  />
+                </div>
+                <div className="product-form-field">
+                  <CustomCreatableSelect
+                    defaultValue={{
+                      label: values.sex,
+                      value: values.sex,
+                    }}
+                    name="sex"
+                    iid="sex"
+                    options={[
+                      { value: "Men", label: "Men" },
+                      { value: "Women", label: "Women" },
+                    ]}
+                    disabled={isLoading}
+                    placeholder="Select/Create Sex"
+                    label="* Sex"
+                  />
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <Field
+                    disabled={isLoading}
+                    name="description"
+                    id="description"
+                    rows={3}
+                    label="* Product Description"
+                    component={CustomTextarea}
+                  />
+                </div>
               </div>
               <div className="d-flex">
                 <div className="product-form-field">
@@ -320,7 +366,10 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                     className=""
                     id="recommended"
                     onChange={(e) =>
-                      setValues({ ...values, isRecommended: e.target.checked })
+                      setValues({
+                        ...values,
+                        isRecommended: e.target.checked,
+                      })
                     }
                     type="checkbox"
                   />
@@ -382,7 +431,9 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
 ProductForm.propTypes = {
   product: PropType.shape({
     name: PropType.string,
+    categories: PropType.string,
     type: PropType.string,
+    sex: PropType.string,
     price: PropType.number,
     xlQuantity: PropType.number,
     lgQuantity: PropType.number,

@@ -19,7 +19,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 import { AppliedFilters } from "@/components/product";
 import { ProductGrid, ProductList } from "@/components/product";
-import { typeOptions } from "@/constants/constants";
+import { categories } from "@/constants/constants";
 
 const Home = () => {
   useDocumentTitle("urbanfit | Home");
