@@ -326,14 +326,14 @@
 
 .product-modal-image {
   width: 100%;
-  height: 100%;
+  height: 99%;
   object-fit: cover;
   user-select: none;
 }
 
 .product-modal-details {
   padding: $l-size;
-
+  max-width: 65%;
   @include tablet {
     width: 100%;
     padding: $m-size;

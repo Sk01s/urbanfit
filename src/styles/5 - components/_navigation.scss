@@ -1,9 +1,11 @@
 .navigation {
   width: 100%;
-  height: 10rem;
   background: $background-color;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* Three columns with the middle one expanding */
+  align-items: center; /* Center vertically */
+  /* Set the container height to the viewport height for vertical centering */
+  padding: 0 20px;
   padding: 0.5rem 5rem;
   padding-top: 3rem;
   position: absolute;
@@ -12,7 +14,6 @@
   z-index: map-get($z-index, navigation);
   box-shadow: none;
   @include bezier-transition(transform, 0.3s, ease);
-
   @include tablet {
     padding: 0.5rem 2rem;
   }
@@ -23,15 +24,17 @@
   }
 
   .logo {
-    height: inherit;
-    margin-right: 2rem;
+    display: flex;
+    height: 100%;
+    justify-self: center;
+    justify-content: center;
+    align-content: center;
   }
 
   .logo img {
-    width: 15rem;
+    width: 18rem;
     height: inherit;
     object-fit: contain;
-    scale: 1.35;
   }
 
   .logo a {
@@ -88,8 +91,6 @@
 
 .navigation-menu-main {
   padding-left: 0;
-  margin-right: 2rem;
-  flex-grow: 1;
 
   li {
     display: inline-block;
@@ -107,30 +108,6 @@
     .navigation-action {
       display: inline-flex;
       margin-left: 5rem;
-    }
-  }
-  @media (max-width: 1310px) {
-    & {
-      right: -200%;
-      top: 5rem;
-      width: 70%;
-      position: absolute;
-      display: flex;
-      gap: 2rem;
-      padding: 2rem;
-      flex-direction: column;
-      background-color: $background-color;
-      transition: 200ms ease-in-out;
-      -webkit-transition: 200ms ease-in-out;
-      -moz-transition: 200ms ease-in-out;
-      -ms-transition: 200ms ease-in-out;
-      -o-transition: 200ms ease-in-out;
-    }
-    li {
-      text-align: center;
-    }
-    &.active {
-      right: 0;
     }
   }
 }

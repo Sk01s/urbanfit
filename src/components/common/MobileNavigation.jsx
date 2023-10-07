@@ -186,7 +186,6 @@ const Navigation = (props) => {
         </ul>
         <section>
           <div
-            className="product-display-grid"
             style={{ width: "99%", marginBottom: "8rem", gap: 0 }}
           >
             <ProductShowcaseGrid

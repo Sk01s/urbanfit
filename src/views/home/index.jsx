@@ -78,6 +78,7 @@ const Home = () => {
             display: "flex",
             flexDirection: "column",
             gap: "1rem",
+            marginInline: "auto",
           }}
         >
           {errorFeatured && !isLoadingFeatured ? (
@@ -101,6 +102,7 @@ const Home = () => {
             display: "flex",
             gap: "1rem",
             flexDirection: "column",
+            marginInline: "auto",
           }}
         >
           {errorRecommended && !isLoadingRecommended ? (
