@@ -14,7 +14,7 @@ import React from "react";
 import * as Yup from "yup";
 import { categories, type } from "@/constants/constants";
 import { useState } from "react";
-import ProductRelative from "@/components/product/productRelative";
+import {ProductRelative} from "@/components/product";
 // Default type names that I used. You can use what you want
 
 const FormSchema = Yup.object().shape({
