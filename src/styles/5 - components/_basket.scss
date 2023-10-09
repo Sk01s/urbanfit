@@ -110,10 +110,11 @@
 
 .basket-item-name {
   margin: $s-size 0;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .basket-item-remove {

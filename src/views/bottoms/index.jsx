@@ -20,7 +20,7 @@ const CategoryDisplay = () => {
     shallowEqual
   );
   const categoryProduct = store.products.items.filter(
-    (product) => product.type === "Bottoms"
+    (product) => product.categories === "Bottoms"
   );
   return (
     <main className="content" style={{ display: "block" }}>

@@ -39,13 +39,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
           )}
         </div>
         <div className="product-display-details">
-          <h4>
-            {product.name ? (
-              `${product.name} ${product.type}`
-            ) : (
-              <Skeleton width={80} />
-            )}
-          </h4>
+          <h4>{product.name ? `${product.name} ` : <Skeleton width={80} />}</h4>
 
           <p className="product-card-price ">
             {product.price ? (

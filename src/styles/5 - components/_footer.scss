@@ -37,7 +37,8 @@ footer {
 }
 
 .footer-col-1 {
-  flex-basis: 40%;
+  margin-top: 2rem;
+  flex-basis: 25%;
 
   @include mobile {
     flex-basis: none;
@@ -48,8 +49,8 @@ footer {
 
 .footer-col-2 {
   padding: 3rem 0;
-  text-align: center;
-  flex-basis: 20%;
+  flex-basis: 25%;
+  margin-left: 3rem;
 
   @include mobile {
     flex-basis: none;
@@ -61,8 +62,17 @@ footer {
 }
 
 .footer-col-3 {
-  flex-basis: 40%;
-  text-align: right;
+  flex-basis: 25%;
+
+  @include mobile {
+    flex-basis: none;
+    order: 2;
+    text-align: left;
+  }
+}
+
+.footer-col-4 {
+  flex-basis: 20%;
 
   @include mobile {
     flex-basis: none;
@@ -74,7 +84,8 @@ footer {
 @include mobile {
   .footer-col-1,
   .footer-col-2,
-  .footer-col-3 {
+  .footer-col-3,
+  .footer-col- {
     width: 100%;
     margin: $s-size 0;
   }

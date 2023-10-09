@@ -36,6 +36,7 @@ const EditProduct = ({ match }) => {
             isLoading={isLoading}
             onSubmit={onSubmitForm}
             product={product}
+            isEditing={true}
           />
         </Suspense>
       )}

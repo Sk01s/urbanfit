@@ -129,6 +129,7 @@ const Navigation = (props) => {
           height: "100vh",
           zIndex: "10",
           overflowY: "scroll",
+          overflowX: "hidden",
         }}
       >
         <div
@@ -184,16 +185,14 @@ const Navigation = (props) => {
           </li>
         </ul>
         <section>
-          <h3 style={{ textAlign: "left", margin: "0 0 0 1.4rem" }}>
-            Recommended
-          </h3>
           <div
-            className="product-display-grid"
-            style={{ scale: "0.8", translate: "-10% -5%" }}
+            style={{ width: "99%", marginBottom: "8rem", gap: 0 }}
           >
             <ProductShowcaseGrid
               products={recommendedProducts}
               skeletonCount={6}
+              title={"Recommended"}
+              titleStyle={{}}
             />
           </div>
         </section>

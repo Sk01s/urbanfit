@@ -19,13 +19,13 @@ const useFileHandler = (initState) => {
     const val = event.target.value;
     const img = event.target.files[0];
     const size = img.size / 1024 / 1024;
-    const regex = /(\.jpg|\.jpeg|\.png)$/i;
+    const regex = /(\.jpg|\.jpeg|\.png|\.webp)$/i;
 
     setFileLoading(true);
     if (!regex.exec(val)) {
       alert('File type must be JPEG or PNG', 'error');
       setFileLoading(false);
-    } else if (size > 0.5) {
+    } else if (size > 1) {
       alert('File size exceeded 500kb, consider optimizing your image', 'error');
       setFileLoading(false);
     } else if (type === 'multiple') {

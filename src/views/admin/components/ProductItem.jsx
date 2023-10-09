@@ -59,7 +59,7 @@ const ProductItem = ({ product }) => {
             </span>
           </div>
           <div className="grid-col">
-            <span>{product.type || <Skeleton width={50} />}</span>
+            <span>{product.categories || <Skeleton width={50} />}</span>
           </div>
           <div className="grid-col">
             <span>

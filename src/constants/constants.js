@@ -64,10 +64,24 @@ export const EDIT_USER = "EDIT_USER";
 export const LOADING = "LOADING";
 export const IS_AUTHENTICATING = "IS_AUTHENTICATING";
 export const SET_REQUEST_STATUS = "SET_REQUEST_STATUS";
-export const typeOptions = [
+export const categories = [
   { value: "Tops", label: "Tops" },
   { value: "Bottoms", label: "Bottoms" },
   { value: "Hoodies & Sweats", label: "Hoodies & Sweats" },
   { value: "Jackets", label: " Jackets" },
   { value: "Sets", label: "Sets" },
+];
+
+export const type = [
+  { value: { categories: "Tops", name: "T-shirt" }, label: "T-shirt" },
+  {
+    value: { categories: "Bottoms", name: "Sweat Pants" },
+    label: "Sweat Pants",
+  },
+  {
+    value: { categories: "Hoodies & Sweats", name: "Sweat Shrit" },
+    label: "Sweat Shirt",
+  },
+  { value: { categories: "Jackets", name: " Jacket" }, label: "Jacket" },
+  { value: { categories: "Sets", name: "set" }, label: "set" },
 ];

@@ -18,7 +18,7 @@ export const selectFilter = (products, filter) => {
         ? product.description.toLowerCase().includes(keyword)
         : true;
       const matchType = product.type
-        ? product.type.toLowerCase().includes(filter.type)
+        ? product.categories.toLowerCase().includes(filter.type)
         : true;
 
       return (matchKeyword || matchDescription) && matchType && isInRange;

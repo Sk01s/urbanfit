@@ -35,6 +35,7 @@ const AppRouter = () => {
             exact
             path={ROUTES.RECOMMENDED_PRODUCTS}
           />
+          <Route component={view.Categories} exact path={ROUTES.CATEGORIES} />
           <Route component={view.Tops} exact path={ROUTES.TOPS} />
           <Route component={view.Bottoms} exact path={ROUTES.BOTTOMS} />
           <Route component={view.Hoodies} exact path={ROUTES.HOODIES_SWEATS} />

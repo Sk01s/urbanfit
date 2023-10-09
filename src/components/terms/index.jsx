@@ -5,7 +5,7 @@ const Index = (props) => {
   const { setAccepeted } = props;
   return (
     <div className="terms">
-      <div>
+    <div>
         We use cookies to ensure you have the best browsing experience on our
         website. By using our site, you acknowledge that you have read and
         understood our

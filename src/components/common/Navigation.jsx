@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 import { FilterOutlined, ShoppingOutlined } from "@ant-design/icons";
-import * as ROUTE from "@/constants/routes";
-import logo from "@/images/logo-full.png";
-import React, { useEffect, useRef } from "react";
+import * as Route from "@/constants/routes";
+import logo from "@/images/logo-full.svg";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import UserAvatar from "@/views/account/components/UserAvatar";
@@ -11,13 +11,18 @@ import Badge from "./Badge";
 import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
+import { ProductShowcaseGrid } from "@/components/product";
+import { useRecommendedProducts } from "@/hooks";
 
 const Navigation = () => {
   const navigationMenu = useRef();
   const navbar = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { pathname } = useLocation();
+  const { recommendedProducts, fetchRecommendedProducts, isLoading, error } =
+    useRecommendedProducts();
   const toggleLinks = () => {
-    navigationMenu.current.classList.toggle("active");
+    setIsMenuOpen((prev) => !prev);
   };
 
   const store = useSelector((state) => ({
@@ -27,33 +32,18 @@ const Navigation = () => {
     isLoading: state.app.loading,
   }));
 
-  const scrollHandler = () => {
-    if (navbar.current && window.screen.width > 480) {
-      if (window.pageYOffset >= 70) {
-        navbar.current.classList.add("is-nav-scrolled");
-      } else {
-        navbar.current.classList.remove("is-nav-scrolled");
-      }
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", scrollHandler);
-    return () => window.removeEventListener("scroll", scrollHandler);
-  }, []);
-
   const onClickLink = (e) => {
     if (store.isAuthenticating) e.preventDefault();
   };
 
   // disable the basket toggle to these pathnames
   const basketDisabledpathnames = [
-    ROUTE.CHECKOUT_STEP_1,
-    ROUTE.CHECKOUT_STEP_2,
-    ROUTE.CHECKOUT_STEP_3,
-    ROUTE.SIGNIN,
-    ROUTE.SIGNUP,
-    ROUTE.FORGOT_PASSWORD,
+    Route.CHECKOUT_STEP_1,
+    Route.CHECKOUT_STEP_2,
+    Route.CHECKOUT_STEP_3,
+    Route.SIGNIN,
+    Route.SIGNUP,
+    Route.FORGOT_PASSWORD,
   ];
   if (
     store.user &&
@@ -73,13 +63,7 @@ const Navigation = () => {
     );
   }
   return (
-    <nav className="navigation" ref={navbar}>
-      <div className="logo">
-        <Link onClick={onClickLink} to="/">
-          <img alt="Logo" src={logo} />
-        </Link>
-      </div>
-      <SearchBar />
+    <nav className="navigation is-nav-scrolled" ref={navbar}>
       <ul
         className="navigation-menu-main"
         ref={navigationMenu}
@@ -89,81 +73,67 @@ const Navigation = () => {
           <NavLink
             activeClassName="navigation-menu-active"
             exact
-            to={ROUTE.HOME}
+            to={Route.HOME}
           >
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink activeClassName="navigation-menu-active" to={ROUTE.SHOP}>
+          <NavLink activeClassName="navigation-menu-active" to={Route.SHOP}>
             Shop
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            activeClassName="navigation-menu-active"
-            to={ROUTE.FEATURED_PRODUCTS}
-          >
-            Featured
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            activeClassName="navigation-menu-active"
-            to={ROUTE.RECOMMENDED_PRODUCTS}
-          >
-            Recommended
-          </NavLink>
-        </li>
       </ul>
+      <div className="logo">
+        <Link onClick={onClickLink} to="/">
+          <img alt="Logo" src={logo} />
+        </Link>
+      </div>
 
-      <BasketToggle>
-        {({ onClickToggle }) => (
-          <button
-            className="button-link navigation-menu-link basket-toggle"
-            disabled={basketDisabledpathnames.includes(pathname)}
-            onClick={onClickToggle}
-            type="button"
-          >
-            <Badge count={store.basketLength}>
-              <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
-            </Badge>
-          </button>
-        )}
-      </BasketToggle>
-      <ul className="navigation-menu">
-        {store.user ? (
-          <li className="navigation-menu-item">
-            <UserAvatar />
-          </li>
-        ) : (
-          <li className="navigation-action">
-            {pathname !== ROUTE.SIGNUP && (
-              <Link
-                className="button button-small"
-                onClick={onClickLink}
-                to={ROUTE.SIGNUP}
-              >
-                Sign Up
-              </Link>
-            )}
-            {pathname !== ROUTE.SIGNIN && (
-              <Link
-                className="button button-small button-muted margin-left-s"
-                onClick={onClickLink}
-                to={ROUTE.SIGNIN}
-              >
-                Sign In
-              </Link>
-            )}
-          </li>
-        )}
-      </ul>
-      <button className="menu-btn" onClick={toggleLinks}>
-        <div />
-        <div />
-        <div />
-      </button>
+      <div style={{ display: "flex" }}>
+        <ul className="navigation-menu">
+          {store.user ? (
+            <li className="navigation-menu-item">
+              <UserAvatar />
+            </li>
+          ) : (
+            <li className="navigation-action">
+              {pathname !== Route.SIGNUP && (
+                <Link
+                  className="button button-small"
+                  onClick={onClickLink}
+                  to={Route.SIGNUP}
+                >
+                  Sign Up
+                </Link>
+              )}
+              {pathname !== Route.SIGNIN && (
+                <Link
+                  className="button button-small button-muted margin-left-s"
+                  onClick={onClickLink}
+                  to={Route.SIGNIN}
+                >
+                  Sign In
+                </Link>
+              )}
+            </li>
+          )}
+        </ul>
+        <BasketToggle>
+          {({ onClickToggle }) => (
+            <button
+              className="button-link navigation-menu-link basket-toggle"
+              disabled={basketDisabledpathnames.includes(pathname)}
+              onClick={onClickToggle}
+              type="button"
+            >
+              <Badge count={store.basketLength}>
+                <ShoppingOutlined style={{ fontSize: "2.4rem" }} />
+              </Badge>
+            </button>
+          )}
+        </BasketToggle>
+      </div>
     </nav>
   );
 };

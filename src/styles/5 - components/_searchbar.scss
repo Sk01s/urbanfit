@@ -2,7 +2,7 @@
   width: 400px;
   display: flex;
   position: relative;
-  z-index: 100;
+  z-index: 9;
 }
 
 .search-input {
@@ -77,11 +77,12 @@
   top: 0;
   bottom: 0;
   margin: auto;
-  color: #7a7a7a;
+  color: #626262;
   font-size: 1.6rem;
 }
 
 .mobile-navigation-main > .searchbar-icon {
+  margin-left: 0.3rem;
   position: relative;
   left: 0;
   display: block;
