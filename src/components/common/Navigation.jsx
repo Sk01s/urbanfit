@@ -12,17 +12,22 @@ import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useRecommendedProducts } from "@/hooks";
+import { useEssentialProducts } from "@/hooks";
 
 const Navigation = () => {
   const navigationMenu = useRef();
   const navbar = useRef(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPopupVisible, setPopupVisible] = useState(false);
+
   const { pathname } = useLocation();
-  const { recommendedProducts, fetchRecommendedProducts, isLoading, error } =
-    useRecommendedProducts();
-  const toggleLinks = () => {
-    setIsMenuOpen((prev) => !prev);
+  const { essentialProducts, fetchEssentialProducts, isLoading, error } =
+    useEssentialProducts();
+  const handleMouseEnter = () => {
+    setPopupVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setPopupVisible(false);
   };
 
   const store = useSelector((state) => ({
@@ -63,12 +68,12 @@ const Navigation = () => {
     );
   }
   return (
-    <nav className="navigation is-nav-scrolled" ref={navbar}>
-      <ul
-        className="navigation-menu-main"
-        ref={navigationMenu}
-        onClick={toggleLinks}
-      >
+    <nav
+      className=" navigation is-nav-scrolled"
+      ref={navbar}
+      onMouseLeave={handleMouseLeave}
+    >
+      <ul className="navigation-menu-main" ref={navigationMenu}>
         <li>
           <NavLink
             activeClassName="navigation-menu-active"
@@ -78,10 +83,73 @@ const Navigation = () => {
             Home
           </NavLink>
         </li>
-        <li>
+        <li onMouseEnter={handleMouseEnter} style={{ isolation: "isolate" }}>
           <NavLink activeClassName="navigation-menu-active" to={Route.SHOP}>
             Shop
           </NavLink>
+          <div className={`popup-menu ${isPopupVisible && "open"}`}>
+            <ul>
+              <li>
+                <h4>Women</h4>
+              </li>
+              <li>
+                <Link to="">View all women</Link>
+              </li>
+              {/* <li>
+                <Link to="">New Arrivals</Link>
+              </li> */}
+              <li>
+                <Link to="">Essentials</Link>
+              </li>
+              <li>
+                <Link to="">T-shirts</Link>
+              </li>
+              <li>
+                <Link to="">Active wear</Link>
+              </li>
+              <li>
+                <Link to="">Leggings</Link>
+              </li>
+              <li>
+                <Link to="">Jackets</Link>
+              </li>
+              <li>
+                <Link to="">Hoodies & Sweatshrits</Link>
+              </li>
+              <li>
+                <Link to="">Sweatpants & Pants</Link>
+              </li>
+              <li>
+                <Link to="">Sets</Link>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                <Link to="/men">View all men</Link>
+              </li>
+              {/* <li>
+                <Link to="">New Arrivals</Link>
+              </li> */}
+              <li>
+                <Link to="">Essentials</Link>
+              </li>
+              <li>
+                <Link to="">T-shirts</Link>
+              </li>
+              <li>
+                <Link to="">Jackets</Link>
+              </li>
+              <li>
+                <Link to="">Hoodies & Sweatshrits</Link>
+              </li>
+              <li>
+                <Link to="">Sweatpants </Link>
+              </li>
+              <li>
+                <Link to="">Sets</Link>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
       <div className="logo">
@@ -89,7 +157,6 @@ const Navigation = () => {
           <img alt="Logo" src={logo} />
         </Link>
       </div>
-
       <div style={{ display: "flex" }}>
         <ul className="navigation-menu">
           {store.user ? (

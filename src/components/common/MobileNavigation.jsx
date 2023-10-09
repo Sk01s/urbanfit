@@ -15,7 +15,7 @@ import * as Route from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useRecommendedProducts } from "@/hooks";
+import { useEssentialProducts } from "@/hooks";
 const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
@@ -32,8 +32,8 @@ const Navigation = (props) => {
     isAuthenticating: state.app.isAuthenticating,
     isLoading: state.app.loading,
   }));
-  const { recommendedProducts, fetchRecommendedProducts, isLoading, error } =
-    useRecommendedProducts();
+  const { essentialProducts, EssentialProduct, isLoading, error } =
+    useEssentialProducts();
   const toggleNav = () => {
     setIsMenuOpen((prev) => !prev);
   };
@@ -185,11 +185,9 @@ const Navigation = (props) => {
           </li>
         </ul>
         <section>
-          <div
-            style={{ width: "99%", marginBottom: "8rem", gap: 0 }}
-          >
+          <div style={{ width: "99%", marginBottom: "8rem", gap: 0 }}>
             <ProductShowcaseGrid
-              products={recommendedProducts}
+              products={essentialProducts}
               skeletonCount={6}
               title={"Recommended"}
               titleStyle={{}}

@@ -9,7 +9,7 @@ const ProductForm = lazy(() => import("../components/ProductForm"));
 
 const AddProduct = () => {
   useScrollTop();
-  useDocumentTitle("Add New Product | urbanfit");
+  useDocumentTitle("Add New Product | Urbanfit");
   const isLoading = useSelector((state) => state.app.loading);
   const dispatch = useDispatch();
 

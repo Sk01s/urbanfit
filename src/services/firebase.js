@@ -269,17 +269,17 @@ class Firebase {
     });
   };
 
-  getFeaturedProducts = (itemsCount = 12) =>
+  getSeasonalProducts = (itemsCount = 12) =>
     this.db
       .collection("products")
-      .where("isFeatured", "==", true)
+      .where("isSeasonal", "==", true)
       .limit(itemsCount)
       .get();
 
-  getRecommendedProducts = (itemsCount = 12) =>
+  getEsssentialProducts = (itemsCount = 12) =>
     this.db
       .collection("products")
-      .where("isRecommended", "==", true)
+      .where("isEssential", "==", true)
       .limit(itemsCount)
       .get();
 

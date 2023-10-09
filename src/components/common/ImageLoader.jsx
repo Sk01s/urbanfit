@@ -2,7 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import PropType from "prop-types";
 import React, { useState } from "react";
 
-const ImageLoader = ({ src, alt, className, draggable = true }) => {
+const ImageLoader = ({ src, alt, className, draggable = true, style }) => {
   const loadedImages = {};
   const [loaded, setLoaded] = useState(loadedImages[src]);
 
@@ -10,7 +10,7 @@ const ImageLoader = ({ src, alt, className, draggable = true }) => {
     loadedImages[src] = true;
     setLoaded(true);
   };
-
+  console.log(style);
   return (
     <>
       {!loaded && (
@@ -22,6 +22,7 @@ const ImageLoader = ({ src, alt, className, draggable = true }) => {
             right: 0,
             left: 0,
             margin: "auto",
+            ...style,
           }}
         />
       )}

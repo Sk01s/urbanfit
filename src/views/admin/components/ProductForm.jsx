@@ -13,6 +13,8 @@ import PropType from "prop-types";
 import React from "react";
 import * as Yup from "yup";
 import { categories, type } from "@/constants/constants";
+import { useState } from "react";
+import ProductRelative from "@/components/product/productRelative";
 // Default type names that I used. You can use what you want
 
 const FormSchema = Yup.object().shape({
@@ -44,9 +46,12 @@ const FormSchema = Yup.object().shape({
   keywords: Yup.array()
     .of(Yup.string())
     .min(1, "Please enter at least 1 keyword for this product."),
+  relative: Yup.array()
+    .of(Yup.string())
+    .min(0, "Please enter at least 1 keyword for this product."),
 
-  isFeatured: Yup.boolean(),
-  isRecommended: Yup.boolean(),
+  isSeasonal: Yup.boolean(),
+  isEssential: Yup.boolean(),
   availableColors: Yup.array()
     .of(Yup.string().required())
     .min(1, "Please add a default color for this product."),
@@ -66,8 +71,9 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
     xsQuantity: product?.xsQuantity || 0,
     description: product?.description || "",
     keywords: product?.keywords || [],
-    isFeatured: product?.isFeatured || false,
-    isRecommended: product?.isRecommended || false,
+    relative: product?.relative || [],
+    isSeasonal: product?.isSeasonal || product.isFeatured || false,
+    isEssential: product?.isEssential || product.isRecommended || false,
     availableColors: product?.availableColors || [],
   };
 
@@ -344,38 +350,43 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
               </div>
               <br />
               <div className="d-flex">
+                <ProductRelative values={values} />
+              </div>
+              <br />
+
+              <div className="d-flex">
                 <div className="product-form-field">
                   <input
-                    checked={values.isFeatured}
+                    checked={values.isSeasonal}
                     className=""
-                    id="featured"
+                    id="Seasonal"
                     onChange={(e) =>
-                      setValues({ ...values, isFeatured: e.target.checked })
+                      setValues({ ...values, isSeasonal: e.target.checked })
                     }
                     type="checkbox"
                   />
-                  <label htmlFor="featured">
+                  <label htmlFor="Seasonal">
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Featured &nbsp;
+                      &nbsp; Add to Seasonal &nbsp;
                     </h5>
                   </label>
                 </div>
                 <div className="product-form-field">
                   <input
-                    checked={values.isRecommended}
+                    checked={values.isEssential}
                     className=""
-                    id="recommended"
+                    id="essentails"
                     onChange={(e) =>
                       setValues({
                         ...values,
-                        isRecommended: e.target.checked,
+                        isEssential: e.target.checked,
                       })
                     }
                     type="checkbox"
                   />
-                  <label htmlFor="recommended">
+                  <label htmlFor="essentails">
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Recommended &nbsp;
+                      &nbsp; Add to Essential &nbsp;
                     </h5>
                   </label>
                 </div>
@@ -441,11 +452,12 @@ ProductForm.propTypes = {
     xsQuantity: PropType.number,
     description: PropType.string,
     keywords: PropType.arrayOf(PropType.string),
+    relative: PropType.arrayOf(PropType.string),
     imageCollection: PropType.arrayOf(PropType.object),
     image: PropType.string,
     imageUrl: PropType.string,
-    isFeatured: PropType.bool,
-    isRecommended: PropType.bool,
+    isSeasonal: PropType.bool,
+    isEssential: PropType.bool,
     availableColors: PropType.arrayOf(PropType.string),
   }).isRequired,
   onSubmit: PropType.func.isRequired,

@@ -142,3 +142,45 @@
   font-weight: bold;
   opacity: 1 !important;
 }
+/* Add this CSS to your stylesheet or a separate CSS file */
+.popup-menu {
+  position: absolute;
+  z-index: 1000;
+  top: 5.9rem;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+  overflow-y: auto;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+  visibility: hidden;
+  transition: opacity 175ms ease-in, visibility 175ms;
+  text-align: start;
+  -webkit-transition: opacity 175ms ease-in, visibility 175ms;
+  -moz-transition: opacity 175ms ease-in, visibility 175ms;
+  -ms-transition: opacity 175ms ease-in, visibility 175ms;
+  -o-transition: opacity 175ms ease-in, visibility 175ms;
+  background-color: white;
+  padding: 2rem;
+}
+.popup-menu.open {
+  visibility: visible;
+}
+.popup-menu:hover {
+  visibility: visible;
+}
+
+/* Style the sublinks */
+.popup-menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.popup-menu ul li {
+  margin: 5px 0;
+}
+
+.popup-menu ul li a {
+  text-decoration: none;
+  color: #333;
+}

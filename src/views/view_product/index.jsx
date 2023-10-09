@@ -7,7 +7,7 @@ import {
   useBasket,
   useDocumentTitle,
   useProduct,
-  useRecommendedProducts,
+  useEssentialProducts,
   useScrollTop,
 } from "@/hooks";
 import React, { useEffect, useRef, useState } from "react";
@@ -49,11 +49,11 @@ const ViewProduct = () => {
   };
 
   const {
-    recommendedProducts,
-    fetchRecommendedProducts,
-    isLoading: isLoadingFeatured,
-    error: errorFeatured,
-  } = useRecommendedProducts(6);
+    essentialProducts,
+    fetchEssentialProducts,
+    isLoading: isLoadingSeasonal,
+    error: errorSeasonal,
+  } = useEssentialProducts(6);
   const colorOverlay = useRef(null);
 
   useEffect(() => {
@@ -400,15 +400,15 @@ const ViewProduct = () => {
             </div>
 
             <div style={{ marginTop: "10rem" }}>
-              {errorFeatured && !isLoadingFeatured ? (
+              {errorSeasonal && !isLoadingSeasonal ? (
                 <MessageDisplay
                   message={error}
-                  action={fetchRecommendedProducts}
+                  action={fetchEssentialProducts}
                   buttonLabel="Try Again"
                 />
               ) : (
                 <ProductShowcaseGrid
-                  products={recommendedProducts}
+                  products={essentialProducts}
                   title={"Recommended"}
                   skeletonCount={3}
                 />

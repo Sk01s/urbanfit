@@ -7,7 +7,7 @@ import { selectFilter } from "@/selectors/selector";
 import bannerImg from "@/images/banner-guy.png";
 
 const CategoryDisplay = () => {
-  useDocumentTitle("Hoodies & Sweats | urbanfit");
+  useDocumentTitle("Hoodies & Sweats | Urbanfit");
   useScrollTop();
 
   const store = useSelector(

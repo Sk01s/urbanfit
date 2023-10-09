@@ -13,7 +13,7 @@ import { displayDate } from "@/helpers/utils";
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
 const EditProduct = () => {
-  useDocumentTitle("Edit Product | urbanfit");
+  useDocumentTitle("Edit Product | Urbanfit");
   useScrollTop();
 
   const [orderDetails, setOrderDetails] = useState({

@@ -30,8 +30,9 @@ const AppRouter = () => {
             exact
             path={ROUTES.FEATURED_PRODUCTS}
           />
+          <Route component={view.FAQS} exact path={ROUTES.FAQS} />
           <Route
-            component={view.RecommendedProducts}
+            component={view.EssentialProducts}
             exact
             path={ROUTES.RECOMMENDED_PRODUCTS}
           />

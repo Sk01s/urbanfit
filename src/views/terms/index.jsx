@@ -7,7 +7,7 @@ const index = () => {
         marginTop: "5rem",
       }}
     >
-      Terms and Conditions Welcome to urbanfit, an ecommerce website that sells
+      Terms and Conditions Welcome to Urbanfit, an ecommerce website that sells
       clothing and accessories.
       <br /> By accessing or using our website,
       <br /> you agree to be bound by the following terms and conditions:
@@ -34,15 +34,15 @@ const index = () => {
       Governing Law and Jurisdiction: This section outlines the governing law
       and jurisdiction for this agreement. <br /> Entire Agreement: This section
       states that this agreement constitutes the entire agreement between you
-      and urbanfit. <br /> Changes to this Agreement: This section outlines our
+      and Urbanfit. <br /> Changes to this Agreement: This section outlines our
       right to modify this agreement at any time. <br /> Contact Information:
       This section provides our contact information for any questions or
       concerns regarding this agreement. <br /> Every Edge Cases We have taken
       every possible measure to ensure that our terms and conditions are
       comprehensive and cover every edge case scenario. <br /> However, if you
       have any questions or concerns regarding these terms and conditions,
-      please do not hesitate to contact us at contact@urbanfit.com. <br /> Thank
-      you for choosing urbanfit!
+      please do not hesitate to contact us at contact@Urbanfit.com. <br /> Thank
+      you for choosing Urbanfit!
     </p>
   );
 };

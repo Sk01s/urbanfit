@@ -16,7 +16,7 @@ import withCheckout from "../hoc/withCheckout";
 import ShippingForm from "./ShippingForm";
 import ShippingTotal from "./ShippingTotal";
 import firebase from "@/services/firebase";
-
+import { displayActionMessage } from "@/helpers/utils";
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
     .required("Full name is required.")
@@ -52,7 +52,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
     };
   }, []);
 
-  useDocumentTitle("Check Out Step 2 | urbanfit");
+  useDocumentTitle("Check Out Step 2 | Urbanfit");
   useScrollTop();
   const [otpModel, setOtpModel] = useState(false);
   const [confroming, setConfroming] = useState(false);
@@ -146,6 +146,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                         .catch((error) => {
                           setOtpModel(false);
                           setError(error);
+                          displayActionMessage(error);
                         });
                     }}
                   >
@@ -153,7 +154,6 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     <ArrowRightOutlined />
                   </button>
                 </div>
-                <div>{error}</div>
               </Form>
             )}
           </Formik>

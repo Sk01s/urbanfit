@@ -5,7 +5,7 @@ const useDocumentTitle = (title) => {
     if (title) {
       document.title = title;
     } else {
-      document.title = "urbanfit - eCommerce React App";
+      document.title = "Urbanfit - Clothing Brand";
     }
   }, [title]);
 };

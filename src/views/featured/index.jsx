@@ -1,16 +1,16 @@
 import { MessageDisplay } from "@/components/common";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useDocumentTitle, useFeaturedProducts, useScrollTop } from "@/hooks";
+import { useDocumentTitle, useSeasonalProducts, useScrollTop } from "@/hooks";
 import bannerImg from "@/images/banner-guy.png";
 import { ProductGrid } from "@/components/product";
 import React from "react";
 
 const FeaturedProducts = () => {
-  useDocumentTitle("Featured Products | urbanfit");
+  useDocumentTitle("Featured Products | Urbanfit");
   useScrollTop();
 
-  const { featuredProducts, fetchFeaturedProducts, isLoading, error } =
-    useFeaturedProducts();
+  const { seasonalProducts, fetchSeasonalProducts, isLoading, error } =
+    useSeasonalProducts();
 
   return (
     <main className="content">
@@ -27,11 +27,11 @@ const FeaturedProducts = () => {
           {error && !isLoading ? (
             <MessageDisplay
               message={error}
-              action={fetchFeaturedProducts}
+              action={fetchSeasonalProducts}
               buttonLabel="Try Again"
             />
           ) : (
-            <ProductGrid products={featuredProducts} skeletonCount={6} />
+            <ProductGrid products={seasonalProducts} skeletonCount={6} />
           )}
         </div>
       </div>

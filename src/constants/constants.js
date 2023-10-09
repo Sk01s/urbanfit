@@ -67,8 +67,7 @@ export const SET_REQUEST_STATUS = "SET_REQUEST_STATUS";
 export const categories = [
   { value: "Tops", label: "Tops" },
   { value: "Bottoms", label: "Bottoms" },
-  { value: "Hoodies & Sweats", label: "Hoodies & Sweats" },
-  { value: "Jackets", label: " Jackets" },
+  { value: "Active", label: "Active" },
   { value: "Sets", label: "Sets" },
 ];
 
@@ -79,9 +78,19 @@ export const type = [
     label: "Sweat Pants",
   },
   {
-    value: { categories: "Hoodies & Sweats", name: "Sweat Shrit" },
-    label: "Sweat Shirt",
+    value: { categories: "Active", name: "Active wear" },
+    label: "Active wear",
   },
-  { value: { categories: "Jackets", name: " Jacket" }, label: "Jacket" },
-  { value: { categories: "Sets", name: "set" }, label: "set" },
+  { value: { categories: "Active", name: " Legging" }, label: "Legging" },
+  { value: { categories: "Tops", name: " Jacket" }, label: "Jacket" },
+  {
+    value: { categories: "Tops", name: " Hoodies&Sweatshirts" },
+    label: "Hoodies&Sweatshirts",
+  },
+  {
+    value: { categories: "Tops", name: "Sweatpants&Pants" },
+    label: "Sweatpants&Pants",
+  },
+
+  { value: { categories: "Sets", name: "Sets" }, label: "Sets" },
 ];

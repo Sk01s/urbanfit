@@ -22,7 +22,7 @@ const Orders = () => {
     };
     getOrders();
   }, []);
-  useDocumentTitle(" Orders | urbanfit");
+  useDocumentTitle(" Orders | Urbanfit");
   return (
     <Boundary>
       <div className="product-admin-header">

@@ -11,8 +11,8 @@ import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
 
 const OrderSummary = ({ basket, subtotal }) => {
-  console.log(basket)
-  useDocumentTitle("Check Out Step 1 | urbanfit");
+  console.log(basket);
+  useDocumentTitle("Check Out Step 1 | Urbanfit");
   useScrollTop();
   const dispatch = useDispatch();
   const history = useHistory();

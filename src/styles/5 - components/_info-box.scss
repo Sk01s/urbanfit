@@ -71,13 +71,13 @@
   -o-transform: translateY(0);
 }
 
-.info-content.closed {
-  transform: translateY(-1000%);
-  -webkit-transform: translateY(-1000%);
-  -moz-transform: translateY(-1000%);
-  -ms-transform: translateY(-1000%);
-  -o-transform: translateY(-1000%);
-}
+// .info-content.closed {
+//   transform: translateY(-1000%);
+//   -webkit-transform: translateY(-1000%);
+//   -moz-transform: translateY(-1000%);
+//   -ms-transform: translateY(-1000%);
+//   -o-transform: translateY(-1000%);
+// }
 
 .expanded .info-content {
   max-height: 300px; /* Adjust the height as needed */

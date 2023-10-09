@@ -28,3 +28,4 @@ export const CHECKOUT_STEP_3 = "/checkout/step3";
 export const VIEW_PRODUCT = "/product/:id";
 export const TERMS = "/terms-conditions";
 export const ORDER_COMPLETED = "/order-completed";
+export const FAQS = "/faqs";

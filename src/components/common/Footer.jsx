@@ -132,37 +132,33 @@ const Footer = () => {
                   id="menu-item-40814"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-40814"
                 >
-                  <a href="https://shopwithabc.com/faqs/#order-payment">
-                    Orders Payment
-                  </a>
+                  <Link to="/faqs/#order-payment">Orders Payment</Link>
                 </li>
                 <li
                   id="menu-item-40815"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-40815"
                 >
-                  <a href="https://shopwithabc.com/faqs/#order-delivery">
-                    Shipping & Delivery
-                  </a>
+                  <Link to="/faqs/#order-delivery">Shipping & Delivery</Link>
                 </li>
                 <li
                   id="menu-item-40816"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-40816"
                 >
-                  <a href="https://shopwithabc.com/faqs/#refund-policy">
+                  <Link to="/faqs/#refund-policy">
                     Returns &amp; Refund Policy
-                  </a>
+                  </Link>
                 </li>
                 <li
                   id="menu-item-7139"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7139"
                 >
-                  <a href="https://shopwithabc.com/contact-us/">Contact Us</a>
+                  <Link to="/contact-us/">Contact Us</Link>
                 </li>
                 <li
                   id="menu-item-40817"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-40817"
                 >
-                  <a href="https://shopwithabc.com/faqs/">FAQs</a>
+                  <Link to="/faqs/">FAQs</Link>
                 </li>
               </ul>
             </div>

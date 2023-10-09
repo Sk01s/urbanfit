@@ -41,7 +41,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     address: state.checkout.shipping,
     date: new Date(),
     uid: firebase.getCurrentUser(),
-    id: crypto.randomUUID()
+    id: crypto.randomUUID(),
   }));
   useEffect(() => {
     state = {
@@ -51,7 +51,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     };
     console.log(state);
   }, [paymentType, firebase.auth]);
-  useDocumentTitle("Check Out Final Step | urbanfit");
+  useDocumentTitle("Check Out Final Step | Urbanfit");
   useScrollTop();
 
   const initFormikValues = {

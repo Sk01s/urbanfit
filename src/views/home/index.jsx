@@ -8,9 +8,10 @@ import {
 } from "@/constants/routes";
 import {
   useDocumentTitle,
-  useFeaturedProducts,
-  useRecommendedProducts,
+  useSeasonalProducts,
+  useEssentialProducts,
   useScrollTop,
+  useSeason,
 } from "@/hooks";
 import bannerImg from "@/images/banner-girl.png";
 import React from "react";
@@ -22,7 +23,7 @@ import { ProductGrid, ProductList } from "@/components/product";
 import { categories } from "@/constants/constants";
 
 const Home = () => {
-  useDocumentTitle("urbanfit | Home");
+  useDocumentTitle("Urbanfit | Home");
   useScrollTop();
   const store = useSelector(
     (state) => ({
@@ -33,19 +34,20 @@ const Home = () => {
     }),
     shallowEqual
   );
+  const season = useSeason();
 
   const {
-    featuredProducts,
-    fetchFeaturedProducts,
-    isLoading: isLoadingFeatured,
-    error: errorFeatured,
-  } = useFeaturedProducts(6);
+    seasonalProducts,
+    fetchSeasonalProducts,
+    isLoading: isLoadingSeasonal,
+    error: errorSeasonal,
+  } = useSeasonalProducts(6);
   const {
-    recommendedProducts,
-    fetchRecommendedProducts,
-    isLoading: isLoadingRecommended,
-    error: errorRecommended,
-  } = useRecommendedProducts(6);
+    essentialProducts,
+    fetchEssentialProducts,
+    isLoading: isLoadingEssential,
+    error: errorEssentail,
+  } = useEssentialProducts(6);
 
   return (
     <main className="content">
@@ -81,16 +83,16 @@ const Home = () => {
             marginInline: "auto",
           }}
         >
-          {errorFeatured && !isLoadingFeatured ? (
+          {errorSeasonal && !isLoadingSeasonal ? (
             <MessageDisplay
-              message={errorFeatured}
-              action={fetchFeaturedProducts}
+              message={errorSeasonal}
+              action={fetchSeasonalProducts}
               buttonLabel="Try Again"
             />
           ) : (
             <ProductShowcaseGrid
-              title={"Featured Products"}
-              products={featuredProducts}
+              title={season + " collection"}
+              products={seasonalProducts}
               skeletonCount={6}
             />
           )}
@@ -105,16 +107,16 @@ const Home = () => {
             marginInline: "auto",
           }}
         >
-          {errorRecommended && !isLoadingRecommended ? (
+          {errorEssentail && !isLoadingEssential ? (
             <MessageDisplay
-              message={errorRecommended}
-              action={fetchRecommendedProducts}
+              message={errorEssentail}
+              action={fetchEssentialProducts}
               buttonLabel="Try Again"
             />
           ) : (
             <ProductShowcaseGrid
-              title={"Recommended Products"}
-              products={recommendedProducts}
+              title={"Essential Products"}
+              products={essentialProducts}
               skeletonCount={6}
             />
           )}
