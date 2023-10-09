@@ -13,8 +13,10 @@
 
 .category-container {
   margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  // display: grid;
+  // grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  // justify-content: center;
+  // align-items: center;
   gap: 3rem;
   .category-card {
     display: flex;

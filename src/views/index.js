@@ -28,3 +28,7 @@ export { default as Hoodies } from "./hoodies_sweats/index";
 export { default as Jackets } from "./jackects/index";
 export { default as Sets } from "./sets/index";
 export { default as FAQS } from "./faqs/index";
+export { default as Men } from "./men/index";
+export { default as SexCategory } from "./men/Category";
+export { default as TypeCategory } from "./men/type";
+export { default as Women } from "./women/index";

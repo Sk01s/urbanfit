@@ -151,6 +151,8 @@
   width: 100%;
   overflow: auto;
   overflow-y: auto;
+  display: flex;
+  gap: 4rem;
   border-top: 1px solid #e9ecef;
   border-bottom: 1px solid #e9ecef;
   visibility: hidden;
@@ -162,11 +164,27 @@
   -o-transition: opacity 175ms ease-in, visibility 175ms;
   background-color: white;
   padding: 2rem;
+  h4 {
+    margin-top: 0;
+    letter-spacing: 0.019em;
+    line-height: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $black;
+    font-variation-settings: "opsz" 8;
+    font-style: normal;
+  }
+  .type-link {
+    padding: 0;
+    color: $gray-10;
+    font-weight: 400;
+  }
+  .type-link:hover {
+    color: #333;
+    background-color: #fff;
+  }
 }
 .popup-menu.open {
-  visibility: visible;
-}
-.popup-menu:hover {
   visibility: visible;
 }
 

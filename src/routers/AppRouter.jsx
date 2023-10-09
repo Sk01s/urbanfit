@@ -28,13 +28,13 @@ const AppRouter = () => {
           <Route
             component={view.FeaturedProducts}
             exact
-            path={ROUTES.FEATURED_PRODUCTS}
+            path={ROUTES.SEASONAL_PRODUCTS}
           />
           <Route component={view.FAQS} exact path={ROUTES.FAQS} />
           <Route
             component={view.EssentialProducts}
             exact
-            path={ROUTES.RECOMMENDED_PRODUCTS}
+            path={ROUTES.ESSENTIAL_PRODUCTS}
           />
           <Route component={view.Categories} exact path={ROUTES.CATEGORIES} />
           <Route component={view.Tops} exact path={ROUTES.TOPS} />
@@ -42,6 +42,18 @@ const AppRouter = () => {
           <Route component={view.Hoodies} exact path={ROUTES.HOODIES_SWEATS} />
           <Route component={view.Jackets} exact path={ROUTES.JACKETS} />
           <Route component={view.Sets} exact path={ROUTES.SETS} />
+          <Route component={view.Men} exact path={ROUTES.MEN} />
+          <Route component={view.Women} exact path={ROUTES.WOMEN} />
+          <Route
+            component={view.SexCategory}
+            exact
+            path={ROUTES.SEX_CATEGORY}
+          />
+          <Route
+            component={view.TypeCategory}
+            exact
+            path={ROUTES.TYPE_CATEGORY}
+          />
           <PublicRoute component={view.SignUp} path={ROUTES.SIGNUP} />
 
           <PublicRoute component={view.SignIn} exact path={ROUTES.SIGNIN} />

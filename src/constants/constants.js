@@ -68,29 +68,22 @@ export const categories = [
   { value: "Tops", label: "Tops" },
   { value: "Bottoms", label: "Bottoms" },
   { value: "Active", label: "Active" },
-  { value: "Sets", label: "Sets" },
 ];
 
 export const type = [
   { value: { categories: "Tops", name: "T-shirt" }, label: "T-shirt" },
   {
-    value: { categories: "Bottoms", name: "Sweat Pants" },
-    label: "Sweat Pants",
+    value: { categories: "Bottoms", name: "Sweatpants & Pants" },
+    label: "Sweatpants & Pants",
   },
   {
     value: { categories: "Active", name: "Active wear" },
     label: "Active wear",
   },
-  { value: { categories: "Active", name: " Legging" }, label: "Legging" },
-  { value: { categories: "Tops", name: " Jacket" }, label: "Jacket" },
+  { value: { categories: "Active", name: "Legging" }, label: "Legging" },
+  { value: { categories: "Tops", name: "Jacket" }, label: "Jacket" },
   {
-    value: { categories: "Tops", name: " Hoodies&Sweatshirts" },
-    label: "Hoodies&Sweatshirts",
+    value: { categories: "Tops", name: "Hoodies & Sweatshirts" },
+    label: "Hoodies & Sweatshirts",
   },
-  {
-    value: { categories: "Tops", name: "Sweatpants&Pants" },
-    label: "Sweatpants&Pants",
-  },
-
-  { value: { categories: "Sets", name: "Sets" }, label: "Sets" },
 ];

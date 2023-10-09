@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import { ColorChooser, ImageLoader, MessageDisplay } from "@/components/common";
 import { ProductShowcaseGrid } from "@/components/product";
-import { RECOMMENDED_PRODUCTS, SHOP } from "@/constants/routes";
+import { ESSENTIAL_PRODUCTS, SHOP } from "@/constants/routes";
 import { displayMoney } from "@/helpers/utils";
 import {
   useBasket,

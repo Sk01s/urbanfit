@@ -5,9 +5,15 @@ export const TOPS = "/category/tops";
 export const BOTTOMS = "/category/bottoms";
 export const HOODIES_SWEATS = "/category/hoodies-sweats";
 export const JACKETS = "/category/jackets";
+export const MEN = "/men";
+export const SEX_CATEGORY = "/store/:sex/:category";
+export const TYPE_CATEGORY = "/type/:sex/:type";
+export const WOMEN = "/women";
+export const WOMEN_CATEGORIES = "/women/:category";
+
 export const SETS = "/category/sets";
-export const FEATURED_PRODUCTS = "/featured";
-export const RECOMMENDED_PRODUCTS = "/recommended";
+export const SEASONAL_PRODUCTS = "/seasonal";
+export const ESSENTIAL_PRODUCTS = "/essential";
 export const ACCOUNT = "/account";
 export const ACCOUNT_EDIT = "/account/edit";
 export const ADMIN_DASHBOARD = "/admin/dashboard";
