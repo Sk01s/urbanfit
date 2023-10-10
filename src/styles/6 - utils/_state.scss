@@ -1,4 +1,4 @@
-// 
+//
 // STATE ---------
 //
 
@@ -24,7 +24,7 @@
 }
 
 .is-img-loaded {
-  animation: fadeIn .3s ease;
+  animation: fadeIn 0.3s ease;
   opacity: 1;
 }
 
@@ -35,11 +35,12 @@
 
 .is-nav-scrolled {
   position: fixed;
-  animation: slide-down .3s ease 1;
+  animation: slide-down 0.3s ease 1;
   animation-fill-mode: forwards;
   top: 0;
   height: 6rem;
-  padding-top: .5rem;
+  margin: 0;
+  padding: 0;
   background: $nav-bg-scrolled;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, .02);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.02);
 }

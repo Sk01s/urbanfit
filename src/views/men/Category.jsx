@@ -11,6 +11,7 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 
+
 const Category = (props) => {
   const { category, sex } = useParams();
   useScrollTop();
@@ -29,24 +30,24 @@ const Category = (props) => {
       product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
       product.categories.toLocaleLowerCase() === category.toLocaleLowerCase()
   );
+  const {
+    seasonalProducts,
+    fetchSeasonalProducts,
+    isLoading: isLoadingSeasonal,
+    error: errorSeasonal,
+  } = useSeasonalProducts(6);
+  const {
+    essentialProducts,
+    fetchEssentialProducts,
+    isLoading: isLoadingEssential,
+    error: errorEssentail,
+  } = useEssentialProducts(6);
   if (category === "seasonal-collection") {
-    const {
-      seasonalProducts,
-      fetchSeasonalProducts,
-      isLoading: isLoadingSeasonal,
-      error: errorSeasonal,
-    } = useSeasonalProducts(6);
     filteredProducts = seasonalProducts.filter(
       (product) => product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
     );
   }
   if (category === "essential") {
-    const {
-      essentialProducts,
-      fetchEssentialProducts,
-      isLoading: isLoadingEssential,
-      error: errorEssentail,
-    } = useEssentialProducts(6);
     filteredProducts = essentialProducts.filter(
       (product) => product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
     );

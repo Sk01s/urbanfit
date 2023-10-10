@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
+import firebase from "@/services/firebase";
 
 const OrderItem = ({ order, index }) => {
   const price = order?.items?.reduce(
@@ -21,6 +22,26 @@ const OrderItem = ({ order, index }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const orderRef = useRef(null);
+  const onDeleteProduct = () => {
+    orderRef.current.classList.toggle("item-active");
+  };
+
+  const onConfirmDelete = () => {
+    // dispatch(removeProduct(order.id));
+    firebase
+      .removeOrder(order.id)
+      .then(() => {
+        displayActionMessage("Item successfully deleted");
+        orderRef.current.remove();
+        orderRef.current.classList.remove("item-active");
+      })
+      .catch((error) => {
+        displayActionMessage("failed to delete", error);
+      });
+  };
+  const onCancelDelete = () => {
+    orderRef.current.classList.remove("item-active");
+  };
 
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
@@ -67,6 +88,35 @@ const OrderItem = ({ order, index }) => {
               <Link to={`/admin/orders/${order.id}`}>View details</Link>
             )}
           </div>
+          {
+            <div className="item-action">
+              <button
+                className="button button-border button-small button-danger"
+                onClick={onDeleteProduct}
+                type="button"
+              >
+                Delete
+              </button>
+              <div className="item-action-confirm">
+                <h5>Are you sure you want to delete this?</h5>
+                <button
+                  className="button button-small button-border"
+                  onClick={onCancelDelete}
+                  type="button"
+                >
+                  No
+                </button>
+                &nbsp;
+                <button
+                  className="button button-small button-danger"
+                  onClick={onConfirmDelete}
+                  type="button"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          }
         </div>
       </div>
     </SkeletonTheme>

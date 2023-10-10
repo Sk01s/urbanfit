@@ -14,7 +14,7 @@ import React from "react";
 import * as Yup from "yup";
 import { categories, type } from "@/constants/constants";
 import { useState } from "react";
-import {ProductRelative} from "@/components/product";
+import { ProductRelative } from "@/components/product";
 // Default type names that I used. You can use what you want
 
 const FormSchema = Yup.object().shape({
@@ -32,17 +32,21 @@ const FormSchema = Yup.object().shape({
     .required("Price is required."),
   description: Yup.string().required("Description is required."),
   xlQuantity: Yup.number()
-    .integer("Max quantity should be an integer.")
-    .required("Max quantity is required."),
+    .min(0, "number is invalid.")
+    .integer(" quantity should be an integer.")
+    .required(" quantity is required."),
   lgQuantity: Yup.number()
-    .integer("Max quantity should be an integer.")
-    .required("Max quantity is required."),
+    .min(0, "number is invalid.")
+    .integer(" quantity should be an integer.")
+    .required(" quantity is required."),
   smQuantity: Yup.number()
-    .integer("Max quantity should be an integer.")
-    .required("Max quantity is required."),
+    .min(0, "number is invalid.")
+    .integer(" quantity should be an integer.")
+    .required(" quantity is required."),
   xsQuantity: Yup.number()
-    .integer("Max quantity should be an integer.")
-    .required("Max quantity is required."),
+    .min(0, "number is invalid.")
+    .integer(" quantity should be an integer.")
+    .required(" quantity is required."),
   keywords: Yup.array()
     .of(Yup.string())
     .min(1, "Please enter at least 1 keyword for this product."),
@@ -57,7 +61,7 @@ const FormSchema = Yup.object().shape({
     .min(1, "Please add a default color for this product."),
 });
 
-const ProductForm = ({ product, onSubmit, isLoading }) => {
+const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
   const initFormikValues = {
     name: product?.name || "",
     categories: product?.categories || "",
@@ -84,7 +88,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
     });
 
   const onSubmitForm = (form) => {
-    if (imageFile.image.file || product.imageUr) {
+    if (imageFile.image.file || product.imageUr || isEditing) {
       onSubmit({
         ...form,
         totalQuantity:
@@ -97,7 +101,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
         // of name here instead in firebase functions
         name_lower: form.name.toLowerCase(),
         dateAdded: new Date().getTime(),
-        image: imageFile?.image?.file || product.imageUrl,
+        image: !isEditing ? imageFile?.image?.file : product.image,
         imageCollection: imageFile.imageCollection,
       });
     } else {
@@ -341,8 +345,14 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                           }
                           title="Delete Image"
                           type="button"
+                          style={{
+                            borderRadius: "50%",
+                            backgroundColor: "black",
+                            aspectRatio: "1",
+                            color: "white",
+                          }}
                         >
-                          <i className="fa fa-times-circle" />
+                          X
                         </button>
                       </div>
                     ))}

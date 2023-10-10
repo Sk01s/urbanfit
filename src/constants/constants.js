@@ -71,19 +71,22 @@ export const categories = [
 ];
 
 export const type = [
-  { value: { categories: "Tops", name: "T-shirt" }, label: "T-shirt" },
+  { value: { categories: "Tops", name: "T-shrit" }, label: "T-shrit" },
   {
     value: { categories: "Bottoms", name: "Sweatpants & Pants" },
     label: "Sweatpants & Pants",
   },
   {
+    value: { categories: "Bottoms", name: "Leggings" },
+    label: "Leggings",
+  },
+  {
     value: { categories: "Active", name: "Active wear" },
     label: "Active wear",
   },
-  { value: { categories: "Active", name: "Legging" }, label: "Legging" },
   { value: { categories: "Tops", name: "Jacket" }, label: "Jacket" },
   {
-    value: { categories: "Tops", name: "Hoodies & Sweatshirts" },
-    label: "Hoodies & Sweatshirts",
+    value: { categories: "Tops", name: "Hoodies & Sweatshrits" },
+    label: "Hoodies & Sweatshrits",
   },
 ];

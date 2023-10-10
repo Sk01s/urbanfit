@@ -10,7 +10,6 @@ const ImageLoader = ({ src, alt, className, draggable = true, style }) => {
     loadedImages[src] = true;
     setLoaded(true);
   };
-  console.log(style);
   return (
     <>
       {!loaded && (

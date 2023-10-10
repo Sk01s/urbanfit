@@ -201,9 +201,9 @@
   display: none;
 }
 .product-view {
-  margin: 10rem 0rem;
   max-width: 90%;
   margin-inline: auto;
+  margin-top: 5rem;
 }
 @media (max-width: 800px) {
   .product-view {
@@ -232,7 +232,9 @@
 .product-image-wrapper {
   height: inherit;
   position: relative;
-  width: 40vw;
+  width: 50vw;
+  max-width: 550px;
+  margin-top: 4.2rem;
   input[type="color"] {
     position: absolute;
     top: 0;
@@ -333,8 +335,11 @@
 
 .product-modal-details {
   padding: $l-size;
-  max-width: 65%;
-  @include tablet {
+  width: 50%;
+}
+@media (max-width: 728px) {
+  .product-modal-details {
+    max-width: 100%;
     width: 100%;
     padding: $m-size;
     padding-bottom: $l-size;

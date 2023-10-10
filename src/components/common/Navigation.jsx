@@ -162,7 +162,7 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="/shop/women/essentials"
+                to="/store/women/essentials"
                 className="type-link"
               >
                 Essentials
@@ -171,16 +171,16 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="type/women/t-shirt"
+                to="/type/women/t-shrit"
                 className="type-link"
               >
-                T-shirts
+                T-shrits
               </Link>
             </li>
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="type/women/active-wear"
+                to="/type/women/active-wear"
                 className="type-link"
               >
                 Active wear
@@ -189,7 +189,7 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="/type/women/legging"
+                to="/type/women/leggings"
                 className="type-link"
               >
                 Leggings
@@ -243,7 +243,7 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="/shop/men/essential"
+                to="/store/men/essential"
                 className="type-link"
               >
                 Essentials
@@ -252,10 +252,10 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="/type/men/t-shirt"
+                to="/type/men/t-shrit"
                 className="type-link"
               >
-                T-shirts
+                T-shrits
               </Link>
             </li>
             <li>
@@ -279,10 +279,10 @@ const Navigation = () => {
             <li>
               <Link
                 onClick={handleMouseLeave}
-                to="/type/men/sweatpants"
+                to="/type/men/sweatpants-&-pants"
                 className="type-link"
               >
-                Sweatpants{" "}
+                Sweatpants & Pants
               </Link>
             </li>
             {/* <li>

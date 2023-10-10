@@ -318,6 +318,8 @@ class Firebase {
 
   getOrder = (id) => this.db.collection("order").doc(id).get();
 
+  removeOrder = (id) => this.db.collection("order").doc(id).delete();
+
   getUserOrders = () =>
     this.db
       .collection("order")

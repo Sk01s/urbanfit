@@ -103,7 +103,7 @@ const Basket = () => {
           </div>
           {basket.length <= 0 && (
             <div className="basket-empty">
-              <h5 className="basket-empty-msg">Your basket is empty</h5>
+              <h5 className="basket-empty-msg">Your Cart is empty</h5>
             </div>
           )}
           {basket.map((product, i) => (

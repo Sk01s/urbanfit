@@ -26,20 +26,19 @@ const TypeCategory = (props) => {
   );
   let filteredProducts = store.products?.items?.filter(
     (product) =>
-      product?.type?.name.toLocaleLowerCase?.().replace(" ", "-") ===
+      product?.type?.name?.toLocaleLowerCase().replaceAll(" ", "-") ===
         type.toLocaleLowerCase() &&
       product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
   );
   -console.log(filteredProducts);
   return (
-    <div>hi</div>
-    // <main className="content">
-    //   <section className="product-list-wrapper">
-    //     <ProductList {...store}>
-    //       <ProductGrid products={filteredProducts} />
-    //     </ProductList>
-    //   </section>
-    // </main>
+    <main className="content">
+      <section className="product-list-wrapper">
+        <ProductList {...store}>
+          <ProductGrid products={filteredProducts} />
+        </ProductList>
+      </section>
+    </main>
   );
 };
 

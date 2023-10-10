@@ -16,11 +16,14 @@ import { selectFilter } from "@/selectors/selector";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useEssentialProducts } from "@/hooks";
+import InfoBox from "@/components/product/InfoBox";
 const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
   const [isSearching, setIsSearching] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isWomenOpen, setIsWomenOpen] = useState(false);
+  const [isMenOpen, setIsMenOpen] = useState(false);
   const searchEl = useRef();
 
   const onClickLink = (e) => {
@@ -36,6 +39,11 @@ const Navigation = (props) => {
     useEssentialProducts();
   const toggleNav = () => {
     setIsMenuOpen((prev) => !prev);
+  };
+  const closeMenu = () => {
+    setIsMenOpen(false);
+    setIsMenuOpen(false);
+    setIsWomenOpen(false);
   };
   useEffect(() => {
     let close = (e) => {
@@ -143,7 +151,7 @@ const Navigation = (props) => {
         >
           <img alt="Logo" src={logo} style={{ width: "12rem" }} />{" "}
           <button
-            onClick={() => setIsMenuOpen(false)}
+            onClick={closeMenu}
             style={{ all: "unset", cursor: "pointer" }}
           >
             <svg
@@ -165,23 +173,134 @@ const Navigation = (props) => {
           </button>
         </div>
         <ul className="menu-links">
-          <li onClick={() => setIsMenuOpen(false)}>
-            <Link to={Route.HOME}>Home</Link>
+          <li>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 3rem 0 1rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setIsWomenOpen(true)}
+            >
+              <h4>Women</h4>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-right"
+              >
+                <title>Right</title>
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
           </li>
-          <li onClick={() => setIsMenuOpen(false)}>
-            <Link to={Route.TOPS}>T-Shirts</Link>
+          <li>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 3rem 0 1rem",
+                cursor: "pointer",
+              }}
+              onClick={() => setIsMenOpen(true)}
+            >
+              <h4>Men</h4>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-right"
+              >
+                <title>Right</title>
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
           </li>
-          <li onClick={() => setIsMenuOpen(false)}>
-            <Link to={Route.BOTTOMS}>Bottoms</Link>
+        </ul>
+        <ul
+          className="menu-links"
+          style={{
+            position: "absolute",
+            left: isMenOpen ? 0 : "100vw",
+            transitionDuration: "300ms",
+            top: 0,
+            width: "100%",
+            top: "6rem",
+            backgroundColor: "white",
+            height: "100%",
+            zIndex: 10,
+          }}
+        >
+          <li onClick={closeMenu}>
+            <Link to="/type/men/t-shirt">T-shrits</Link>
           </li>
-          <li onClick={() => setIsMenuOpen(false)}>
-            <Link to={Route.HOODIES_SWEATS}>Hoodies & Sweats</Link>
+          <li onClick={closeMenu}>
+            <Link to="/type/men/hoodies-&-sweatshrits">
+              Hoodies & Sweatshrits
+            </Link>
           </li>
-          <li onClick={() => setIsMenuOpen(false)}>
-            <Link to={Route.JACKETS}>Jackets</Link>
+          <li>
+            <Link to="/store/men/jacket">Jacket</Link>
           </li>
-          <li onClick={() => setIsMenuOpen(false)}>
-            <Link to={Route.SETS}>Sets</Link>
+
+          <li onClick={closeMenu}>
+            <Link to="/type/men/sweatpants-&-pants">Sweatpants & Pants</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link to="/type/men/leggings">Leggings</Link>
+          </li>
+          <button></button>
+        </ul>
+        <ul
+          className="menu-links"
+          style={{
+            position: "absolute",
+            left: isWomenOpen ? 0 : "100vw",
+            transitionDuration: "300ms",
+            top: 0,
+            width: "100%",
+            top: "6rem",
+            backgroundColor: "white",
+            height: "100%",
+            zIndex: 10,
+          }}
+        >
+          <li onClick={closeMenu}>
+            <Link to="/type/women/t-shirt">T-shrits</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link to="/type/women/hoodies-&-sweatshrits">
+              Hoodies & Sweatshrits
+            </Link>
+          </li>
+          <li>
+            <Link to="/store/women/jacket">Jacket</Link>
+          </li>
+
+          <li onClick={closeMenu}>
+            <Link to="/type/women/sweatpants-&-pants">Sweatpants & Pants</Link>
+          </li>
+          <li onClick={closeMenu}>
+            <Link to="/type/women/leggings">Leggings</Link>
+          </li>
+
+          <li>
+            <Link to="/type/women/active-wear">Active wear</Link>
           </li>
         </ul>
         <section>
@@ -191,6 +310,8 @@ const Navigation = (props) => {
               skeletonCount={6}
               title={"Recommended"}
               titleStyle={{}}
+              infinite={false}
+              center={false}
             />
           </div>
         </section>
@@ -282,7 +403,7 @@ const Navigation = (props) => {
         </div>
       </nav>
       <div
-        onClick={() => setIsMenuOpen(false)}
+        onClick={closeMenu}
         style={{
           position: "absolute",
           width: "100vw",

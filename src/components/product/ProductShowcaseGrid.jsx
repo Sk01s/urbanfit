@@ -5,11 +5,18 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-const ProductShowcase = ({ products, skeletonCount, title, titleStyle }) => {
+const ProductShowcase = ({
+  products,
+  skeletonCount,
+  title,
+  titleStyle,
+  infinite = true,
+  center = true,
+}) => {
   const settings = {
     className: "center",
-    centerMode: true,
-    infinite: true,
+    infinite,
+    center,
     centerPadding: "0",
     slidesToShow: 1,
     speed: 500,

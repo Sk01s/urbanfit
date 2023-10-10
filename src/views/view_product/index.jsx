@@ -9,6 +9,7 @@ import {
   useProduct,
   useEssentialProducts,
   useScrollTop,
+  useDidMount,
 } from "@/hooks";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -21,8 +22,16 @@ import { Helmet } from "react-helmet";
 import CustomDots from "@/components/product/CustomDotes";
 import InfoBox from "@/components/product/InfoBox";
 import QuantitySelector from "@/components/product/QuantitySelecter";
+import { shallowEqual, useSelector } from "react-redux";
+import { selectFilter } from "@/selectors/selector";
+import { useMemo } from "react";
+import ProductShowcase from "@/components/product/ProductShowcaseGrid";
+import {} from "@/hooks";
+import firebase from "@/services/firebase";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const ViewProduct = () => {
+  const { pathname } = useLocation();
   const slider = useRef();
   const sizesBtnsEl = useRef([]);
   const { id } = useParams();
@@ -35,16 +44,29 @@ const ViewProduct = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantitiy] = useState(1);
   const [maxQuantity, setMaxQuantity] = useState(10);
+  const [relatedProduct, setRelatedProduct] = useState([]);
+  // const products = useSelector((state) => state.products.items);
+  useEffect(() => {
+    (async () => {
+      const docs = await firebase.getProducts();
+      setRelatedProduct(
+        docs.products.filter((item) => product?.relative?.includes(item.id))
+      );
+      console.log(relatedProduct.length === 0);
+    })();
+    return () => {
+      setRelatedProduct([]);
+    };
+  }, [product]);
   const isOverSized = () => {
     // Search in the name if there is nama has the word over
 
     // Convert the input string to lowercase to perform a case-insensitive search
-    const lowercasedString = inputString.toLowerCase();
 
     // Check if the lowercased string contains "oversized" or "oversize"
     return (
-      lowercasedString.includes("oversized") ||
-      lowercasedString.includes("oversize")
+      product.name.toLocaleLowerCase().includes("oversized") ||
+      product.name.toLocaleLowerCase().includes("oversize")
     );
   };
 
@@ -320,7 +342,11 @@ const ViewProduct = () => {
                       <h5>Desciption</h5>
                     </>
                   }
-                  description={product.description}
+                  description={
+                    <div
+                      dangerouslySetInnerHTML={{ __html: product.description }}
+                    />
+                  }
                 />
                 <InfoBox
                   title={
@@ -344,9 +370,9 @@ const ViewProduct = () => {
                     </>
                   }
                   description={
-                    isOverSized
-                      ? "This item is designed to have a regular fit and should correspond accurately to standard sizing."
-                      : "This item is designed to be oversized for a regular fit."
+                    isOverSized()
+                      ? "This item is designed to be oversized for a regular fit."
+                      : "This item is designed to have a regular fit and should correspond accurately to standard sizing."
                   }
                 />
                 <InfoBox
@@ -396,6 +422,15 @@ const ViewProduct = () => {
                   }
                   description={""}
                 />
+                {relatedProduct.length === 0 ? (
+                  <></>
+                ) : (
+                  <ProductShowcase
+                    products={relatedProduct}
+                    skeletonCount={4}
+                    title={"Complete your Look "}
+                  />
+                )}
               </div>
             </div>
 
@@ -410,7 +445,7 @@ const ViewProduct = () => {
                 <ProductShowcaseGrid
                   products={essentialProducts}
                   title={"Recommended"}
-                  skeletonCount={3}
+                  skeletonCount={2}
                 />
               )}
             </div>

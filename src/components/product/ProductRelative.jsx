@@ -12,11 +12,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 const ProductRelative = ({ values }) => {
   const [modelRelationProduct, setModelRelationProduct] = useState(false);
-  // useEffect(() => {
-  //   console.log(values);
-  //   if (values.relative) return;
-  //   values.relative = [];
-  // }, []);
   const [state, setState] = useState(values.relative || []);
   const handleSetState = (newState) => {
     setState(newState);
@@ -39,7 +34,6 @@ const ProductRelative = ({ values }) => {
       ),
     [state]
   );
-  console.log(relatedProduct);
   return (
     <div style={{ maxWidth: "70vw" }}>
       <div style={{ maxWeight: "30vw" }}>
