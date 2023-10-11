@@ -21,6 +21,7 @@ import { selectFilter } from "@/selectors/selector";
 import { AppliedFilters } from "@/components/product";
 import { ProductGrid, ProductList } from "@/components/product";
 import { categories } from "@/constants/constants";
+import { Landing } from "@/components/common";
 
 const Home = () => {
   useDocumentTitle("Urbanfit | Home");
@@ -69,6 +70,7 @@ const Home = () => {
             </Link>
           </div>
         </div>
+        {/* <Landing /> */}
 
         <div
           className="display product-display-grid"
@@ -112,7 +114,7 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
-              title={"Essential Products"}
+              title={"Essentials"}
               products={essentialProducts}
               skeletonCount={6}
             />

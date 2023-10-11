@@ -23,12 +23,10 @@ const Navigation = () => {
   const { essentialProducts, fetchEssentialProducts, isLoading, error } =
     useEssentialProducts();
   const handleMouseEnter = () => {
-    console.log("entering");
     setPopupVisible(true);
   };
 
   const handleMouseLeave = () => {
-    console.log("fading");
     setPopupVisible(false);
   };
 
@@ -52,6 +50,27 @@ const Navigation = () => {
     Route.SIGNUP,
     Route.FORGOT_PASSWORD,
   ];
+
+  const [scrollOpacity, setScrollOpacity] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const maxScroll = 100; // Adjust this value to control the scroll threshold
+
+      // Calculate the opacity based on the scroll position
+      const opacity = Math.min(scrollY / maxScroll, 1);
+
+      setScrollOpacity(opacity);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   if (
     store.user &&
     store.user.role === "ADMIN" &&
@@ -71,9 +90,13 @@ const Navigation = () => {
   }
   return (
     <nav
-      className=" navigation is-nav-scrolled"
+      className=" navigation "
       ref={navbar}
       onMouseLeave={handleMouseLeave}
+      style={{
+        backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
+        boxShadow: `-4px 0px 50px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
+      }}
     >
       <ul className="navigation-menu-main" ref={navigationMenu}>
         <li>
