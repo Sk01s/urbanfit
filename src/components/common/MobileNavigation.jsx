@@ -134,7 +134,7 @@ const Navigation = (props) => {
           transitionDuration: "300ms",
           backgroundColor: "white",
           width: "90vw",
-          height: "100vh",
+          height: "100dvh",
           zIndex: "10",
           overflowY: "scroll",
           overflowX: "hidden",
@@ -304,11 +304,19 @@ const Navigation = (props) => {
           </li>
         </ul>
         <section>
-          <div style={{ width: "99%", marginBottom: "8rem", gap: 0 }}>
+          <div
+            style={{
+              width: "99%",
+              marginBottom: "8rem",
+              gap: 0,
+              overflow: "hidden",
+              height: " 100dvh; ",
+            }}
+          >
             <ProductShowcaseGrid
               products={essentialProducts}
               skeletonCount={6}
-              title={"Recommended"}
+              title={"Essentials"}
               titleStyle={{}}
               infinite={false}
               center={false}
@@ -407,7 +415,7 @@ const Navigation = (props) => {
         style={{
           position: "absolute",
           width: "100vw",
-          height: "100vh",
+          height: "100dvh",
           top: 0,
           left: isMenuOpen ? 0 : "-100%",
           zIndex: 9,

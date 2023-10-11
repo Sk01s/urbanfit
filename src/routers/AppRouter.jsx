@@ -20,7 +20,8 @@ const AppRouter = () => {
     <Router history={history}>
       <>
         <Navigation />
-        <Basket />({!accepeted && <Terms setAccepeted={setAccepeted} />})
+        <Basket />
+        {!accepeted && <Terms setAccepeted={setAccepeted} />}
         <Switch>
           <Route component={view.Search} exact path={ROUTES.SEARCH} />
           <Route component={view.Home} exact path={ROUTES.HOME} />

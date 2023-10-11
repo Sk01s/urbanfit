@@ -15,8 +15,8 @@ const ProductShowcase = ({
 }) => {
   const settings = {
     className: "center",
-    infinite,
-    center,
+    infinite: true,
+    center: true,
     centerPadding: "0",
     slidesToShow: 1,
     speed: 500,

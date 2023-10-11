@@ -139,7 +139,7 @@ const ViewProduct = () => {
                   index={currentIndex}
                   onChangeIndex={handleChangeIndex}
                   enableMouseEvents
-                  height={"90vh"}
+                  height={"90dvh"}
                 >
                   {product.imageCollection.map((image, index) => (
                     <ImageLoader

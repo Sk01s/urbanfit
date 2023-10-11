@@ -56,7 +56,7 @@ const EditProduct = () => {
       {orderId && (
         <Suspense
           fallback={
-            <div className="loader" style={{ minHeight: "80vh" }}>
+            <div className="loader" style={{ minHeight: "80dvh" }}>
               <h6>Loading ... </h6>
               <br />
               <LoadingOutlined />

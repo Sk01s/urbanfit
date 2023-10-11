@@ -23,7 +23,7 @@ const AddProduct = () => {
       <h2>Add New Product</h2>
       <Suspense
         fallback={
-          <div className="loader" style={{ minHeight: "80vh" }}>
+          <div className="loader" style={{ minHeight: "80dvh" }}>
             <h6>Loading ... </h6>
             <br />
             <LoadingOutlined />

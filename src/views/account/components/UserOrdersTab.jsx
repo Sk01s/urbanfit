@@ -13,7 +13,7 @@ const UserOrdersTab = () => {
       .then((orders) => setOrders(orders));
   }, []);
   return (
-    <div className="loader" style={{ minHeight: "80vh" }}>
+    <div className="loader" style={{ minHeight: "80dvh" }}>
       <h3>My Orders</h3>
       {orders ? (
         orders?.map((item) => {
