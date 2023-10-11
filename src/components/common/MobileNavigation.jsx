@@ -246,11 +246,13 @@ const Navigation = (props) => {
             zIndex: 10,
           }}
         >
-          <li onClick={closeMenu}>
-            <Link to="/type/men/t-shirt">T-shrits</Link>
+          <li>
+            <Link onClick={closeMenu} to="/type/men/t-shirt">
+              T-shrits
+            </Link>
           </li>
-          <li onClick={closeMenu}>
-            <Link to="/type/men/hoodies-&-sweatshrits">
+          <li>
+            <Link onClick={closeMenu} to="/type/men/hoodies-&-sweatshrits">
               Hoodies & Sweatshrits
             </Link>
           </li>
@@ -258,13 +260,16 @@ const Navigation = (props) => {
             <Link to="/store/men/jacket">Jacket</Link>
           </li>
 
-          <li onClick={closeMenu}>
-            <Link to="/type/men/sweatpants-&-pants">Sweatpants & Pants</Link>
+          <li>
+            <Link onClick={closeMenu} to="/type/men/sweatpants-&-pants">
+              Sweatpants & Pants
+            </Link>
           </li>
-          <li onClick={closeMenu}>
-            <Link to="/type/men/leggings">Leggings</Link>
+          <li>
+            <Link onClick={closeMenu} to="/type/men/leggings">
+              Leggings
+            </Link>
           </li>
-          <button></button>
         </ul>
         <ul
           className="menu-links"
@@ -280,27 +285,37 @@ const Navigation = (props) => {
             zIndex: 10,
           }}
         >
-          <li onClick={closeMenu}>
-            <Link to="/type/women/t-shirt">T-shrits</Link>
+          <li>
+            <Link onClick={closeMenu} to="/type/women/t-shirt">
+              T-shrits
+            </Link>
           </li>
-          <li onClick={closeMenu}>
+          <li>
             <Link to="/type/women/hoodies-&-sweatshrits">
               Hoodies & Sweatshrits
             </Link>
           </li>
           <li>
-            <Link to="/store/women/jacket">Jacket</Link>
-          </li>
-
-          <li onClick={closeMenu}>
-            <Link to="/type/women/sweatpants-&-pants">Sweatpants & Pants</Link>
-          </li>
-          <li onClick={closeMenu}>
-            <Link to="/type/women/leggings">Leggings</Link>
+            <Link onClick={closeMenu} to="/store/women/jacket">
+              Jacket
+            </Link>
           </li>
 
           <li>
-            <Link to="/type/women/active-wear">Active wear</Link>
+            <Link onClick={closeMenu} to="/type/women/sweatpants-&-pants">
+              Sweatpants & Pants
+            </Link>
+          </li>
+          <li>
+            <Link onClick={closeMenu} to="/type/women/leggings">
+              Leggings
+            </Link>
+          </li>
+
+          <li>
+            <Link onClick={closeMenu} to="/type/women/active-wear">
+              Active wear
+            </Link>
           </li>
         </ul>
         <section>
