@@ -318,14 +318,12 @@ const Navigation = (props) => {
             </Link>
           </li>
         </ul>
-        <section>
+        <section style={{ overflow: "hidden", height: " 95dvh; " }}>
           <div
             style={{
               width: "99%",
               marginBottom: "8rem",
               gap: 0,
-              overflow: "hidden",
-              height: " 100dvh; ",
             }}
           >
             <ProductShowcaseGrid
