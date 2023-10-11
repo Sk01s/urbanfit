@@ -1,44 +1,44 @@
 /* eslint-disable react/forbid-prop-types */
 import { FeaturedProduct } from "@/components/product";
 import PropType from "prop-types";
-import React, { useRef } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-const ProductShowcase = ({
-  products,
-  skeletonCount,
-  title,
-  titleStyle,
-  infinite = true,
-  center = true,
-}) => {
-  const settings = {
-    className: "center",
-    infinite: true,
-    center: true,
-    centerPadding: "0",
-    slidesToShow: 1,
-    speed: 500,
-    arrows: false,
-    variableWidth: true,
+import React, { useRef, useState } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+
+const ProductShowcase = ({ products, skeletonCount, title, titleStyle }) => {
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const getPercentage = () => {
+    if (window.innerWidth <= 700) {
+      return 50;
+    } else if (window.innerWidth <= 800) {
+      return 40;
+    } else if (window.innerWidth <= 1000) {
+      return 35;
+    } else {
+      return 30;
+    }
+  };
+  const handleNextSlide = () => {
+    if (currentIndex < products.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0);
+    }
   };
 
-  const sliderRef = useRef(null);
-
-  const goToNext = () => {
-    sliderRef.current.slickNext(); // Go to the next slide
-  };
-
-  const goToPrevious = () => {
-    sliderRef.current.slickPrev(); // Go to the previous slide
+  const handlePrevSlide = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    } else {
+      setCurrentIndex(products.length - 1);
+    }
   };
 
   return (
-    <>
+    <div className="">
       <div className="display-header">
         <button
-          onClick={goToPrevious}
+          onClick={handlePrevSlide}
           style={{
             background: "rgba(255, 255, 255, 0)",
             border: "none",
@@ -62,7 +62,7 @@ const ProductShowcase = ({
         </button>
         <h1 style={titleStyle}>{title}</h1>
         <button
-          onClick={goToNext}
+          onClick={handleNextSlide}
           style={{
             background: "rgba(255, 255, 255, 0)",
             border: "none",
@@ -85,7 +85,16 @@ const ProductShowcase = ({
           </svg>
         </button>
       </div>
-      <Slider ref={sliderRef} {...settings}>
+      <Carousel
+        showArrows={false}
+        showIndicators={false}
+        selectedItem={currentIndex}
+        centerMode={true} // Enable center mode
+        centerSlidePercentage={getPercentage()} // Adjust this percentage as needed
+        emulateTouch={true}
+        swipeable={true}
+        onSwipeEnd={() => setCurrentIndex(0)}
+      >
         {products.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (
               <FeaturedProduct
@@ -97,8 +106,8 @@ const ProductShowcase = ({
           : products.map((product) => (
               <FeaturedProduct key={product.id} product={product} />
             ))}
-      </Slider>
-    </>
+      </Carousel>
+    </div>
   );
 };
 
