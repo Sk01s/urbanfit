@@ -249,6 +249,8 @@
     width: 100%;
     margin: auto;
     margin-bottom: 0.2rem;
+    margin-top: 5rem;
+    max-width: 100%;
   }
 }
 .product-modal-image-collection {
@@ -257,15 +259,14 @@
   display: flex;
   overflow-y: scroll;
   position: relative;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
   height: auto;
   order: 2;
   overflow-x: scroll;
   overflow-y: unset;
-  margin-top: 2rem;
   @include tablet {
-    padding-inline: 0.7rem;
+    padding-inline: 1.5rem;
   }
 }
 .product-sizes-container {
@@ -310,7 +311,7 @@
   margin-bottom: 5px;
   position: relative;
   aspect-ratio: 9/16;
-  width: 5rem;
+  width: 6rem;
   &:hover {
     cursor: pointer;
     background: #fff;
@@ -584,7 +585,7 @@
   text-align: left;
   user-select: none;
   aspect-ratio: 9/16;
-  max-height: 50rem;
+  max-height: 40rem;
   &:hover {
     cursor: pointer;
     transform: scale(1.01);

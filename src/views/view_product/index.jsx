@@ -159,8 +159,6 @@ const ViewProduct = () => {
                 )}
               </div>
               <div className="product-modal-details">
-                <br />
-                <span className="text-subtle">{product.categories}</span>
                 <h2>{product.name}</h2>
                 <p style={{ fontWeight: "300 ", fontSize: "19px" }}>
                   {displayMoney(product.price)}
@@ -178,8 +176,6 @@ const ViewProduct = () => {
                     >
                       Color
                     </span>
-                    <br />
-                    <br />
                     <ColorChooser
                       availableColors={product.availableColors}
                       onSelectedColorChange={onSelectedColorChange}
@@ -187,15 +183,13 @@ const ViewProduct = () => {
                   </div>
                 )}
                 <div>
-                  <br />
-                  <br />
                   <div>
                     <div
                       style={{
                         color: "#343120",
                         fontWeight: "700",
                         fontSize: "1.2rem",
-                        marginBottom: "2rem",
+                        marginTop: "2rem",
                       }}
                     >
                       Size (UK)
@@ -254,14 +248,13 @@ const ViewProduct = () => {
                     </button> */}
                   </div>
                 </div>
-                <br />
-                <br />
+
                 <div
                   style={{
                     color: "#343120",
                     fontWeight: "700",
                     fontSize: "1.2rem",
-                    marginBottom: "2rem",
+                    marginBlock: "1rem",
                   }}
                 >
                   Quantity
@@ -283,7 +276,6 @@ const ViewProduct = () => {
                     }`}
                     style={{
                       background: isItemOnBasket(product.id) && "#6f6f6f",
-                      border: "1.5px solid rgb(151, 81, 7)",
                       color: "#fff",
                       lineHeight: "1em",
                       height: "auto",
@@ -293,7 +285,7 @@ const ViewProduct = () => {
                       padding: "1.2em 25px",
                       verticalAlign: "middle",
                       textAlign: "center",
-                      borderRadius: "3px",
+                      borderRadius: ".75rem",
                       transition:
                         "background-color .1s,color .1s,border-color .1s,opacity .1s",
                       display: "inline-block",
@@ -425,11 +417,15 @@ const ViewProduct = () => {
                 {relatedProduct.length === 0 ? (
                   <></>
                 ) : (
-                  <ProductShowcase
-                    products={relatedProduct}
-                    skeletonCount={4}
-                    title={"Complete your Look "}
-                  />
+                  <>
+                    <br />
+                    <br />
+                    <ProductShowcase
+                      products={relatedProduct}
+                      skeletonCount={4}
+                      title={"Complete your Look "}
+                    />
+                  </>
                 )}
               </div>
             </div>

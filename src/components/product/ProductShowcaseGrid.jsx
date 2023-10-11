@@ -6,9 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 const ProductShowcase = ({ products, skeletonCount, title, titleStyle }) => {
   const settings = {
-    className: "center",
     infinite: true,
-    center: true,
+    centerMode: true,
     centerPadding: "0",
     slidesToShow: 1,
     speed: 500,
@@ -42,7 +41,7 @@ const ProductShowcase = ({ products, skeletonCount, title, titleStyle }) => {
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
+            stroke="#000"
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -66,7 +65,7 @@ const ProductShowcase = ({ products, skeletonCount, title, titleStyle }) => {
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
+            stroke="#000"
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"

@@ -9,6 +9,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { clearBasket } from "@/redux/actions/basketActions";
+import { ProductShowcaseGrid } from "@/components/product";
+import { useEssentialProducts } from "@/hooks";
 
 const Basket = () => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
@@ -54,6 +56,8 @@ const Basket = () => {
       dispatch(clearBasket());
     }
   };
+  const { essentialProducts, EssentialProduct, isLoading, error } =
+    useEssentialProducts();
 
   return user && user.role === "ADMIN" ? null : (
     <Boundary>
@@ -104,18 +108,50 @@ const Basket = () => {
           {basket.length <= 0 && (
             <div className="basket-empty">
               <h5 className="basket-empty-msg">Your Cart is empty</h5>
+              <BasketToggle>
+                {({ onClickToggle }) => (
+                  <button
+                    className="button"
+                    onClick={onClickToggle}
+                    role="presentation"
+                  >
+                    Start Shopping
+                  </button>
+                )}
+              </BasketToggle>
             </div>
           )}
-          {basket.map((product, i) => (
-            <BasketItem
-              // eslint-disable-next-line react/no-array-index-key
-              key={`${product.id}_${i}`}
-              product={product}
-              basket={basket}
-              dispatch={dispatch}
-            />
-          ))}
+          <div style={{ overflowY: "scroll" }}>
+            {basket.map((product, i) => (
+              <BasketItem
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${product.id}_${i}`}
+                product={product}
+                basket={basket}
+                dispatch={dispatch}
+              />
+            ))}
+            <section style={{ overflow: "hidden", height: " 95dvh; " }}>
+              <div
+                style={{
+                  width: "99%",
+                  marginTop: "2rem",
+                  gap: 0,
+                }}
+              >
+                <ProductShowcaseGrid
+                  products={essentialProducts}
+                  skeletonCount={6}
+                  title={"Essentials"}
+                  titleStyle={{}}
+                  infinite={false}
+                  center={false}
+                />
+              </div>
+            </section>
+          </div>
         </div>
+
         <div className="basket-checkout">
           <div className="basket-total">
             <p className="basket-total-title">Subtotal Amout:</p>

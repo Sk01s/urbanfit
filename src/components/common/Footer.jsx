@@ -10,14 +10,13 @@ const Footer = () => {
   function isVisable() {
     return !pathname.startsWith("/admin");
   }
-  console.log(isVisable());
   return isVisable() ? (
     <footer>
       <div className="list">
         <div className="footer-col-1">
           <p
             style={{
-              fontSize: "1.125rem",
+              fontSize: "1.325rem",
               fontWeight: 300,
               color: "#222;",
               lineHeight: "normal",

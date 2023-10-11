@@ -27,7 +27,7 @@ $border-color-focus: #c5c5c5;
 // General
 $white: #fff;
 $black: #000;
-$accent: #ff7332;
+$accent: #000;
 $off-black: #303030;
 $off-white: #f0f0f0;
 $red: rgba(247, 45, 45, 0.986);
@@ -38,7 +38,7 @@ $gray-10: #818181;
 $gray-20: #b6b6b6;
 
 // Buttons
-$button-color: #ff7332;
+$button-color: #000;
 $button-hover: lighten($button-color, 10%);
 
 // Social
@@ -47,4 +47,4 @@ $color-facebook-hover: darken($color-facebook, 5%);
 $color-github: #24292e;
 $color-github-hover: lighten($color-github, 5%);
 
-$color-success: #ff7332;
+$color-success: #000;

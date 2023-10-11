@@ -71,18 +71,21 @@ const Navigation = (props) => {
   return (
     <nav className="mobile-navigation">
       <div className="mobile-navigation-main">
-        <button className="menu-btn" onClick={toggleNav}>
-          <div />
-          <div />
-          <div />
-        </button>
-        <SearchOutlined
-          className="searchbar-icon"
-          onClick={(e) => {
-            e.bubbles = false;
-            setIsSearching((prev) => !prev);
-          }}
-        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <button className="menu-btn" onClick={toggleNav}>
+            <div />
+            <div />
+            <div />
+          </button>
+          <SearchOutlined
+            className="searchbar-icon"
+            onClick={(e) => {
+              e.bubbles = false;
+              setIsSearching((prev) => !prev);
+            }}
+            style={{ position: "relative", left: "0" }}
+          />
+        </div>
         <Link
           className="mobile-navigation-logo"
           onClick={onClickLink}
@@ -184,7 +187,7 @@ const Navigation = (props) => {
               }}
               onClick={() => setIsWomenOpen(true)}
             >
-              <h4>Women</h4>
+              <h4 style={{ margin: 0 }}>Women</h4>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -213,7 +216,7 @@ const Navigation = (props) => {
               }}
               onClick={() => setIsMenOpen(true)}
             >
-              <h4>Men</h4>
+              <h4 style={{ margin: 0 }}>Men</h4>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -231,6 +234,15 @@ const Navigation = (props) => {
               </svg>
             </div>
           </li>
+          <li>
+            <Link
+              to="/about-us"
+              onClick={() => closeMenu()}
+              style={{ fontWeight: 700, marginLeft: "0.8rem;" }}
+            >
+              About us
+            </Link>
+          </li>
         </ul>
         <ul
           className="menu-links"
@@ -240,12 +252,41 @@ const Navigation = (props) => {
             transitionDuration: "300ms",
             top: 0,
             width: "100%",
-            top: "6rem",
+            top: "5rem",
             backgroundColor: "white",
             height: "100%",
             zIndex: 10,
           }}
         >
+          <div
+            style={{
+              cursor: "pointer",
+              position: "absolute",
+              left: isMenOpen ? "0" : "100vw",
+              top: " -10.5%",
+              background: "white",
+              cursor: "pointer",
+              paddingRight: "40%",
+              paddingLeft: "2rem",
+            }}
+            onClick={() => setIsMenOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left"
+            >
+              <title>Left</title>
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
           <li>
             <Link onClick={closeMenu} to="/type/men/t-shirt">
               T-shrits
@@ -279,12 +320,41 @@ const Navigation = (props) => {
             transitionDuration: "300ms",
             top: 0,
             width: "100%",
-            top: "6rem",
+            top: "5rem",
             backgroundColor: "white",
             height: "100%",
             zIndex: 10,
           }}
         >
+          <div
+            style={{
+              cursor: "pointer",
+              position: "absolute",
+              left: isWomenOpen ? "0" : "100vw",
+              top: " -10.5%",
+              background: "white",
+              cursor: "pointer",
+              paddingRight: "40%",
+              paddingLeft: "2rem",
+            }}
+            onClick={() => setIsWomenOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left"
+            >
+              <title>Left</title>
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
           <li>
             <Link onClick={closeMenu} to="/type/women/t-shirt">
               T-shrits

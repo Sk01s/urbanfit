@@ -4,7 +4,7 @@ import ReactPlayer from "react-player";
 
 const slides = [
   {
-    videoUrl: "https://www.youtube.com/watch?v=aBIsrZ3yEPA",
+    videoUrl: "/2- What is Middleware.mp4",
   },
   {
     videoUrl: "/1- Introduction.mp4",
