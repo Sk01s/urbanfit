@@ -28,7 +28,7 @@ const Basket = () => {
       firebase
         .saveBasketItems(basket, firebase.auth.currentUser.uid)
         .then(() => {
-          console.log("Item saved to basket");
+          console.log("Item saved to Cart");
         })
         .catch((e) => {
           console.log(e);

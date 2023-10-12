@@ -101,7 +101,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
         // of name here instead in firebase functions
         name_lower: form.name.toLowerCase(),
         dateAdded: new Date().getTime(),
-        image: !isEditing ? imageFile?.image?.file : product.image,
+        image: imageFile.image.file || product.image,
         imageCollection: imageFile.imageCollection,
       });
     } else {

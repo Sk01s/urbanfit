@@ -423,7 +423,7 @@ const ViewProduct = () => {
                     <ProductShowcase
                       products={relatedProduct}
                       skeletonCount={4}
-                      title={"Complete your Look "}
+                      title={"Make your look perfect "}
                     />
                   </>
                 )}
