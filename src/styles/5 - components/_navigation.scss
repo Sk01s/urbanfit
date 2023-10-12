@@ -30,12 +30,14 @@
     top: 00;
     left: 50%;
     translate: -50% 0;
+    overflow: hidden;
   }
 
   .logo img {
     width: 18rem;
     height: inherit;
     object-fit: contain;
+    scale: 2.2;
   }
 
   .logo a {

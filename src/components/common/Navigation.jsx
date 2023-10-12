@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { FilterOutlined, ShoppingOutlined } from "@ant-design/icons";
 import * as Route from "@/constants/routes";
-import logo from "@/images/logo-full.svg";
+import logo from "@/images/logo-full.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -78,7 +78,7 @@ const Navigation = () => {
   ) {
     return null;
   }
-  if (window.screen.width <= 800) {
+  if (window.screen.width <= 560) {
     return (
       <MobileNavigation
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -92,10 +92,15 @@ const Navigation = () => {
     <nav
       className=" navigation "
       ref={navbar}
-      onMouseLeave={handleMouseLeave}
       style={{
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
+
         boxShadow: `-4px 0px 50px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
+      }}
+      onMouseEnter={() => setScrollOpacity(1)}
+      onMouseLeave={() => {
+        setScrollOpacity(0);
+        handleMouseLeave();
       }}
     >
       <ul className="navigation-menu-main" ref={navigationMenu}>
@@ -111,6 +116,11 @@ const Navigation = () => {
         <li onMouseEnter={handleMouseEnter} style={{ isolation: "isolate" }}>
           <NavLink activeClassName="navigation-menu-active" to={Route.SHOP}>
             Shop
+          </NavLink>
+        </li>
+        <li>
+          <NavLink activeClassName="navigation-menu-active" to={Route.ABOUT_US}>
+            About Us
           </NavLink>
         </li>
       </ul>

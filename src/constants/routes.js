@@ -35,3 +35,4 @@ export const VIEW_PRODUCT = "/product/:id";
 export const TERMS = "/terms-conditions";
 export const ORDER_COMPLETED = "/order-completed";
 export const FAQS = "/faqs";
+export const ABOUT_US = "/about-us";

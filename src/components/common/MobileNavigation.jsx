@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserNav from "@/views/account/components/UserAvatar";
 import Badge from "./Badge";
-import logo from "@/images/logo-full.svg";
+import logo from "@/images/logo-full.png";
 import FiltersToggle from "./FiltersToggle";
 import * as ROUTE from "@/constants/routes";
 import SearchBar from "./SearchBar";
@@ -60,6 +60,26 @@ const Navigation = (props) => {
     }
   }, [isSearching]);
 
+  const [scrollOpacity, setScrollOpacity] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const maxScroll = 100; // Adjust this value to control the scroll threshold
+
+      // Calculate the opacity based on the scroll position
+      const opacity = Math.min(scrollY / maxScroll, 1);
+
+      setScrollOpacity(opacity);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const basketDisabledpathnames = [
     ROUTE.CHECKOUT_STEP_1,
     ROUTE.CHECKOUT_STEP_2,
@@ -69,7 +89,15 @@ const Navigation = (props) => {
     ROUTE.FORGOT_PASSWORD,
   ];
   return (
-    <nav className="mobile-navigation">
+    <nav
+      className="mobile-navigation"
+      style={{
+        backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
+        boxShadow: `-4px 0px 50px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
+      }}
+      onMouseEnter={() => setScrollOpacity(1)}
+      onMouseLeave={() => setScrollOpacity(0)}
+    >
       <div className="mobile-navigation-main">
         <div style={{ display: "flex", alignItems: "center" }}>
           <button className="menu-btn" onClick={toggleNav}>
@@ -128,7 +156,6 @@ const Navigation = (props) => {
           <SearchBar ref={searchEl} />
         </div>
       )}
-
       <nav
         style={{
           position: "absolute",
@@ -152,7 +179,33 @@ const Navigation = (props) => {
             borderBottom: "solid 1px #cacaca",
           }}
         >
-          <img alt="Logo" src={logo} style={{ width: "12rem" }} />{" "}
+          {isMenOpen || isWomenOpen ? (
+            <svg
+              onClick={() => {
+                setIsMenOpen(false);
+                setIsWomenOpen(false);
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-chevron-left"
+            >
+              <title>Left</title>
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          ) : (
+            <img
+              alt="Logo"
+              src={logo}
+              style={{ width: "12rem", height: "4rem", objectFit: "cover" }}
+            />
+          )}{" "}
           <button
             onClick={closeMenu}
             style={{ all: "unset", cursor: "pointer" }}
@@ -238,7 +291,7 @@ const Navigation = (props) => {
             <Link
               to="/about-us"
               onClick={() => closeMenu()}
-              style={{ fontWeight: 700, marginLeft: "0.8rem;" }}
+              style={{ fontWeight: 700, marginLeft: "1rem" }}
             >
               About us
             </Link>
@@ -258,35 +311,6 @@ const Navigation = (props) => {
             zIndex: 10,
           }}
         >
-          <div
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              left: isMenOpen ? "0" : "100vw",
-              top: " -10.5%",
-              background: "white",
-              cursor: "pointer",
-              paddingRight: "40%",
-              paddingLeft: "2rem",
-            }}
-            onClick={() => setIsMenOpen(false)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left"
-            >
-              <title>Left</title>
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </div>
           <li>
             <Link onClick={closeMenu} to="/type/men/t-shirt">
               T-shrits
@@ -326,35 +350,6 @@ const Navigation = (props) => {
             zIndex: 10,
           }}
         >
-          <div
-            style={{
-              cursor: "pointer",
-              position: "absolute",
-              left: isWomenOpen ? "0" : "100vw",
-              top: " -10.5%",
-              background: "white",
-              cursor: "pointer",
-              paddingRight: "40%",
-              paddingLeft: "2rem",
-            }}
-            onClick={() => setIsWomenOpen(false)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#000"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-chevron-left"
-            >
-              <title>Left</title>
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </div>
           <li>
             <Link onClick={closeMenu} to="/type/women/t-shirt">
               T-shrits

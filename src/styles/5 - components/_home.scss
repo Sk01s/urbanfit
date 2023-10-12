@@ -33,3 +33,40 @@
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   }
 }
+
+.timer {
+  position: relative;
+  width: 25rem;
+  height: 0.2rem;
+  background-color: white;
+  border-radius: 2rem;
+  -webkit-border-radius: 2rem;
+  -moz-border-radius: 2rem;
+  -ms-border-radius: 2rem;
+  -o-border-radius: 2rem;
+  overflow: hidden;
+}
+.timer::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgb(255, 255, 255);
+  transition-duration: 5s;
+  transition-timing-function: linear;
+}
+.timer.active {
+  background-color: #ffffff83;
+}
+.timer.active::after {
+  width: 100%;
+}
+video {
+  // user-select: none;
+  // width: auto;
+  // height: 100%;
+}
+video::-webkit-media-controls-picture-in-picture-button {
+  display: none;
+}

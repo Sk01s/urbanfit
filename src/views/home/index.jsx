@@ -22,6 +22,7 @@ import { AppliedFilters } from "@/components/product";
 import { ProductGrid, ProductList } from "@/components/product";
 import { categories } from "@/constants/constants";
 import { Landing } from "@/components/common";
+import { useEffect } from "react";
 
 const Home = () => {
   useDocumentTitle("Urbanfit | Home");
@@ -50,10 +51,18 @@ const Home = () => {
     error: errorEssentail,
   } = useEssentialProducts(6);
 
+  useEffect(() => {
+    console.log(
+      (document.getElementsByClassName("content")[0].style.padding = 0)
+    );
+    return () =>
+      (document.getElementsByClassName("content")[0].style.padding =
+        "10rem 2rem");
+  }, []);
   return (
     <main className="content">
       <div className="home">
-        <div className="banner">
+        {/* <div className="banner">
           <div className="banner-desc">
             <h1 className="text-thin">
               Welcome to <span className="text-thin-light">Urbanfit</span>
@@ -69,8 +78,8 @@ const Home = () => {
               <ArrowRightOutlined />
             </Link>
           </div>
-        </div>
-        {/* <Landing /> */}
+        </div> */}
+        <Landing />
 
         <div
           className="display product-display-grid"

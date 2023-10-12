@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Carousel } from "react-responsive-carousel";
 import ReactPlayer from "react-player";
-
+import Slider from "react-slick";
+import { Link } from "react-router-dom";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import {
+  SEASONAL_PRODUCTS,
+  ESSENTIAL_PRODUCTS,
+  SHOP,
+} from "@/constants/routes";
 const slides = [
   {
     videoUrl: "/2- What is Middleware.mp4",
@@ -12,69 +18,105 @@ const slides = [
   // Add more slides as needed
 ];
 
-const slideDuration = 3000; // 3 seconds in milliseconds
-
 const updateInterval = 70; // Update every 10 milliseconds
 
 const VideoSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [played, setPlayed] = useState(0);
   const playerRef = useRef(null);
+  const timerArray = useRef([]);
 
   const handleSlideChange = (newSlide) => {
-    if (playerRef.current) {
-      playerRef.current.seekTo(0, "seconds"); // Reset video to start
-    }
-    setCurrentSlide(newSlide);
-    setPlayed(0); // Reset the played percentage
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
   useEffect(() => {
-    let intervalId;
-    let startData = new Date();
-    if (playerRef.current) {
-      intervalId = setInterval(() => {
-        const currentDate = new Date();
-        const currentTime = currentDate - startData;
-        const percentage = currentTime / (slideDuration / 1000) / 10;
-
-        setPlayed(percentage);
-      }, updateInterval);
-    }
+    timerArray.current[currentSlide].classList.add("active");
 
     return () => {
-      clearInterval(intervalId);
+      console.log(playerRef.current.player);
+      timerArray.current[currentSlide].classList.remove("active");
+      playerRef.current.player.handlePause();
     };
   }, [currentSlide]);
 
+  const playerConfig = {
+    youtube: {
+      playerVars: {
+        disablekb: 1, // Disable keyboard controls
+        controls: 0, // Disable YouTube controls
+      },
+    },
+  };
+
   return (
-    <Carousel
-      showArrows={false}
-      showThumbs={false}
-      selectedItem={currentSlide}
-      onChange={handleSlideChange}
-      interval={slideDuration}
-      infiniteLoop={true}
-      autoPlay={true} // 3 seconds autoplay
-      showStatus={false}
-      showIndicators={false}
+    <div
+      style={{ position: "relative", maxHeight: "85vh", overflow: "hidden" }}
     >
-      {slides.map((slide, index) => (
-        <div key={index}>
-          <ReactPlayer
-            ref={playerRef}
-            url={slide.videoUrl}
-            controls={false}
-            loop={true}
-            muted={true}
-            playing={true}
-            width="100%"
-            height="auto"
+      <Slider
+        arrows={false}
+        dots={false}
+        selectedItem={currentSlide}
+        afterChange={handleSlideChange}
+        infinite={true}
+        autoplaySpeed={5000}
+        autoplay={true}
+      >
+        {slides.map((slide, index) => (
+          <div key={index} style={{ position: "relative" }}>
+            <ReactPlayer
+              ref={playerRef}
+              url={slide.videoUrl}
+              controls={false}
+              loop={true}
+              config={playerConfig}
+              muted={true}
+              playing={true}
+              width="100%"
+              height="auto"
+              
+            />
+            <div
+              className=""
+              style={{
+                position: "absolute",
+                left: `${30 + 20 * index}%`,
+                top: "50%",
+                translate: "-50% -50%",
+              }}
+            >
+              <h1 className="text-thin">
+                Welcome to <span className="text-thin-light">Urbanfit</span>
+              </h1>
+
+              <br />
+              <Link to={SHOP} className="button">
+                Shop Now &nbsp;
+                <ArrowRightOutlined />
+              </Link>
+            </div>
+          </div>
+        ))}
+      </Slider>
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          width: "30rem",
+          position: "absolute",
+          left: "50%",
+          translate: "-50%",
+          bottom: "1rem",
+        }}
+      >
+        {slides.map((_, index) => (
+          <div
+            key={index}
+            ref={(e) => (timerArray.current[index] = e)}
+            className="timer"
           />
-          <div>Time played: {played.toFixed(2)}%</div>
-        </div>
-      ))}
-    </Carousel>
+        ))}
+      </div>
+    </div>
   );
 };
 
