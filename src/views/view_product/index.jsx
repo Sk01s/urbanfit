@@ -440,7 +440,7 @@ const ViewProduct = () => {
               ) : (
                 <ProductShowcaseGrid
                   products={essentialProducts}
-                  title={"Recommended"}
+                  title={"Essentials"}
                   skeletonCount={2}
                 />
               )}

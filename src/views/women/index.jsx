@@ -42,7 +42,7 @@ const index = () => {
           </Link>
           <Link to={"/store/women/essential"} className="category-card">
             <div>
-              <p>Essentail</p>
+              <p>Essential</p>
               <button>Shop Now</button>
             </div>
           </Link>
