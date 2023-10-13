@@ -22,9 +22,10 @@ const Footer = () => {
               lineHeight: "normal",
             }}
           >
-            Our goal is to inspire youth to believe in themselves, champion
-            creativity, and embrace uniqueness. At UrbanFit, every team member
-            is a young talent, hence our 'Made by society' slogan.
+            Our mission is to inspire and ignite the boundless creativity and
+            uniqueness within today's youth. At Urbanfit, each team member
+            embodies youthful talent, giving life to our 'Made by
+            Society' slogan.
             <br />
             <br />
             <strong> Join us to empower youth for a better society!</strong>

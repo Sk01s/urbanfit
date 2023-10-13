@@ -10,10 +10,12 @@ import {
 } from "@/constants/routes";
 const slides = [
   {
-    videoUrl: "/2- What is Middleware.mp4",
+    videoUrl:
+      "https://house-fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/1268729919001/44fb1ed0-9a76-4f2a-87b3-fbbfbd87e778/e27d090d-28a7-4312-8e26-d54a696e92fe/main.mp4?fastly_token=NjcwOTQ4ZTdfNzVjN2I5YTI0MDY2MjAyNGUwMWY3Nzg4OWY3ZjIzNDQxMWZmZGI1ZjhlNjcyZjMyOWFkOTg2ODk4NGI5MjMzZl8vL2hvdXNlLWZhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMTI2ODcyOTkxOTAwMS80NGZiMWVkMC05YTc2LTRmMmEtODdiMy1mYmJmYmQ4N2U3NzgvZTI3ZDA5MGQtMjhhNy00MzEyLThlMjYtZDU0YTY5NmU5MmZlL21haW4ubXA0",
   },
   {
-    videoUrl: "/1- Introduction.mp4",
+    videoUrl:
+      "https://house-fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/1268729919001/9dbda366-67d9-434b-b6d8-0dfad1f2fb58/6bfbfb62-fd1e-43f7-b68a-97b432ecca11/main.mp4?fastly_token=NjcwOTQ4ZWFfZGMxZDJmZmQ2NjdlNjNkZTUyZTdjYmQ5YzliOTYzZGI1MWVlMzI2MTMxMzkwMTcwMmZhODBjNzNmOThkMzUxN18vL2hvdXNlLWZhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMTI2ODcyOTkxOTAwMS85ZGJkYTM2Ni02N2Q5LTQzNGItYjZkOC0wZGZhZDFmMmZiNTgvNmJmYmZiNjItZmQxZS00M2Y3LWI2OGEtOTdiNDMyZWNjYTExL21haW4ubXA0",
   },
   // Add more slides as needed
 ];
@@ -28,14 +30,13 @@ const VideoSlider = () => {
   const handleSlideChange = (newSlide) => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
-
+  const isSmall = window.innerWidth <= 728;
   useEffect(() => {
     timerArray.current[currentSlide].classList.add("active");
 
     return () => {
-      console.log(playerRef.current.player);
       timerArray.current[currentSlide].classList.remove("active");
-      playerRef.current.player.handlePause();
+      // playerRef.current.player.handlePause();
     };
   }, [currentSlide]);
 
@@ -68,13 +69,32 @@ const VideoSlider = () => {
               url={slide.videoUrl}
               controls={false}
               loop={true}
-              config={playerConfig}
+              config={{
+                file: {
+                  attributes: {
+                    style: {
+                      width: "", // Override the width of the inner video element
+                    },
+                  },
+                },
+              }}
               muted={true}
               playing={true}
               width="100%"
               height="auto"
-              
+              style={{
+                position: currentSlide === index ? "relative" : "initial",
+              }}
             />
+            <div style={{ display: "none" }}>
+              <video
+                controls={false}
+                ref={(video) => (playerRef.current = video)}
+                width={isSmall ? "auto" : "100%"}
+              >
+                <source src={slide.videoUrl} type="video/mp4" />
+              </video>
+            </div>
             <div
               className=""
               style={{

@@ -9,9 +9,14 @@ import AdminRoute from "./AdminRoute";
 import ClientRoute from "./ClientRoute";
 import PublicRoute from "./PublicRoute";
 import Terms from "./../components/terms/index";
+import { createPortal } from "react-dom";
 // Revert back to history v4.10.0 because
 // v5.0 breaks navigation
 export const history = createBrowserHistory();
+
+function NavbarOut() {
+  return createPortal(<Navigation />, document.getElementById("portal"));
+}
 
 const AppRouter = () => {
   console.log(view.OrderView);
@@ -19,7 +24,7 @@ const AppRouter = () => {
   return (
     <Router history={history}>
       <>
-        <Navigation />
+        <NavbarOut />
         <Basket />
         {!accepeted && <Terms setAccepeted={setAccepeted} />}
         <Switch>

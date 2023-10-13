@@ -158,14 +158,14 @@ const Navigation = (props) => {
       )}
       <nav
         style={{
-          position: "absolute",
-          top: 0,
+          position: "inherit",
+          top: " 0em",
           left: isMenuOpen ? 0 : "-100%",
           transitionDuration: "300ms",
           backgroundColor: "white",
           width: "90vw",
           height: "100dvh",
-          zIndex: "10",
+          zIndex: "1000",
           overflowY: "scroll",
           overflowX: "hidden",
         }}
@@ -491,12 +491,12 @@ const Navigation = (props) => {
       <div
         onClick={closeMenu}
         style={{
-          position: "absolute",
+          position: "inherit",
           width: "100vw",
           height: "100dvh",
           top: 0,
           left: isMenuOpen ? 0 : "-100%",
-          zIndex: 9,
+          zIndex: 999,
           backgroundColor: "#222222a0",
         }}
       />

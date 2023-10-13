@@ -71,6 +71,8 @@ h6 {
 
 .content {
   width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
   min-height: 100dvh;
   position: relative;
   padding: $top $pad-desktop;
