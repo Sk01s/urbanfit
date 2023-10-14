@@ -85,7 +85,7 @@ const VideoSlider = () => {
               }}
               muted={true}
               playing={true}
-              width={isSmall ? "100vw" : "100%"}
+              // width={isSmall ? "auto" : "100%"}
               height="auto"
               style={{
                 position: currentSlide === index ? "relative" : "initial",
@@ -108,6 +108,7 @@ const VideoSlider = () => {
                 left: `${30 + 20 * index}%`,
                 top: "50%",
                 translate: "-50% -50%",
+                zIndex: 2,
               }}
             >
               <h1 className="text-thin">
