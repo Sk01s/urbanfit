@@ -41,15 +41,6 @@ const VideoSlider = () => {
     };
   }, [currentSlide]);
 
-  const playerConfig = {
-    youtube: {
-      playerVars: {
-        disablekb: 1, // Disable keyboard controls
-        controls: 0, // Disable YouTube controls
-      },
-    },
-  };
-
   return (
     <div
       style={{
@@ -91,6 +82,7 @@ const VideoSlider = () => {
                 position: currentSlide === index ? "relative" : "initial",
                 zIndex: currentSlide === index ? "1" : "0",
               }}
+              playsinline
             />
             <div style={{ display: "none" }}>
               <video

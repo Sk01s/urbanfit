@@ -12,9 +12,13 @@
   margin-right: 1.4rem;
   position: relative;
   z-index: 1;
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 0px 0px 4px white, 0 0 0 4.5px black;
+  box-shadow: 0 0px 0px 4px white, 0 0 0 5px black;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
   &:hover {
     cursor: pointer;
     border: 2px solid #f1f1f1;
@@ -23,11 +27,8 @@
 
 .color-item-selected,
 .color-item-deletable {
-  transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
+  flex-shrink: 0;
+  box-shadow: 0 0px 0px 5px white, 0 0 0 6px black;
 
   //   content: "✓";
   //   position: absolute;

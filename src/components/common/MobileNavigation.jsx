@@ -322,17 +322,14 @@ const Navigation = (props) => {
             </Link>
           </li>
           <li>
-            <Link to="/store/men/jacket">Jacket</Link>
+            <Link onClick={closeMenu} to="/store/men/jacket">
+              Jacket
+            </Link>
           </li>
 
           <li>
             <Link onClick={closeMenu} to="/type/men/sweatpants-&-pants">
               Sweatpants & Pants
-            </Link>
-          </li>
-          <li>
-            <Link onClick={closeMenu} to="/type/men/leggings">
-              Leggings
             </Link>
           </li>
         </ul>
@@ -395,9 +392,9 @@ const Navigation = (props) => {
               products={essentialProducts}
               skeletonCount={6}
               title={"Essentials"}
-              titleStyle={{}}
               infinite={false}
               center={false}
+              to={ROUTE.ESSENTIAL_PRODUCTS}
             />
           </div>
         </section>

@@ -35,6 +35,7 @@
   padding: 5px $s-size;
   animation: forwards showing 200ms ease-in-out;
   -webkit-animation: forwards showing 200ms ease-in-out;
+  background-color: white;
 }
 @keyframes showing {
   from {

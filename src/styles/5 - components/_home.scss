@@ -63,9 +63,11 @@
   width: 100%;
 }
 video {
-  // user-select: none;
-  // width: auto;
+  pointer-events: none;
   // height: 100%;
+}
+video::-webkit-media-controls-start-playback-button {
+  display: none;
 }
 video::-webkit-media-controls-picture-in-picture-button {
   display: none;

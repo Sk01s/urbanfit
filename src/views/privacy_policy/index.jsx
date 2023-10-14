@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useScrollTop } from "@/hooks";
 
 function index(props) {
+  useScrollTop;
   return (
     <div
       className="privacy-policy"

@@ -18,10 +18,10 @@ const CreditPayment = ({ setPaymentType }) => {
 
     if (cb && cn && cl) {
       if (values.type === "credit") {
-        cardInputRef.current.focus();
+        cardInputRef.current?.focus();
         cn.style.height = `${cb.offsetHeight + cl.offsetHeight}px`;
       } else {
-        cardInputRef.current.blur();
+        cardInputRef.current?.blur();
         cn.style.height = `${cb.offsetHeight}px`;
       }
     }

@@ -141,12 +141,20 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     id="next"
                     onClick={() => {
                       firebase
-                        .requestPhoneOtp(form.current.values.mobile.value)
-                        .then(() => setOtpModel(true))
-                        .catch((error) => {
-                          setOtpModel(false);
-                          setError(error);
-                          displayActionMessage(error);
+                        .getUser(firebase.auth.currentUser.uid)
+                        .then((e) => {
+                          if (e.data().allowed) {
+                            form.current.handleSubmit();
+                          } else {
+                            firebase
+                              .requestPhoneOtp(form.current.values.mobile.value)
+                              .then(() => setOtpModel(true))
+                              .catch((error) => {
+                                setOtpModel(false);
+                                setError(error);
+                                displayActionMessage(error);
+                              });
+                          }
                         });
                     }}
                   >

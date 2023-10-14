@@ -424,6 +424,8 @@ const ViewProduct = () => {
                       products={relatedProduct}
                       skeletonCount={4}
                       title={"Make your look perfect "}
+                      to={false}
+                      center={false}
                     />
                   </>
                 )}
@@ -442,6 +444,7 @@ const ViewProduct = () => {
                   products={essentialProducts}
                   title={"Essentials"}
                   skeletonCount={2}
+                  to={ESSENTIAL_PRODUCTS}
                 />
               )}
             </div>

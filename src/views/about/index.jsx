@@ -1,6 +1,8 @@
+import { useScrollTop } from "@/hooks";
 import React from "react";
 
 const about = () => {
+  useScrollTop();
   return (
     <div
       style={{

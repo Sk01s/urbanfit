@@ -33,7 +33,7 @@ const ProductShowcase = ({
 
   return (
     <>
-      <div className="display-header">
+      <div className="display-header" style={{ marginBottom: to || "2rem" }}>
         <button
           onClick={goToPrevious}
           style={{
@@ -52,7 +52,6 @@ const ProductShowcase = ({
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-left"
           >
             <title>Left</title>
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -83,20 +82,22 @@ const ProductShowcase = ({
           </svg>
         </button>
       </div>
-      <Link
-        to={to}
-        style={{
-          textAlign: "center",
-          color: "#5b9bbe",
-          fontSize: "1.2rem",
-          textDecoration: "underline",
-          marginInline: "auto",
-          display: "block",
-          marginBottom: ".6rem",
-        }}
-      >
-        View All
-      </Link>
+      {to && (
+        <Link
+          to={to}
+          style={{
+            textAlign: "center",
+            color: "#5b9bbe",
+            fontSize: "1.2rem",
+            textDecoration: "underline",
+            marginInline: "auto",
+            display: "block",
+            marginBottom: "1.6rem",
+          }}
+        >
+          View All
+        </Link>
+      )}
       <Slider ref={sliderRef} {...settings}>
         {products.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (

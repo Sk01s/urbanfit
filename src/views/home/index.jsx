@@ -23,7 +23,7 @@ import { ProductGrid, ProductList } from "@/components/product";
 import { categories } from "@/constants/constants";
 import { Landing } from "@/components/common";
 import { useEffect } from "react";
-
+import firebase from "@/services/firebase";
 const Home = () => {
   useDocumentTitle("Urbanfit | Home");
   useScrollTop();
@@ -37,6 +37,10 @@ const Home = () => {
     shallowEqual
   );
   const season = useSeason();
+  useEffect(() => {
+    firebase
+
+  }, []);
 
   const {
     seasonalProducts,
