@@ -89,7 +89,6 @@ const SignIn = ({ history }) => {
                           name="email"
                           type="email"
                           label="Email"
-                          placeholder="test@example.com"
                           component={CustomInput}
                         />
                       </div>

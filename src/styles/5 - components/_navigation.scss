@@ -81,6 +81,7 @@
   padding: 0.5rem $l-size;
   display: flex;
   justify-content: space-between;
+  flex-direction: row-reverse;
 }
 
 .navigation-menu {
