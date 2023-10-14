@@ -36,8 +36,7 @@ const CustomMobileInput = (props) => {
         defaultCountry="lb"
         inputStyle={{
           width: "100%",
-          backgroundColor: "#f9f9f9",
-          borderRadius: 0,
+          backgroundColor: "#fff",
         }}
         onChange={(phone) => handleChange(phone)}
       />
@@ -46,7 +45,7 @@ const CustomMobileInput = (props) => {
 };
 
 CustomMobileInput.defaultProps = {
-  label: "Mobile Number",
+  label: "",
   placeholder: "09254461351",
 };
 

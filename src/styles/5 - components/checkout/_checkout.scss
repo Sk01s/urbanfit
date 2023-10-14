@@ -10,15 +10,12 @@
 .checkout-header {
   display: flex;
   justify-content: center;
-  position: sticky;
-  top: $nav-height;
-  background: $background-color;
+  position: relative;
   padding: 1rem 0;
   margin-bottom: 3rem;
   z-index: 1;
 
   @include mobile {
-    top: 5rem;
   }
 }
 

@@ -2,13 +2,14 @@ import { FeaturedProduct } from "@/components/product";
 import PropType from "prop-types";
 import React, { useRef } from "react";
 import Slider from "react-slick";
-
+import { Link } from "react-router-dom";
 const ProductShowcase = ({
   products,
   skeletonCount,
   title,
   titleStyle,
   center = true,
+  to = "",
 }) => {
   const settings = {
     infinite: true,
@@ -38,12 +39,13 @@ const ProductShowcase = ({
           style={{
             background: "rgba(255, 255, 255, 0)",
             border: "none",
+            translate: "0 0.6rem",
           }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="#000"
@@ -62,25 +64,39 @@ const ProductShowcase = ({
           style={{
             background: "rgba(255, 255, 255, 0)",
             border: "none",
+            translate: "0 0.6rem",
           }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="#000"
             stroke-width="1.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="feather feather-chevron-right"
           >
             <title>Right</title>
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
       </div>
+      <Link
+        to={to}
+        style={{
+          textAlign: "center",
+          color: "#5b9bbe",
+          fontSize: "1.2rem",
+          textDecoration: "underline",
+          marginInline: "auto",
+          display: "block",
+          marginBottom: ".6rem",
+        }}
+      >
+        View All
+      </Link>
       <Slider ref={sliderRef} {...settings}>
         {products.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (

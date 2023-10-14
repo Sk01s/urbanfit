@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { CustomInput, CustomMobileInput } from "@/components/formik";
+import {
+  CustomInput,
+  CustomMobileInput,
+  CustomCreatableSelect,
+} from "@/components/formik";
 import { Field, useFormikContext } from "formik";
 import React from "react";
+import { countries } from "@/constants/constants";
 
 const ShippingForm = () => {
   const { values } = useFormikContext();
@@ -13,8 +18,7 @@ const ShippingForm = () => {
             <Field
               name="fullname"
               type="text"
-              label="* Full Name"
-              placeholder="Enter your full name"
+              label="Full name"
               component={CustomInput}
               style={{ textTransform: "capitalize" }}
             />
@@ -23,8 +27,7 @@ const ShippingForm = () => {
             <Field
               name="email"
               type="email"
-              label="* Email Address"
-              placeholder="Enter your email address"
+              label="Email"
               component={CustomInput}
             />
           </div>
@@ -34,8 +37,7 @@ const ShippingForm = () => {
             <Field
               name="street"
               type="text"
-              label="* Street"
-              placeholder="Enter street"
+              label="Street"
               component={CustomInput}
             />
           </div>
@@ -43,8 +45,7 @@ const ShippingForm = () => {
             <Field
               name="city"
               type="text"
-              label="* City"
-              placeholder="Enter City"
+              label="City"
               component={CustomInput}
             />
           </div>
@@ -54,8 +55,7 @@ const ShippingForm = () => {
             <Field
               name="building"
               type="text"
-              label="* Building"
-              placeholder="Enter full Building Name"
+              label="Building"
               component={CustomInput}
             />
           </div>
@@ -63,8 +63,7 @@ const ShippingForm = () => {
             <Field
               name="floor"
               type="text"
-              label="* Floor Number"
-              placeholder="Enter Floor Number"
+              label="Floor"
               component={CustomInput}
             />
           </div>
@@ -74,13 +73,26 @@ const ShippingForm = () => {
             <Field
               name="nearby"
               type="text"
-              label="*  Near by"
-              placeholder="Enter full Near by"
+              label="Near by"
               component={CustomInput}
             />
           </div>
           <div className="d-block checkout-field">
             <CustomMobileInput name="mobile" defaultValue={values.mobile} />
+          </div>
+          <div className="d-block">
+            <div className="product-form-field" style={{}}>
+              <CustomCreatableSelect
+                defaultValue={{
+                  label: "lebanon",
+                  value: "lebanon",
+                }}
+                name="categories"
+                iid="categories"
+                options={countries}
+                label="Countries"
+              />
+            </div>
           </div>
         </div>
         <div className="checkout-fieldset">

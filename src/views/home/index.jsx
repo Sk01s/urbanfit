@@ -102,6 +102,7 @@ const Home = () => {
               title={season + " collection"}
               products={seasonalProducts}
               skeletonCount={6}
+              to={SEASONAL_PRODUCTS}
             />
           )}
         </div>
@@ -126,6 +127,7 @@ const Home = () => {
               title={"Essentials"}
               products={essentialProducts}
               skeletonCount={6}
+              to={ESSENTIAL_PRODUCTS}
             />
           )}
         </div>
