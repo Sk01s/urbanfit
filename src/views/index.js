@@ -32,3 +32,5 @@ export { default as Men } from "./men/index";
 export { default as SexCategory } from "./men/Category";
 export { default as TypeCategory } from "./men/type";
 export { default as Women } from "./women/index";
+export { default as About } from "./about/index";
+export { default as Privacy } from "./privacy_policy/index";

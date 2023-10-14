@@ -176,29 +176,25 @@ const Footer = () => {
                   id="menu-item-7183"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7183"
                 >
-                  <a href="https://shopwithabc.com/about-us/">Our Story</a>
+                  <Link to="/about-us/">Our Story</Link>
                 </li>
                 <li
                   id="menu-item-7181"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-7181"
                 >
-                  <a href="https://shopwithabc.com/abc-app-download/">
-                    Our Impact
-                  </a>
+                  <Link to="/about-us">Our Impact</Link>
                 </li>
                 <li
                   id="menu-item-7127"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-7127"
                 >
-                  <a href="https://www.abc.com.lb/Loyalty/HowItWorks%20">
-                    Who we are
-                  </a>
+                  <Link to="/about-us">Who we are</Link>
                 </li>
                 <li
                   id="menu-item-7128"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-7128"
                 >
-                  <a href="https://www.abc.com.lb/World">Contact Us</a>
+                  <Link to="/about-us">Contact Us</Link>
                 </li>
               </ul>
             </div>
@@ -222,12 +218,9 @@ const Footer = () => {
                   id="menu-item-7138"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-7138"
                 >
-                  <a
-                    rel="privacy-policy"
-                    href="https://shopwithabc.com/privacy-policy/"
-                  >
+                  <Link rel="privacy-policy" to="/privacy">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

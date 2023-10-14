@@ -44,7 +44,6 @@ const UserNav = ({ isSigned = true }) => {
 
   return isAuthenticating ? (
     <div className="user-nav">
-      <span>Signing Out</span>
       &nbsp;
       <LoadingOutlined />
     </div>
@@ -61,7 +60,34 @@ const UserNav = ({ isSigned = true }) => {
         {profile.fullname && profile.fullname.split(" ")[0]}
       </h5>
       <div className="user-nav-img-wrapper">
-        <img alt="" className="user-nav-img" src={profile.avatar} />
+        {isSigned ? (
+          <img alt="" className="user-nav-img" src={profile.avatar} />
+        ) : (
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            style={{ backgroundColor: "white" }}
+          >
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="">
+              <path
+                d="M3,18.25 C3,15.763979 7.54216175,14.2499656 12.0281078,14.2499656 C16.5140539,14.2499656 21,15.7636604 21,18.25 C21,19.9075597 21,20.907554 21,21.2499827 L3,21.2499827 C3,20.9073416 3,19.9073474 3,18.25 Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+              ></path>
+              <circle
+                stroke="currentColor"
+                stroke-width="1.5"
+                cx="12"
+                cy="7"
+                r="4.25"
+              ></circle>
+            </g>
+          </svg>
+        )}
       </div>
       <DownOutlined style={{ fontSize: "1.2rem" }} />
 

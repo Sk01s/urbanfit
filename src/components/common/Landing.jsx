@@ -31,6 +31,7 @@ const VideoSlider = () => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
   const isSmall = window.innerWidth <= 728;
+  const isBig = window.innerWidth >= 1200;
   useEffect(() => {
     timerArray.current[currentSlide].classList.add("active");
 
@@ -51,7 +52,11 @@ const VideoSlider = () => {
 
   return (
     <div
-      style={{ position: "relative", maxHeight: "85vh", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        minHeight: isSmall ? "70vh" : "auto",
+      }}
     >
       <Slider
         arrows={false}
@@ -73,17 +78,18 @@ const VideoSlider = () => {
                 file: {
                   attributes: {
                     style: {
-                      width: "", // Override the width of the inner video element
+                      width: isBig ? "100vw" : "", // Override the width of the inner video element
                     },
                   },
                 },
               }}
               muted={true}
               playing={true}
-              width="100%"
+              width={isSmall ? "auto" : "100%"}
               height="auto"
               style={{
                 position: currentSlide === index ? "relative" : "initial",
+                zIndex: currentSlide === index ? "1" : "0",
               }}
             />
             <div style={{ display: "none" }}>

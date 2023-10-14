@@ -83,95 +83,103 @@ const Basket = () => {
         </div>
       </Modal>
       <div className="basket">
-        <div className="basket-list">
-          <div className="basket-header">
-            <h3 className="basket-header-title">
-              My Basket &nbsp;
-              <span>
-                ({` ${basket.length} ${basket.length > 1 ? "items" : "item"}`})
-              </span>
-            </h3>
-            <div className="basket-header-btn">
-              <BasketToggle>
-                {({ onClickToggle }) => (
-                  <span
-                    className="basket-toggle button button-border button-border-gray button-small"
-                    onClick={onClickToggle}
-                    role="presentation"
-                  >
-                    Close
-                  </span>
-                )}
-              </BasketToggle>
-            </div>
-          </div>
-          {basket.length <= 0 && (
-            <div className="basket-empty">
-              <h5 className="basket-empty-msg">Your Cart is empty</h5>
-              <BasketToggle>
-                {({ onClickToggle }) => (
-                  <button
-                    className="button"
-                    onClick={onClickToggle}
-                    role="presentation"
-                  >
-                    Start Shopping
-                  </button>
-                )}
-              </BasketToggle>
-            </div>
-          )}
-          <div style={{ overflowY: "scroll" }}>
-            {basket.map((product, i) => (
-              <BasketItem
-                // eslint-disable-next-line react/no-array-index-key
-                key={`${product.id}_${i}`}
-                product={product}
-                basket={basket}
-                dispatch={dispatch}
-              />
-            ))}
-            <section style={{ overflow: "hidden", height: " 95dvh; " }}>
-              <div
-                style={{
-                  width: "99%",
-                  marginTop: "2rem",
-                  gap: 0,
-                }}
-              >
-                <ProductShowcaseGrid
-                  products={essentialProducts}
-                  skeletonCount={6}
-                  title={"Essentials"}
-                  titleStyle={{}}
-                  infinite={false}
-                  center={false}
-                />
-              </div>
-            </section>
-          </div>
-        </div>
-
-        <div className="basket-checkout">
-          <div className="basket-total">
-            <p className="basket-total-title">Subtotal Amout:</p>
-            <h2 className="basket-total-amount">
-              {displayMoney(
-                calculateTotal(
-                  basket.map((product) => product.price * product.quantity)
-                )
+        {basket.length <= 0 ? (
+          <div className="basket-empty">
+            <h5 className="basket-empty-msg">Your Cart is empty</h5>
+            <BasketToggle>
+              {({ onClickToggle }) => (
+                <button
+                  className="button"
+                  onClick={onClickToggle}
+                  role="presentation"
+                >
+                  Start Shopping
+                </button>
               )}
-            </h2>
+            </BasketToggle>
           </div>
-          <button
-            className="basket-checkout-button button"
-            disabled={basket.length === 0 || pathname === "/checkout"}
-            onClick={onCheckOut}
-            type="button"
-          >
-            Check Out
-          </button>
-        </div>
+        ) : (
+          <>
+            <div className="basket-list">
+              <div className="basket-header">
+                <h3 className="basket-header-title">
+                  My Basket &nbsp;
+                  <span>
+                    (
+                    {` ${basket.length} ${
+                      basket.length > 1 ? "items" : "item"
+                    }`}
+                    )
+                  </span>
+                </h3>
+                <div className="basket-header-btn">
+                  <BasketToggle>
+                    {({ onClickToggle }) => (
+                      <span
+                        className="basket-toggle button button-border button-border-gray button-small"
+                        onClick={onClickToggle}
+                        role="presentation"
+                      >
+                        Close
+                      </span>
+                    )}
+                  </BasketToggle>
+                </div>
+              </div>
+
+              <div style={{ overflowY: "scroll" }}>
+                {basket.map((product, i) => (
+                  <BasketItem
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`${product.id}_${i}`}
+                    product={product}
+                    basket={basket}
+                    dispatch={dispatch}
+                  />
+                ))}
+                <section style={{ overflow: "hidden", height: " 95dvh; " }}>
+                  <div
+                    style={{
+                      width: "99%",
+                      marginTop: "2rem",
+                      gap: 0,
+                    }}
+                  >
+                    <ProductShowcaseGrid
+                      products={essentialProducts}
+                      skeletonCount={6}
+                      title={"Essentials"}
+                      titleStyle={{}}
+                      infinite={false}
+                      center={false}
+                    />
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div className="basket-checkout">
+              <div className="basket-total">
+                <p className="basket-total-title">Subtotal Amout:</p>
+                <h2 className="basket-total-amount">
+                  {displayMoney(
+                    calculateTotal(
+                      basket.map((product) => product.price * product.quantity)
+                    )
+                  )}
+                </h2>
+              </div>
+              <button
+                className="basket-checkout-button button"
+                disabled={basket.length === 0 || pathname === "/checkout"}
+                onClick={onCheckOut}
+                type="button"
+              >
+                Check Out
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </Boundary>
   );

@@ -14,21 +14,18 @@ import { createPortal } from "react-dom";
 // v5.0 breaks navigation
 export const history = createBrowserHistory();
 
-function NavbarOut() {
-  return createPortal(<Navigation />, document.getElementById("portal"));
-}
-
 const AppRouter = () => {
   console.log(view.OrderView);
   const [accepeted, setAccepeted] = useState(localStorage.getItem("terms"));
   return (
     <Router history={history}>
       <>
-        <NavbarOut />
+        <Navigation />
         <Basket />
         {!accepeted && <Terms setAccepeted={setAccepeted} />}
         <Switch>
           <Route component={view.Search} exact path={ROUTES.SEARCH} />
+          <Route component={view.About} exact path={ROUTES.ABOUT_US} />
           <Route component={view.Home} exact path={ROUTES.HOME} />
           <Route component={view.Shop} exact path={ROUTES.SHOP} />
           <Route
@@ -48,6 +45,7 @@ const AppRouter = () => {
           <Route component={view.Hoodies} exact path={ROUTES.HOODIES_SWEATS} />
           <Route component={view.Jackets} exact path={ROUTES.JACKETS} />
           <Route component={view.Sets} exact path={ROUTES.SETS} />
+          <Route component={view.Privacy} exact path={ROUTES.PRIVACY} />
           <Route component={view.Men} exact path={ROUTES.MEN} />
           <Route component={view.Women} exact path={ROUTES.WOMEN} />
           <Route

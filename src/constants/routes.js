@@ -36,3 +36,4 @@ export const TERMS = "/terms-conditions";
 export const ORDER_COMPLETED = "/order-completed";
 export const FAQS = "/faqs";
 export const ABOUT_US = "/about-us";
+export const PRIVACY = "/privacy";
