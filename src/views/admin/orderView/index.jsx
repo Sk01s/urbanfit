@@ -65,30 +65,49 @@ const EditProduct = () => {
         >
           <div>
             <section className="address">
+              <h4>Contact</h4>
+              <div>
+                <div>{orderDetails.address?.email}</div>
+                <div>{orderDetails.address?.mobile?.value}</div>
+
+                <div>
+                  {orderDetails.address?.building || <Skeleton width={40} />}
+                </div>
+              </div>
+            </section>
+            <section className="address">
               <h4>Shipping Address</h4>
               <span>
                 {orderDetails.address?.isInternational ? "" : "No "}
                 International Shipping
               </span>
               <div>
-                <span>
-                  {orderDetails.address?.city || <Skeleton width={40} />}
+                <div>
+                  Country :{" "}
+                  {orderDetails.address?.country || <Skeleton width={40} />}
                   {" , "}
-                </span>
+                </div>
+                <div>
+                  City : {orderDetails.address?.city || <Skeleton width={40} />}
+                  {" , "}
+                </div>
 
-                <span>
+                <div>
+                  Street :{" "}
                   {orderDetails.address?.street || <Skeleton width={40} />}
                   {" , "}
-                </span>
+                </div>
 
-                <span>
+                <div>
+                  Floor :{" "}
                   {orderDetails.address?.floor || <Skeleton width={40} />}
                   {" , "}
-                </span>
+                </div>
 
-                <span>
+                <div>
+                  Building{" "}
                   {orderDetails.address?.building || <Skeleton width={40} />}
-                </span>
+                </div>
               </div>
             </section>
             <section className="items">

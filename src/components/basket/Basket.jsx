@@ -103,12 +103,12 @@ const Basket = () => {
             <div className="basket-list">
               <div className="basket-header">
                 <h3 className="basket-header-title">
-                  My Basket &nbsp;
+                  My Cart &nbsp;
                   <span>
                     (
                     {` ${basket.length} ${
                       basket.length > 1 ? "items" : "item"
-                    }`}
+                    } `}
                     )
                   </span>
                 </h3>

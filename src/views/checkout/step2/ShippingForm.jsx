@@ -14,6 +14,36 @@ const ShippingForm = () => {
     <div className="checkout-shipping-wrapper">
       <div className="checkout-shipping-form">
         <div className="checkout-fieldset">
+          <div
+            className="d-block checkout-fieldset"
+            style={{
+              margin: window.innerWidth <= 480 ? 0 : "0px 3.2rem 0 1.2rem",
+              fontSize: "1.2rem",
+            }}
+          >
+            <div className="product-form-field" style={{ marginBottom: "0" }}>
+              <CustomCreatableSelect
+                defaultValue={{
+                  label: values.country,
+                  value: values.country,
+                }}
+                name="country"
+                iid="country"
+                options={countries}
+                label="Country"
+              />
+            </div>
+          </div>
+          <div
+            className="d-block checkout-fieldset"
+            style={{ margin: window.innerWidth <= 480 ? "0 0 1.2rem 0" : 0 }}
+          >
+            <div className="checkout-field" style={{ margin: "0" }}>
+              <CustomMobileInput name="mobile" defaultValue={values.mobile} />
+            </div>
+          </div>
+        </div>
+        <div className="checkout-fieldset">
           <div className="d-block checkout-field">
             <Field
               name="fullname"
@@ -71,31 +101,14 @@ const ShippingForm = () => {
         <div className="checkout-fieldset">
           <div className="d-block checkout-field">
             <Field
-              name="nearby"
+              name="zipcode"
               type="text"
-              label="Near by"
+              label="Postal code (optional)"
               component={CustomInput}
             />
           </div>
-          <div className="d-block checkout-field">
-            <CustomMobileInput name="mobile" defaultValue={values.mobile} />
-          </div>
-          <div className="d-block">
-            <div className="product-form-field" style={{}}>
-              <CustomCreatableSelect
-                defaultValue={{
-                  label: "lebanon",
-                  value: "lebanon",
-                }}
-                name="categories"
-                iid="categories"
-                options={countries}
-                label="Countries"
-              />
-            </div>
-          </div>
         </div>
-        <div className="checkout-fieldset">
+        {/* <div className="checkout-fieldset">
           <Field name="isInternational">
             {({ field, form, meta }) => (
               <div className="checkout-field">
@@ -127,11 +140,11 @@ const ShippingForm = () => {
                     </h5>
                     <h4 className="margin-0">$50.00</h4>
                   </label>
-                </div>
-              </div>
+                </div> */}
+        {/* </div>
             )}
           </Field>
-        </div>
+        </div> */}
       </div>
     </div>
   );

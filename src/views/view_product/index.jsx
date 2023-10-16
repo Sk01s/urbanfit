@@ -200,7 +200,7 @@ const ViewProduct = () => {
                         className={`product-size  ${
                           product.smQuantity || "not-available"
                         }`}
-                        disabled={product.smQuantity ? false : true}
+                        disabled={product.smQuantity > 0 ? false : true}
                         onClick={(e) => onSelectedSizeChange(3, "sm")}
                       >
                         S
@@ -210,7 +210,7 @@ const ViewProduct = () => {
                         className={`product-size ${
                           product.mdQuantity || "not-available"
                         }`}
-                        disabled={product.mdQuantity ? false : true}
+                        disabled={product.mdQuantity > 0 ? false : true}
                         onClick={(e) => onSelectedSizeChange(2, "md")}
                       >
                         M
@@ -220,7 +220,7 @@ const ViewProduct = () => {
                         className={`product-size ${
                           product.lgQuantity || "not-available"
                         }`}
-                        disabled={product.lgQuantity ? false : true}
+                        disabled={product.lgQuantity > 0 ? false : true}
                         onClick={(e) => onSelectedSizeChange(1, "lg")}
                       >
                         L
@@ -230,7 +230,7 @@ const ViewProduct = () => {
                         className={`product-size  ${
                           product.xlQuantity || "not-available"
                         }`}
-                        disabled={product.xlQuantity ? false : true}
+                        disabled={product.xlQuantity > 0 ? false : true}
                         onClick={(e) => onSelectedSizeChange(0, "xl")}
                       >
                         XL

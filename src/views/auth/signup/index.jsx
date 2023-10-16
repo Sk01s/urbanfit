@@ -91,34 +91,40 @@ const SignUp = ({ history }) => {
               >
                 {() => (
                   <Form>
-                    <div className="auth-field">
+                    <div
+                      className="auth-field"
+                      style={{ marginBottom: "1rem" }}
+                    >
                       <Field
                         disabled={isAuthenticating}
                         name="fullname"
                         type="text"
-                        label="* Full Name"
-                        placeholder="John Doe"
+                        label="Full Name"
                         style={{ textTransform: "capitalize" }}
                         component={CustomInput}
                       />
                     </div>
-                    <div className="auth-field">
+                    <div
+                      className="auth-field"
+                      style={{ marginBottom: "1rem" }}
+                    >
                       <Field
                         disabled={isAuthenticating}
                         name="email"
                         type="email"
-                        label="* Email"
-                        placeholder="test@example.com"
+                        label="Email"
                         component={CustomInput}
                       />
                     </div>
-                    <div className="auth-field">
+                    <div
+                      className="auth-field"
+                      style={{ marginBottom: "1rem" }}
+                    >
                       <Field
                         disabled={isAuthenticating}
                         name="password"
                         type="password"
-                        label="* Password"
-                        placeholder="Your Password"
+                        label="Password"
                         component={CustomInput}
                       />
                     </div>

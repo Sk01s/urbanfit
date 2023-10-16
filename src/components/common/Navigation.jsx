@@ -30,6 +30,9 @@ const Navigation = () => {
     setPopupVisible(false);
   };
 
+  function isInVisable() {
+    return pathname.startsWith("/checkout");
+  }
   const store = useSelector((state) => ({
     basketLength: state.basket.length,
     user: state.auth,
@@ -72,9 +75,10 @@ const Navigation = () => {
   }, []);
 
   if (
-    store.user &&
-    store.user.role === "ADMIN" &&
-    location.pathname.startsWith("/admin")
+    (store.user &&
+      store.user.role === "ADMIN" &&
+      location.pathname.startsWith("/admin")) ||
+    isInVisable()
   ) {
     return null;
   }

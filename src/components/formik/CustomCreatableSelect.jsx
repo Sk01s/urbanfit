@@ -1,19 +1,19 @@
 /* eslint-disable react/forbid-prop-types */
-import { useField } from 'formik';
-import PropType from 'prop-types';
-import React from 'react';
-import CreatableSelect from 'react-select/creatable';
+import { useField } from "formik";
+import PropType from "prop-types";
+import React from "react";
+import CreatableSelect from "react-select/creatable";
 
 const CustomCreatableSelect = (props) => {
   const [field, meta, helpers] = useField(props);
-  const {
-    options, defaultValue, label, placeholder, isMulti, type, iid
-  } = props;
+  const { options, defaultValue, label, placeholder, isMulti, type, iid } =
+    props;
   const { touched, error } = meta;
   const { setValue } = helpers;
 
   const handleChange = (newValue) => {
     if (Array.isArray(newValue)) {
+      console.log(newValue);
       const arr = newValue.map((fieldKey) => fieldKey.value);
       setValue(arr);
     } else {
@@ -22,9 +22,9 @@ const CustomCreatableSelect = (props) => {
   };
 
   const handleKeyDown = (e) => {
-    if (type === 'number') {
+    if (type === "number") {
       const { key } = e.nativeEvent;
-      if (/\D/.test(key) && key !== 'Backspace') {
+      if (/\D/.test(key) && key !== "Backspace") {
         e.preventDefault();
       }
     }
@@ -35,7 +35,9 @@ const CustomCreatableSelect = (props) => {
       {touched && error ? (
         <span className="label-input label-error">{error}</span>
       ) : (
-        <label className="label-input" htmlFor={field.name}>{label}</label>
+        <label className="label-input" htmlFor={field.name}>
+          {label}
+        </label>
       )}
       <CreatableSelect
         isMulti={isMulti}
@@ -49,15 +51,16 @@ const CustomCreatableSelect = (props) => {
         styles={{
           menu: (provided) => ({
             ...provided,
-            zIndex: 10
+            zIndex: 10,
           }),
           container: (provided) => ({
-            ...provided, marginBottom: '1.2rem'
+            ...provided,
+            marginBottom: "1.2rem",
           }),
           control: (provided) => ({
             ...provided,
-            border: touched && error ? '1px solid red' : '1px solid #cacaca'
-          })
+            border: touched && error ? "1px solid red" : "1px solid #cacaca",
+          }),
         }}
       />
     </div>
@@ -66,23 +69,21 @@ const CustomCreatableSelect = (props) => {
 
 CustomCreatableSelect.defaultProps = {
   isMulti: false,
-  placeholder: '',
-  iid: '',
+  placeholder: "",
+  iid: "",
   options: [],
-  type: 'string'
+  type: "string",
 };
 
 CustomCreatableSelect.propTypes = {
   options: PropType.arrayOf(PropType.object),
-  defaultValue: PropType.oneOfType([
-    PropType.object,
-    PropType.array
-  ]).isRequired,
+  defaultValue: PropType.oneOfType([PropType.object, PropType.array])
+    .isRequired,
   label: PropType.string.isRequired,
   placeholder: PropType.string,
   isMulti: PropType.bool,
   type: PropType.string,
-  iid: PropType.string
+  iid: PropType.string,
 };
 
 export default CustomCreatableSelect;

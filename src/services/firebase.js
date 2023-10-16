@@ -3,6 +3,7 @@ import "firebase/firestore";
 import "firebase/storage";
 import "firebase/auth";
 import firebaseConfig from "./config";
+import { displayActionMessage } from "@/helpers/utils";
 
 class Firebase {
   constructor() {
@@ -20,16 +21,37 @@ class Firebase {
 
   signIn = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
-  generateRecaptcha = () => {
-    window.recaptchaVerifier = new app.auth.RecaptchaVerifier("next", {
-      size: "invisible",
+
+  generateRecaptcha = (number, setModel, setError, setRec) => {
+    console.log(number);
+    window.recaptchaVerifier = new app.auth.RecaptchaVerifier("container", {
+      size: "normal",
+
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
+        console.log("sending", window.recaptchaVerifier.token);
+        this.requestPhoneOtp(number)
+          .then((e) => {
+            console.log(e);
+            setModel(true);
+            setRec(false);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+            displayActionMessage(e);
+            setRec(false);
+          });
+      },
+      "expired-callback": () => {
+        // Response expired. Ask user to solve reCAPTCHA again.
+        // ...
+        displayActionMessage("solve it reCAPTCHA  again");
       },
     });
-    const recaptchaVerifier = window.recaptchaVerifier;
+
     // [START auth_phone_recaptcha_render]
-    recaptchaVerifier.render().then((widgetId) => {
+    window.recaptchaVerifier.render().then((widgetId) => {
       window.recaptchaWidgetId = widgetId;
     });
   };
@@ -53,6 +75,7 @@ class Firebase {
     this.auth.currentUser.unlink(app.auth.PhoneAuthProvider.PROVIDER_ID);
   };
   requestPhoneOtp = (number) => {
+    console.log(this.auth.currentUser);
     return this.auth.currentUser
       .linkWithPhoneNumber(number, window.recaptchaVerifier)
       .then((confirmationResult) => {
@@ -311,7 +334,10 @@ class Firebase {
         .doc(item.id)
         .set(item, { merge: true });
     });
-    await this.db.collection("order").doc(id).set(order);
+    await this.db
+      .collection("order")
+      .doc(id)
+      .set({ ...order, otp: false });
   };
 
   getOrders = () => this.db.collection("order").get();

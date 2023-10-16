@@ -115,8 +115,8 @@
   text-overflow: ellipsis;
   position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: break-spaces;
+  font-size: 1.25rem;
 }
 
 .basket-item-remove {

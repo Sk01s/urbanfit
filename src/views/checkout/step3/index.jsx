@@ -80,10 +80,12 @@ const Payment = ({ shipping, payment, subtotal }) => {
         validate={(form) => {
           if (form.type !== "COD") {
             displayActionMessage("Feature not ready yet :)", "info");
+          } else {
+            return true;
           }
         }}
       >
-        {() => (
+        {({values,setValues}) => (
           <Form className="checkout-step-3" onSubmit={onConfirm}>
             <CreditPayment setPaymentType={setPaymentType} />
             <PayPalPayment setPaymentType={setPaymentType} />

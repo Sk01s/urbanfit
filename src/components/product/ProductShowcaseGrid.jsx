@@ -92,10 +92,11 @@ const ProductShowcase = ({
             textDecoration: "underline",
             marginInline: "auto",
             display: "block",
+            marginTop: ".4rem",
             marginBottom: "1.6rem",
           }}
         >
-          View All
+          VIEW ALL
         </Link>
       )}
       <Slider ref={sliderRef} {...settings}>

@@ -34,7 +34,6 @@
 }
 
 .checkout-header-menu {
-  width: 50%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -179,6 +178,9 @@
 
   @include mobile {
     flex-direction: column;
+    & > div {
+      margin-bottom: 1.5rem;
+    }
   }
 }
 
@@ -265,4 +267,8 @@
 
 .payment-img-discover {
   background-position: 175px 115px;
+}
+
+.react-international-phone-country-selector-dropdown {
+  z-index: 2 !important;
 }

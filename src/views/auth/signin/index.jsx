@@ -83,7 +83,10 @@ const SignIn = ({ history }) => {
                 >
                   {() => (
                     <Form>
-                      <div className="auth-field">
+                      <div
+                        className="auth-field"
+                        style={{ marginBottom: "1rem" }}
+                      >
                         <Field
                           disabled={isAuthenticating}
                           name="email"
@@ -92,7 +95,10 @@ const SignIn = ({ history }) => {
                           component={CustomInput}
                         />
                       </div>
-                      <div className="auth-field">
+                      <div
+                        className="auth-field"
+                        style={{ marginBottom: "1rem" }}
+                      >
                         <Field
                           disabled={isAuthenticating}
                           name="password"

@@ -22,7 +22,10 @@ const CustomMobileInput = (props) => {
     setValue(mob);
   };
   return (
-    <div className="input-group">
+    <div
+      className="input-group"
+      style={{ marginRight: window.innerWidth <= 480 ? "0" : "1.2rem" }}
+    >
       {touched && error ? (
         <span className="label-input label-error">
           {error?.value || error?.dialCode}

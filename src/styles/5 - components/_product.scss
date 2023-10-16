@@ -291,7 +291,11 @@
   border-color: $accent;
   color: $accent;
 }
-
+.product-size:disabled {
+  background-color: #cfcdcd;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
 .product-modal-image-collection::-webkit-scrollbar {
   width: 10px;
 }
@@ -580,24 +584,23 @@
   // max-height: 50rem;
   position: relative;
   margin-inline: 1rem;
-  transition-duration: 200ms;
+  transition-duration: 300ms;
   text-align: left;
   user-select: none;
   aspect-ratio: 9/16;
   max-height: 40rem;
-  &:hover {
+
+  &:hover,
+  &:disabled {
     cursor: pointer;
-    transform: scale(1.01);
-    -webkit-transform: scale(1.01);
-    -moz-transform: scale(1.01);
-    -ms-transform: scale(1.01);
-    -o-transform: scale(1.01);
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
   }
   .badge {
     position: absolute;
     right: 0;
     z-index: 1;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background-color: #1a1a1a;
     color: white;
   }

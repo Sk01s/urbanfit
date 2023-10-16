@@ -1,5 +1,4 @@
 import { CloseOutlined } from "@ant-design/icons";
-import { BasketItemControl } from "@/components/basket";
 import { ImageLoader } from "@/components/common";
 import { displayMoney } from "@/helpers/utils";
 import PropType from "prop-types";
@@ -8,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeFromBasket } from "@/redux/actions/basketActions";
 
-const BasketItem = ({ product, display = false }) => {
+const EmailItem = ({ product, display = false }) => {
   const dispatch = useDispatch();
   const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
   const displaySizeForOmar = (size) => {
@@ -45,71 +44,23 @@ const BasketItem = ({ product, display = false }) => {
             >
               <h4 className="basket-item-name">{product.name}</h4>
             </Link>
-            {display ? (
-              <></>
-            ) : (
-              <div className="basket-item-price">
-                <h4 className="my-0">{displayMoney(product.price)}</h4>
-              </div>
-            )}
+
+            <div className="basket-item-price">
+              <h4 className="my-0">{displayMoney(product.price)}</h4>
+            </div>
           </div>
 
           <div className="basket-item-specs">
             <div>
-              {display ? (
-                <></>
-              ) : (
-                <div style={{ display: "flex", gap: "0.8rem" }}>
-                  <span className="spec-title">Color : </span>
-                  <div
-                    style={{
-                      backgroundColor:
-                        product.selectedColor || product.availableColors[0],
-                      width: "11px",
-                      height: "11px",
-                      borderRadius: "50%",
-                      translate: " -3px 1.5px",
-                    }}
-                  />
-                </div>
-              )}
-              <div style={{ display: "flex", gap: "0.8rem" }}>
+              <div
+                style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}
+              >
                 <span className="spec-title">Size : </span>
-                <h5 className="my-0" style={{ fontSize: "1.125rem" }}>
+                <h5 className="my-0">
                   {displaySizeForOmar(product.selectedSize)}{" "}
                 </h5>
               </div>
-              {display ? (
-                <></>
-              ) : (
-                <div>
-                  <span className="spec-title"></span>
-                  {/* <h5 className="my-0">{product.quantity}</h5> */}
-                  <BasketItemControl product={product} />
-                </div>
-              )}
             </div>
-            {display ? (
-              <></>
-            ) : (
-              <button
-                onClick={onRemoveFromBasket}
-                type="button"
-                style={{
-                  all: "unset",
-                  cursor: "pointer",
-                  fontSize: "1rem",
-                  textDecoration: "underline",
-                  color: "#000",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: "1rem",
-                }}
-              >
-                Remove
-              </button>
-            )}
           </div>
         </div>
       </div>
@@ -117,7 +68,7 @@ const BasketItem = ({ product, display = false }) => {
   );
 };
 
-BasketItem.propTypes = {
+EmailItem.propTypes = {
   product: PropType.shape({
     id: PropType.string,
     name: PropType.string,
@@ -139,4 +90,4 @@ BasketItem.propTypes = {
   }).isRequired,
 };
 
-export default BasketItem;
+export default EmailItem;

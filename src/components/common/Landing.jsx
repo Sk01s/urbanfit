@@ -103,7 +103,10 @@ const VideoSlider = () => {
                 zIndex: 2,
               }}
             >
-              <h1 className="text-thin">
+              <h1
+                className="text-thin"
+                style={{ fontSize: isSmall ? "2.2rem" : "3rem" }}
+              >
                 Welcome to <span className="text-thin-light">Urbanfit</span>
               </h1>
 
