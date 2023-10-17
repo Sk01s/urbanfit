@@ -87,7 +87,7 @@ const Navigation = () => {
   ) {
     return null;
   }
-  if (window.screen.width <= 728) {
+  if (window.screen.width <= 850) {
     return (
       <MobileNavigation
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -109,7 +109,7 @@ const Navigation = () => {
       onMouseEnter={() => setScrollOpacity(1)}
     >
       <ul className="navigation-menu-main" ref={navigationMenu}>
-        <li>
+        {/* <li>
           <NavLink
             activeClassName="navigation-menu-active"
             exact
@@ -117,7 +117,7 @@ const Navigation = () => {
           >
             Home
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink activeClassName="navigation-menu-active" to={Route.SHOP}>
             Shop
@@ -237,7 +237,7 @@ const Navigation = () => {
               <li>
                 <Link
                   onClick={handleMouseLeave}
-                  to="/store/women/essentials"
+                  to="/store/women/essential"
                   className="type-link"
                 >
                   Essentials

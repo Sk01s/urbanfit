@@ -24,33 +24,33 @@ const index = () => {
         >
           <Link to={"/store/men/tops"} className="category-card">
             <div>
-              <p>Tops</p>
-              <button>Shop Now</button>
+              <h3>Tops</h3>
+              <button className="button">Shop Now</button>
             </div>
           </Link>
           <Link to={"/store/men/bottoms"} className="category-card">
             <div>
-              <p>Bottoms</p>
-              <button>Shop Now</button>
+              <h3>Bottoms</h3>
+              <button className="button">Shop Now</button>
             </div>
           </Link>
           <Link to={"/store/men/active"} className="category-card">
             <div>
-              <p>Active</p>
-              <button>Shop Now</button>
+              <h3>Active</h3>
+              <button className="button">Shop Now</button>
             </div>
           </Link>
           <Link to={"/store/men/essential"} className="category-card">
             <div>
-              <p>Essential</p>
-              <button>Shop Now</button>
+              <h3>Essential</h3>
+              <button className="button">Shop Now</button>
             </div>
           </Link>
         </div>
         <Link to={"/store/men/seasonal-collection"} className="category-card">
           <div>
-            <p>{season}</p>
-            <button>Shop Now</button>
+            <h3>{season}</h3>
+            <button className="button">Shop Now</button>
           </div>
         </Link>
       </div>

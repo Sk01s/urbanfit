@@ -28,6 +28,9 @@
     aspect-ratio: 16/9;
     font-size: 2rem;
     min-height: 100px;
+    &:hover {
+      text-decoration: none;
+    }
   }
   @media (max-width: 728px) {
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));

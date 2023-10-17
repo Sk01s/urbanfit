@@ -58,6 +58,7 @@ const AppRouter = () => {
             exact
             path={ROUTES.TYPE_CATEGORY}
           />
+          <Route component={view.Contact} exact path={ROUTES.CONTACT_US} />
           <PublicRoute component={view.SignUp} path={ROUTES.SIGNUP} />
 
           <PublicRoute component={view.SignIn} exact path={ROUTES.SIGNIN} />

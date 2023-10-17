@@ -34,3 +34,4 @@ export { default as TypeCategory } from "./men/type";
 export { default as Women } from "./women/index";
 export { default as About } from "./about/index";
 export { default as Privacy } from "./privacy_policy/index";
+export { default as Contact } from "./contact_us/index";

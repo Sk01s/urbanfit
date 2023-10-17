@@ -190,12 +190,7 @@ const Footer = () => {
                 >
                   <Link to="/about-us">Who we are</Link>
                 </li>
-                <li
-                  id="menu-item-7128"
-                  className="menu-item menu-item-type-custom menu-item-object-custom menu-item-7128"
-                >
-                  <Link to="/about-us">Contact Us</Link>
-                </li>
+    
               </ul>
             </div>
           </div>{" "}
