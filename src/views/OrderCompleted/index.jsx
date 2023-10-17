@@ -77,7 +77,7 @@ const Index = () => {
               .requestPhoneOtp(order.address.mobile.value || "+96171108084")
               .then(() => {
                 setOtpModel(true);
-                setRec(false);
+                setOtpRec(false);
               })
               .catch((error) => {
                 console.log(error);
