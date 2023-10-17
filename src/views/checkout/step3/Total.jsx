@@ -117,6 +117,7 @@ const Total = ({ isInternational, subtotal, order }) => {
       )
       .then((e) => console.log(e));
     dispatch(clearBasket());
+    
     history.push(`/order-completed/${order.id}`, order);
   };
   const onClickBack = () => {

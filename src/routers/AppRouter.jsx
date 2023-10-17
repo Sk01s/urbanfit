@@ -59,6 +59,10 @@ const AppRouter = () => {
             path={ROUTES.TYPE_CATEGORY}
           />
           <Route component={view.Contact} exact path={ROUTES.CONTACT_US} />
+          <Route
+            component={view.OrderCompleted}
+            path={ROUTES.ORDER_COMPLETED}
+          />
           <PublicRoute component={view.SignUp} path={ROUTES.SIGNUP} />
 
           <PublicRoute component={view.SignIn} exact path={ROUTES.SIGNIN} />
@@ -66,10 +70,7 @@ const AppRouter = () => {
             component={view.ForgotPassword}
             path={ROUTES.FORGOT_PASSWORD}
           />
-          <PublicRoute
-            component={view.OrderCompleted}
-            path={ROUTES.ORDER_COMPLETED}
-          />
+
           <Route component={view.ViewProduct} path={ROUTES.VIEW_PRODUCT} />
           <ClientRoute
             component={view.UserAccount}

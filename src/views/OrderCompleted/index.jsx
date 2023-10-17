@@ -4,7 +4,7 @@ import firebase from "@/services/firebase";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
 import { displayActionMessage } from "@/helpers/utils";
-const Index = () => {
+const OrderCompleted = () => {
   const location = useLocation();
   const { id } = useParams();
   const [message, setMessage] = useState("");
@@ -17,8 +17,8 @@ const Index = () => {
 
   useEffect(() => {
     if (!location.state.otp && location.state.id) {
-      console.log(!location.state.otp && location.state.id);
       if (recaptchaRef.current.childElementCount === 1) return;
+      console.log("fetching");
       firebase.generateRecaptcha(
         location.state.address.mobile.value,
         setOtpModel,
@@ -28,14 +28,16 @@ const Index = () => {
     }
   }, []);
   useEffect(() => {
-    firebase
-      .getOrder(id)
-      .then((data) => {
+    const fetchOrder = async () => {
+      try {
+        const data = await firebase.getOrder(id);
+        console.log(data.data());
         setOrder(data.data());
-      })
-      .catch((error) => {
+      } catch (error) {
         setError(error);
-      });
+      }
+    };
+    fetchOrder();
   }, []);
   const confiremOtp = (otp) => {
     setConfroming(true);
@@ -72,10 +74,11 @@ const Index = () => {
           ref={recaptchaRef}
           className="button"
           onClick={() => {
-            //   console.log("button");
+            console.log(order.address.mobile.value);
             firebase
               .requestPhoneOtp(order.address.mobile.value || "+96171108084")
               .then(() => {
+                console.log(order);
                 setOtpModel(true);
                 setOtpRec(false);
               })
@@ -91,7 +94,7 @@ const Index = () => {
           Verfity Phone Number
         </button>
       </div>
-      <main style={{ marginTop: "4rem" }}>
+      <main key={order} style={{ marginTop: "4rem" }}>
         <div
           style={{
             display: "flex",
@@ -292,7 +295,7 @@ const Index = () => {
                     onClick={({ currentTarget }) => {
                       currentTarget.disabled = true;
                       firebase.requestPhoneOtp(
-                        form.current.values.mobile.value
+                        location.state.address.mobile.value
                       );
                     }}
                   >
@@ -311,4 +314,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default OrderCompleted;

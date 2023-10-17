@@ -87,6 +87,7 @@ class Firebase {
         console.log("good", confirmationResult);
         window.confirmationResult = confirmationResult;
         // ...
+        return confirmationResult;
       })
       .catch((e) => {
         console.log(e);
