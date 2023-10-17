@@ -5,6 +5,7 @@ import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
 import { displayActionMessage } from "@/helpers/utils";
 const Index = () => {
+  const location = useLocation();
   const { id } = useParams();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -13,20 +14,25 @@ const Index = () => {
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
-  const address = order?.address;
-  const items = order?.items;
-  const payment = order?.payment;
 
   useEffect(() => {
-    // if (!order.otp && order.id) {
-    //   if (recaptchaRef.current.childElementCount === 1) return;
-    firebase.generateRecaptcha("", setOtpModel, setError, setOtpRec);
-    // }
+    if (!location.state.otp && location.state.id) {
+      console.log(!location.state.otp && location.state.id);
+      if (recaptchaRef.current.childElementCount === 1) return;
+      firebase.generateRecaptcha(
+        location.state.address.mobile.value,
+        setOtpModel,
+        setError,
+        setOtpRec
+      );
+    }
   }, []);
   useEffect(() => {
     firebase
       .getOrder(id)
-      .then((data) => setOrder(data.data()))
+      .then((data) => {
+        setOrder(data.data());
+      })
       .catch((error) => {
         setError(error);
       });
@@ -48,7 +54,6 @@ const Index = () => {
   return (
     <>
       <div
-        ref={recaptchaRef}
         style={{
           position: "fixed",
           width: "100vw",
@@ -64,22 +69,23 @@ const Index = () => {
         }}
       >
         <button
+          ref={recaptchaRef}
           className="button"
-          onClick={() => {
-            console.log("button");
-            firebase
-              .requestPhoneOtp(address.mobile.value)
-              .then(() => {
-                setOtpModel(true);
-                setRec(false);
-              })
-              .catch((error) => {
-                console.log(error);
-                setOtpModel(false);
-                setError(error);
-                displayActionMessage(error);
-              });
-          }}
+          // onClick={() => {
+          //   console.log("button");
+          //   // firebase
+          //   //   .requestPhoneOtp(order.address.mobile.value || "+96171108084")
+          //   //   .then(() => {
+          //   //     setOtpModel(true);
+          //   //     setRec(false);
+          //   //   })
+          //   //   .catch((error) => {
+          //   //     console.log(error);
+          //   //     setOtpModel(false);
+          //   //     setError(error);
+          //   //     displayActionMessage(error);
+          //   //   });
+          // }}
           id="container"
         >
           Verfity Phone Number
@@ -158,29 +164,29 @@ const Index = () => {
               <h4 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>
                 Contact information
               </h4>
-              <p>{address?.email || "alsarakibiy@gmail.com"}</p>
+              <p>{order.address?.email || "alsarakibiy@gmail.com"}</p>
             </div>
             <div>
               <h4 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>
                 Shipping address
               </h4>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {address?.country} ,
+                {order.address?.country} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {address?.city} ,
+                {order.address?.city} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {address?.street} ,
+                {order.address?.street} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {address?.building} ,
+                {order.address?.building} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {address?.floor} ,
+                {order.address?.floor} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {address?.zipcode}
+                {order.address?.zipcode}
               </div>
             </div>
             <div>
@@ -188,7 +194,8 @@ const Index = () => {
                 Payment method
               </h3>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {(payment === "COD" && "Cash on delivery") || payment}
+                {(order.payment === "COD" && "Cash on delivery") ||
+                  order.payment}
               </div>
             </div>
           </div>
@@ -203,7 +210,7 @@ const Index = () => {
             borderRadius: ".8rem",
           }}
         >
-          {items?.map((item, index) => (
+          {order.items?.map((item, index) => (
             <BasketItem product={item} display={true} key={index} />
           ))}
         </div>

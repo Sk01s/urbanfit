@@ -23,25 +23,12 @@ class Firebase {
     this.auth.signInWithEmailAndPassword(email, password);
 
   generateRecaptcha = (number, setModel, setError, setRec) => {
-    console.log(number);
-    window.recaptchaVerifier = new app.auth.RecaptchaVerifier("container", {
+    const recaptchaVerifier = new app.auth.RecaptchaVerifier("container", {
       size: "invisible",
 
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
         console.log("callback");
-        // this.requestPhoneOtp(number)
-        //   .then((e) => {
-        //     console.log(e);
-        //     setModel(true);
-        //     setRec(false);
-        //   })
-        //   .catch((e) => {
-        //     console.log(e);
-        //     setError(e.message);
-        //     displayActionMessage(e);
-        //     // setRec(false);
-        //   });
       },
       "expired-callback": () => {
         // Response expired. Ask user to solve reCAPTCHA again.
@@ -49,27 +36,25 @@ class Firebase {
         displayActionMessage("solve it reCAPTCHA  again");
       },
     });
-
+    window.recaptchaVerifier = recaptchaVerifier;
     // [START auth_phone_recaptcha_render]
-    window.recaptchaVerifier.render();
-    // .then((widgetId) => {
-    //   window.recaptchaWidgetId = widgetId;
-    //   window.recaptchaVerifier.verify().then(() => {
-    //     console.log("verfiy");
-    //     // this.requestPhoneOtp(number)
-    //     //   .then((e) => {
-    //     //     console.log(e);
-    //     //     setModel(true);
-    //     //     setRec(false);
-    //     //   })
-    //     //   .catch((e) => {
-    //     //     console.log(e);
-    //     //     setError(e.message);
-    //     //     displayActionMessage(e);
-    //     //     // setRec(true);
-    //     //   });
-    //   });
-    // });
+    recaptchaVerifier.render().then(() => {
+      recaptchaVerifier.verify().then((e) => {
+        console.log(number, recaptchaVerifier);
+        this.requestPhoneOtp(number, recaptchaVerifier)
+          .then((e) => {
+            console.log(e);
+            setModel(true);
+            setRec(false);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+            displayActionMessage(e);
+            // setRec(true);
+          });
+      });
+    });
   };
   confiremOtp = (otp) => {
     return window.confirmationResult
@@ -90,9 +75,9 @@ class Firebase {
   unlinkMobile = () => {
     this.auth.currentUser.unlink(app.auth.PhoneAuthProvider.PROVIDER_ID);
   };
-  requestPhoneOtp = (number) => {
+  requestPhoneOtp = async (number, recaptchaVerifier) => {
     return this.auth.currentUser
-      .linkWithPhoneNumber(number, window.recaptchaVerifier)
+      .linkWithPhoneNumber(number, recaptchaVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
