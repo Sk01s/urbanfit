@@ -71,21 +71,21 @@ const Index = () => {
         <button
           ref={recaptchaRef}
           className="button"
-          // onClick={() => {
-          //   console.log("button");
-          //   // firebase
-          //   //   .requestPhoneOtp(order.address.mobile.value || "+96171108084")
-          //   //   .then(() => {
-          //   //     setOtpModel(true);
-          //   //     setRec(false);
-          //   //   })
-          //   //   .catch((error) => {
-          //   //     console.log(error);
-          //   //     setOtpModel(false);
-          //   //     setError(error);
-          //   //     displayActionMessage(error);
-          //   //   });
-          // }}
+          onClick={() => {
+            //   console.log("button");
+            firebase
+              .requestPhoneOtp(order.address.mobile.value || "+96171108084")
+              .then(() => {
+                setOtpModel(true);
+                setRec(false);
+              })
+              .catch((error) => {
+                console.log(error);
+                setOtpModel(false);
+                setError(error);
+                displayActionMessage(error);
+              });
+          }}
           id="container"
         >
           Verfity Phone Number

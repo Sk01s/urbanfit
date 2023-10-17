@@ -75,7 +75,10 @@ class Firebase {
   unlinkMobile = () => {
     this.auth.currentUser.unlink(app.auth.PhoneAuthProvider.PROVIDER_ID);
   };
-  requestPhoneOtp = async (number, recaptchaVerifier) => {
+  requestPhoneOtp = async (
+    number,
+    recaptchaVerifier = window.recaptchaVerifier
+  ) => {
     return this.auth.currentUser
       .linkWithPhoneNumber(number, recaptchaVerifier)
       .then((confirmationResult) => {
