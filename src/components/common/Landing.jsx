@@ -36,7 +36,7 @@ const VideoSlider = () => {
     timerArray.current[currentSlide].classList.add("active");
 
     return () => {
-      timerArray.current[currentSlide].classList.remove("active");
+      timerArray.current[currentSlide]?.classList.remove("active");
       // playerRef.current.player.handlePause();
     };
   }, [currentSlide]);

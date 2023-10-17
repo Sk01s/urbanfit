@@ -18,7 +18,7 @@ const Footer = () => {
             style={{
               fontSize: "1.325rem",
               fontWeight: 300,
-              color: "#222;",
+              color: "#222",
               lineHeight: "normal",
             }}
           >
@@ -38,7 +38,7 @@ const Footer = () => {
               <li>
                 <a
                   aria-label="Facebook"
-                  class="facebook"
+                  className="facebook"
                   target="_blank"
                   rel="noopener"
                 >
@@ -50,9 +50,9 @@ const Footer = () => {
                     <title>Facebook</title>
                     <g
                       stroke="none"
-                      stroke-width="1"
+                      strokeWidth="1"
                       fill="none"
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                     >
                       <g
                         transform="translate(-325.000000, -295.000000)"
@@ -68,7 +68,7 @@ const Footer = () => {
               <li>
                 <a
                   aria-label="Instagram"
-                  class="instagram"
+                  className="instagram"
                   target="_blank"
                   rel="noopener"
                   href="https://www.instagram.com/urbanfit.lb/"
@@ -82,9 +82,9 @@ const Footer = () => {
                     <defs></defs>
                     <g
                       stroke="none"
-                      stroke-width="1"
+                      strokeWidth="1"
                       fill="none"
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                     >
                       <g
                         transform="translate(-642.000000, -295.000000)"
@@ -100,7 +100,7 @@ const Footer = () => {
               <li>
                 <a
                   aria-label="WhatsApp"
-                  class="whatsapp"
+                  className="whatsapp"
                   target="_blank"
                   rel="noopener"
                   href="https://api.whatsapp.com/send?phone=96171108084"
@@ -109,7 +109,7 @@ const Footer = () => {
                     aria-hidden="true"
                     focusable="false"
                     role="presentation"
-                    class="icon svg-whatsapp"
+                    className="icon svg-whatsapp"
                     viewBox="0 0 30.667 30.667"
                     fill="currentColor"
                   >

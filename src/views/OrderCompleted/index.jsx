@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import firebase from "@/services/firebase";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
-
+import { displayActionMessage } from "@/helpers/utils";
 const Index = () => {
   const { id } = useParams();
   const [message, setMessage] = useState("");
@@ -18,29 +18,19 @@ const Index = () => {
   const payment = order?.payment;
 
   useEffect(() => {
-    if (!order.id) {
-      firebase
-        .getOrder(id)
-        .then((data) => setOrder(data.data()))
-        .catch((error) => {
-          setError(error);
-        });
-    }
-
-    if (!order.otp && order.id) {
-      if (recaptchaRef.current.childElementCount === 1) return;
-      firebase.generateRecaptcha(
-        order?.address?.mobile?.value,
-        setOtpModel,
-        setError,
-        setOtpRec
-      );
-    }
-
-    return () => {
-      window.recaptchaVerifier = null;
-    };
-  }, [order]);
+    // if (!order.otp && order.id) {
+    //   if (recaptchaRef.current.childElementCount === 1) return;
+    firebase.generateRecaptcha("", setOtpModel, setError, setOtpRec);
+    // }
+  }, []);
+  useEffect(() => {
+    firebase
+      .getOrder(id)
+      .then((data) => setOrder(data.data()))
+      .catch((error) => {
+        setError(error);
+      });
+  }, []);
   const confiremOtp = (otp) => {
     setConfroming(true);
     firebase
@@ -58,7 +48,6 @@ const Index = () => {
   return (
     <>
       <div
-        id="container"
         ref={recaptchaRef}
         style={{
           position: "fixed",
@@ -73,7 +62,29 @@ const Index = () => {
           left: 0,
           zIndex: 10000,
         }}
-      ></div>
+      >
+        <button
+          className="button"
+          onClick={() => {
+            console.log("button");
+            firebase
+              .requestPhoneOtp(address.mobile.value)
+              .then(() => {
+                setOtpModel(true);
+                setRec(false);
+              })
+              .catch((error) => {
+                console.log(error);
+                setOtpModel(false);
+                setError(error);
+                displayActionMessage(error);
+              });
+          }}
+          id="container"
+        >
+          Verfity Phone Number
+        </button>
+      </div>
       <main style={{ marginTop: "4rem" }}>
         <div
           style={{

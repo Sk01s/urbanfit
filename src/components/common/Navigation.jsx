@@ -17,17 +17,22 @@ import { useEssentialProducts } from "@/hooks";
 const Navigation = () => {
   const navigationMenu = useRef();
   const navbar = useRef(null);
-  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [isMenPopupVisible, setMenPopupVisible] = useState(false);
+  const [isWomenPopupVisible, setWomenPopupVisible] = useState(false);
 
   const { pathname } = useLocation();
   const { essentialProducts, fetchEssentialProducts, isLoading, error } =
     useEssentialProducts();
-  const handleMouseEnter = () => {
-    setPopupVisible(true);
+  const handleMouseEnterMen = () => {
+    setMenPopupVisible(true);
+  };
+  const handleMouseEnterWomen = () => {
+    setWomenPopupVisible(true);
   };
 
   const handleMouseLeave = () => {
-    setPopupVisible(false);
+    setMenPopupVisible(false);
+    setWomenPopupVisible(false);
   };
 
   function isInVisable() {
@@ -113,16 +118,104 @@ const Navigation = () => {
             Home
           </NavLink>
         </li>
+        <li>
+          <NavLink activeClassName="navigation-menu-active" to={Route.SHOP}>
+            Shop
+          </NavLink>
+        </li>
         <li
-          onMouseEnter={handleMouseEnter}
+          onMouseEnter={handleMouseEnterMen}
           onMouseLeave={() => {
             handleMouseLeave();
           }}
         >
-          <NavLink activeClassName="navigation-menu-active" to={Route.SHOP}>
-            Shop
+          <NavLink activeClassName="navigation-menu-active" to={Route.MEN}>
+            Men
           </NavLink>
-          <div className={`popup-menu ${isPopupVisible && "open"}`}>
+          <div className={`popup-menu ${isMenPopupVisible && "open"}`}>
+            <ul style={{ flexDirection: "column", display: "flex" }}>
+              <li>
+                <h4>Men</h4>
+              </li>
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/men"
+                  className="type-link"
+                >
+                  View all men
+                </Link>
+              </li>
+              {/* <li>
+                <Link onClick={()=>handleMouseLeave()} to="" className="type-link">New Arrivals</Link>
+              </li> */}
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/store/men/essential"
+                  className="type-link"
+                >
+                  Essentials
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/type/men/t-shrit"
+                  className="type-link"
+                >
+                  T-shrits
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/type/men/jacket"
+                  className="type-link"
+                >
+                  Jackets
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/type/men/hoodies-&-sweatshrits"
+                  className="type-link"
+                >
+                  Hoodies & Sweatshrits
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/type/men/sweatpants-&-pants"
+                  className="type-link"
+                >
+                  Sweatpants & Pants
+                </Link>
+              </li>
+              {/* <li>
+              <Link
+                onClick={handleMouseLeave}
+                to="/type/men/"
+                className="type-link"
+              >
+                Sets
+              </Link>
+            </li> */}
+            </ul>
+          </div>
+        </li>
+        <li
+          onMouseEnter={handleMouseEnterWomen}
+          onMouseLeave={() => {
+            handleMouseLeave();
+          }}
+        >
+          <NavLink activeClassName="navigation-menu-active" to={Route.WOMEN}>
+            Women
+          </NavLink>
+          <div className={`popup-menu ${isWomenPopupVisible && "open"}`}>
             <ul style={{ flexDirection: "column", display: "flex" }}>
               <li>
                 <h4>Women</h4>
@@ -130,8 +223,7 @@ const Navigation = () => {
               <li>
                 <Link
                   onClick={() => {
-                    setPopupVisible(false);
-                    console.log(isPopupVisible);
+                    handleMouseLeave();
                   }}
                   to="/women"
                   className="type-link"
@@ -207,77 +299,6 @@ const Navigation = () => {
               </li>
               {/* <li>
               <Link onClick={handleMouseLeave} to="" className="type-link">
-                Sets
-              </Link>
-            </li> */}
-            </ul>
-            <ul style={{ flexDirection: "column", display: "flex" }}>
-              <li>
-                <h4>Men</h4>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/men"
-                  className="type-link"
-                >
-                  View all men
-                </Link>
-              </li>
-              {/* <li>
-                <Link onClick={()=>handleMouseLeave()} to="" className="type-link">New Arrivals</Link>
-              </li> */}
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/store/men/essential"
-                  className="type-link"
-                >
-                  Essentials
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/t-shrit"
-                  className="type-link"
-                >
-                  T-shrits
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/jacket"
-                  className="type-link"
-                >
-                  Jackets
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/hoodies-&-sweatshrits"
-                  className="type-link"
-                >
-                  Hoodies & Sweatshrits
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/sweatpants-&-pants"
-                  className="type-link"
-                >
-                  Sweatpants & Pants
-                </Link>
-              </li>
-              {/* <li>
-              <Link
-                onClick={handleMouseLeave}
-                to="/type/men/"
-                className="type-link"
-              >
                 Sets
               </Link>
             </li> */}

@@ -25,23 +25,23 @@ class Firebase {
   generateRecaptcha = (number, setModel, setError, setRec) => {
     console.log(number);
     window.recaptchaVerifier = new app.auth.RecaptchaVerifier("container", {
-      size: "normal",
+      size: "invisible",
 
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-        console.log("sending", window.recaptchaVerifier.token);
-        this.requestPhoneOtp(number)
-          .then((e) => {
-            console.log(e);
-            setModel(true);
-            setRec(false);
-          })
-          .catch((e) => {
-            console.log(e);
-            setError(e.message);
-            displayActionMessage(e);
-            setRec(false);
-          });
+        console.log("callback");
+        // this.requestPhoneOtp(number)
+        //   .then((e) => {
+        //     console.log(e);
+        //     setModel(true);
+        //     setRec(false);
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //     setError(e.message);
+        //     displayActionMessage(e);
+        //     // setRec(false);
+        //   });
       },
       "expired-callback": () => {
         // Response expired. Ask user to solve reCAPTCHA again.
@@ -51,9 +51,25 @@ class Firebase {
     });
 
     // [START auth_phone_recaptcha_render]
-    window.recaptchaVerifier.render().then((widgetId) => {
-      window.recaptchaWidgetId = widgetId;
-    });
+    window.recaptchaVerifier.render();
+    // .then((widgetId) => {
+    //   window.recaptchaWidgetId = widgetId;
+    //   window.recaptchaVerifier.verify().then(() => {
+    //     console.log("verfiy");
+    //     // this.requestPhoneOtp(number)
+    //     //   .then((e) => {
+    //     //     console.log(e);
+    //     //     setModel(true);
+    //     //     setRec(false);
+    //     //   })
+    //     //   .catch((e) => {
+    //     //     console.log(e);
+    //     //     setError(e.message);
+    //     //     displayActionMessage(e);
+    //     //     // setRec(true);
+    //     //   });
+    //   });
+    // });
   };
   confiremOtp = (otp) => {
     return window.confirmationResult
@@ -75,7 +91,6 @@ class Firebase {
     this.auth.currentUser.unlink(app.auth.PhoneAuthProvider.PROVIDER_ID);
   };
   requestPhoneOtp = (number) => {
-    console.log(this.auth.currentUser);
     return this.auth.currentUser
       .linkWithPhoneNumber(number, window.recaptchaVerifier)
       .then((confirmationResult) => {
@@ -84,6 +99,10 @@ class Firebase {
         console.log("good", confirmationResult);
         window.confirmationResult = confirmationResult;
         // ...
+      })
+      .catch((e) => {
+        console.log(e);
+        throw e;
       });
   };
 
