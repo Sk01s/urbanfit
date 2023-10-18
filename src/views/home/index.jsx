@@ -37,10 +37,6 @@ const Home = () => {
     shallowEqual
   );
   const season = useSeason();
-  useEffect(() => {
-    firebase
-
-  }, []);
 
   const {
     seasonalProducts,

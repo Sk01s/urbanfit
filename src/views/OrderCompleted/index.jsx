@@ -16,7 +16,7 @@ const OrderCompleted = () => {
   const recaptchaRef = useRef();
 
   useEffect(() => {
-    if (!location.state.otp && location.state.id) {
+    if (!location.state?.otp && location.state?.id) {
       if (recaptchaRef.current.childElementCount === 1) return;
       console.log("fetching");
       firebase.generateRecaptcha(
@@ -174,22 +174,22 @@ const OrderCompleted = () => {
                 Shipping address
               </h4>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.country} ,
+                {order.address?.country || location.state?.address?.country} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.city} ,
+                {order.address?.city || location.state?.address?.city} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.street} ,
+                {order.address?.street || location.state?.address?.street} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.building} ,
+                {order.address?.building || location.state?.address.building} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.floor} ,
+                {order.address?.floor || location.state?.address.floor} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.zipcode}
+                {order.address?.zipcode || location.state?.address.zipcode}
               </div>
             </div>
             <div>
@@ -198,7 +198,8 @@ const OrderCompleted = () => {
               </h3>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
                 {(order.payment === "COD" && "Cash on delivery") ||
-                  order.payment}
+                  order.payment ||
+                  location.state?.payment}
               </div>
             </div>
           </div>
