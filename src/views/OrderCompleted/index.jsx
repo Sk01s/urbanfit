@@ -16,18 +16,22 @@ const OrderCompleted = () => {
   const recaptchaRef = useRef();
 
   useEffect(() => {
-    if (!location.state?.otp && location.state?.id) {
-      if (recaptchaRef.current.childElementCount === 1) return;
-      console.log("fetching");
-      firebase.generateRecaptcha(
-        location.state.address.mobile.value,
-        setOtpModel,
-        setError,
-        setOtpRec
-      );
-    }
-  }, []);
-  useEffect(() => {
+    const recaptcha = async () => {
+      try {
+        if (!location.state?.otp && location.state?.id) {
+          if (recaptchaRef.current.childElementCount === 1) return;
+          firebase.generateRecaptcha(
+            location.state.address.mobile.value,
+            setOtpModel,
+            setError,
+            setOtpRec
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const fetchOrder = async () => {
       try {
         const data = await firebase.getOrder(id);
@@ -37,6 +41,7 @@ const OrderCompleted = () => {
         setError(error);
       }
     };
+    recaptcha();
     fetchOrder();
   }, []);
   const confiremOtp = (otp) => {
