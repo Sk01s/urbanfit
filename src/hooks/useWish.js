@@ -2,7 +2,7 @@ import { displayActionMessage } from "@/helpers/utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToWish as dispatchAddToWish,
-  removeFromWish,
+  removeFromWish as dispatchRemoveFromWish,
 } from "@/redux/actions/wishActions";
 
 const useWish = () => {
@@ -12,10 +12,11 @@ const useWish = () => {
   const isItemOnWish = (id) => !!wish.find((item) => item.id === id);
 
   const removeFromWish = (product) => {
-    dispatch(removeFromWish(product.id));
+    dispatch(dispatchRemoveFromWish(product.id));
     displayActionMessage("Item removed from wish list", "info");
   };
   const addToWish = (product) => {
+    if (isItemOnWish(product.id)) return removeFromWish(product);
     dispatch(dispatchAddToWish(product));
     displayActionMessage("Item added to wish list", "success");
     console.log(wish);

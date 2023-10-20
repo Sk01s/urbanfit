@@ -10,7 +10,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(true);
+  const [otpRec, setOtpRec] = useState(false);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
@@ -91,14 +91,14 @@ const OrderCompleted = () => {
           Verfity Phone Number
         </button> */}
       </div>
-      <main key={order} style={{ marginTop: "4rem" }}>
+      <main key={order} style={{ marginTop: "5.5rem" }}>
         <div
           style={{
             display: "flex",
             gap: "2rem",
             justifyContent: "left",
             alignItems: "center",
-            width: "100vw",
+            marginInline: "2rem",
           }}
         >
           <svg
@@ -129,14 +129,14 @@ const OrderCompleted = () => {
         </div>
         <div
           style={{
-            maxWidth: "80vw",
             border: "1px solid rgb(219, 215, 215)",
             padding: "1rem",
-            maxWidth: "95vw",
             fontWeight: "500",
             borderRadius: ".8rem",
             marginBlock: "2rem",
             zIndex: 1,
+            width: "calc(100vw - 4rem)",
+            marginInline: "auto",
           }}
         >
           <h3 style={{ marginBlock: "0.6rem" }}>Your order is confirmed </h3>
@@ -148,12 +148,21 @@ const OrderCompleted = () => {
           style={{
             border: "1px solid rgb(219, 215, 215)",
             padding: "1rem",
-            maxWidth: "95vw",
             fontWeight: "500",
             borderRadius: ".8rem",
+            width: "calc(100vw - 4rem)",
+            marginInline: "auto",
           }}
         >
-          <h3 style={{ marginBlock: "0.6rem" }}>Order details</h3>
+          <h3
+            style={{
+              marginTop: "0.6rem",
+              marginBottom: "1rem",
+              fontWeight: "400",
+            }}
+          >
+            Order details
+          </h3>
           <div
             style={{
               display: "flex",
@@ -161,13 +170,44 @@ const OrderCompleted = () => {
             }}
           >
             <div>
-              <h4 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>
+              <h4
+                style={{
+                  marginTop: "0.6rem",
+                  marginBottom: "1rem",
+                  fontSize: "1.35rem",
+
+                  fontWeight: "500",
+                }}
+              >
                 Contact information
               </h4>
-              <p>{location.state?.address?.email}</p>
+              <p style={{ margin: 0 }}>{location.state?.address?.email}</p>
             </div>
             <div>
-              <h4 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>
+              <h3
+                style={{
+                  marginBlock: "1rem",
+                  fontSize: "1.35rem",
+                  fontWeight: "500",
+                }}
+              >
+                Shipping method
+              </h3>
+              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+                {(location.state.payment === "COD" &&
+                  "Cash on delivery (2 - 3 working days)") ||
+                  location.state.payment ||
+                  location.state?.payment}
+              </div>
+            </div>
+            <div>
+              <h4
+                style={{
+                  marginBlock: "1rem",
+                  fontSize: "1.35rem",
+                  fontWeight: "500",
+                }}
+              >
                 Shipping address
               </h4>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
@@ -190,12 +230,18 @@ const OrderCompleted = () => {
               </div>
             </div>
             <div>
-              <h3 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>
+              <h3
+                style={{
+                  marginBlock: "0.8rem",
+                  fontSize: "1.35rem",
+                  fontWeight: "500",
+                }}
+              >
                 Payment method
               </h3>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {(order.payment === "COD" && "Cash on delivery") ||
-                  order.payment ||
+                {(location.state.payment === "COD" && "Cash on delivery ") ||
+                  location.state.payment ||
                   location.state?.payment}
               </div>
             </div>
@@ -204,18 +250,27 @@ const OrderCompleted = () => {
         <div
           style={{
             border: "1px solid rgb(219, 215, 215)",
-            padding: "1rem",
-            maxWidth: "95vw",
+            padding: "1rem 0 0 0",
             fontWeight: "500",
             marginTop: "2rem",
             borderRadius: ".8rem",
+            width: "calc(100vw - 4rem)",
+            marginInline: "auto",
           }}
         >
           {location.state?.items?.map((item, index) => (
             <BasketItem product={item} display={true} key={index} />
           ))}
         </div>
-        <Link to="/" className="button" style={{ marginTop: "2rem" }}>
+        <Link
+          to="/"
+          className="button"
+          style={{
+            marginTop: "2rem",
+            width: "calc(100vw - 4rem)",
+            marginInline: "auto",
+          }}
+        >
           Continue shopping
         </Link>
         {otpModel && (

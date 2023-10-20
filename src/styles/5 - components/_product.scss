@@ -648,3 +648,9 @@
 .carousel-status {
   display: none; /* Hide the control dots */
 }
+.category-gender {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, calc(50% - 0.5rem)));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
