@@ -51,10 +51,12 @@ class Firebase {
     });
     window.recaptchaVerifier = recaptchaVerifier;
     // [START auth_phone_recaptcha_render]
-    recaptchaVerifier.render().then(() => {
-      // recaptchaVerifier.verify().then((e) => {
-      //   console.log(number, recaptchaVerifier);
-      // });
+    recaptchaVerifier.render().then((widgetId) => {
+      window.recaptchaWidgetId = widgetId;
+
+      recaptchaVerifier.verify().then((e) => {
+        const recaptchaResponse = grecaptcha.getResponse(recaptchaWidgetId);
+      });
     });
     return recaptchaVerifier;
   };

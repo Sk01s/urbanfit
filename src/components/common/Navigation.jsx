@@ -87,7 +87,7 @@ const Navigation = () => {
   ) {
     return null;
   }
-  if (window.screen.width <= 850) {
+  if (window.innerWidth <= 850) {
     return (
       <MobileNavigation
         // eslint-disable-next-line react/jsx-props-no-spreading

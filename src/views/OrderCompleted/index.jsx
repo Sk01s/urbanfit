@@ -20,14 +20,12 @@ const OrderCompleted = () => {
       try {
         if (!location.state?.otp && location.state?.id) {
           if (recaptchaRef.current.childElementCount === 1) return;
-          firebase
-            .generateRecaptcha(
-              location.state.address.mobile.value,
-              setOtpModel,
-              setError,
-              setOtpRec
-            )
-            .then((e) => console.log(e));
+          firebase.generateRecaptcha(
+            location.state.address.mobile.value,
+            setOtpModel,
+            setError,
+            setOtpRec
+          );
         }
       } catch (error) {
         console.log(error);
@@ -213,7 +211,7 @@ const OrderCompleted = () => {
             borderRadius: ".8rem",
           }}
         >
-          {location.state.items?.map((item, index) => (
+          {location.state?.items?.map((item, index) => (
             <BasketItem product={item} display={true} key={index} />
           ))}
         </div>
@@ -306,7 +304,7 @@ const OrderCompleted = () => {
             </div>
 
             <div>{message}</div>
-            <div>{error}</div>
+            <div>{error && "error happend"}</div>
           </section>
         )}
       </main>
