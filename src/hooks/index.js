@@ -1,4 +1,5 @@
 export { default as useBasket } from "./useBasket";
+export { default as useWish } from "./useWish";
 export { default as useDidMount } from "./useDidMount";
 export { default as useDocumentTitle } from "./useDocumentTitle";
 export { default as useSeasonalProducts } from "./useSeasonalProducts";

@@ -12,16 +12,7 @@ const index = () => {
           width: "100%",
         }}
       >
-        <div
-          style={{
-            width: "100%",
-            gap: "2rem",
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fill,minmax(200px,calc(50% - 1rem)))",
-            marginBottom: "2rem",
-          }}
-        >
+        <div className="category-gender">
           <Link to={"/store/women/tops"} className="category-card">
             <div>
               <h3>Tops</h3>

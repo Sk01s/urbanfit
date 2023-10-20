@@ -14,9 +14,13 @@ export const CLEAR_SEARCH_STATE = "CLEAR_SEARCH_STATE";
 export const SET_LAST_REF_KEY = "SET_LAST_REF_KEY";
 
 export const SET_BASKET_ITEMS = "SET_BASKET_ITEMS";
+export const SET_WISH_ITEMS = "SET_WISH_ITEMS";
 export const ADD_TO_BASKET = "ADD_TO_BASKET";
+export const ADD_TO_WISH = "ADD_TO_WISH";
 export const REMOVE_FROM_BASKET = "REMOVE_FROM_BASKET";
+export const REMOVE_FROM_WISH = "REMOVE_FROM_WISH";
 export const CLEAR_BASKET = "CLEAR_BASKET";
+export const CLEAR_WISH = "CLEAR_WISH";
 export const ADD_QTY_ITEM = "ADD_QTY_ITEM";
 export const MINUS_QTY_ITEM = "MINUS_QTY_ITEM";
 

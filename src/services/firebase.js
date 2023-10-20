@@ -28,33 +28,35 @@ class Firebase {
 
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-        console.log("callback");
+        // console.log(number, recaptchaVerifier);
+        // this.requestPhoneOtp(number, recaptchaVerifier)
+        //   .then((e) => {
+        //     console.log(setModel);
+        //     setModel?.(true);
+        //     setRec?.(false);
+        //   })
+        //   .catch((e) => {
+        //     console.log(e);
+        //     setError(e.message);
+        //     displayActionMessage(e);
+        //     // setRec(true);
+        //   });
       },
       "expired-callback": () => {
         // Response expired. Ask user to solve reCAPTCHA again.
         // ...
+
         displayActionMessage("solve it reCAPTCHA  again");
       },
     });
     window.recaptchaVerifier = recaptchaVerifier;
     // [START auth_phone_recaptcha_render]
     recaptchaVerifier.render().then(() => {
-      recaptchaVerifier.verify().then((e) => {
-        console.log(number, recaptchaVerifier);
-        this.requestPhoneOtp(number, recaptchaVerifier)
-          .then((e) => {
-            console.log(e);
-            setModel(true);
-            setRec(false);
-          })
-          .catch((e) => {
-            console.log(e);
-            setError(e.message);
-            displayActionMessage(e);
-            // setRec(true);
-          });
-      });
+      // recaptchaVerifier.verify().then((e) => {
+      //   console.log(number, recaptchaVerifier);
+      // });
     });
+    return recaptchaVerifier;
   };
   confiremOtp = (otp) => {
     return window.confirmationResult

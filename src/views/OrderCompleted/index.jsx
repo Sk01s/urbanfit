@@ -20,29 +20,21 @@ const OrderCompleted = () => {
       try {
         if (!location.state?.otp && location.state?.id) {
           if (recaptchaRef.current.childElementCount === 1) return;
-          firebase.generateRecaptcha(
-            location.state.address.mobile.value,
-            setOtpModel,
-            setError,
-            setOtpRec
-          );
+          firebase
+            .generateRecaptcha(
+              location.state.address.mobile.value,
+              setOtpModel,
+              setError,
+              setOtpRec
+            )
+            .then((e) => console.log(e));
         }
       } catch (error) {
         console.log(error);
       }
     };
 
-    const fetchOrder = async () => {
-      try {
-        const data = await firebase.getOrder(id);
-        console.log(data.data());
-        setOrder(data.data());
-      } catch (error) {
-        setError(error);
-      }
-    };
     recaptcha();
-    fetchOrder();
   }, []);
   const confiremOtp = (otp) => {
     setConfroming(true);
@@ -79,11 +71,13 @@ const OrderCompleted = () => {
           ref={recaptchaRef}
           className="button"
           onClick={() => {
-            console.log(order.address.mobile.value);
+            console.log(location.state.address.mobile.value);
             firebase
-              .requestPhoneOtp(order.address.mobile.value || "+96171108084")
+              .requestPhoneOtp(
+                location.state.address.mobile.value || "+96171108084"
+              )
               .then(() => {
-                console.log(order);
+                console.log(location.state);
                 setOtpModel(true);
                 setOtpRec(false);
               })
@@ -219,7 +213,7 @@ const OrderCompleted = () => {
             borderRadius: ".8rem",
           }}
         >
-          {order.items?.map((item, index) => (
+          {location.state.items?.map((item, index) => (
             <BasketItem product={item} display={true} key={index} />
           ))}
         </div>
