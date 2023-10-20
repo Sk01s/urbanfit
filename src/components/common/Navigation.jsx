@@ -14,11 +14,22 @@ import SearchBar from "./SearchBar";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useEssentialProducts } from "@/hooks";
 
+const handleScroll = () => {
+  const scrollY = window.scrollY;
+  const maxScroll = 100; // Adjust this value to control the scroll threshold
+
+  // Calculate the opacity based on the scroll position
+  const opacity = Math.min(scrollY / maxScroll, 1);
+
+  return opacity;
+};
+
 const Navigation = () => {
   const navigationMenu = useRef();
   const navbar = useRef(null);
   const [isMenPopupVisible, setMenPopupVisible] = useState(false);
   const [isWomenPopupVisible, setWomenPopupVisible] = useState(false);
+  const [scrollOpacity, setScrollOpacity] = useState(handleScroll());
 
   const { pathname } = useLocation();
   const { essentialProducts, fetchEssentialProducts, isLoading, error } =
@@ -59,23 +70,14 @@ const Navigation = () => {
     Route.FORGOT_PASSWORD,
   ];
 
-  const [scrollOpacity, setScrollOpacity] = useState(0);
-
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const maxScroll = 100; // Adjust this value to control the scroll threshold
-
-      // Calculate the opacity based on the scroll position
-      const opacity = Math.min(scrollY / maxScroll, 1);
-
-      setScrollOpacity(opacity);
+    const setScroll = () => {
+      setScrollOpacity(() => handleScroll());
     };
-
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", setScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", setScroll);
     };
   }, []);
 
@@ -107,6 +109,7 @@ const Navigation = () => {
         boxShadow: `-4px 0px 50px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
       }}
       onMouseEnter={() => setScrollOpacity(1)}
+      onMouseLeave={() => setScrollOpacity(handleScroll())}
     >
       <ul className="navigation-menu-main" ref={navigationMenu}>
         {/* <li>

@@ -249,7 +249,7 @@
     width: 100%;
     margin: auto;
     margin-bottom: 0.2rem;
-    margin-top: 6rem;
+    margin-top: 5rem;
     max-width: 100%;
   }
 }
@@ -264,7 +264,7 @@
   height: auto;
   order: 2;
   overflow-x: scroll;
-  overflow-y: unset;
+  overflow-y: hidden;
   @include tablet {
     padding-inline: 1.5rem;
   }

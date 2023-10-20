@@ -142,6 +142,7 @@ const ViewProduct = () => {
                   onChangeIndex={handleChangeIndex}
                   enableMouseEvents
                   height={"90dvh"}
+                  style={{ overflowY: "hidden" }}
                 >
                   {product.imageCollection.map((image, index) => (
                     <ImageLoader

@@ -17,6 +17,17 @@ import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useEssentialProducts } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
+
+const handleScroll = () => {
+  const scrollY = window.scrollY;
+  const maxScroll = 100; // Adjust this value to control the scroll threshold
+
+  // Calculate the opacity based on the scroll position
+  const opacity = Math.min(scrollY / maxScroll, 1);
+
+  return opacity;
+};
+
 const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
@@ -24,6 +35,7 @@ const Navigation = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWomenOpen, setIsWomenOpen] = useState(false);
   const [isMenOpen, setIsMenOpen] = useState(false);
+  const [scrollOpacity, setScrollOpacity] = useState(handleScroll());
   const searchEl = useRef();
 
   const onClickLink = (e) => {
@@ -60,23 +72,15 @@ const Navigation = (props) => {
     }
   }, [isSearching]);
 
-  const [scrollOpacity, setScrollOpacity] = useState(0);
-
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const maxScroll = 100; // Adjust this value to control the scroll threshold
-
-      // Calculate the opacity based on the scroll position
-      const opacity = Math.min(scrollY / maxScroll, 1);
-
-      setScrollOpacity(opacity);
+    const setScroll = () => {
+      setScrollOpacity(() => handleScroll());
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", setScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", setScroll);
     };
   }, []);
 
@@ -96,7 +100,7 @@ const Navigation = (props) => {
         boxShadow: `-4px 0px 50px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
       }}
       onMouseEnter={() => setScrollOpacity(1)}
-      onMouseLeave={() => setScrollOpacity(0)}
+      onMouseLeave={() => setScrollOpacity(handleScroll())}
     >
       <div className="mobile-navigation-main">
         <div style={{ display: "flex", alignItems: "center" }}>
