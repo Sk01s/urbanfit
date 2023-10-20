@@ -18,8 +18,7 @@ const OrderCompleted = () => {
   useEffect(() => {
     const recaptcha = async () => {
       try {
-        if (!location.state?.otp && location.state?.id) {
-          if (recaptchaRef.current.childElementCount === 1) return;
+        if (location.state?.id) {
           firebase.generateRecaptcha(
             location.state.address.mobile.value,
             setOtpModel,
@@ -64,8 +63,9 @@ const OrderCompleted = () => {
           left: 0,
           zIndex: 10000,
         }}
+        id="container"
       >
-        <button
+        {/* <button
           ref={recaptchaRef}
           className="button"
           onClick={() => {
@@ -89,7 +89,7 @@ const OrderCompleted = () => {
           id="container"
         >
           Verfity Phone Number
-        </button>
+        </button> */}
       </div>
       <main key={order} style={{ marginTop: "4rem" }}>
         <div
@@ -164,7 +164,7 @@ const OrderCompleted = () => {
               <h4 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>
                 Contact information
               </h4>
-              <p>{order.address?.email || "alsarakibiy@gmail.com"}</p>
+              <p>{location.state?.address?.email}</p>
             </div>
             <div>
               <h4 style={{ marginBlock: "0.6rem", fontSize: "1.5rem" }}>

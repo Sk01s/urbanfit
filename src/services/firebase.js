@@ -24,7 +24,7 @@ class Firebase {
 
   generateRecaptcha = (number, setModel, setError, setRec) => {
     const recaptchaVerifier = new app.auth.RecaptchaVerifier("container", {
-      size: "invisible",
+      size: "normal",
 
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
@@ -56,6 +56,17 @@ class Firebase {
 
       recaptchaVerifier.verify().then((e) => {
         const recaptchaResponse = grecaptcha.getResponse(recaptchaWidgetId);
+        this.requestPhoneOtp(number)
+          .then(() => {
+            setModel(true);
+            setRec(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setModel(false);
+            setError(error);
+            displayActionMessage(error);
+          });
       });
     });
     return recaptchaVerifier;
