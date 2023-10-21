@@ -590,12 +590,12 @@
   aspect-ratio: 9/16;
   max-height: 40rem;
 
-  &:hover,
-  &:disabled {
-    cursor: pointer;
-    filter: grayscale(1);
-    -webkit-filter: grayscale(1);
-  }
+  // &:hover,
+  // &:disabled {
+  //   cursor: pointer;
+  //   filter: grayscale(1);
+  //   -webkit-filter: grayscale(1);
+  // }
   .badge {
     position: absolute;
     right: 0;
@@ -653,4 +653,13 @@
   grid-template-columns: repeat(auto-fill, minmax(20rem, calc(50% - 0.5rem)));
   gap: 1rem;
   margin-bottom: 1rem;
+}
+@media (max-width: 728px) {
+  .category-gender {
+    grid-template-columns: 1fr;
+  }
+}
+.css-1uccc91-singleValue {
+  top: 65% !important;
+  margin-left: 0.6rem !important;
 }

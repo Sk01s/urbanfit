@@ -278,6 +278,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                     disabled={isLoading}
                     placeholder="Create/Select Keywords"
                     label="* Keywords"
+                    creatable={true}
                   />
                 </div>
                 &nbsp;

@@ -92,9 +92,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       <div className="checkout">
         <StepTracker current={2} />
         <div className="checkout-step-2">
-          <h3 className="text-center" style={{ fontSize: "1.4rem" }}>
-            Shipping Details
-          </h3>
+          
           <Formik
             innerRef={form}
             initialValues={initFormikValues}

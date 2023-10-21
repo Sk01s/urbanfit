@@ -10,7 +10,7 @@ export const SEX_CATEGORY = "/store/:sex/:category";
 export const TYPE_CATEGORY = "/type/:sex/:type";
 export const WOMEN = "/women";
 export const WOMEN_CATEGORIES = "/women/:category";
-
+export const WISH = "/wish-list";
 export const SETS = "/category/sets";
 export const SEASONAL_PRODUCTS = "/seasonal";
 export const ESSENTIAL_PRODUCTS = "/essential";

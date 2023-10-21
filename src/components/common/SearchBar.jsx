@@ -8,7 +8,7 @@ import {
   removeSelectedRecent,
 } from "@/redux/actions/filterActions";
 
-const SearchBar = () => {
+const SearchBar = ({ style }) => {
   const [searchInput, setSearchInput] = useState("");
   const { filter, isLoading } = useSelector((state) => ({
     filter: state.filter,
@@ -69,7 +69,7 @@ const SearchBar = () => {
 
   return (
     <>
-      <div className="searchbar" ref={searchbarRef}>
+      <div style={style} className="searchbar" ref={searchbarRef}>
         <SearchOutlined
           className="searchbar-icon"
           onClick={() => {

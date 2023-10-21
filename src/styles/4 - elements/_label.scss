@@ -13,9 +13,10 @@ label {
   }
 }
 .label-input.active {
-  top: 0rem;
-  scale: 0.95;
+  top: 1rem;
+  scale: 0.9;
   z-index: 1;
+  font-size: 1rem;
 }
 input + .label-input {
   position: absolute;

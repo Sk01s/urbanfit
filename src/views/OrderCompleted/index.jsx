@@ -10,7 +10,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(false);
+  const [otpRec, setOtpRec] = useState(true);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
@@ -46,6 +46,30 @@ const OrderCompleted = () => {
         setMessage("invalide code ");
       });
   };
+
+  function getOrdinalSuffix(number) {
+    if (number === 0) {
+      return "0"; // Special case for 0
+    }
+
+    const lastDigit = number % 10;
+    const lastTwoDigits = number % 100;
+
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+      return number + "th";
+    }
+
+    switch (lastDigit) {
+      case 1:
+        return number + "st";
+      case 2:
+        return number + "nd";
+      case 3:
+        return number + "rd";
+      default:
+        return number + "th";
+    }
+  }
 
   return (
     <>
@@ -210,11 +234,9 @@ const OrderCompleted = () => {
               >
                 Shipping address
               </h4>
+
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.country || location.state?.address?.country} ,
-              </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.city || location.state?.address?.city} ,
+                {order.address?.fullname || location.state?.address?.fullname} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
                 {order.address?.street || location.state?.address?.street} ,
@@ -223,10 +245,21 @@ const OrderCompleted = () => {
                 {order.address?.building || location.state?.address.building} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.floor || location.state?.address.floor} ,
+                {getOrdinalSuffix(parseInt(location.state?.address.floor))} ,
+              </div>
+              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+                {order.address?.city || location.state?.address?.city} ,
               </div>
               <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
                 {order.address?.zipcode || location.state?.address.zipcode}
+              </div>
+              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+                {order.address?.country || location.state?.address?.country} ,
+              </div>
+              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+                {order.address?.mobile.value ||
+                  location.state?.address?.mobile.value}{" "}
+                ,
               </div>
             </div>
             <div>

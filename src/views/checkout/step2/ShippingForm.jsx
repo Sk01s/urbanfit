@@ -11,104 +11,112 @@ import { countries } from "@/constants/constants";
 const ShippingForm = () => {
   const { values } = useFormikContext();
   return (
-    <div className="checkout-shipping-wrapper">
-      <div className="checkout-shipping-form">
-        <div className="checkout-fieldset">
-          <div
-            className="d-block checkout-fieldset"
-            style={{
-              margin: window.innerWidth <= 480 ? 0 : "0px 3.2rem 0 1.2rem",
-              fontSize: "1.2rem",
-            }}
-          >
-            <div className="product-form-field" style={{ marginBottom: "0" }}>
-              <CustomCreatableSelect
-                defaultValue={{
-                  label: values.country,
-                  value: values.country,
-                }}
-                name="country"
-                iid="country"
-                options={countries}
-                label="Country"
+    <>
+      <div className="checkout-contact-wrapper">
+        <h3 className="text-center" style={{ fontSize: "1.4rem" }}>
+          Contact
+        </h3>
+        <div className="d-block checkout-field">
+          <Field
+            name="email"
+            type="email"
+            label="Email"
+            component={CustomInput}
+          />
+        </div>
+      </div>
+      <h3 className="text-center" style={{ fontSize: "1.4rem" }}>
+        Shipping Details
+      </h3>
+      <div className="checkout-shipping-wrapper">
+        <div className="checkout-shipping-form">
+          <div className="checkout-fieldset">
+            <div
+              className="d-block checkout-fieldset"
+              style={{
+                margin: window.innerWidth <= 480 ? 0 : "0px 3.2rem 0 1.2rem",
+                fontSize: "1.2rem",
+              }}
+            >
+              <div className="product-form-field" style={{ marginBottom: "0" }}>
+                <CustomCreatableSelect
+                  defaultValue={{
+                    label: values.country,
+                    value: values.country,
+                  }}
+                  name="country"
+                  iid="country"
+                  options={countries}
+                  label="Country"
+                />
+              </div>
+            </div>
+            <div
+              className="d-block checkout-fieldset"
+              style={{ margin: window.innerWidth <= 480 ? "0 0 1.2rem 0" : 0 }}
+            ></div>
+          </div>
+          <div className="checkout-fieldset">
+            <div className="d-block checkout-field">
+              <Field
+                name="fullname"
+                type="text"
+                label="Full name"
+                component={CustomInput}
+                style={{ textTransform: "capitalize" }}
               />
             </div>
-          </div>
-          <div
-            className="d-block checkout-fieldset"
-            style={{ margin: window.innerWidth <= 480 ? "0 0 1.2rem 0" : 0 }}
-          >
-            <div className="checkout-field" style={{ margin: "0" }}>
+            <div className="d-block checkout-field">
               <CustomMobileInput name="mobile" defaultValue={values.mobile} />
             </div>
           </div>
-        </div>
-        <div className="checkout-fieldset">
-          <div className="d-block checkout-field">
-            <Field
-              name="fullname"
-              type="text"
-              label="Full name"
-              component={CustomInput}
-              style={{ textTransform: "capitalize" }}
-            />
+          <div className="checkout-fieldset">
+            <div className="d-block checkout-field">
+              <Field
+                name="street"
+                type="text"
+                label="Street"
+                component={CustomInput}
+              />
+            </div>
+            <div className="d-block checkout-field">
+              <Field
+                name="city"
+                type="text"
+                label="City"
+                component={CustomInput}
+              />
+            </div>
           </div>
-          <div className="d-block checkout-field">
-            <Field
-              name="email"
-              type="email"
-              label="Email"
-              component={CustomInput}
-            />
+          <div className="checkout-fieldset">
+            <div className="d-block checkout-field">
+              <Field
+                name="building"
+                type="text"
+                label="Building"
+                component={CustomInput}
+              />
+            </div>
+            <div className="d-block checkout-field">
+              <Field
+                name="floor"
+                type="text"
+                label="Floor"
+                component={CustomInput}
+              />
+            </div>
           </div>
-        </div>
-        <div className="checkout-fieldset">
-          <div className="d-block checkout-field">
-            <Field
-              name="street"
-              type="text"
-              label="Street"
-              component={CustomInput}
-            />
+          <div className="checkout-fieldset">
+            <div className="d-block checkout-field">
+              <Field
+                name="zipcode"
+                type="text"
+                label="Postal code (optional)"
+                component={CustomInput}
+              />
+            </div>
           </div>
-          <div className="d-block checkout-field">
-            <Field
-              name="city"
-              type="text"
-              label="City"
-              component={CustomInput}
-            />
-          </div>
-        </div>
-        <div className="checkout-fieldset">
-          <div className="d-block checkout-field">
-            <Field
-              name="building"
-              type="text"
-              label="Building"
-              component={CustomInput}
-            />
-          </div>
-          <div className="d-block checkout-field">
-            <Field
-              name="floor"
-              type="text"
-              label="Floor"
-              component={CustomInput}
-            />
-          </div>
-        </div>
-        <div className="checkout-fieldset">
-          <div className="d-block checkout-field">
-            <Field
-              name="zipcode"
-              type="text"
-              label="Postal code (optional)"
-              component={CustomInput}
-            />
-          </div>
-        </div>
-        {/* <div className="checkout-fieldset">
+          {/* <div className="checkout-fieldset">
           <Field name="isInternational">
             {({ field, form, meta }) => (
               <div className="checkout-field">
@@ -141,12 +149,13 @@ const ShippingForm = () => {
                     <h4 className="margin-0">$50.00</h4>
                   </label>
                 </div> */}
-        {/* </div>
+          {/* </div>
             )}
           </Field>
         </div> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -58,6 +58,7 @@ const AppRouter = () => {
             exact
             path={ROUTES.TYPE_CATEGORY}
           />
+          <Route component={view.Wish} exact path={ROUTES.WISH} />
           <Route component={view.Contact} exact path={ROUTES.CONTACT_US} />
           <Route
             component={view.OrderCompleted}

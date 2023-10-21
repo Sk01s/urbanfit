@@ -30,9 +30,13 @@ footer {
   height: 6rem;
   object-fit: contain;
 }
+.footer-col-1 {
+  margin-right: 3rem;
+}
 
 @media (max-width: 1000px) {
   .list {
+    padding-inline: 10%;
     grid-template-columns: 1fr;
   }
 }

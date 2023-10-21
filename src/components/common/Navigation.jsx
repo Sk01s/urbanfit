@@ -29,6 +29,7 @@ const Navigation = () => {
   const navbar = useRef(null);
   const [isMenPopupVisible, setMenPopupVisible] = useState(false);
   const [isWomenPopupVisible, setWomenPopupVisible] = useState(false);
+  const [isSmall, setSmall] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(handleScroll());
 
   const { pathname } = useLocation();
@@ -80,6 +81,13 @@ const Navigation = () => {
       window.removeEventListener("scroll", setScroll);
     };
   }, []);
+  useEffect(() => {
+    const small = () => {
+      setSmall(window.innerWidth <= 850);
+    };
+    window.onresize = small;
+    small();
+  }, []);
 
   if (
     (store.user &&
@@ -89,7 +97,7 @@ const Navigation = () => {
   ) {
     return null;
   }
-  if (window.innerWidth <= 850) {
+  if (isSmall) {
     return (
       <MobileNavigation
         // eslint-disable-next-line react/jsx-props-no-spreading
@@ -348,6 +356,33 @@ const Navigation = () => {
             </li>
           )}
         </ul>
+        <li
+          className="navigation-menu-item"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Link
+            style={{
+              all: "unset",
+              display: "block",
+              translate: "0 3px",
+              cursor: "pointer",
+            }}
+            to={Route.WISH}
+          >
+            <svg width={35} viewBox="0 0 50 50">
+              <path
+                d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z"
+                fill={"#000"}
+                strokeWidth={2}
+              />
+            </svg>
+          </Link>
+        </li>
+
         <BasketToggle>
           {({ onClickToggle }) => (
             <button
