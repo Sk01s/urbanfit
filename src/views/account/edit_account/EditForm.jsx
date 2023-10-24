@@ -20,8 +20,7 @@ const EditForm = ({ isLoading, authProvider }) => {
         disabled={isLoading}
         name="fullname"
         type="text"
-        label="* Full Name"
-        placeholder="Enter your full name"
+        label="Full Name"
         component={CustomInput}
         style={{ textTransform: "capitalize" }}
       />
@@ -29,43 +28,32 @@ const EditForm = ({ isLoading, authProvider }) => {
         disabled={authProvider !== "password" || isLoading}
         name="email"
         type="email"
-        label="* Email Address"
-        placeholder="test@example.com"
+        label="Email Address"
         component={CustomInput}
       />
       <Field
         name="street"
         type="text"
-        label="* Shipping Street"
-        placeholder="Enter full shipping street"
+        label=" Street"
         component={CustomInput}
       />
-      <Field
-        name="city"
-        type="text"
-        label="* Shipping City"
-        placeholder="Enter full shipping City"
-        component={CustomInput}
-      />
+      <Field name="city" type="text" label=" City" component={CustomInput} />
       <Field
         name="building"
         type="text"
-        label="* Shipping Building"
-        placeholder="Enter full shipping Building"
+        label="  Building"
         component={CustomInput}
       />
       <Field
         name="floor"
         type="text"
-        label="* Shipping Floor Number"
-        placeholder="Enter full shipping Floor Number"
+        label=" Floor Number"
         component={CustomInput}
       />
       <Field
-        name="nearby"
+        name="zipcode"
         type="text"
-        label="*  Near by"
-        placeholder="Enter full Near by"
+        label="Postal code"
         component={CustomInput}
       />
       <CustomMobileInput

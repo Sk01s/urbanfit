@@ -73,12 +73,29 @@ const BasketItem = ({ product, display = false }) => {
                   />
                 </div>
               )}
-              <div style={{ display: "flex", gap: "0.8rem" }}>
+              <div
+                style={{ display: "flex", gap: "0.8rem", marginBlock: ".6rem" }}
+              >
                 <span className="spec-title">Size : </span>
                 <h5 className="my-0" style={{ fontSize: "1.125rem" }}>
                   {displaySizeForOmar(product.selectedSize)}{" "}
                 </h5>
               </div>
+              {product[`${product.selectedSize}Quantity`] <= 9 && (
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "0.8rem",
+                    marginBlock: ".6rem",
+                  }}
+                >
+                  <h5 className="my-0" style={{ fontSize: "1.125rem" }}>
+                    {product[`${product.selectedSize}Quantity`]}
+                  </h5>
+                  <span className="spec-title">In Stoke </span>
+                </div>
+              )}
+
               {display ? (
                 <></>
               ) : (

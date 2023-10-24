@@ -46,6 +46,7 @@ const CustomCreatableSelect = (props) => {
         border: touched && error ? "1px solid red" : "1px solid #cacaca",
         marginBottom: "1.2rem",
         borderRadius: ".7rem",
+        overflow: "hidden",
       }}
     >
       {touched && error ? (

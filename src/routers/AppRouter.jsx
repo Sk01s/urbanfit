@@ -1,5 +1,5 @@
 import { Basket } from "@/components/basket";
-import { Footer, Navigation } from "@/components/common";
+import { Footer, Navigation, NewsDisplay } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 import { createBrowserHistory } from "history";
 import React, { useState } from "react";
@@ -20,6 +20,7 @@ const AppRouter = () => {
   return (
     <Router history={history}>
       <>
+        <NewsDisplay />
         <Navigation />
         <Basket />
         {!accepeted && <Terms setAccepeted={setAccepeted} />}

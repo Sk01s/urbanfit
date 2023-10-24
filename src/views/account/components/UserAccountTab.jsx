@@ -69,12 +69,12 @@ const UserProfile = (props) => {
           ) : (
             <h5 className="text-subtle text-italic">Floor Number not set</h5>
           )}
-          <span>Nearby</span>
+          <span>Postal code</span>
           <br />
-          {profile.nearby ? (
-            <h5>{profile.nearby}</h5>
+          {profile.zipcode ? (
+            <h5>{profile.zipcode}</h5>
           ) : (
-            <h5 className="text-subtle text-italic">Nearby not set</h5>
+            <h5 className="text-subtle text-italic">zipcode is not set</h5>
           )}
           <span>Mobile</span>
           <br />

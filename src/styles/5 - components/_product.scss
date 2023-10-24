@@ -203,7 +203,7 @@
 .product-view {
   max-width: 90%;
   margin-inline: auto;
-  margin-top: 5rem;
+  margin-top: 8rem;
 }
 @media (max-width: 800px) {
   .product-view {
@@ -249,7 +249,7 @@
     width: 100%;
     margin: auto;
     margin-bottom: 0.2rem;
-    margin-top: 5rem;
+    margin-top: 9rem;
     max-width: 100%;
   }
 }
@@ -342,7 +342,7 @@
   padding: $l-size;
   width: 50%;
 }
-@media (max-width: 728px) {
+@media (max-width: 800px) {
   .product-modal-details {
     max-width: 100%;
     width: 100%;
@@ -589,10 +589,10 @@
   user-select: none;
   aspect-ratio: 9/16;
   max-height: 40rem;
+  cursor: pointer;
 
   // &:hover,
   // &:disabled {
-  //   cursor: pointer;
   //   filter: grayscale(1);
   //   -webkit-filter: grayscale(1);
   // }

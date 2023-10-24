@@ -13,44 +13,39 @@ const ShippingForm = () => {
   return (
     <>
       <div className="checkout-contact-wrapper">
-        <h3 className="text-center" style={{ fontSize: "1.4rem" }}>
+        <h3
+          style={{
+            textAlign: window.innerWidth <= 480 ? "left" : "center",
+            fontSize: "1.3rem",
+          }}
+        >
           Contact
         </h3>
-        <div className="d-block checkout-field">
-          <Field
-            name="email"
-            type="email"
-            label="Email"
-            component={CustomInput}
-          />
+        <div className=" checkout-fieldset">
+          <div className="d-block  checkout-field">
+            <Field
+              name="email"
+              type="email"
+              label="Email"
+              component={CustomInput}
+            />
+          </div>
+          <div className="d-block checkout-field">
+            <CustomMobileInput name="mobile" defaultValue={values.mobile} />
+          </div>
         </div>
       </div>
-      <h3 className="text-center" style={{ fontSize: "1.4rem" }}>
+      <h3
+        style={{
+          textAlign: window.innerWidth <= 480 ? "left" : "center",
+          fontSize: "1.3rem",
+        }}
+      >
         Shipping Details
       </h3>
       <div className="checkout-shipping-wrapper">
         <div className="checkout-shipping-form">
           <div className="checkout-fieldset">
-            <div
-              className="d-block checkout-fieldset"
-              style={{
-                margin: window.innerWidth <= 480 ? 0 : "0px 3.2rem 0 1.2rem",
-                fontSize: "1.2rem",
-              }}
-            >
-              <div className="product-form-field" style={{ marginBottom: "0" }}>
-                <CustomCreatableSelect
-                  defaultValue={{
-                    label: values.country,
-                    value: values.country,
-                  }}
-                  name="country"
-                  iid="country"
-                  options={countries}
-                  label="Country"
-                />
-              </div>
-            </div>
             <div
               className="d-block checkout-fieldset"
               style={{ margin: window.innerWidth <= 480 ? "0 0 1.2rem 0" : 0 }}
@@ -66,8 +61,25 @@ const ShippingForm = () => {
                 style={{ textTransform: "capitalize" }}
               />
             </div>
-            <div className="d-block checkout-field">
-              <CustomMobileInput name="mobile" defaultValue={values.mobile} />
+            <div
+              className="d-block checkout-fieldset"
+              style={{
+                margin: window.innerWidth <= 480 ? 0 : "0px 1.2rem 0 1.2rem",
+                fontSize: "1.2rem",
+              }}
+            >
+              <div className="product-form-field" style={{ marginBottom: "0" }}>
+                <CustomCreatableSelect
+                  defaultValue={{
+                    label: values.country,
+                    value: values.country,
+                  }}
+                  name="country"
+                  iid="country"
+                  options={countries}
+                  label="Country"
+                />
+              </div>
             </div>
           </div>
           <div className="checkout-fieldset">

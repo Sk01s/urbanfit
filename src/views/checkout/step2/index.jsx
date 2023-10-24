@@ -25,10 +25,10 @@ const FormSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email is not valid.")
     .required("Email is required."),
-  street: Yup.string().required("Shipping street is required."),
-  city: Yup.string().required("Shipping city is required."),
-  building: Yup.string().required("Shipping building is required."),
-  floor: Yup.number().required("Shipping floor number is required."),
+  street: Yup.string().required("Street is required."),
+  city: Yup.string().required("City is required."),
+  building: Yup.string().required("Building is required."),
+  floor: Yup.number().required("Floor number is required."),
   zipcode: Yup.number(),
 
   mobile: Yup.object()
@@ -92,7 +92,6 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       <div className="checkout">
         <StepTracker current={2} />
         <div className="checkout-step-2">
-          
           <Formik
             innerRef={form}
             initialValues={initFormikValues}

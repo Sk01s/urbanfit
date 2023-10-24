@@ -15,4 +15,5 @@ export { default as Preloader } from "./Preloader";
 export { default as PriceRange } from "./PriceRange";
 export { default as SearchBar } from "./SearchBar";
 export { default as Landing } from "./Landing";
+export { default as NewsDisplay } from "./News";
 export { default as SocialLogin } from "./SocialLogin";
