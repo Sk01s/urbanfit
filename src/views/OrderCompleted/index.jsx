@@ -10,7 +10,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(false);
+  const [otpRec, setOtpRec] = useState(true);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
