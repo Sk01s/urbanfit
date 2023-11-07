@@ -33,10 +33,10 @@ export const CHECKOUT_STEP_2 = "/checkout/step2";
 export const CHECKOUT_STEP_3 = "/checkout/step3";
 export const VIEW_PRODUCT = "/product/:id";
 export const TERMS = "/terms-conditions";
-
 export const ORDER_COMPLETED = "/order-completed/:id";
 export const ORDER = "/order/:id";
 export const FAQS = "/faqs";
 export const ABOUT_US = "/about-us";
 export const PRIVACY = "/privacy";
 export const CONTACT_US = "/contact-us";
+export const USER_VIEW_ORDER = "/order/:id";

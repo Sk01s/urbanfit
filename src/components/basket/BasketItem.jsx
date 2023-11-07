@@ -92,7 +92,7 @@ const BasketItem = ({ product, display = false }) => {
                   <h5 className="my-0" style={{ fontSize: "1.125rem" }}>
                     {product[`${product.selectedSize}Quantity`]}
                   </h5>
-                  <span className="spec-title">In Stoke </span>
+                  <span className="spec-title">in stock </span>
                 </div>
               )}
 

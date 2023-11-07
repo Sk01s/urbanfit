@@ -80,6 +80,10 @@ const AppRouter = () => {
             path={ROUTES.ACCOUNT}
           />
           <ClientRoute
+            component={view.UserViewOrder}
+            path={ROUTES.USER_VIEW_ORDER}
+          />
+          <ClientRoute
             component={view.EditAccount}
             exact
             path={ROUTES.ACCOUNT_EDIT}

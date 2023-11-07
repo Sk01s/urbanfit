@@ -78,7 +78,7 @@ const Total = ({ isInternational, subtotal, order }) => {
             align-items: center;" 
           >
             <span class="spec-title" style="font-size:0.9rem;
-            font-size:1rem;">Size : </span>
+           ">size : </span>
             <span class="my-0" style="
             font-size:0.9rem;">
               ${displaySizeForOmar(product.selectedSize)}
