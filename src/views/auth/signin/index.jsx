@@ -104,7 +104,6 @@ const SignIn = ({ history }) => {
                           name="password"
                           type="password"
                           label="Password"
-                          placeholder="Your Password"
                           component={CustomInput}
                         />
                       </div>

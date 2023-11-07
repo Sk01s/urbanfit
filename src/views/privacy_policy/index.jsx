@@ -7,7 +7,7 @@ function index(props) {
   return (
     <div
       className="privacy-policy"
-      style={{ marginTop: "8rem", width: "90vw", marginInline: "auto" }}
+      style={{ marginTop: "9rem", width: "90vw", marginInline: "auto" }}
     >
       <h1>Privacy Policy</h1>
 

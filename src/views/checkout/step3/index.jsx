@@ -85,10 +85,10 @@ const Payment = ({ shipping, payment, subtotal }) => {
           }
         }}
       >
-        {({values,setValues}) => (
+        {({ values, setValues }) => (
           <Form className="checkout-step-3" onSubmit={onConfirm}>
             <CreditPayment setPaymentType={setPaymentType} />
-            <PayPalPayment setPaymentType={setPaymentType} />
+            {/* <PayPalPayment setPaymentType={setPaymentType} /> */}
             <CODPayment setPaymentType={setPaymentType} />
             {state && (
               <Total

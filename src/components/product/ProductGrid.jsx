@@ -13,6 +13,7 @@ const ProductGrid = ({ products }) => {
           // eslint-disable-next-line react/no-array-index-key
           key={`product-skeleton ${index}`}
           product={product}
+          skeleton
         />
       )) : products.map((product) => (
         <ProductItem

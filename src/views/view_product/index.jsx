@@ -30,6 +30,7 @@ import ProductShowcase from "@/components/product/ProductShowcaseGrid";
 import {} from "@/hooks";
 import firebase from "@/services/firebase";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { BasketToggle } from "@/components/basket";
 
 const ViewProduct = () => {
   const { pathname } = useLocation();
@@ -40,7 +41,7 @@ const ViewProduct = () => {
   const { addToBasket, isItemOnBasket } = useBasket(id);
   const { wish, addToWish, isItemOnWish } = useWish(id);
   useScrollTop();
-  useDocumentTitle(`View ${product?.name || "Item"}`);
+  useDocumentTitle(`${product?.name || ""}`);
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
@@ -99,13 +100,14 @@ const ViewProduct = () => {
     }
   };
 
-  const handleAddToBasket = () => {
+  const handleAddToBasket = (onClickToggle, e) => {
     addToBasket({
       ...product,
       selectedColor,
       quantity,
       selectedSize: selectedSize,
     });
+    onClickToggle(e);
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -167,12 +169,12 @@ const ViewProduct = () => {
                   }}
                 >
                   {isItemOnWish(product.id) ? (
-                    <svg width={27} viewBox="0 0 50 50">
-                      <path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z" />
-                    </svg>
-                  ) : (
                     <svg width={25} id="heart">
                       <path d="M2.2 9.4c0 1.3.2 3.3 2 5.1 1.6 1.6 6.9 5.2 7.1 5.4.2.1.4.2.6.2s.4-.1.6-.2c.2-.2 5.5-3.7 7.1-5.4 1.8-1.8 2-3.8 2-5.1 0-3-2.4-5.4-5.4-5.4-1.6 0-3.2.9-4.2 2.3C11 4.9 9.4 4 7.6 4 4.7 4 2.2 6.4 2.2 9.4z"></path>
+                    </svg>
+                  ) : (
+                    <svg width={27} viewBox="0 0 50 50">
+                      <path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z" />
                     </svg>
                   )}
                 </button>
@@ -294,42 +296,46 @@ const ViewProduct = () => {
                   className="product-modal-action"
                   style={{ marginBlock: "5.6rem" }}
                 >
-                  <button
-                    className={`button ${
-                      isItemOnBasket(product.id)
-                        ? "button-border button-border-gray"
-                        : ""
-                    }`}
-                    style={{
-                      background: isItemOnBasket(product.id) && "#6f6f6f",
-                      color: "#fff",
-                      lineHeight: "1em",
-                      height: "auto",
-                      margin: "0",
-                      textDecoration: "none !important",
-                      cursor: "pointer",
-                      padding: "1.2em 25px",
-                      verticalAlign: "middle",
-                      textAlign: "center",
-                      borderRadius: ".75rem",
-                      transition:
-                        "background-color .1s,color .1s,border-color .1s,opacity .1s",
-                      display: "inline-block",
-                      fontWeight: "400",
-                      fontStyle: "normal",
-                      letterSpacing: ".08em",
-                      textTransform: "uppercase",
-                      padding: "15px 25px",
-                      fontSize: "14px;",
-                      width: "100%",
-                    }}
-                    onClick={handleAddToBasket}
-                    type="button"
-                  >
-                    {isItemOnBasket(product.id)
-                      ? "Remove From Cart"
-                      : "Add To Cart"}
-                  </button>
+                  <BasketToggle>
+                    {({ onClickToggle }) => (
+                      <button
+                        className={`button basket-toggle ${
+                          isItemOnBasket(product.id)
+                            ? "button-border button-border-gray"
+                            : ""
+                        }`}
+                        style={{
+                          background: isItemOnBasket(product.id) && "#6f6f6f",
+                          color: "#fff",
+                          lineHeight: "1em",
+                          height: "auto",
+                          margin: "0",
+                          textDecoration: "none !important",
+                          cursor: "pointer",
+                          padding: "1.2em 25px",
+                          verticalAlign: "middle",
+                          textAlign: "center",
+                          borderRadius: ".75rem",
+                          transition:
+                            "background-color .1s,color .1s,border-color .1s,opacity .1s",
+                          display: "inline-block",
+                          fontWeight: "400",
+                          fontStyle: "normal",
+                          letterSpacing: ".08em",
+                          textTransform: "uppercase",
+                          padding: "15px 25px",
+                          fontSize: "14px;",
+                          width: "100%",
+                        }}
+                        onClick={(e) => handleAddToBasket(onClickToggle, e)}
+                        type="button"
+                      >
+                        {isItemOnBasket(product.id)
+                          ? "Remove From Cart"
+                          : "Add To Cart"}
+                      </button>
+                    )}
+                  </BasketToggle>
                 </div>
                 <InfoBox
                   open={true}

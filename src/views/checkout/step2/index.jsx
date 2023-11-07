@@ -112,6 +112,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     className="button button-muted"
                     onClick={() => history.push(CHECKOUT_STEP_1)}
                     type="button"
+                    style={{ fontSize: "1.3rem" }}
                   >
                     <ArrowLeftOutlined />
                     &nbsp; Go Back
@@ -120,6 +121,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                     className="button button-icon"
                     type="submit"
                     id="next"
+                    style={{ fontSize: "1.3rem" }}
                   >
                     Next Step &nbsp;
                     <ArrowRightOutlined />

@@ -97,7 +97,7 @@ const Navigation = (props) => {
       className="mobile-navigation"
       style={{
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
-        boxShadow: `-4px 0px 50px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
+        boxShadow: `-4px 16px 9px rgba(0, 0, 0, ${scrollOpacity * 0.09})`,
       }}
       onMouseEnter={() => setScrollOpacity(1)}
       onMouseLeave={() => setScrollOpacity(handleScroll())}
@@ -430,6 +430,8 @@ const Navigation = (props) => {
               gap: 0,
             }}
           >
+            <br />
+            <br />
             <ProductShowcaseGrid
               products={essentialProducts}
               skeletonCount={6}

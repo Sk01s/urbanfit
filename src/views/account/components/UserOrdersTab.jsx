@@ -16,8 +16,8 @@ const UserOrdersTab = () => {
   return (
     <div className="loader" style={{ minHeight: "80dvh" }}>
       <h3>My Orders</h3>
-      <ol>
-        {orders ? (
+      <ol style={{ all: "unset" }}>
+        {orders?.length ? (
           orders?.map((item, index) => {
             return (
               <li style={{ marginBottom: "1rem" }}>
@@ -28,9 +28,11 @@ const UserOrdersTab = () => {
             );
           })
         ) : (
-          <strong>
-            <span className="text-subtle">You don&apos;t have any orders</span>
-            <button>shop now</button>
+          <strong style={{ textAlign: "center" }}>
+            <p className="text-subtle">You don&apos;t have any orders</p>
+            <button style={{ marginInline: "auto" }} className="button">
+              shop now
+            </button>
           </strong>
         )}
       </ol>

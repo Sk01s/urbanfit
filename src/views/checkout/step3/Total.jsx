@@ -117,7 +117,7 @@ const Total = ({ isInternational, subtotal, order }) => {
       )
       .then((e) => console.log(e));
     dispatch(clearBasket());
-    
+
     history.push(`/order-completed/${order.id}`, order);
   };
   const onClickBack = () => {
@@ -142,6 +142,7 @@ const Total = ({ isInternational, subtotal, order }) => {
           className="button button-muted"
           onClick={() => onClickBack(values)}
           type="button"
+          style={{ fontSize: "1.3rem" }}
         >
           <ArrowLeftOutlined />
           &nbsp; Go Back
@@ -151,6 +152,7 @@ const Total = ({ isInternational, subtotal, order }) => {
           disabled={false}
           onClick={handleOrder}
           type="button"
+          style={{ fontSize: "1.3rem" }}
         >
           <CheckOutlined />
           &nbsp; Confirm

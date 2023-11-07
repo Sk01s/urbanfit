@@ -4,7 +4,7 @@ const index = () => {
   return (
     <p
       style={{
-        marginTop: "5rem",
+        marginTop: "9rem",
       }}
     >
       Terms and Conditions Welcome to Urbanfit, an ecommerce website that sells

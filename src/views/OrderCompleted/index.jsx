@@ -10,7 +10,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(true);
+  const [otpRec, setOtpRec] = useState(false);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
@@ -61,13 +61,13 @@ const OrderCompleted = () => {
 
     switch (lastDigit) {
       case 1:
-        return number + "st";
+        return number + "st (floor)";
       case 2:
-        return number + "nd";
+        return number + "nd (floor)";
       case 3:
-        return number + "rd";
+        return number + "rd (floor)";
       default:
-        return number + "th";
+        return number + "th (floor)";
     }
   }
 
@@ -76,19 +76,32 @@ const OrderCompleted = () => {
       <div
         style={{
           position: "fixed",
-          width: "100vw",
-          height: "100vh",
           display: otpRec ? "flex" : "none",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#22222299",
-          backdropFilter: "blur(3px)",
           top: 0,
           left: 0,
+          bottom: 0,
+          right: 0,
+          justifyContent: "center",
+          alignItems: "center",
           zIndex: 10000,
         }}
-        id="container"
       >
+        <div
+          style={{
+            position: "absolute",
+            width: "100vw",
+            height: "100vh",
+            display: otpRec ? "flex" : "none",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#22222299",
+            filter: "blur(3px)",
+            top: 0,
+            left: 0,
+          }}
+        />
+        <div style={{ position: "relative" }} id="container"></div>
+
         {/* <button
           ref={recaptchaRef}
           className="button"
@@ -115,7 +128,7 @@ const OrderCompleted = () => {
           Verfity Phone Number
         </button> */}
       </div>
-      <main key={order} style={{ marginTop: "5.5rem" }}>
+      <main key={order} style={{ marginTop: "11.5rem" }}>
         <div
           style={{
             display: "flex",
@@ -207,7 +220,7 @@ const OrderCompleted = () => {
               </h4>
               <p style={{ margin: 0 }}>{location.state?.address?.email}</p>
             </div>
-            <div>
+            {/* <div>
               <h3
                 style={{
                   marginBlock: "1rem",
@@ -223,7 +236,7 @@ const OrderCompleted = () => {
                   location.state.payment ||
                   location.state?.payment}
               </div>
-            </div>
+            </div> */}
             <div>
               <h4
                 style={{
@@ -235,28 +248,62 @@ const OrderCompleted = () => {
                 Shipping address
               </h4>
 
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.fullname || location.state?.address?.fullname} ,
+              <div
+                style={{
+                  color: "#4a4a4a",
+                  fontSize: "1.3rem",
+                  marginBottom: ".5rem",
+                }}
+              >
+                {order.address?.fullname || location.state?.address?.fullname}
               </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.street || location.state?.address?.street} ,
+              <div
+                style={{
+                  color: "#4a4a4a",
+                  fontSize: "1.3rem",
+                  marginBottom: ".5rem",
+                }}
+              >
+                {order.address?.street || location.state?.address?.street}
               </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.building || location.state?.address.building} ,
+              <div
+                style={{
+                  color: "#4a4a4a",
+                  fontSize: "1.3rem",
+                  marginBottom: ".5rem",
+                }}
+              >
+                {order.address?.building || location.state?.address.building} ,{" "}
+                {getOrdinalSuffix(parseInt(location.state?.address.floor))}
               </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {getOrdinalSuffix(parseInt(location.state?.address.floor))} ,
-              </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.city || location.state?.address?.city} ,
-              </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+
+              <div
+                style={{
+                  color: "#4a4a4a",
+                  fontSize: "1.3rem",
+                  marginBottom: ".5rem",
+                }}
+              >
+                {order.address?.city || location.state?.address?.city}{" "}
                 {order.address?.zipcode || location.state?.address.zipcode}
               </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
-                {order.address?.country || location.state?.address?.country} ,
+
+              <div
+                style={{
+                  color: "#4a4a4a",
+                  fontSize: "1.3rem",
+                  marginBottom: ".5rem",
+                }}
+              >
+                {order.address?.country || location.state?.address?.country}
               </div>
-              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+              <div
+                style={{
+                  color: "#4a4a4a",
+                  fontSize: "1.3rem",
+                  marginBottom: ".5rem",
+                }}
+              >
                 {order.address?.mobile.value ||
                   location.state?.address?.mobile.value}{" "}
                 ,

@@ -130,7 +130,7 @@ function* authSaga({ type, payload }) {
           city: "",
           building: "",
           floor: "",
-          nearby: "",
+          zipcode: "",
           basket: [],
           mobile: { data: {} },
           role: "USER",

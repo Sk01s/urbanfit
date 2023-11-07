@@ -12,7 +12,7 @@
   font-size: 1.5rem;
   opacity: 1;
   transition: opacity 0.5s ease; // Adjust the duration of the fade (in seconds)
-  z-index: 100;
+  z-index: 10;
   span {
     color: $black;
   }

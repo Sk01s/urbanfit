@@ -49,11 +49,17 @@ const OrderSummary = ({ basket, subtotal }) => {
             className="button button-muted"
             onClick={onClickPrevious}
             type="button"
+            style={{ fontSize: "1.3rem" }}
           >
             <ShopOutlined />
             &nbsp; Continue Shopping
           </button>
-          <button className="button" onClick={onClickNext} type="submit">
+          <button
+            className="button"
+            onClick={onClickNext}
+            type="submit"
+            style={{ fontSize: "1.3rem" }}
+          >
             Next Step &nbsp;
             <ArrowRightOutlined />
           </button>

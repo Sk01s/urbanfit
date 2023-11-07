@@ -1,8 +1,13 @@
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, auto);
   grid-gap: $s-size;
   justify-content: center;
+}
+@media (max-width: 728px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(120px, auto));
+  }
 }
 
 .product-list-header {

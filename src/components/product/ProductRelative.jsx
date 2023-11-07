@@ -163,6 +163,7 @@ const ProductShowcase = ({
                 product={product}
                 relative={relative}
                 handleSetState={handleSetState}
+                skeleton
               />
             ))
           : products.map((product) => (

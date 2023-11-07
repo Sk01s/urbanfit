@@ -7,7 +7,7 @@ const newsItems = [
   "World wide Delivery (DHL)",
   "Wear the change Be URBANFIT!",
 ];
-const delay = 2000;
+const delay = 4000;
 const handleScroll = () => {
   const scrollY = window.scrollY;
   const maxScroll = 100; // Adjust this value to control the scroll threshold

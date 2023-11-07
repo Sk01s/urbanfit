@@ -145,10 +145,12 @@ const Basket = () => {
                       gap: 0,
                     }}
                   >
+                    <br />
+                    <br />
                     <ProductShowcaseGrid
                       products={essentialProducts}
                       skeletonCount={6}
-                      title={"Essentials"}
+                      title={"You may also like"}
                       titleStyle={{}}
                       infinite={false}
                       center={false}

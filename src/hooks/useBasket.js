@@ -16,10 +16,10 @@ const useBasket = () => {
       return displayActionMessage("select size", "info");
     if (isItemOnBasket(product.id)) {
       dispatch(removeFromBasket(product.id));
-      displayActionMessage("Item removed from cart", "info");
+      // displayActionMessage("Item removed from cart", "info");
     } else {
       dispatch(dispatchAddToBasket(product));
-      displayActionMessage("Item added to cart", "success");
+      // displayActionMessage("Item added to cart", "success");
     }
   };
 
