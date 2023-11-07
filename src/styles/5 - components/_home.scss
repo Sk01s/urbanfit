@@ -23,11 +23,11 @@
     justify-content: left;
     align-items: end;
     padding: 8%;
-    background-color: $gray-20;
     color: $white;
     aspect-ratio: 16/9;
     font-size: 2rem;
     min-height: 100px;
+    background: linear-gradient(to right, antiquewhite, aliceblue);
     &:hover {
       text-decoration: none;
     }

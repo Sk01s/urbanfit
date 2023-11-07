@@ -29,9 +29,10 @@ const ProductFeatured = ({ product, skeleton }) => {
                 className="product-card-img"
                 src={product.image}
                 draggable={false}
+                style={{ minWidth: "200px" }}
               />
             ) : (
-              <Skeleton width="100%" height="100%" />
+              <Skeleton width="50vw" height="100%" />
             )}
           </div>
           <div className="product-display-details">
