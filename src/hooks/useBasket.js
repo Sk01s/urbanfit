@@ -11,7 +11,7 @@ const useBasket = () => {
 
   const isItemOnBasket = (id) => !!basket.find((item) => item.id === id);
 
-  const addToBasket = (product) => {
+  const addToBasket = (product, show) => {
     if (product.selectedSize === "")
       return displayActionMessage("select size", "info");
     if (isItemOnBasket(product.id)) {
@@ -20,6 +20,7 @@ const useBasket = () => {
     } else {
       dispatch(dispatchAddToBasket(product));
       // displayActionMessage("Item added to cart", "success");
+      show();
     }
   };
 

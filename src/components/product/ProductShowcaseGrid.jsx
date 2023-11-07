@@ -109,8 +109,8 @@ const ProductShowcase = ({
                 skeleton
               />
             ))
-          : products.map((product) => (
-              <FeaturedProduct key={product.id} product={product} />
+          : products.map((product, index) => (
+              <FeaturedProduct key={product.id + index} product={product} />
             ))}
       </Slider>
     </>

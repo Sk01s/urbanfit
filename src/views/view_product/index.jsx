@@ -101,13 +101,15 @@ const ViewProduct = () => {
   };
 
   const handleAddToBasket = (onClickToggle, e) => {
-    addToBasket({
-      ...product,
-      selectedColor,
-      quantity,
-      selectedSize: selectedSize,
-    });
-    onClickToggle(e);
+    addToBasket(
+      {
+        ...product,
+        selectedColor,
+        quantity,
+        selectedSize: selectedSize,
+      },
+      onClickToggle
+    );
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -17,3 +17,4 @@ export { default as SearchBar } from "./SearchBar";
 export { default as Landing } from "./Landing";
 export { default as NewsDisplay } from "./News";
 export { default as SocialLogin } from "./SocialLogin";
+export { default as CategoryDisplay } from "./CategoryDisplay";

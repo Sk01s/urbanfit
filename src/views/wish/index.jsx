@@ -9,7 +9,7 @@ const UserWishList = () => {
   const { wish, addToWish, isItemOnWish } = useWish();
   return (
     <div
-      style={{ minHeight: "80dvh", marginTop: "10rem", textAlign: "center" }}
+      style={{ minHeight: "80dvh", marginTop: "12rem", textAlign: "center" }}
     >
       <h3>My Wish List</h3>
       <section className="product-list-wrapper" style={{ width: "100%" }}>
