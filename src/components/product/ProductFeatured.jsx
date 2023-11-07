@@ -6,19 +6,21 @@ import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useHistory } from "react-router-dom";
 
-const ProductFeatured = ({ product, skeleton }) => {
+const ProductFeatured = ({ product, skeleton, onClick }) => {
   const { wish, addToWish, isItemOnWish } = useWish(product.id);
   const history = useHistory();
   const onClickItem = () => {
     if (!product) return;
-
+    onClick?.();
     history.push(`/product/${product.id}`);
   };
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div style={{ position: "relative" }}>
         <div
-          className="product-display"
+          className={`product-display ${
+            product.totalQuantity === 0 ? "out" : ""
+          }`}
           onClick={onClickItem}
           role="presentation"
         >
@@ -55,7 +57,7 @@ const ProductFeatured = ({ product, skeleton }) => {
               cursor: "pointer",
               position: "absolute",
               top: 0,
-              right: "1rem",
+              right: "1.5rem",
               padding: ".5rem",
             }}
             onClick={() => {

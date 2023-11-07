@@ -25,7 +25,9 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div style={{ position: "relative" }}>
         <div
-          className="product-display"
+          className={`product-display ${
+            product.totalQuantity === 0 ? "out" : ""
+          }`}
           onClick={onClickItem}
           role="presentation"
         >
@@ -61,7 +63,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
               cursor: "pointer",
               position: "absolute",
               top: 0,
-              right: ".5rem",
+              right: "1.5rem",
               padding: ".5rem",
             }}
             onClick={() => {

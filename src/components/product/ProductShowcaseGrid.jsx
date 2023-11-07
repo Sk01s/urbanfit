@@ -10,6 +10,7 @@ const ProductShowcase = ({
   titleStyle,
   center = true,
   to = "",
+  close,
 }) => {
   const settings = {
     infinite: true,
@@ -85,6 +86,7 @@ const ProductShowcase = ({
       {to && (
         <Link
           to={to}
+          onClick={close}
           style={{
             textAlign: "center",
             color: "#5b9bbe",
@@ -107,10 +109,11 @@ const ProductShowcase = ({
                 key={`product-skeleton ${index}`}
                 product={product}
                 skeleton
+                onClick={close}
               />
             ))
           : products.map((product, index) => (
-              <FeaturedProduct key={product.id + index} product={product} />
+              <FeaturedProduct key={product.id + index} product={product} onClick={close} />
             ))}
       </Slider>
     </>

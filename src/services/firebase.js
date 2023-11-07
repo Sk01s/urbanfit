@@ -29,18 +29,6 @@ class Firebase {
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
         // console.log(number, recaptchaVerifier);
-        this.requestPhoneOtp(number)
-          .then((e) => {
-            console.log(setModel);
-            setModel?.(true);
-            setRec?.(false);
-          })
-          .catch((e) => {
-            console.log(e);
-            setError(e.message);
-            displayActionMessage(e);
-            setRec(true);
-          });
       },
       "expired-callback": () => {
         // Response expired. Ask user to solve reCAPTCHA again.

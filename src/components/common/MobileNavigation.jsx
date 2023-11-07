@@ -455,7 +455,10 @@ const Navigation = (props) => {
           >
             <br />
             <br />
+            <br />
+            <br />
             <ProductShowcaseGrid
+              close={closeMenu}
               products={essentialProducts}
               skeletonCount={6}
               title={"Essentials"}

@@ -593,7 +593,7 @@
   text-align: left;
   user-select: none;
   aspect-ratio: 9/16;
-  max-height: 40rem;
+  max-height: 55rem;
   cursor: pointer;
 
   // &:hover,
@@ -603,19 +603,32 @@
   // }
   .badge {
     position: absolute;
-    right: 0;
+    left: 50%;
+    top: 40%;
     z-index: 1;
+    transform: translate(-50%, -50%);
     padding: 1rem;
     background-color: #1a1a1a;
     color: white;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
   }
 }
+.product-display.out .product-display-img {
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
+}
 
+.product-grid .product-display {
+  max-height: auto;
+}
 .product-display-img {
   width: 100%;
   height: 80%;
-  min-height: 32rem;
-  aspect-ratio: 9/16;
+  // max-height: 43rem;
+  // aspect-ratio: 9/16;
   background: #f1f1f1;
   position: relative;
   overflow: hidden;

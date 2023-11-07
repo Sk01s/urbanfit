@@ -94,7 +94,7 @@ const OrderCompleted = () => {
             display: otpRec ? "flex" : "none",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#22222299",
+            backgroundColor: "#222",
             filter: "blur(3px)",
             top: 0,
             left: 0,
@@ -128,7 +128,7 @@ const OrderCompleted = () => {
           Verfity Phone Number
         </button> */}
       </div>
-      <main key={order} style={{ marginTop: "11.5rem" }}>
+      <main key={order} style={{ marginTop: "14.5rem" }}>
         <div
           style={{
             display: "flex",

@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 
 import InfoBox from "@/components/product/InfoBox";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useScrollTop } from "@/hooks";
 const FAQS = () => {
+  useScrollTop();
   const { pathname } = useLocation();
 
   function scrollToSectionWithSpace(id) {
