@@ -13,9 +13,10 @@ import {
 } from "@/helpers/utils";
 
 const OrderView = () => {
-  useDocumentTitle("Edit Product | Urbanfit");
+  useDocumentTitle("View Order | Urbanfit");
   useScrollTop();
-
+  const [loading, setLoading] = useState(false);
+  const [model, setModel] = useState(false);
   const [orderDetails, setOrderDetails] = useState({
     address: {
       city: "",
@@ -117,10 +118,7 @@ const OrderView = () => {
                   <li key={index}>
                     <div>
                       <p>Name : {item?.name || <Skeleton width={40} />}</p>
-                      <p>
-                        Description :{" "}
-                        {item?.description || <Skeleton width={40} />}
-                      </p>
+
                       <p>
                         Selected Size :{" "}
                         {item?.selectedSize || <Skeleton width={40} />}
@@ -176,20 +174,105 @@ const OrderView = () => {
             <button
               className="button"
               onClick={() => {
-                firebase
-                  .removeOrder(id)
-                  .then((e) => {
-                    Redirect("/");
-                  })
-                  .catch((e) => {
-                    displayActionMessage("Error happend");
-                  });
+                setModel(true);
               }}
             >
-              Delete
+              Cancel Order
             </button>
           </div>
         </Suspense>
+      )}
+      {model && (
+        <section
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+            backgroundColor: "white",
+            borderRadius: "3rem",
+            padding: "3rem 4rem",
+            width: "clamp(80vw,700px,70vw)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "2rem",
+            alignItems: "center",
+            zIndex: "2",
+            boxShadow: "0 0 40px 5px #cccbcbd4",
+          }}
+        >
+          <div style={{ padding: "2rem" }}>
+            <h3>Are you sure that you want to cancel your order ?</h3>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "1rem",
+              justifyContent: "space-between",
+              width: "65%",
+            }}
+          >
+            <button
+              style={{
+                backgroundColor: "white",
+                borderRadius: "1rem",
+                border: "solid #333 1px ",
+                marginTop: "1rem",
+                padding: "1.2rem 1.7rem",
+                color: "#cacaa",
+              }}
+              onClick={() => {
+                setModel(false);
+              }}
+            >
+              No
+            </button>
+            <button
+              style={{
+                backgroundColor: "white",
+                borderRadius: "1rem",
+                border: "solid #333 1px ",
+                marginTop: "1rem",
+                padding: "1.2rem 1.7rem",
+                color: "#cacaa",
+                display: "flex",
+                gap: "1rem",
+              }}
+              onClick={async () => {
+                // currentTarget.disabled = true;
+                // firebase.requestPhoneOtp(location.state.address.mobile.value);
+                setLoading(true);
+                await firebase
+                  .removeOrder(id)
+                  .then((e) => {
+                    Redirect("/");
+                    return e;
+                  })
+                  .catch((e) => {
+                    displayActionMessage("Error happend");
+                    return e;
+                  })
+                  .finally(() => {
+                    setLoading(true);
+                  });
+              }}
+            >
+              Yes
+              {loading && (
+                <div
+                  style={{
+                    width: "2rem",
+                    height: "2rem",
+                    borderRadius: "50%",
+                    borderTop: "solid 1px ",
+                    borderRight: "solid 1px",
+                  }}
+                  className="spining"
+                />
+              )}
+            </button>
+          </div>
+        </section>
       )}
     </section>
   );

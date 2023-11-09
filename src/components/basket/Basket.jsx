@@ -157,6 +157,7 @@ const Basket = () => {
                       infinite={false}
                       center={false}
                       to={ESSENTIAL_PRODUCTS}
+                      cart
                     />
                   </div>
                 </section>

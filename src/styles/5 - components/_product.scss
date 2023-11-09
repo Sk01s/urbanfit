@@ -580,6 +580,11 @@
 .slick-list {
   // height: 35rem;
 }
+.home .slick-slider {
+  width: 95vw;
+  max-width: 1200px;
+  margin-inline: auto;
+}
 .slick-slide {
   display: flex !important;
   justify-content: center;
@@ -621,6 +626,10 @@
   -webkit-filter: blur(3px);
 }
 
+.basket-list .product-display,
+.mobile-navigation .product-display {
+  max-height: 32rem;
+}
 .product-grid .product-display {
   max-height: auto;
 }

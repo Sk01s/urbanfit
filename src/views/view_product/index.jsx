@@ -61,6 +61,9 @@ const ViewProduct = () => {
       setRelatedProduct([]);
     };
   }, [product]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   const isOverSized = () => {
     // Search in the name if there is nama has the word over
 

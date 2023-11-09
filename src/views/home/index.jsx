@@ -109,7 +109,7 @@ const Home = () => {
         <div
           className="display "
           style={{
-            marginTop: "8rem",
+            marginTop: "14rem",
             display: "flex",
             gap: "1rem",
             flexDirection: "column",
@@ -128,6 +128,7 @@ const Home = () => {
               products={essentialProducts}
               skeletonCount={6}
               to={ESSENTIAL_PRODUCTS}
+              
             />
           )}
         </div>

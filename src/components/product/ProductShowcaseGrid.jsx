@@ -3,6 +3,7 @@ import PropType from "prop-types";
 import React, { useRef } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import { BasketToggle } from "@/components/basket";
 const ProductShowcase = ({
   products,
   skeletonCount,
@@ -11,6 +12,7 @@ const ProductShowcase = ({
   center = true,
   to = "",
   close,
+  cart,
 }) => {
   const settings = {
     infinite: true,
@@ -83,7 +85,29 @@ const ProductShowcase = ({
           </svg>
         </button>
       </div>
-      {to && (
+      {to && cart ? (
+        <BasketToggle>
+          {({ onClickToggle }) => (
+            <Link
+              to={to}
+              onClick={onClickToggle}
+              style={{
+                textAlign: "center",
+                color: "#5b9bbe",
+                fontSize: "1.2rem",
+                textDecoration: "underline",
+                marginInline: "auto",
+                display: "block",
+                marginTop: ".4rem",
+                marginBottom: "1.6rem",
+              }}
+              className="basket-toggle"
+            >
+              VIEW ALL
+            </Link>
+          )}
+        </BasketToggle>
+      ) : (
         <Link
           to={to}
           onClick={close}
@@ -109,11 +133,15 @@ const ProductShowcase = ({
                 key={`product-skeleton ${index}`}
                 product={product}
                 skeleton
-                onClick={close}
+                // onClick={close}
               />
             ))
           : products.map((product, index) => (
-              <FeaturedProduct key={product.id + index} product={product} onClick={close} />
+              <FeaturedProduct
+                key={product.id + index}
+                product={product}
+                onClick={close}
+              />
             ))}
       </Slider>
     </>

@@ -218,7 +218,9 @@ const OrderCompleted = () => {
               >
                 Contact information
               </h4>
-              <p style={{ margin: 0 }}>{location.state?.address?.email}</p>
+              <p style={{ margin: 0, fontSize: "1.3rem" }}>
+                {location.state?.address?.email}
+              </p>
             </div>
             {/* <div>
               <h3
