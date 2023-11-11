@@ -53,7 +53,14 @@ const ProductList = (props) => {
       {products.items.length < products.total && (
         <div className="d-flex-center padding-l">
           <button
-            className="button button-small"
+            style={{
+              borderRadius: 0,
+              border: "solid 1px #222",
+              backgroundColor: "white",
+              color: "#222",
+              padding: " 1.5rem 1rem",
+              borderRadius: "1.5rem",
+            }}
             disabled={isFetching}
             onClick={fetchProducts}
             type="button"

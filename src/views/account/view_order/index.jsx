@@ -3,7 +3,7 @@ import { useDocumentTitle, useScrollTop } from "@/hooks";
 import PropType from "prop-types";
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Redirect, withRouter, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import firebase from "@/services/firebase";
 import Skeleton from "react-loading-skeleton";
 import {
@@ -11,8 +11,10 @@ import {
   displayActionMessage,
   displayDate,
 } from "@/helpers/utils";
+import { BasketItem } from "@/components/basket";
 
 const OrderView = () => {
+  const history = useHistory();
   useDocumentTitle("View Order | Urbanfit");
   useScrollTop();
   const [loading, setLoading] = useState(false);
@@ -113,31 +115,20 @@ const OrderView = () => {
             </section>
             <section className="items">
               <h4>items</h4>
-              <ol style={{ paddingLeft: "1.8rem", fontSize: "1.4rem" }}>
+              <div
+                style={{
+                  border: "1px solid rgb(219, 215, 215)",
+                  padding: "1rem 0 0 0",
+                  fontWeight: "500",
+                  marginTop: "2rem",
+                  borderRadius: ".8rem",
+                  marginInline: "auto",
+                }}
+              >
                 {orderDetails?.items?.map((item, index) => (
-                  <li key={index}>
-                    <div>
-                      <p>Name : {item?.name || <Skeleton width={40} />}</p>
-
-                      <p>
-                        Selected Size :{" "}
-                        {item?.selectedSize || <Skeleton width={40} />}
-                      </p>
-                      {item?.availableColors?.length === 1 ? (
-                        ""
-                      ) : (
-                        <p>
-                          Selected Color :{" "}
-                          {item?.selectedColor || <Skeleton width={40} />}
-                        </p>
-                      )}
-                      <p>
-                        Quantity : {item.quantity || <Skeleton width={40} />}
-                      </p>
-                    </div>
-                  </li>
+                  <BasketItem product={item} display={true} key={index} />
                 ))}
-              </ol>
+              </div>
             </section>
             <div
               style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}
@@ -192,8 +183,9 @@ const OrderView = () => {
             backgroundColor: "white",
             borderRadius: "3rem",
             padding: "3rem 4rem",
-            width: "clamp(80vw,700px,70vw)",
+            width: "40rem",
             display: "flex",
+            maxWidth: "90vw",
             flexDirection: "column",
             gap: "2rem",
             alignItems: "center",
@@ -209,7 +201,7 @@ const OrderView = () => {
               display: "flex",
               gap: "1rem",
               justifyContent: "space-between",
-              width: "65%",
+              width: "75%",
             }}
           >
             <button
@@ -245,7 +237,8 @@ const OrderView = () => {
                 await firebase
                   .removeOrder(id)
                   .then((e) => {
-                    Redirect("/");
+                    history.push("/");
+                    displayActionMessage("Order has been canceled");
                     return e;
                   })
                   .catch((e) => {

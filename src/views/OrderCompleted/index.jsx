@@ -4,7 +4,9 @@ import firebase from "@/services/firebase";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
 import { displayActionMessage } from "@/helpers/utils";
+import { useScrollTop } from "@/hooks";
 const OrderCompleted = () => {
+  useScrollTop();
   const location = useLocation();
   const { id } = useParams();
   const [message, setMessage] = useState("");
@@ -94,8 +96,12 @@ const OrderCompleted = () => {
             display: otpRec ? "flex" : "none",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#222",
-            filter: "blur(3px)",
+            backgroundColor: "#44444460",
+            backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
+            backgroundSize: "20rem",
+            backdropFilter: "blur(2px)",
+
+            filter: "blur(0.75px)",
             top: 0,
             left: 0,
           }}
@@ -158,7 +164,7 @@ const OrderCompleted = () => {
             ></path>
           </svg>
           <div>
-            <span>Order Completed</span>
+            <span>Order #{id.split("-")[0]}</span>
             <p style={{ margin: ".5rem 0 0 0 " }}>
               THANK YOU, {firebase.auth.currentUser.displayName}
             </p>
@@ -178,7 +184,7 @@ const OrderCompleted = () => {
         >
           <h3 style={{ marginBlock: "0.6rem" }}>Your order is confirmed </h3>
           <p style={{ fontSize: "1.3rem" }}>
-            You’ll receive an email when your order is ready.
+            You'll receive a confirmation email with your order number shortly
           </p>
         </div>
         <div
@@ -307,8 +313,7 @@ const OrderCompleted = () => {
                 }}
               >
                 {order.address?.mobile.value ||
-                  location.state?.address?.mobile.value}{" "}
-                ,
+                  location.state?.address?.mobile.value}
               </div>
             </div>
             <div>
@@ -356,93 +361,112 @@ const OrderCompleted = () => {
           Continue shopping
         </Link>
         {otpModel && (
-          <section
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%,-50%)",
-              backgroundColor: "white",
-              borderRadius: "3rem",
-              padding: "3rem 4rem",
-              width: "clamp(80vw,700px,70vw)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "2rem",
-              alignItems: "center",
-              zIndex: "2",
-              boxShadow: "0 0 40px 5px #cccbcbd4",
-            }}
-          >
-            <div style={{ padding: "2rem" }}>
-              <h2>We've sent you an OTP</h2>
-              <p>Confirm your phone number . Please enter the OTP code. </p>
-            </div>
-            <div
+          <>
+            <section
               style={{
+                position: "fixed",
+                top: "55%",
+                left: "50%",
+                transform: "translate(-50%,-50%)",
+                backgroundColor: "white",
+                borderRadius: "3rem",
+                padding: "3rem 4rem",
+                width: "40rem",
+                maxWidth: "90vw",
                 display: "flex",
                 flexDirection: "column",
-                gap: "1rem",
+                gap: "2rem",
+                alignItems: "center",
+                zIndex: "200",
+                boxShadow: "0 0 20px 8px #cccbcb40",
               }}
             >
-              {confroming ? (
-                <div
-                  style={{
-                    width: "8rem",
-                    height: "8rem",
-                    borderRadius: "50%",
-                    borderTop: "solid 1px ",
-                    borderRight: "solid 1px",
-                  }}
-                  className="spining"
-                />
-              ) : (
-                <>
-                  <input
-                    type="number"
+              <div style={{ padding: "2rem" }}>
+                <h2>We've sent you an OTP</h2>
+                <p>Confirm your phone number . Please enter the OTP code. </p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                {confroming ? (
+                  <div
                     style={{
-                      border: "1px solid #ccc",
-                      background:
-                        "linear-gradient(to left, #ccc 1px, transparent 0)",
-                      backgroundSize: "40px 1px",
-                      width: "240px",
-                      font: "24px monaco, monospace",
-                      letterSpacing: "26.4px",
-                      textIndent: " -2px",
-                      textTransform: "uppercase",
+                      width: "8rem",
+                      height: "8rem",
+                      borderRadius: "50%",
+                      borderTop: "solid 1px ",
+                      borderRight: "solid 1px",
                     }}
-                    onChange={(otp) =>
-                      otp.currentTarget.value.length === 6
-                        ? confiremOtp(otp?.currentTarget?.value)
-                        : otp.currentTarget.value
-                    }
-                    required={true}
+                    className="spining"
                   />
-                  <button
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: "1rem",
-                      border: "solid #333 1px ",
-                      marginTop: "1rem",
-                      padding: "1rem",
-                      color: "#cacaa",
-                    }}
-                    onClick={({ currentTarget }) => {
-                      currentTarget.disabled = true;
-                      firebase.requestPhoneOtp(
-                        location.state.address.mobile.value
-                      );
-                    }}
-                  >
-                    Resend OTP
-                  </button>
-                </>
-              )}
-            </div>
+                ) : (
+                  <>
+                    <input
+                      type="number"
+                      style={{
+                        border: "1px solid #ccc",
+                        background:
+                          "linear-gradient(to left, #ccc 1px, transparent 0)",
+                        backgroundSize: "40px 1px",
+                        width: "240px",
+                        font: "24px monaco, monospace",
+                        letterSpacing: "26.4px",
+                        textIndent: " -2px",
+                        textTransform: "uppercase",
+                      }}
+                      onChange={(otp) =>
+                        otp.currentTarget.value.length === 6
+                          ? confiremOtp(otp?.currentTarget?.value)
+                          : otp.currentTarget.value
+                      }
+                      required={true}
+                    />
+                    <button
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: "1rem",
+                        border: "solid #333 1px ",
+                        marginTop: "1rem",
+                        padding: "1rem",
+                        color: "#cacaa",
+                      }}
+                      onClick={({ currentTarget }) => {
+                        currentTarget.disabled = true;
+                        firebase.requestPhoneOtp(
+                          location.state.address.mobile.value
+                        );
+                      }}
+                    >
+                      Resend OTP
+                    </button>
+                  </>
+                )}
+              </div>
 
-            <div>{message}</div>
-            <div>{error && "error happend"}</div>
-          </section>
+              <div>{message}</div>
+              <div>{error && "error happend"}</div>
+            </section>
+            <div
+              style={{
+                width: "100vw",
+                position: "absolute",
+                height: "100vh",
+                backgroundColor: "#44444430",
+                backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
+                backgroundSize: "20rem",
+                backdropFilter: "blur(2px)",
+                filter: "blur(0.75px)",
+                top: 0,
+                zIndex: 100,
+                top: 0,
+                left: 0,
+              }}
+            />
+          </>
         )}
       </main>
     </>

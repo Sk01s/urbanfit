@@ -4,7 +4,7 @@
   grid-gap: $s-size;
   justify-content: center;
 }
-@media (max-width: 728px) {
+@media (max-width: 960px) {
   .product-grid {
     grid-template-columns: repeat(2, minmax(120px, auto));
   }
@@ -580,7 +580,7 @@
 .slick-list {
   // height: 35rem;
 }
-.home .slick-slider {
+.show-case .slick-slider {
   width: 95vw;
   max-width: 1200px;
   margin-inline: auto;
@@ -591,14 +591,14 @@
   align-items: center;
 }
 .product-display {
-  // max-height: 50rem;
+  min-width: 20rem;
   position: relative;
   margin-inline: 1rem;
   transition-duration: 300ms;
   text-align: left;
   user-select: none;
-  aspect-ratio: 9/16;
-  max-height: 55rem;
+  aspect-ratio: 7.5/16;
+  max-height: 50rem;
   cursor: pointer;
 
   // &:hover,
@@ -612,26 +612,33 @@
     top: 40%;
     z-index: 1;
     transform: translate(-50%, -50%);
-    padding: 1rem;
-    background-color: #1a1a1a;
-    color: white;
+    color: #eee;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
   }
 }
+@media (min-width: 1000px) {
+  .product-display {
+    max-height: 85vh;
+  }
+}
 .product-display.out .product-display-img {
-  filter: blur(3px);
-  -webkit-filter: blur(3px);
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
 }
 
 .basket-list .product-display,
 .mobile-navigation .product-display {
-  max-height: 32rem;
+  max-height: 35rem;
+  min-width: auto;
 }
 .product-grid .product-display {
-  max-height: auto;
+  max-height: 55vw;
+  min-width: 25vw;
+  aspect-ratio: 9/16;
+  margin-inline: 0;
 }
 .product-display-img {
   width: 100%;
@@ -691,4 +698,19 @@
 .css-1uccc91-singleValue {
   top: 65% !important;
   margin-left: 0.6rem !important;
+}
+.contact-banner {
+  width: 100%;
+  margin-inline: auto;
+  display: block;
+  margin-top: 4rem;
+  margin-bottom: 6rem;
+  aspect-ratio: 16/8;
+  object-fit: cover;
+}
+
+@media (min-width: 800px) {
+  .contact-banner {
+    width: 90vw;
+  }
 }

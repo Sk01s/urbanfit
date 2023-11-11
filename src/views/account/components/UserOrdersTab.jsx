@@ -30,9 +30,13 @@ const UserOrdersTab = () => {
         ) : (
           <strong style={{ textAlign: "center" }}>
             <p className="text-subtle">You don&apos;t have any orders</p>
-            <button style={{ marginInline: "auto" }} className="button">
+            <Link
+              to="/shop"
+              style={{ marginInline: "auto" }}
+              className="button"
+            >
               shop now
-            </button>
+            </Link>
           </strong>
         )}
       </ol>

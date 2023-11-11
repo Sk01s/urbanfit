@@ -6,7 +6,6 @@ import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 
 const Shop = () => {
-
   const store = useSelector(
     (state) => ({
       filteredProducts: selectFilter(state.products.items, state.filter),
@@ -20,6 +19,11 @@ const Shop = () => {
   return (
     <main className="content">
       <section className="product-list-wrapper">
+        <h2 style={{ textAlign: "center" }}> Products</h2>
+        <p style={{ color: "#343a40", textAlign: "center" }}>
+          {store.filteredProducts.length} products
+        </p>
+        <br />
         <AppliedFilters filteredProductsCount={store.filteredProducts.length} />
         <ProductList {...store}>
           <ProductGrid products={store.filteredProducts} />

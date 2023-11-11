@@ -147,8 +147,6 @@ const Basket = () => {
                   >
                     <br />
                     <br />
-                    <br />
-                    <br />
                     <ProductShowcaseGrid
                       products={essentialProducts}
                       skeletonCount={6}

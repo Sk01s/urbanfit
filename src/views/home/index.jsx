@@ -114,6 +114,7 @@ const Home = () => {
             gap: "1rem",
             flexDirection: "column",
             marginInline: "auto",
+            marginBottom: "0",
           }}
         >
           {errorEssentail && !isLoadingEssential ? (
@@ -128,7 +129,6 @@ const Home = () => {
               products={essentialProducts}
               skeletonCount={6}
               to={ESSENTIAL_PRODUCTS}
-              
             />
           )}
         </div>

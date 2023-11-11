@@ -81,7 +81,7 @@ const BasketItem = ({ product, display = false }) => {
                   {displaySizeForOmar(product.selectedSize)}{" "}
                 </h5>
               </div>
-              {product[`${product.selectedSize}Quantity`] <= 9 && (
+              {product[`${product.selectedSize}Quantity`] <= 9 && !display && (
                 <div
                   style={{
                     display: "flex",

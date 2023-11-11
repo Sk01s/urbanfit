@@ -470,7 +470,7 @@ const ViewProduct = () => {
               </div>
             </div>
 
-            <div style={{ marginTop: "10rem" }}>
+            <div style={{ marginTop: "10rem", marginBottom: 0 }}>
               {errorSeasonal && !isLoadingSeasonal ? (
                 <MessageDisplay
                   message={error}
@@ -479,7 +479,9 @@ const ViewProduct = () => {
                 />
               ) : (
                 <ProductShowcaseGrid
-                  products={essentialProducts}
+                  products={essentialProducts.filter(
+                    (product) => product.id !== id
+                  )}
                   title={"Essentials"}
                   skeletonCount={2}
                   to={ESSENTIAL_PRODUCTS}

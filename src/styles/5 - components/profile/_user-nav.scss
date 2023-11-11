@@ -25,7 +25,6 @@
   overflow: hidden;
   margin-left: 10px;
   position: relative;
-  background: $border-color-focus;
 
   &:after {
     content: attr("data-alt");

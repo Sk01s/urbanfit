@@ -11,7 +11,6 @@ import {
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 
-
 const Category = (props) => {
   const { category, sex } = useParams();
   useScrollTop();
@@ -56,6 +55,12 @@ const Category = (props) => {
   return (
     <main className="content">
       <section className="product-list-wrapper">
+        <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
+          {sex} {category}
+        </h2>
+        <p style={{ color: "#343a40", textAlign: "center" }}>
+          {filteredProducts.length} products
+        </p>
         <ProductList {...store}>
           <ProductGrid products={filteredProducts} />
         </ProductList>

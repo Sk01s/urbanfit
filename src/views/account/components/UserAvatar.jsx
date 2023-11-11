@@ -64,13 +64,12 @@ const UserNav = ({ isSigned = true }) => {
           <img alt="" className="user-nav-img" src={profile.avatar} />
         ) : (
           <svg
-            width="24px"
-            height="24px"
+            width="22px"
+            height="22px"
             viewBox="0 0 24 24"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            style={{ backgroundColor: "white" }}
           >
             <g stroke="none" stroke-width="1" fill="none" fill-rule="">
               <path

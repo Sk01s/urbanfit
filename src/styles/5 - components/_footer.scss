@@ -1,6 +1,5 @@
 footer {
   padding: 0 $xxl-size;
-  margin-top: $xl-size;
   background: $background-color-01;
 
   a {
@@ -19,7 +18,7 @@ footer {
 .list {
   position: relative;
   display: grid;
-  padding-top: 10rem;
+  padding-top: 5rem;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   padding-inline: 10rem;
   gap: 2.5rem;

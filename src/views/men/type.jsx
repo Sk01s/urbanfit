@@ -30,10 +30,16 @@ const TypeCategory = (props) => {
         type.toLocaleLowerCase() &&
       product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
   );
-  -console.log(filteredProducts);
+  console.log(filteredProducts);
   return (
     <main className="content">
       <section className="product-list-wrapper">
+        <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
+          {sex} {type}
+        </h2>
+        <p style={{ color: "#343a40", textAlign: "center" }}>
+          {filteredProducts.length} products
+        </p>
         <ProductList {...store}>
           <ProductGrid products={filteredProducts} />
         </ProductList>

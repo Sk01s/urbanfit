@@ -35,7 +35,7 @@ const ProductShowcase = ({
   };
 
   return (
-    <>
+    <div className="show-case">
       <div className="display-header" style={{ marginBottom: to || "2rem" }}>
         <button
           onClick={goToPrevious}
@@ -144,7 +144,7 @@ const ProductShowcase = ({
               />
             ))}
       </Slider>
-    </>
+    </div>
   );
 };
 

@@ -151,8 +151,8 @@ input[type="color"] {
 
 .input-form {
   border: 1px solid $border-color-focus !important;
-  padding: 2rem 1.6rem 0.4rem 1.6rem !important;
-  font-size: 1.1rem !important;
+  padding: 2rem 1.6rem 1rem 1.6rem !important;
+  font-size: 1.2rem !important;
   //margin-bottom: $s-size;
   border-radius: 0.6rem;
   -moz-border-radius: 0.6rem;
@@ -161,6 +161,10 @@ input[type="color"] {
   -webkit-border-radius: 0.6rem;
 }
 
+.contact .input-group label,
+.contact .input-form {
+  font-size: 1.3rem !important;
+}
 .input-group {
   display: flex;
   position: relative;
