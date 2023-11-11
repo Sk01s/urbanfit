@@ -12,6 +12,11 @@ import { clearBasket } from "@/redux/actions/basketActions";
 import emailjs from "@emailjs/browser";
 
 const Total = ({ isInternational, subtotal, order }) => {
+  const isNotOrderValide = () =>
+    !!order.items.find(
+      (product) => product[`${product.selectedSize}Quantity`] <= 0
+    );
+
   const displaySizeForOmar = (size) => {
     if (size === "lg") return "L";
     if (size === "md") return "M";
@@ -98,7 +103,12 @@ const Total = ({ isInternational, subtotal, order }) => {
     if (order.payment !== "COD")
       return displayActionMessage("Feature not ready yet :)", "info");
     // Update the Orders date
-
+    if (isNotOrderValide()) {
+      return displayActionMessage(
+        "one or more of your item/items is out of stock",
+        "info"
+      );
+    }
     order.date = new Date();
     order.otp = false;
 

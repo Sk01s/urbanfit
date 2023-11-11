@@ -103,6 +103,7 @@ const ViewProduct = () => {
     }
   };
 
+  console.log(product);
   const handleAddToBasket = (onClickToggle, e) => {
     addToBasket(
       {
