@@ -10,6 +10,29 @@ import { setPaymentDetails } from "@/redux/actions/checkoutActions";
 import firebase from "@/services/firebase";
 import { clearBasket } from "@/redux/actions/basketActions";
 import emailjs from "@emailjs/browser";
+function getOrdinalSuffix(number) {
+  if (number === 0) {
+    return "0"; // Special case for 0
+  }
+
+  const lastDigit = number % 10;
+  const lastTwoDigits = number % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return number + "th";
+  }
+
+  switch (lastDigit) {
+    case 1:
+      return number + "st (floor)";
+    case 2:
+      return number + "nd (floor)";
+    case 3:
+      return number + "rd (floor)";
+    default:
+      return number + "th (floor)";
+  }
+}
 
 const Total = ({ isInternational, subtotal, order }) => {
   const isNotOrderValide = () =>
@@ -31,6 +54,32 @@ const Total = ({ isInternational, subtotal, order }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const searchData = new URLSearchParams();
+  const contact = () => `
+    <div>
+      <h4 style="margin-block: 1rem; font-size: 1.35rem; font-weight: 500;">
+        Shipping address
+      </h4>
+      <p style="color: #555;  margin-bottom: 0.5rem;">
+        ${order.address?.fullname}
+      </p>
+      <p style="color: #555;  margin-bottom: 0.5rem;">
+      ${order.address?.street}
+      </p>
+      <p style="color: #555;  margin-bottom: 0.5rem;">
+      ${order.address?.building} ,${" "}
+      ${getOrdinalSuffix(parseInt(order?.address.floor))}
+      </p>
+      <p style="color: #555;  margin-bottom: 0.5rem;">
+      ${order.address?.city}{" "}
+      ${order.address?.zipcode}
+      </div>
+      <p style="color: #555;  margin-bottom: 0.5rem;">
+      ${order.address?.country}
+      </p>
+      <p style="color: #555;  margin-bottom: 0.5rem;">
+      ${order.address?.mobile.value}
+      </p>
+    </div>`;
   const createEmailItems = () => {
     const items = order.items.reduce((acc, product) => {
       return (
@@ -111,7 +160,6 @@ const Total = ({ isInternational, subtotal, order }) => {
     }
     order.date = new Date();
     order.otp = false;
-
     firebase.addOrder(order.id, order);
     emailjs
       .send(
@@ -122,6 +170,7 @@ const Total = ({ isInternational, subtotal, order }) => {
           name: order.address.fullname,
           email: order.address.email,
           items: createEmailItems(),
+          contact: contact(),
         },
         "JPeR2g9TA1pVocFL4"
       )
