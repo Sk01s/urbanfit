@@ -453,7 +453,7 @@ const OrderCompleted = () => {
             <div
               style={{
                 width: "100vw",
-                position: "absolute",
+                position: "fixed",
                 height: "100vh",
                 backgroundColor: "#44444430",
                 backgroundImage: "url('/urbanfitpng-removebg-preview.png')",

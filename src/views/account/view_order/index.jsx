@@ -87,24 +87,20 @@ const OrderView = () => {
                 <div>
                   Country :{" "}
                   {orderDetails?.address?.country || <Skeleton width={40} />}
-                  {" , "}
                 </div>
                 <div>
                   City :{" "}
                   {orderDetails?.address?.city || <Skeleton width={40} />}
-                  {" , "}
                 </div>
 
                 <div>
                   Street :{" "}
                   {orderDetails?.address?.street || <Skeleton width={40} />}
-                  {" , "}
                 </div>
 
                 <div>
                   Floor :{" "}
                   {orderDetails?.address?.floor || <Skeleton width={40} />}
-                  {" , "}
                 </div>
 
                 <div>
