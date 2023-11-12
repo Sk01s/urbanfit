@@ -109,7 +109,6 @@ const Home = () => {
         <div
           className="display "
           style={{
-            marginTop: "14rem",
             display: "flex",
             gap: "1rem",
             flexDirection: "column",

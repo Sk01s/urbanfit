@@ -85,7 +85,9 @@ const ProductShowcase = ({
           </svg>
         </button>
       </div>
-      {to && cart ? (
+      {!to ? (
+        <></>
+      ) : cart ? (
         <BasketToggle>
           {({ onClickToggle }) => (
             <Link

@@ -1,0 +1,35 @@
+.about-section {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+
+  .image {
+    width: 40vw;
+    height: 100%;
+    background-image: url("/our-story-1.png");
+    background: linear-gradient(to right, antiquewhite, aliceblue);
+  }
+  .text {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 800px) {
+  .about-section {
+    flex-direction: column-reverse;
+    .image {
+      width: 100vw;
+      min-height: 20rem;
+    }
+    .text {
+      width: 100vw;
+    }
+  }
+}
+.about-banner {
+  width: 100%;
+  height: 100%;
+  background-image: url("/our-story-1.png");
+}

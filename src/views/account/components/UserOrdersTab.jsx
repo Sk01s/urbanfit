@@ -16,13 +16,35 @@ const UserOrdersTab = () => {
   return (
     <div className="loader" style={{ minHeight: "80dvh" }}>
       <h3>My Orders</h3>
-      <ol style={{ all: "unset" }}>
+      <ol style={{ padding: 0 }}>
         {orders?.length ? (
           orders?.map((item, index) => {
             return (
-              <li style={{ marginBottom: "1rem" }}>
-                <Link to={`/order/${item.id}`} style={{ fontWeight: 400 }}>
-                  Order Id : #{item.id.split("-")[0]}
+              <li
+                style={{
+                  marginBottom: "1rem",
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <h4 style={{ fontWeight: 400 }}>
+                  {index + 1}. Order Id : #{item.id.split("-")[0]}
+                </h4>
+                <Link
+                  style={{
+                    border: "solid 1px ",
+                    display: "flex",
+                    placeItems: "center",
+                    borderRadius: "1.5rem",
+                    padding: "1rem 1.4rem",
+                    fontSize: "1.3rem",
+                    // maxHeight: "5rem",
+                  }}
+                  to={`/order/${item.id}`}
+                >
+                  view Order
                 </Link>
               </li>
             );

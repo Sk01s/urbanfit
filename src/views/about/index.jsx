@@ -16,26 +16,10 @@ const about = () => {
         }}
       >
         <h2>Our Story</h2>
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            background: "",
-            backgroundImage: "url('/our-story-1.png')",
-          }}
-        />
+        <div className="about-banner" />
       </div>
-      <div
-        style={{
-          marginTop: "4rem",
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-
-          gap: "2rem",
-        }}
-      >
-        <div>
+      <div className="about-section">
+        <div className="text">
           <h2>
             Our 2023 goals. An empowering year of positivity. Here's our plan.
           </h2>
@@ -46,7 +30,7 @@ const about = () => {
             together, and change even more people’s lives.
           </p>
         </div>
-        <img src="/our-story-2.png" alt="our Team" />
+        <div className="image" />
       </div>
     </main>
   );
