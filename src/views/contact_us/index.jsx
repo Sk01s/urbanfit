@@ -2,7 +2,9 @@ import React from "react";
 import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useScrollTop } from "@/hooks";
 const Contact = () => {
+  useScrollTop();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState();

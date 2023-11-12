@@ -1,12 +1,15 @@
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  grid-gap: $s-size;
+  gap: 0 1.4rem;
   justify-content: center;
 }
 @media (max-width: 960px) {
   .product-grid {
     grid-template-columns: repeat(2, minmax(120px, auto));
+    .product-display {
+      max-height: 85vw !important;
+    }
   }
 }
 
@@ -571,7 +574,7 @@
   width: 100%;
   height: auto;
   display: grid;
-  grid-gap: 2rem;
+  grid-gap: 4rem;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 30%));
   @media (max-width: 800px) {
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
@@ -597,7 +600,7 @@
   transition-duration: 300ms;
   text-align: left;
   user-select: none;
-  aspect-ratio: 8/16;
+  aspect-ratio: 8.5/16;
   max-height: 50rem;
   cursor: pointer;
 
@@ -637,7 +640,7 @@
 .product-grid .product-display {
   max-height: 55vw;
   min-width: 25vw;
-  aspect-ratio: 9/16;
+  aspect-ratio: 8/16;
   margin-inline: 0;
 }
 .product-display-img {

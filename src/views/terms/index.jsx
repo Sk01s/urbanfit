@@ -1,10 +1,14 @@
+import { useScrollTop } from "@/hooks";
 import React from "react";
 
 const index = () => {
+  useScrollTop();
   return (
     <p
       style={{
         marginTop: "9rem",
+        width: "80vw",
+        marginInline: "auto",
       }}
     >
       Terms and Conditions Welcome to Urbanfit, an ecommerce website that sells

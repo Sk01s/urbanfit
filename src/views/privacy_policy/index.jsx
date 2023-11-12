@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useScrollTop } from "@/hooks";
 
 function index(props) {
-  useScrollTop;
+  useScrollTop();
   return (
     <div
       className="privacy-policy"

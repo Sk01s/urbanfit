@@ -63,7 +63,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
               cursor: "pointer",
               position: "absolute",
               top: 0,
-              right: "1.5rem",
+              right: "1%",
               padding: ".5rem",
             }}
             onClick={() => {
