@@ -1,5 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useLocation,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import {
   useDocumentTitle,
@@ -10,8 +13,12 @@ import {
 } from "@/hooks";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
+import { SortModel } from "@/components/common";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const TypeCategory = (props) => {
+  const { pathname } = useLocation();
   const { type, sex } = useParams();
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
@@ -24,23 +31,39 @@ const TypeCategory = (props) => {
     }),
     shallowEqual
   );
-  let filteredProducts = store.products?.items?.filter(
-    (product) =>
-      product?.type?.name?.toLocaleLowerCase().replaceAll(" ", "-") ===
-        type.toLocaleLowerCase() &&
-      product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
+  const [filteredProducts, setFilterdProducts] = useState(
+    store.products?.items?.filter(
+      (product) =>
+        product?.type?.name?.toLocaleLowerCase().replaceAll(" ", "-") ===
+          type.toLocaleLowerCase() &&
+        product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
+    )
   );
+  const sortProducts = (products) => {
+    setFilterdProducts(products);
+  };
+  useEffect(() => {
+    setFilterdProducts(
+      store.products?.items?.filter(
+        (product) =>
+          product?.type?.name?.toLocaleLowerCase().replaceAll(" ", "-") ===
+            type.toLocaleLowerCase() &&
+          product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
+      )
+    );
+  }, [pathname]);
   console.log(filteredProducts);
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex} {type}
+          {sex}'s {type}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
         </p>
         <ProductList {...store}>
+          <SortModel setProducts={sortProducts} products={filteredProducts} />
           <ProductGrid products={filteredProducts} />
         </ProductList>
       </section>

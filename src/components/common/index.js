@@ -18,3 +18,4 @@ export { default as Landing } from "./Landing";
 export { default as NewsDisplay } from "./News";
 export { default as SocialLogin } from "./SocialLogin";
 export { default as CategoryDisplay } from "./CategoryDisplay";
+export { default as SortModel } from "./SortModel";

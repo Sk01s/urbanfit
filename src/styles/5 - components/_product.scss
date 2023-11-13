@@ -585,7 +585,6 @@
 }
 .show-case .slick-slider {
   width: 95vw;
-  max-width: 1200px;
   margin-inline: auto;
 }
 .slick-slide {
@@ -600,7 +599,7 @@
   transition-duration: 300ms;
   text-align: left;
   user-select: none;
-  aspect-ratio: 8.5/16;
+  aspect-ratio: 8/16;
   max-height: 50rem;
   cursor: pointer;
 
@@ -640,14 +639,13 @@
 .product-grid .product-display {
   max-height: 55vw;
   min-width: 25vw;
-  aspect-ratio: 8/16;
+  aspect-ratio: 9/16;
   margin-inline: 0;
 }
 .product-display-img {
   width: 100%;
-  height: 80%;
+  height: 85%;
   // max-height: 43rem;
-  // aspect-ratio: 9/16;
   background: #f1f1f1;
   position: relative;
   overflow: hidden;

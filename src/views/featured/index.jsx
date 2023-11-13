@@ -23,7 +23,7 @@ const FeaturedProducts = () => {
             <img src={bannerImg} alt="" />
           </div>
         </div>
-        <div className="display">
+        <div className="display" style={{ marginTop: "5rem" }}>
           {error && !isLoading ? (
             <MessageDisplay
               message={error}

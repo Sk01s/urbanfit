@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
-import React from "react";
+import React, { useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
+import { SortModel } from "@/components/common";
 
 const Shop = () => {
   const store = useSelector(
@@ -15,18 +16,24 @@ const Shop = () => {
     }),
     shallowEqual
   );
-
+  const [filteredProducts, setFilterdProducts] = useState(
+    store.filteredProducts
+  );
+  const sortProducts = (products) => {
+    setFilterdProducts(products);
+  };
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textAlign: "center" }}> Products</h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
-          {store.filteredProducts.length} products
+          {filteredProducts.length} products
         </p>
         <br />
-        <AppliedFilters filteredProductsCount={store.filteredProducts.length} />
+        <AppliedFilters filteredProductsCount={filteredProducts.length} />
         <ProductList {...store}>
-          <ProductGrid products={store.filteredProducts} />
+          <SortModel setProducts={sortProducts} products={filteredProducts} />
+          <ProductGrid products={filteredProducts} />
         </ProductList>
       </section>
     </main>

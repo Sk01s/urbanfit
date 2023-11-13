@@ -1,5 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useLocation,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import {
   useDocumentTitle,
@@ -10,8 +13,12 @@ import {
 } from "@/hooks";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
+import { SortModel } from "@/components/common";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Category = (props) => {
+  const { pathname } = useLocation();
   const { category, sex } = useParams();
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
@@ -24,11 +31,16 @@ const Category = (props) => {
     }),
     shallowEqual
   );
-  let filteredProducts = store.products?.items?.filter(
-    (product) =>
-      product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
-      product.categories.toLocaleLowerCase() === category.toLocaleLowerCase()
+  let [filteredProducts, setFilterdProducts] = useState(() =>
+    store.products?.items?.filter(
+      (product) =>
+        product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
+        product.categories.toLocaleLowerCase() === category.toLocaleLowerCase()
+    )
   );
+  const sortProducts = (products) => {
+    setFilterdProducts(products);
+  };
   const {
     seasonalProducts,
     fetchSeasonalProducts,
@@ -41,27 +53,41 @@ const Category = (props) => {
     isLoading: isLoadingEssential,
     error: errorEssentail,
   } = useEssentialProducts(6);
-  if (category === "seasonal-collection") {
-    filteredProducts = seasonalProducts.filter(
-      (product) => product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-    );
-  }
-  if (category === "essential") {
-    filteredProducts = essentialProducts.filter(
-      (product) => product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-    );
-  }
+  useEffect(() => {
+    if (category === "seasonal-collection") {
+      setFilterdProducts(
+        seasonalProducts.filter(
+          (product) =>
+            product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
+        )
+      );
+    }
+    if (category === "essential") {
+      setFilterdProducts(
+        essentialProducts.filter(
+          (product) =>
+            product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
+        )
+      );
+    }
+
+    // return () => {
+    //   second;
+    // };
+  }, [essentialProducts, seasonalProducts, pathname]);
+
   console.log(filteredProducts);
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex} {category}
+          {sex}'s {category}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
         </p>
         <ProductList {...store}>
+          <SortModel setProducts={sortProducts} products={filteredProducts} />
           <ProductGrid products={filteredProducts} />
         </ProductList>
       </section>
