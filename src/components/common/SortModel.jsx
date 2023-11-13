@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 
 const SortModel = ({ setProducts, products }) => {
+  const [small, setSmall] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [sortType, setSortType] = useState();
-
+  useEffect(() => {
+    window.onresize = () => {
+      setSmall(window.innerWidth <= 800);
+    };
+  }, []);
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
@@ -27,6 +33,7 @@ const SortModel = ({ setProducts, products }) => {
 
         border: "none",
         marginLeft: "auto",
+        marginRight: small ? "0" : "5vw",
         boxShadow: expanded ? "0 6px 12px 1px #0000001f" : "none",
         borderRadius: ".5rem",
       }}
