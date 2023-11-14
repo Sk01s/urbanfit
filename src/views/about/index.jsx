@@ -19,7 +19,7 @@ const about = () => {
         <div className="about-banner" />
       </div>
       <div className="about-section">
-        <div className="text">
+        {/* <div className="text">
           <h2>
             Our 2023 goals. An empowering year of positivity. Here's our plan.
           </h2>
@@ -30,7 +30,7 @@ const about = () => {
             together, and change even more people’s lives.
           </p>
         </div>
-        <div className="image" />
+        <div className="image" /> */}
       </div>
     </main>
   );

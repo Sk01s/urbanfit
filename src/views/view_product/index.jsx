@@ -433,25 +433,22 @@ const ViewProduct = () => {
                   title={
                     <>
                       <svg
-                        class="icon icon--small icon--type-box"
-                        stroke-width="1"
-                        aria-hidden="true"
-                        focusable="false"
-                        role="presentation"
-                        xmlns="http://www.w3.org/2000/svg"
+                        stroke="currentColor"
+                        fill="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 16 16"
                         width={15}
                         height={15}
-                        viewBox="0 0 16 16"
+                        style={{ translate: "0 1px" }}
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M14.41 3.37L8.27 1.41a1 1 0 00-.61 0L1.52 3.37a1 1 0 00-.7.95v7.86c0 .41.25.78.63.93l6.14 2.46c.24.1.5.1.75 0l6.14-2.46a1 1 0 00.62-.93V4.32a1 1 0 00-.69-.95zM7.96 2.36l6.05 1.93-2.7.9L5.35 3.2l2.63-.84zm-.46 12.1l-5.68-2.28V5.3L7.5 7.2v7.26zM8 6.3L1.96 4.28l2.58-.82 5.99 2L8 6.3zm6.1 5.89l-5.6 2.24V7.19l5.6-1.87v6.87z"
-                        ></path>
+                        <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434L7.752.066ZM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567L4.25 7.504ZM7.5 9.933l-2.75 1.571v3.134l2.75-1.571V9.933Zm1 3.134 2.75 1.571v-3.134L8.5 9.933v3.134Zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567-2.742 1.567Zm2.242-2.433V3.504L8.5 5.076V8.21l2.75-1.572ZM7.5 8.21V5.076L4.75 3.504v3.134L7.5 8.21ZM5.258 2.643 8 4.21l2.742-1.567L8 1.076 5.258 2.643ZM15 9.933l-2.75 1.571v3.134L15 13.067V9.933ZM3.75 14.638v-3.134L1 9.933v3.134l2.75 1.571Z"></path>
                       </svg>
-                      <h5>Shipping</h5>
+                      <h5>Returns</h5>
                     </>
                   }
-                  description={""}
+                  description={`Return items must be in their original condition, undamaged and unworn, with the original tag and packaging.
+Returns eligible on full-price items only.`}
                 />
                 {relatedProduct.length === 0 ? (
                   <></>

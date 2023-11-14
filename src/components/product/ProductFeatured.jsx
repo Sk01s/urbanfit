@@ -8,7 +8,6 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useHistory } from "react-router-dom";
 
 const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
-  
   const { wish, addToWish, isItemOnWish } = useWish(product.id);
   const history = useHistory();
   const onClickItem = (onClickToggle, e) => {
@@ -22,7 +21,12 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
       {cart ? (
         <BasketToggle>
           {({ onClickToggle }) => (
-            <div style={{ position: "relative" }} className="basket-toggle">
+            <div
+              style={{ position: "relative" }}
+              className="basket-toggle"
+              onMouseEnter={(e) => e.currentTarget.classList.add("hover")}
+              onMouseLeave={(e) => e.currentTarget.classList.remove("hover")}
+            >
               <div
                 className={`product-display ${
                   product.totalQuantity === 0 ? "out" : ""
@@ -35,12 +39,21 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
                 )}
                 <div className="product-display-img">
                   {product.image ? (
-                    <ImageLoader
-                      className="product-card-img"
-                      src={product.image}
-                      draggable={false}
-                      style={{ minWidth: "200px" }}
-                    />
+                    <>
+                      <ImageLoader
+                        src={product.image}
+                        draggable={false}
+                        style={{ minWidth: "200px" }}
+                      />
+                      {product.imageCollection[3] && (
+                        <ImageLoader
+                          className="image"
+                          src={product.imageCollection[3].url}
+                          draggable={false}
+                          style={{ minWidth: "200px" }}
+                        />
+                      )}
+                    </>
                   ) : (
                     <Skeleton width="50vw" height="100%" />
                   )}
@@ -91,7 +104,11 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
           )}
         </BasketToggle>
       ) : (
-        <div style={{ position: "relative" }}>
+        <div
+          style={{ position: "relative" }}
+          onMouseEnter={(e) => e.currentTarget.classList.add("hover")}
+          onMouseLeave={(e) => e.currentTarget.classList.remove("hover")}
+        >
           <div
             className={`product-display ${
               product.totalQuantity === 0 ? "out" : ""
@@ -104,12 +121,21 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
             )}
             <div className="product-display-img">
               {product.image ? (
-                <ImageLoader
-                  className="product-card-img"
-                  src={product.image}
-                  draggable={false}
-                  style={{ minWidth: "200px" }}
-                />
+                <>
+                  <ImageLoader
+                    src={product.image}
+                    draggable={false}
+                    style={{ minWidth: "200px" }}
+                  />
+                  {product.imageCollection[3] && (
+                    <ImageLoader
+                      className="image"
+                      src={product.imageCollection[3].url}
+                      draggable={false}
+                      style={{ minWidth: "200px" }}
+                    />
+                  )}
+                </>
               ) : (
                 <Skeleton width="50vw" height="100%" />
               )}

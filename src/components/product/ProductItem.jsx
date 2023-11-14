@@ -20,10 +20,14 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
   };
 
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(product.id) : false;
-
+  console.log(product.imageCollection);
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
-      <div style={{ position: "relative" }}>
+      <div
+        style={{ position: "relative" }}
+        onMouseEnter={(e) => e.currentTarget.classList.add("hover")}
+        onMouseLeave={(e) => e.currentTarget.classList.remove("hover")}
+      >
         <div
           className={`product-display ${
             product.totalQuantity === 0 ? "out" : ""
@@ -34,11 +38,16 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
           {product.totalQuantity === 0 && <div className="badge">Sold Out</div>}
           <div className="product-display-img">
             {product.image ? (
-              <ImageLoader
-                className="product-card-img"
-                src={product.image}
-                draggable={false}
-              />
+              <>
+                <ImageLoader src={product.image} draggable={false} />
+                {product.imageCollection[3] && (
+                  <ImageLoader
+                    className="image"
+                    src={product.imageCollection[3].url}
+                    draggable={false}
+                  />
+                )}
+              </>
             ) : (
               <Skeleton width="100%" height="100%" />
             )}
