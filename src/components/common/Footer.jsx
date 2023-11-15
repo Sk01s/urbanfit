@@ -16,10 +16,9 @@ const Footer = () => {
         <div className="footer-col-1">
           <p
             style={{
-              fontSize: "1.325rem",
+              fontSize: "1.5rem",
               fontWeight: 300,
               color: "#222",
-              lineHeight: "normal",
             }}
           >
             Our mission is to inspire and ignite the boundless creativity and
@@ -190,7 +189,6 @@ const Footer = () => {
                 >
                   <Link to="/about-us">Who we are</Link>
                 </li>
-    
               </ul>
             </div>
           </div>{" "}
