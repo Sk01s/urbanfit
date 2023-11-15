@@ -13,7 +13,9 @@ const ProductShowcase = ({
   to = "",
   close,
   cart,
+  view = false,
 }) => {
+  console.log(view);
   const settings = {
     infinite: true,
     centerMode: center,
@@ -35,7 +37,7 @@ const ProductShowcase = ({
   };
 
   return (
-    <div className="show-case">
+    <div className={view ? "" : "show-case"}>
       <div className="display-header" style={{ marginBottom: to || "2rem" }}>
         <button
           onClick={goToPrevious}

@@ -483,6 +483,7 @@ Returns eligible on full-price items only.`}
                   title={"Essentials"}
                   skeletonCount={2}
                   to={ESSENTIAL_PRODUCTS}
+                  view
                 />
               )}
             </div>

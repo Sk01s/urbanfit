@@ -1,0 +1,29 @@
+.privacy {
+  line-height: 1.6;
+  margin: 20px;
+
+  h2 {
+    color: #333;
+  }
+
+  p {
+    margin-bottom: 15px;
+  }
+
+  ol {
+    margin-bottom: 15px;
+    margin-left: 20px;
+    // li {
+    //   margin-bottom: 0.5rem;
+    // }
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
