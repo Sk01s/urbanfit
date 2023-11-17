@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import firebase from "@/services/firebase";
 
 const useSeasonalProducts = (itemsCount) => {
-  const [seasonalProducts, setSeasonalProducts] = useState([]);
+  const [seasonalProducts, setSeasonalProducts] = useState(
+    JSON.parse(localStorage.getItem("seasonals")) || []
+  );
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const didMount = useDidMount(true);

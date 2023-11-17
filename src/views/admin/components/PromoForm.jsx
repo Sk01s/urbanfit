@@ -15,20 +15,23 @@ import * as Yup from "yup";
 import { categories, type } from "@/constants/constants";
 import { useState } from "react";
 import { ProductRelative } from "@/components/product";
+import { CustomDate } from "@/components/formik";
+import dayjs from "dayjs";
 // Default type names that I used. You can use what you want
 
 const FormSchema = Yup.object().shape({
   code: Yup.string()
     .required("promo code is required.")
     .max(60, "promo name must only be less than 60 characters."),
-  percenage: Yup.number()
+  percentage: Yup.number()
     .max(100, "the percentage can't exeed 100")
     .min(1, "the percentage can't be less than 1")
     .required("percentage is required"),
   max: Yup.number()
     .positive("max quantity is invalid.")
     .required("max quantity  is required."),
-
+  startDate: Yup.date().required("max quantity  is required."),
+  endDate: Yup.date().required("max quantity  is required."),
   // uses: Yup.number()
   //   .min(0, "number is invalid.")
   //   .integer(" quantity should be an integer.")
@@ -38,14 +41,17 @@ const FormSchema = Yup.object().shape({
 const PromoForm = ({ onSubmit, isLoading }) => {
   const initFormikValues = {
     code: "",
-
-    max: 0,
+    endDate: new Date(),
+    startDate: new Date(),
+    max: 1,
     percentage: 1,
   };
 
   const onSubmitForm = (form) => {
     onSubmit({
       ...form,
+      startDate: form.startDate.getTime(),
+      endDate: form.endDate.getTime(),
       uses: 0,
       items: [],
       dateAdded: new Date().getTime(),
@@ -89,6 +95,8 @@ const PromoForm = ({ onSubmit, isLoading }) => {
                   />
                 </div>
                 &nbsp;
+              </div>
+              <div className="d-flex">
                 <div className="product-form-field">
                   <Field
                     disabled={isLoading}
@@ -102,21 +110,28 @@ const PromoForm = ({ onSubmit, isLoading }) => {
               </div>
               <div className="d-flex">
                 &nbsp;
-                {/* <div className="product-form-field">
-                  <CustomCreatableSelect
-                    defaultValue={values.keywords.map((key) => ({
-                      value: key,
-                      label: key,
-                    }))}
-                    name="sizes"
-                    iid="sizes"
-                    type="text"
-                    isMulti
-                    disabled={isLoading}
-                    placeholder="Create/Select Sizes"
-                    label="* Sizes (Millimeter)"
+                <div className="product-form-field">
+                  <CustomDate
+                    propName="startDate"
+                    values={values}
+                    setValues={setValues}
+                    value={values.startDate}
+                    name="Start Date"
                   />
-                </div> */}
+                </div>
+              </div>
+              <div className="d-flex">
+                &nbsp;
+                <div className="product-form-field">
+                  <CustomDate
+                    propName="endDate"
+                    value={values.endDate}
+                    values={values}
+                    setValues={setValues}
+                    name="End Date"
+                    comparedTo={values.startDate}
+                  />
+                </div>
               </div>
 
               <br />

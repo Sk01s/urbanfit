@@ -13,7 +13,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { ShoppingOutlined, SearchOutlined } from "@ant-design/icons";
 import * as Route from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
-import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
+import { ProductGrid } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useEssentialProducts } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
@@ -367,7 +367,7 @@ const Navigation = (props) => {
             </Link>
           </li>
           <li>
-            <Link onClick={closeMenu} to="/type/men/t-shirt">
+            <Link onClick={closeMenu} to="/type/men/t-shrit">
               T-shrits
             </Link>
           </li>
@@ -413,7 +413,7 @@ const Navigation = (props) => {
             </Link>
           </li>
           <li>
-            <Link onClick={closeMenu} to="/type/women/t-shirt">
+            <Link onClick={closeMenu} to="/type/women/t-shrit">
               T-shrits
             </Link>
           </li>

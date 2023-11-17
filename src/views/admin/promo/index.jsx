@@ -6,11 +6,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { selectFilter } from "@/selectors/selector";
-import { ProductsNavbar } from "../components";
+import { ProductsNavbar, PromoItem } from "../components";
 import ProductsTable from "../components/ProductsTable";
 import { ADD_PROMO } from "@/constants/routes";
 import firebaseInstance from "@/services/firebase";
-import PromotItem from "../components/PromoItem";
 
 const Products = () => {
   useDocumentTitle("Product List | Urbanfit Admin");
@@ -22,8 +21,9 @@ const Products = () => {
       const promos = data.docs.map((promo) => promo.data());
       setPromos(promos);
     };
+    getPromo();
   }, []);
-  
+
   return (
     <Boundary>
       <ProductsNavbar
@@ -43,29 +43,29 @@ const Products = () => {
                 <h5>Name</h5>
               </div>
               <div className="grid-col">
-                <h5>Type</h5>
+                <h5>Precentage</h5>
               </div>
               <div className="grid-col">
-                <h5>Price</h5>
+                <h5>Uses</h5>
               </div>
               <div className="grid-col">
-                <h5>Date Added</h5>
+                <h5>Start Date</h5>
               </div>
               <div className="grid-col">
-                <h5>Qty</h5>
+                <h5>End Date</h5>
               </div>
             </div>
           )}
           {promos.length === 0
-            ? new Array(10).fill({}).map((product, index) => (
-                <PromotItem
+            ? new Array(10).fill({}).map((promo, index) => (
+                <PromoItem
                   // eslint-disable-next-line react/no-array-index-key
                   key={`product-skeleton ${index}`}
-                  product={product}
+                  promo={promo}
                 />
               ))
-            : promos.map((product) => (
-                <PromoItem key={product.id} product={product} />
+            : promos.map((promo, index) => (
+                <PromoItem key={index} promo={promo} />
               ))}
         </div>
         {/* </ProductList> */}

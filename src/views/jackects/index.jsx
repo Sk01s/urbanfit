@@ -5,23 +5,26 @@ import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 import bannerImg from "@/images/banner-guy.png";
+import { SortModel } from "@/components/common";
 
 const CategoryDisplay = () => {
   useDocumentTitle("Jackets | Urbanfit");
   useScrollTop();
 
-  const store = useSelector(
-    (state) => ({
-      filteredProducts: selectFilter(state.products.items, state.filter),
-      products: state.products,
-      requestStatus: state.app.requestStatus,
-      isLoading: state.app.loading,
-    }),
-    shallowEqual
-  );
-  const categoryProduct = store.products.items.filter(
-    (product) => product.categories === "Jackets"
-  );
+  const { pathname } = useLocation();
+  const { products, fetchProducts, error, isLoading } = useProducts();
+
+  const [filteredProducts, setFilterdProducts] = useState(products);
+  const sortProducts = (products) => {
+    setFilterdProducts(products);
+  };
+
+  useEffect(() => {
+    setFilterdProducts(
+      products.filter((product) => product.categories === "Jackets")
+    );
+  }, [pathname, products]);
+
   return (
     <main className="content" style={{ display: "block" }}>
       <div className="banner" style={{ marginBottom: "4rem" }}>
@@ -33,10 +36,18 @@ const CategoryDisplay = () => {
         </div>
       </div>
       <section className="product-list-wrapper">
-        <AppliedFilters filteredProductsCount={store.filteredProducts.length} />
-        <ProductList {...store}>
-          <ProductGrid products={categoryProduct} />
-        </ProductList>
+        {error && !isLoading ? (
+          <MessageDisplay
+            message={error}
+            action={fetchProducts}
+            buttonLabel="Try Again"
+          />
+        ) : (
+          <>
+            <SortModel setProducts={sortProducts} products={filteredProducts} />
+            <ProductGrid products={filteredProducts} skeletonCount={6} />
+          </>
+        )}
       </section>
     </main>
   );

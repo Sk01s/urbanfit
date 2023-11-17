@@ -317,6 +317,7 @@ class Firebase {
       .where("isEssential", "==", true)
       .limit(itemsCount)
       .get();
+  getProductsAll = () => this.db.collection("products").get();
 
   addProduct = (id, product) =>
     this.db.collection("products").doc(id).set(product);

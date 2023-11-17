@@ -20,7 +20,6 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
   };
 
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(product.id) : false;
-  console.log(product.imageCollection);
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div

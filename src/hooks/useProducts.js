@@ -2,21 +2,20 @@ import { useDidMount } from "@/hooks";
 import { useEffect, useState } from "react";
 import firebase from "@/services/firebase";
 
-const useEssentialProducts = (itemsCount) => {
-  const [essentialProducts, setEssentialProducts] = useState(
-    JSON.parse(localStorage.getItem("essentials")) || []
+const useProducts = () => {
+  const [products, setProducts] = useState(
+    JSON.parse(localStorage.getItem("products")) || []
   );
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const didMount = useDidMount(true);
 
-  const fetchEssentialProducts = async () => {
+  const fetchProducts = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const docs = await firebase.getEsssentialProducts(itemsCount);
-
+      const { docs } = await firebase.getProductsAll();
       if (docs.empty) {
         if (didMount) {
           setError("No Essential products found.");
@@ -31,30 +30,31 @@ const useEssentialProducts = (itemsCount) => {
         });
 
         if (didMount) {
-          setEssentialProducts(items);
+          setProducts(items);
           setLoading(false);
         }
       }
     } catch (e) {
+      console.log(e);
       if (didMount) {
-        setError("Failed to get Essential products");
+        setError("Failed to get products");
         setLoading(false);
       }
     }
   };
 
   useEffect(() => {
-    if (essentialProducts.length === 0 && didMount) {
-      fetchEssentialProducts();
+    if (products.length === 0 && didMount) {
+      fetchProducts();
     }
   }, []);
 
   return {
-    essentialProducts,
-    fetchEssentialProducts,
+    products,
+    fetchProducts,
     isLoading,
     error,
   };
 };
 
-export default useEssentialProducts;
+export default useProducts;

@@ -9,3 +9,4 @@ export { default as useModal } from "./useModal";
 export { default as useProduct } from "./useProduct";
 export { default as useEssentialProducts } from "./useEssentialProducts";
 export { default as useScrollTop } from "./useScrollTop";
+export { default as useProducts } from "./useProducts";

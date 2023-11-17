@@ -5,20 +5,10 @@ import React, { useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
 import { SortModel } from "@/components/common";
+import { useProducts } from "@/hooks";
 
 const Shop = () => {
-  const store = useSelector(
-    (state) => ({
-      filteredProducts: selectFilter(state.products.items, state.filter),
-      products: state.products,
-      requestStatus: state.app.requestStatus,
-      isLoading: state.app.loading,
-    }),
-    shallowEqual
-  );
-  const [filteredProducts, setFilterdProducts] = useState(
-    store.filteredProducts
-  );
+  const { products, fetchProducts, error, isLoading } = useProducts();
   const sortProducts = (products) => {
     setFilterdProducts(products);
   };
@@ -27,14 +17,21 @@ const Shop = () => {
       <section className="product-list-wrapper">
         <h2 style={{ textAlign: "center" }}> Products</h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
-          {filteredProducts.length} products
+          {products.length} products
         </p>
         <br />
-        <AppliedFilters filteredProductsCount={filteredProducts.length} />
-        <ProductList {...store}>
-          <SortModel setProducts={sortProducts} products={filteredProducts} />
-          <ProductGrid products={filteredProducts} />
-        </ProductList>
+        {error && !isLoading ? (
+          <MessageDisplay
+            message={error}
+            action={fetchProducts}
+            buttonLabel="Try Again"
+          />
+        ) : (
+          <>
+            <SortModel setProducts={sortProducts} products={products} />
+            <ProductGrid products={products} skeletonCount={6} />
+          </>
+        )}
       </section>
     </main>
   );

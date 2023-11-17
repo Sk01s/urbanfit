@@ -8,29 +8,39 @@ import { withRouter } from "react-router-dom";
 import { selectFilter } from "@/selectors/selector";
 import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
+import { useProducts } from "@/hooks";
+import { SortModel } from "@/components/common";
 
 const Products = () => {
   useDocumentTitle("Product List | Urbanfit Admin");
   useScrollTop();
 
-  const store = useSelector((state) => ({
-    filteredProducts: selectFilter(state.products.items, state.filter),
-    requestStatus: state.app.requestStatus,
-    isLoading: state.app.loading,
-    products: state.products,
-  }));
+  const { products, fetchProducts, error, isLoading } = useProducts();
+  const [filteredProducts, setFilterdProducts] = useState(products);
+
+  const sortProducts = (products) => {
+    setFilterdProducts(products);
+  };
 
   return (
     <Boundary>
       <ProductsNavbar
-        productsCount={store.products.items.length}
-        totalProductsCount={store.products.total}
+        productsCount={products.length}
+        totalProductsCount={products.total}
       />
       <div className="product-admin-items">
-        <ProductList {...store}>
-          <AppliedFilters filter={store.filter} />
-          <ProductsTable filteredProducts={store.filteredProducts} />
-        </ProductList>
+        {error && !isLoading ? (
+          <MessageDisplay
+            message={error}
+            action={fetchProducts}
+            buttonLabel="Try Again"
+          />
+        ) : (
+          <>
+            <SortModel setProducts={sortProducts} products={filteredProducts} />
+            <ProductGrid products={filteredProducts} skeletonCount={6} />
+          </>
+        )}
       </div>
     </Boundary>
   );

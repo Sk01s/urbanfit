@@ -5,20 +5,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addProduct } from "@/redux/actions/productActions";
 import firebaseInstance from "@/services/firebase";
+import { useState } from "react";
+import { PROMO } from "@/constants/routes";
 
 const PromoForm = lazy(() => import("../components/PromoForm"));
 
 const AddProduct = () => {
   useScrollTop();
   useDocumentTitle("Add New Promo | Urbanfit");
-  const isLoading = useSelector((state) => state.app.loading);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const onSubmit = (promo) => {
-    const res = firebaseInstance.addPromo(
-      firebaseInstance.generateKey(),
-      promo
-    );
+  const onSubmit = async (promo) => {
+    console.log(promo);
+    setIsLoading(true);
+    const res = await firebaseInstance.addPromo(promo.code, promo);
+    setIsLoading(false);
+    history.go(PROMO);
   };
 
   return (
@@ -33,8 +36,7 @@ const AddProduct = () => {
           </div>
         }
       >
-        <PromoForm isLoading={isLoading} onSubmit={onSubmit}
-         />
+        <PromoForm isLoading={isLoading} onSubmit={onSubmit} />
       </Suspense>
     </div>
   );

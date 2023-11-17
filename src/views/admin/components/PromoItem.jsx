@@ -12,78 +12,73 @@ import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { removeProduct } from "@/redux/actions/productActions";
 
-const ProductItem = ({ product }) => {
+const PromoItem = ({ promo }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const productRef = useRef(null);
+  const promoRef = useRef(null);
 
   const onClickEdit = () => {
-    history.push(`${EDIT_PRODUCT}/${product.id}`);
+    history.push(`${EDIT_PRODUCT}/${promo.code}`);
   };
 
   const onDeleteProduct = () => {
-    productRef.current.classList.toggle("item-active");
+    promoRef.current.classList.toggle("item-active");
   };
 
   const onConfirmDelete = () => {
-    dispatch(removeProduct(product.id));
+    dispatch(removeProduct(promo.code));
     displayActionMessage("Item successfully deleted");
-    productRef.current.classList.remove("item-active");
+    promoRef.current.classList.remove("item-active");
   };
 
   const onCancelDelete = () => {
-    productRef.current.classList.remove("item-active");
+    promoRef.current.classList.remove("item-active");
   };
+  console.log(promo);
 
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div
-        className={`item item-products ${!product.id && "item-loading"}`}
-        ref={productRef}
+        className={`item item-products ${!promo.code && "item-loading"}`}
+        ref={promoRef}
       >
         <div className="grid grid-count-6">
-          <div className="grid-col item-img-wrapper">
-            {product.image ? (
+          {/* <div className="grid-col item-img-wrapper">
+            {promo.image ? (
               <ImageLoader
-                alt={product.name}
+                alt={promo.name}
                 className="item-img"
-                src={product.image}
+                src={promo.image}
               />
             ) : (
               <Skeleton width={50} height={30} />
             )}
-          </div>
+          </div> */}
           <div className="grid-col">
             <span className="text-overflow-ellipsis">
-              {product.name || <Skeleton width={50} />}
+              {promo.code || <Skeleton width={50} />}
             </span>
           </div>
           <div className="grid-col">
-            <span>{product.categories || <Skeleton width={50} />}</span>
+            <span>{promo.percentage || <Skeleton width={50} />}</span>
+          </div>
+          <div className="grid-col">
+            <span>{promo.uses || <Skeleton width={30} />}</span>
           </div>
           <div className="grid-col">
             <span>
-              {product.price ? (
-                displayMoney(product.price)
+              {promo.dateAdded ? (
+                displayDate(promo.dateAdded)
               ) : (
                 <Skeleton width={30} />
               )}
             </span>
           </div>
           <div className="grid-col">
-            <span>
-              {product.dateAdded ? (
-                displayDate(product.dateAdded)
-              ) : (
-                <Skeleton width={30} />
-              )}
-            </span>
-          </div>
-          <div className="grid-col">
-            <span>{product.totalQuantity || <Skeleton width={20} />}</span>
+            <span>{promo.totalQuantity || <Skeleton width={20} />}</span>
           </div>
         </div>
-        {product.id && (
+        {promo.code && (
           <div className="item-action">
             <button
               className="button button-border button-small"
@@ -125,7 +120,7 @@ const ProductItem = ({ product }) => {
   );
 };
 
-ProductItem.propTypes = {
+PromoItem.propTypes = {
   product: PropType.shape({
     id: PropType.string,
     name: PropType.string,
@@ -145,4 +140,4 @@ ProductItem.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(ProductItem);
+export default withRouter(PromoItem);

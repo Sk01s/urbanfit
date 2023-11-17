@@ -70,7 +70,7 @@ const Home = () => {
             <p>
               Our collection features unique designs that are sure to make you
               stand out from the crowd. Whether you’re looking for a casual
-              t-shirt or a cozy hoodie, we’ve got you covered.
+              t-shrit or a cozy hoodie, we’ve got you covered.
             </p>
             <br />
             <Link to={SHOP} className="button">

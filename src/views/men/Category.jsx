@@ -16,28 +16,32 @@ import { selectFilter } from "@/selectors/selector";
 import { SortModel } from "@/components/common";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useProducts } from "@/hooks";
 
 const Category = (props) => {
   const { pathname } = useLocation();
   const { category, sex } = useParams();
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
-  const store = useSelector(
-    (state) => ({
-      filteredProducts: selectFilter(state.products.items, state.filter),
-      products: state.products,
-      requestStatus: state.app.requestStatus,
-      isLoading: state.app.loading,
-    }),
-    shallowEqual
-  );
+
+  const { products, fetchProducts, error, isLoading } = useProducts();
   let [filteredProducts, setFilterdProducts] = useState(() =>
-    store.products?.items?.filter(
+    products?.filter(
       (product) =>
         product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
         product.categories.toLocaleLowerCase() === category.toLocaleLowerCase()
     )
   );
+  useEffect(() => {
+    setFilterdProducts(
+      products?.filter(
+        (product) =>
+          product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
+          product.categories.toLocaleLowerCase() ===
+            category.toLocaleLowerCase()
+      )
+    );
+  }, [pathname, products]);
   const sortProducts = (products) => {
     setFilterdProducts(products);
   };
@@ -76,7 +80,6 @@ const Category = (props) => {
     // };
   }, [essentialProducts, seasonalProducts, pathname]);
 
-  console.log(filteredProducts);
   return (
     <main className="content">
       <section className="product-list-wrapper">
@@ -86,10 +89,18 @@ const Category = (props) => {
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
         </p>
-        <ProductList {...store}>
-          <SortModel setProducts={sortProducts} products={filteredProducts} />
-          <ProductGrid products={filteredProducts} />
-        </ProductList>
+        {error && !isLoading ? (
+          <MessageDisplay
+            message={error}
+            action={fetchProducts}
+            buttonLabel="Try Again"
+          />
+        ) : (
+          <>
+            <SortModel setProducts={sortProducts} products={filteredProducts} />
+            <ProductGrid products={filteredProducts} skeletonCount={6} />
+          </>
+        )}
       </section>
     </main>
   );
