@@ -6,9 +6,9 @@ const SortModel = ({ setProducts, products }) => {
   const [expanded, setExpanded] = useState(false);
   const [sortType, setSortType] = useState();
   useEffect(() => {
-    window.onresize = () => {
+    window.addEventListener("resize", () => {
       setSmall(window.innerWidth <= 800);
-    };
+    });
   }, []);
   const toggleExpand = () => {
     setExpanded(!expanded);

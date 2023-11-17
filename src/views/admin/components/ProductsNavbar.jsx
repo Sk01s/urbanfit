@@ -6,14 +6,14 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 const ProductsNavbar = (props) => {
-  const { productsCount, totalProductsCount, name } = props;
+  const { productsCount, totalProductsCount, name, to } = props;
   const history = useHistory();
 
   return (
     <div className="product-admin-header">
       <h3 className="product-admin-header-title">
         {name || "Products"} &nbsp; (
-        {`${productsCount} / ${totalProductsCount}`})
+        {`${productsCount || ""} / ${totalProductsCount || ""}`})
       </h3>
       <SearchBar />
       &nbsp;
@@ -25,11 +25,11 @@ const ProductsNavbar = (props) => {
       </FiltersToggle>
       <button
         className="button button-small"
-        onClick={() => history.push(ADD_PRODUCT)}
+        onClick={() => (to ? history.push(to) : history.push(ADD_PRODUCT))}
         type="button"
       >
         <PlusOutlined />
-        &nbsp; Add New Product
+        &nbsp; Add New {name ? "Promo" : "Product"}
       </button>
     </div>
   );

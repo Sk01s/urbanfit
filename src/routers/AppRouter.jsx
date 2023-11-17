@@ -112,7 +112,9 @@ const AppRouter = () => {
           />
           <AdminRoute component={view.Products} path={ROUTES.ADMIN_PRODUCTS} />
           <AdminRoute component={view.AddProduct} path={ROUTES.ADD_PRODUCT} />
+          <AdminRoute component={view.AddPromo} path={ROUTES.ADD_PROMO} />
           <AdminRoute component={view.OrderView} path={ROUTES.ORDER_DETAILS} />
+          <AdminRoute component={view.Promo} path={ROUTES.PROMO} />
           <AdminRoute
             component={view.EditProduct}
             path={`${ROUTES.EDIT_PRODUCT}/:id`}

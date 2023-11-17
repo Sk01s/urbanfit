@@ -1,4 +1,4 @@
-import { ADMIN_PRODUCTS, ADMIN_ORDERS } from "@/constants/routes";
+import { ADMIN_PRODUCTS, ADMIN_ORDERS, PROMO } from "@/constants/routes";
 
 import React from "react";
 import { NavLink } from "react-router-dom";
@@ -22,6 +22,15 @@ const SideNavigation = () => (
           className="sidenavigation-menu my-0"
         >
           Orders
+        </NavLink>
+      </div>
+      <div className="sidenavigation-item">
+        <NavLink
+          to={PROMO}
+          activeClassName="sidenavigation-menu-active"
+          className="sidenavigation-menu my-0"
+        >
+          Promo
         </NavLink>
       </div>
     </div>

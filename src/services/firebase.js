@@ -106,6 +106,7 @@ class Firebase {
   passwordReset = (email) => this.auth.sendPasswordResetEmail(email);
 
   addUser = (id, user) => this.db.collection("users").doc(id).set(user);
+  addPromo = (id, user) => this.db.collection("promo").doc(id).set(user);
 
   getUser = (id) => this.db.collection("users").doc(id).get();
 
@@ -353,7 +354,11 @@ class Firebase {
 
   getOrders = () => this.db.collection("order").get();
 
+  getPromos = () => this.db.collection("promo").get();
+
   getOrder = (id) => this.db.collection("order").doc(id).get();
+
+  getPromo = (id) => this.db.collection("promo").doc(id).get();
 
   removeOrder = (id) => this.db.collection("order").doc(id).delete();
 

@@ -86,7 +86,7 @@ const Navigation = () => {
     const small = () => {
       setSmall(window.innerWidth <= 850);
     };
-    window.onresize = small;
+    window.addEventListener("resize", small);
     small();
   }, []);
 

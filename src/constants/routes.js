@@ -40,3 +40,6 @@ export const ABOUT_US = "/about-us";
 export const PRIVACY = "/privacy";
 export const CONTACT_US = "/contact-us";
 export const USER_VIEW_ORDER = "/order/:id";
+export const PROMO = "/admin/promo";
+export const VIEW_PROMO = "/admin/promo/:id";
+export const ADD_PROMO = "/admin/promo/add";

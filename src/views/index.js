@@ -37,3 +37,5 @@ export { default as Privacy } from "./privacy_policy/index";
 export { default as Contact } from "./contact_us/index";
 export { default as Wish } from "./wish/index";
 export { default as UserViewOrder } from "./account/view_order/index";
+export { default as Promo } from "./admin/promo/index";
+export { default as AddPromo } from "./admin/add_promo/index";

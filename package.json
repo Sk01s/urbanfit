@@ -55,6 +55,10 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@emailjs/browser": "^3.11.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.18",
+    "dayjs": "^1.11.10",
     "firebase": "^8.4.3",
     "formik": "^2.2.6",
     "framer-motion": "^10.16.4",
