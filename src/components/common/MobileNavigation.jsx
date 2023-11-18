@@ -205,7 +205,7 @@ const Navigation = (props) => {
         style={{
           position: "inherit",
           top: " 0em",
-          left: isMenuOpen ? 0 : "-100%",
+          left: isMenuOpen ? 0 : "-100vw",
           transitionDuration: "300ms",
           backgroundColor: "white",
           width: "90vw",
@@ -562,7 +562,7 @@ const Navigation = (props) => {
           width: "100vw",
           height: "100dvh",
           top: 0,
-          left: isMenuOpen ? 0 : "-100%",
+          left: isMenuOpen ? 0 : "-100vw",
           zIndex: 999,
           backgroundColor: "#222222a0",
         }}

@@ -1,4 +1,5 @@
 .terms {
+  width: 100vw;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -9,9 +10,12 @@
   gap: 1rem;
   color: white;
   z-index: 100000000;
-  padding: 1rem;
+  padding: 2rem;
   padding-inline: 2rem;
   font-size: 1.45rem;
+  div {
+    padding-inline: 1.4rem;
+  }
   a {
     color: #5599da;
   }

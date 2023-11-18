@@ -4,6 +4,7 @@ import "firebase/storage";
 import "firebase/auth";
 import firebaseConfig from "./config";
 import { displayActionMessage } from "@/helpers/utils";
+import dayjs from "dayjs";
 
 class Firebase {
   constructor() {
@@ -59,6 +60,7 @@ class Firebase {
     });
     return recaptchaVerifier;
   };
+
   confiremOtp = (otp) => {
     return window.confirmationResult
       .confirm(otp)
@@ -362,6 +364,16 @@ class Firebase {
   getPromo = (id) => this.db.collection("promo").doc(id).get();
 
   removeOrder = (id) => this.db.collection("order").doc(id).delete();
+  removePromo = (id) => this.db.collection("promo").doc(id).delete();
+  checkPromoCode = async (promo) => {
+    const promoCode = await this.getPromo(promo);
+    if (promoCode.exists) {
+      const promoData = promoCode.data();
+      const startDate = dayjs(promoData.startDate);
+      const endDate = dayjs(promoData.endDate);
+    } else {
+    }
+  };
 
   getUserOrders = () =>
     this.db

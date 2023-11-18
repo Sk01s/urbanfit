@@ -265,13 +265,12 @@
   height: inherit;
   background: #fff;
   display: flex;
-  overflow-y: scroll;
   position: relative;
   gap: 1.5rem;
   width: 100%;
   height: auto;
   order: 2;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   @include tablet {
     padding-inline: 1.5rem;
