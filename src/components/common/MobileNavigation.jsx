@@ -367,7 +367,7 @@ const Navigation = (props) => {
             </Link>
           </li>
           <li>
-            <Link onClick={closeMenu} to="/type/men/t-shirt">
+            <Link onClick={closeMenu} to="/type/men/t-shrit">
               T-shrits
             </Link>
           </li>
@@ -413,7 +413,7 @@ const Navigation = (props) => {
             </Link>
           </li>
           <li>
-            <Link onClick={closeMenu} to="/type/women/t-shirt">
+            <Link onClick={closeMenu} to="/type/women/t-shrit">
               T-shrits
             </Link>
           </li>
