@@ -12,6 +12,7 @@ import { clearBasket } from "@/redux/actions/basketActions";
 import emailjs from "@emailjs/browser";
 import { OrderPaymentSummery } from "@/components/common";
 import { PromoBox } from "../components";
+import { setPromo } from "@/redux/actions/checkoutActions";
 function getOrdinalSuffix(number) {
   if (number === 0) {
     return "0"; // Special case for 0
@@ -178,6 +179,7 @@ const Total = ({ isInternational, subtotal, order }) => {
       )
       .then((e) => console.log(e));
     dispatch(clearBasket());
+    dispatch(setPromo({ percentage: 0 }));
 
     history.push(`/order-completed/${order.id}`, order);
   };
@@ -191,13 +193,14 @@ const Total = ({ isInternational, subtotal, order }) => {
 
   return (
     <>
-      <br />
-      <br />
       <PromoBox />
+      <br />
+      <br />
       <br />
       <div className="basket-total text-right">
         <OrderPaymentSummery subtotal={subtotal} promo={order.promo} />
       </div>
+      <br />
       <br />
       <div className="checkout-shipping-action">
         <button

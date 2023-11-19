@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 import PropType from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setShippingDetails } from "@/redux/actions/checkoutActions";
 import * as Yup from "yup";
@@ -17,6 +17,7 @@ import ShippingForm from "./ShippingForm";
 import ShippingTotal from "./ShippingTotal";
 import firebase from "@/services/firebase";
 import { displayActionMessage } from "@/helpers/utils";
+import { OrderPaymentSummery } from "@/components/common";
 const FormSchema = Yup.object().shape({
   fullname: Yup.string()
     .required("Full name is required.")
@@ -48,6 +49,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
 
   useDocumentTitle("Check Out Step 2 | Urbanfit");
   useScrollTop();
+  const promo = useSelector((store) => store.checkout.promo);
 
   const dispatch = useDispatch();
 
@@ -68,7 +70,6 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
   };
 
   const onSubmitForm = (form) => {
-    console.log(form);
     dispatch(
       setShippingDetails({
         fullname: form.fullname,
@@ -104,7 +105,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                 <ShippingForm />
                 <br />
                 {/*  ---- TOTAL --------- */}
-                <ShippingTotal subtotal={subtotal} />
+                {/* <OrderPaymentSummery subtotal={subtotal} promo={promo} /> */}
                 <br />
                 {/*  ----- NEXT/PREV BUTTONS --------- */}
                 <div className="checkout-shipping-action">

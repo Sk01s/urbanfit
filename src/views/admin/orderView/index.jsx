@@ -145,7 +145,6 @@ const EditProduct = () => {
             <div
               style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}
             >
-              <OrderPaymentSummery subtotal={totalPrice} />
               {/* <h4>Price</h4>
               {Number.isInteger(price) ? (
                 displayMoney(totalPrice)
@@ -163,6 +162,8 @@ const EditProduct = () => {
                 )}
               </span>
             </div>
+            <OrderPaymentSummery subtotal={totalPrice} />
+
             <div
               style={{
                 display: "flex",
