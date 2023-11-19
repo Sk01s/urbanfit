@@ -9,6 +9,7 @@ import firebase from "@/services/firebase";
 import Skeleton from "react-loading-skeleton";
 import { displayMoney } from "@/helpers/utils";
 import { displayDate } from "@/helpers/utils";
+import { OrderPaymentSummery } from "@/components/common";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
@@ -28,13 +29,13 @@ const EditProduct = () => {
     fulfillment: false,
   });
 
-  const price = orderDetails?.items?.reduce(
+  const subtotal = orderDetails?.items?.reduce(
     (acc, next) => parseInt(acc) + parseInt(next.price),
     0
   );
   const totalPrice = orderDetails.address.isInternational
-    ? price + 50
-    : price + 5;
+    ? subtotal + 50
+    : subtotal + 5;
 
   const { orderId } = useParams();
 
@@ -144,12 +145,13 @@ const EditProduct = () => {
             <div
               style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}
             >
-              <h4>Price</h4>
+              <OrderPaymentSummery subtotal={totalPrice} />
+              {/* <h4>Price</h4>
               {Number.isInteger(price) ? (
                 displayMoney(totalPrice)
               ) : (
                 <Skeleton width={50} />
-              )}
+              )} */}
             </div>
             <div>
               <h4>Order's Date</h4>

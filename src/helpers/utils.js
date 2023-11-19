@@ -3,8 +3,18 @@ export const displayDate = (timestamp) => {
   const date = new Date(timestamp);
 
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const day = date.getDate();
@@ -16,9 +26,9 @@ export const displayDate = (timestamp) => {
 };
 
 export const displayMoney = (n) => {
-  const format = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
+  const format = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
   });
 
   // or use toLocaleString()
@@ -33,24 +43,24 @@ export const calculateTotal = (arr) => {
   return total.toFixed(2);
 };
 
-export const displayActionMessage = (msg, status = 'info') => {
-  const div = document.createElement('div');
-  const span = document.createElement('span');
+export const displayActionMessage = (msg, status = "info") => {
+  const div = document.createElement("div");
+  const span = document.createElement("span");
 
-  div.className = `toast ${status === 'info'
-    ? 'toast-info'
-    : status === 'success'
-      ? 'toast-success'
-      : 'toast-error'
+  div.className = `toast ${
+    status === "info"
+      ? "toast-info"
+      : status === "success"
+      ? "toast-success"
+      : "toast-error"
     // eslint-disable-next-line indent
-    }`;
-  span.className = 'toast-msg';
+  }`;
+  span.className = "toast-msg";
   span.textContent = msg;
   div.appendChild(span);
 
-
-  if (document.querySelector('.toast')) {
-    document.body.removeChild(document.querySelector('.toast'));
+  if (document.querySelector(".toast")) {
+    document.body.removeChild(document.querySelector(".toast"));
     document.body.appendChild(div);
   } else {
     document.body.appendChild(div);
@@ -63,4 +73,9 @@ export const displayActionMessage = (msg, status = 'info') => {
       console.log(e);
     }
   }, 3000);
+};
+export const calculateDiscount = (subtotal, promo) => {
+  // const promo = JSON.parse(localStorage.getItem("promo")) || { percentage: 0 };
+  const percentage = promo.percentage / 100;
+  return subtotal * percentage;
 };

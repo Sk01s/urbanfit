@@ -81,6 +81,13 @@ const BasketItem = ({ product, display = false }) => {
                   {displaySizeForOmar(product.selectedSize)}{" "}
                 </h5>
               </div>
+              {display && (
+                <div className="spec-title">
+                  <div className="my-0" style={{ fontSize: "1.125rem" }}>
+                    Quantity : {product.quantity}
+                  </div>
+                </div>
+              )}
               {product[`${product.selectedSize}Quantity`] <= 9 && !display && (
                 <div
                   style={{

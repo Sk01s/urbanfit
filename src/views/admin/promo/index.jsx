@@ -38,7 +38,6 @@ const Products = () => {
         <div>
           {promos.length > 0 && (
             <div className="grid grid-product grid-count-6">
-              <div className="grid-col" />
               <div className="grid-col">
                 <h5>Name</h5>
               </div>
@@ -47,6 +46,9 @@ const Products = () => {
               </div>
               <div className="grid-col">
                 <h5>Uses</h5>
+              </div>
+              <div className="grid-col">
+                <h5>Max</h5>
               </div>
               <div className="grid-col">
                 <h5>Start Date</h5>

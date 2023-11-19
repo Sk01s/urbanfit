@@ -37,6 +37,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
   let state = useSelector((state) => ({
     fulfillment: false,
     items: state.basket,
+    promo: state.checkout.promo,
     payment: state.checkout.payment.type,
     address: state.checkout.shipping,
     date: new Date(),

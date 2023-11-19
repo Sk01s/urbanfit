@@ -5,15 +5,16 @@ import { displayMoney } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 import PropType from "prop-types";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { StepTracker } from "../components";
+import { PromoBox, StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
+import { OrderPaymentSummery } from "@/components/common";
 
 const OrderSummary = ({ basket, subtotal }) => {
-  console.log(basket);
   useDocumentTitle("Check Out Step 1 | Urbanfit");
   useScrollTop();
+  const promo = useSelector((store) => store.checkout.promo);
   const dispatch = useDispatch();
   const history = useHistory();
   const onClickPrevious = () => history.push("/");
@@ -38,10 +39,10 @@ const OrderSummary = ({ basket, subtotal }) => {
             />
           ))}
         </div>
+        <PromoBox />
         <br />
         <div className="basket-total text-right">
-          <p className="basket-total-title">Subtotal:</p>
-          <h2 className="basket-total-amount">{displayMoney(subtotal)}</h2>
+          <OrderPaymentSummery subtotal={subtotal} promo={promo} />
         </div>
         <br />
         <div className="checkout-shipping-action">

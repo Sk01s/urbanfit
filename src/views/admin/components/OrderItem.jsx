@@ -29,9 +29,9 @@ const OrderItem = ({ order, index }) => {
   const onConfirmDelete = () => {
     // dispatch(removeProduct(order.id));
     firebase
-      .removeOrder(order.id)
+      .removeOrder(order.id, order)
       .then(() => {
-        displayActionMessage("Item successfully deleted");
+        displayActionMessage("order has been deleted successfully ");
         orderRef.current.remove();
         orderRef.current.classList.remove("item-active");
       })

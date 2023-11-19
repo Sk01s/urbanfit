@@ -10,6 +10,8 @@ import { setPaymentDetails } from "@/redux/actions/checkoutActions";
 import firebase from "@/services/firebase";
 import { clearBasket } from "@/redux/actions/basketActions";
 import emailjs from "@emailjs/browser";
+import { OrderPaymentSummery } from "@/components/common";
+import { PromoBox } from "../components";
 function getOrdinalSuffix(number) {
   if (number === 0) {
     return "0"; // Special case for 0
@@ -66,11 +68,11 @@ const Total = ({ isInternational, subtotal, order }) => {
       ${order.address?.street}
       </p>
       <p style="color: #555;  margin-bottom: 0.5rem;">
-      ${order.address?.building} ,${" "}
+      ${order.address?.building} 
       ${getOrdinalSuffix(parseInt(order?.address.floor))}
       </p>
       <p style="color: #555;  margin-bottom: 0.5rem;">
-      ${order.address?.city}{" "}
+      ${order.address?.city}
       ${order.address?.zipcode}
       </div>
       <p style="color: #555;  margin-bottom: 0.5rem;">
@@ -189,11 +191,12 @@ const Total = ({ isInternational, subtotal, order }) => {
 
   return (
     <>
+      <br />
+      <br />
+      <PromoBox />
+      <br />
       <div className="basket-total text-right">
-        <p className="basket-total-title">Total:</p>
-        <h2 className="basket-total-amount">
-          {displayMoney(subtotal + (isInternational ? 50 : 5))}
-        </h2>
+        <OrderPaymentSummery subtotal={subtotal} promo={order.promo} />
       </div>
       <br />
       <div className="checkout-shipping-action">

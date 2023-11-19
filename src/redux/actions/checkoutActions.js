@@ -8,6 +8,10 @@ export const setShippingDetails = (details) => ({
   type: SET_CHECKOUT_SHIPPING_DETAILS,
   payload: details,
 });
+export const setPromo = (promo) => ({
+  type: "SET_PROMO",
+  payload: promo,
+});
 
 export const setPaymentDetails = (details) => ({
   type: SET_CHECKOUT_PAYMENT_DETAILS,

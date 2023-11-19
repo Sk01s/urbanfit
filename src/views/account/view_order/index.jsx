@@ -12,6 +12,31 @@ import {
   displayDate,
 } from "@/helpers/utils";
 import { BasketItem } from "@/components/basket";
+import { OrderPaymentSummery } from "@/components/common";
+
+function getOrdinalSuffix(number) {
+  if (number === 0) {
+    return "0"; // Special case for 0
+  }
+
+  const lastDigit = number % 10;
+  const lastTwoDigits = number % 100;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+    return number + "th";
+  }
+
+  switch (lastDigit) {
+    case 1:
+      return number + "st (floor)";
+    case 2:
+      return number + "nd (floor)";
+    case 3:
+      return number + "rd (floor)";
+    default:
+      return number + "th (floor)";
+  }
+}
 
 const OrderView = () => {
   const history = useHistory();
@@ -29,6 +54,9 @@ const OrderView = () => {
     },
     items: [],
     fulfillment: false,
+    promo: {
+      percentage: 0,
+    },
   });
 
   const price = orderDetails?.items?.reduce(
@@ -50,10 +78,9 @@ const OrderView = () => {
     }
     getOrder();
   }, [id]);
-  console.log(orderDetails);
 
   return (
-    <section className="product-form-container">
+    <section style={{ width: "100%" }}>
       <h2>Order</h2>
       {id && (
         <Suspense
@@ -66,18 +93,153 @@ const OrderView = () => {
           }
         >
           <div>
-            <section className="address">
-              <h4>Contact</h4>
-              <div>
-                <div>{orderDetails?.address?.email}</div>
-                <div>{orderDetails?.address?.mobile?.value}</div>
-
+            <div
+              style={{
+                border: "1px solid rgb(219, 215, 215)",
+                padding: "1rem",
+                fontWeight: "500",
+                borderRadius: ".8rem",
+                width: "calc(100vw - 4rem)",
+                marginInline: "auto",
+              }}
+            >
+              <h3
+                style={{
+                  marginTop: "0.6rem",
+                  marginBottom: "1rem",
+                  fontWeight: "400",
+                }}
+              >
+                Order details
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <div>
-                  {orderDetails?.address?.building || <Skeleton width={40} />}
+                  <h4
+                    style={{
+                      marginTop: "0.6rem",
+                      marginBottom: "1rem",
+                      fontSize: "1.35rem",
+
+                      fontWeight: "500",
+                    }}
+                  >
+                    Contact information
+                  </h4>
+                  <p style={{ margin: 0, fontSize: "1.3rem" }}>
+                    {orderDetails?.address?.email}
+                  </p>
+                </div>
+                {/* <div>
+              <h3
+                style={{
+                  marginBlock: "1rem",
+                  fontSize: "1.35rem",
+                  fontWeight: "500",
+                }}
+              >
+                Shipping method
+              </h3>
+              <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+                {(orderDetails.payment === "COD" &&
+                  "Cash on delivery (2 - 3 working days)") ||
+                  orderDetails.payment ||
+                  orderDetails?.payment}
+              </div>
+            </div> */}
+                <div>
+                  <h4
+                    style={{
+                      marginBlock: "1rem",
+                      fontSize: "1.35rem",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Shipping address
+                  </h4>
+
+                  <div
+                    style={{
+                      color: "#4a4a4a",
+                      fontSize: "1.3rem",
+                      marginBottom: ".5rem",
+                    }}
+                  >
+                    {orderDetails?.address?.fullname}
+                  </div>
+                  <div
+                    style={{
+                      color: "#4a4a4a",
+                      fontSize: "1.3rem",
+                      marginBottom: ".5rem",
+                    }}
+                  >
+                    {orderDetails?.address?.street}
+                  </div>
+                  <div
+                    style={{
+                      color: "#4a4a4a",
+                      fontSize: "1.3rem",
+                      marginBottom: ".5rem",
+                    }}
+                  >
+                    {orderDetails?.address.building} ,{" "}
+                    {getOrdinalSuffix(parseInt(orderDetails?.address.floor))}
+                  </div>
+
+                  <div
+                    style={{
+                      color: "#4a4a4a",
+                      fontSize: "1.3rem",
+                      marginBottom: ".5rem",
+                    }}
+                  >
+                    {orderDetails?.address?.city}{" "}
+                    {orderDetails?.address.zipcode}
+                  </div>
+
+                  <div
+                    style={{
+                      color: "#4a4a4a",
+                      fontSize: "1.3rem",
+                      marginBottom: ".5rem",
+                    }}
+                  >
+                    {orderDetails?.address?.country}
+                  </div>
+                  <div
+                    style={{
+                      color: "#4a4a4a",
+                      fontSize: "1.3rem",
+                      marginBottom: ".5rem",
+                    }}
+                  >
+                    {orderDetails?.address?.mobile?.value}
+                  </div>
+                </div>
+                <div>
+                  <h3
+                    style={{
+                      marginBlock: "0.8rem",
+                      fontSize: "1.35rem",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Payment method
+                  </h3>
+                  <div style={{ color: "#4a4a4a", fontSize: "1.3rem" }}>
+                    {(orderDetails.payment === "COD" && "Cash on delivery ") ||
+                      orderDetails.payment ||
+                      orderDetails?.payment}
+                  </div>
                 </div>
               </div>
-            </section>
-            <section className="address">
+            </div>
+            {/* <section className="address">
               <h4>Shipping Address</h4>
               <span>
                 {orderDetails?.address?.isInternational ? "" : "No "}
@@ -108,7 +270,7 @@ const OrderView = () => {
                   {orderDetails?.address?.building || <Skeleton width={40} />}
                 </div>
               </div>
-            </section>
+            </section> */}
             <section className="items">
               <h4>items</h4>
               <div
@@ -126,18 +288,18 @@ const OrderView = () => {
                 ))}
               </div>
             </section>
+            <br />
             <div
-              style={{ display: "flex", alignItems: "center", gap: "1.4rem" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                fontSize: "1.3rem",
+                paddingInline: ".5rem",
+                fontWeight: "400",
+              }}
             >
-              <h4>Price</h4>
-              {Number.isInteger(price) ? (
-                displayMoney(totalPrice)
-              ) : (
-                <Skeleton width={50} />
-              )}
-            </div>
-            <div>
-              <h4>Order's Date</h4>
+              <strong>Order's Date : </strong>
               <span>
                 {orderDetails?.date ? (
                   displayDate(orderDetails?.date.toDate())
@@ -146,18 +308,23 @@ const OrderView = () => {
                 )}
               </span>
             </div>
+            <br />
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "2rem",
+                gap: "1rem",
+                fontSize: "1.3rem",
+                paddingInline: ".5rem",
+                fontWeight: "400",
               }}
             >
-              <h4>Deliverd </h4>
-              <span style={{ fontSize: "1.5rem" }}>
-                {orderDetails?.fulfillment ? "Yes" : "No"}
-              </span>
+              <strong>Deliverd : </strong>
+              <span> {orderDetails?.fulfillment ? "Yes" : "No"}</span>
             </div>
+            <br />
+            <OrderPaymentSummery subtotal={price} promo={orderDetails.promo} />
+            <br />
             <button
               className="button"
               onClick={() => {
@@ -228,10 +395,10 @@ const OrderView = () => {
               }}
               onClick={async () => {
                 // currentTarget.disabled = true;
-                // firebase.requestPhoneOtp(location.state.address.mobile.value);
+                // firebase.requestPhoneOtp(orderDetails.address.mobile.value);
                 setLoading(true);
                 await firebase
-                  .removeOrder(id)
+                  .removeOrder(id, orderDetails)
                   .then((e) => {
                     history.push("/");
                     displayActionMessage("Order has been canceled");

@@ -53,7 +53,7 @@ const PromoForm = ({ onSubmit, isLoading }) => {
       startDate: form.startDate.getTime(),
       endDate: form.endDate.getTime(),
       uses: 0,
-      items: [],
+      orders: [],
       dateAdded: new Date().getTime(),
     });
   };

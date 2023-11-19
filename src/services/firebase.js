@@ -341,6 +341,11 @@ class Firebase {
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
 
   addOrder = async (id, order) => {
+    order.promo.uses++;
+    await this.db
+      .collection("promo")
+      .doc(order.promo.code)
+      .set(order.promo, { merge: true });
     order.items.map(async (item) => {
       item.totalQuantity -= item.quantity;
       item[`${item.selectedSize}Quantity`] -= item.quantity;
@@ -363,15 +368,40 @@ class Firebase {
 
   getPromo = (id) => this.db.collection("promo").doc(id).get();
 
-  removeOrder = (id) => this.db.collection("order").doc(id).delete();
+  removeOrder = (id, order) => {
+    order.items.map(async (item) => {
+      item.totalQuantity += item.quantity;
+      item[`${item.selectedSize}Quantity`] += item.quantity;
+      await this.db
+        .collection("products")
+        .doc(item.id)
+        .set(item, { merge: true });
+    });
+    return this.db.collection("order").doc(id).delete();
+  };
   removePromo = (id) => this.db.collection("promo").doc(id).delete();
-  checkPromoCode = async (promo) => {
+  usePromoCode = async (promo) => {
     const promoCode = await this.getPromo(promo);
     if (promoCode.exists) {
       const promoData = promoCode.data();
+      const currentDate = dayjs();
       const startDate = dayjs(promoData.startDate);
       const endDate = dayjs(promoData.endDate);
+
+      if (currentDate.isBetween(startDate, endDate)) {
+        if (promoData.uses < promoData.max) {
+          // promoData.uses++;
+
+          localStorage.setItem("promo", JSON.stringify(promoData));
+          return promoData;
+        } else {
+          throw "your promo code has exceeded the max number of uses";
+        }
+      } else {
+        throw "your promo code is expired";
+      }
     } else {
+      throw "The promo code that you submited does not exists";
     }
   };
 
@@ -383,6 +413,8 @@ class Firebase {
 
   updateOrder = (id, order) =>
     this.db.collection("order").doc(id).update(order);
+  updatePromo = (promo) =>
+    this.db.collection("promo").doc(promo.code).update(promo);
 }
 
 const firebaseInstance = new Firebase();

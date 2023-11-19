@@ -7,21 +7,25 @@ import { addProduct } from "@/redux/actions/productActions";
 import firebaseInstance from "@/services/firebase";
 import { useState } from "react";
 import { PROMO } from "@/constants/routes";
+import {
+  useLocation,
+  useHistory,
+} from "react-router-dom/cjs/react-router-dom.min";
 
 const PromoForm = lazy(() => import("../components/PromoForm"));
 
 const AddProduct = () => {
+  const history = useHistory();
   useScrollTop();
   useDocumentTitle("Add New Promo | Urbanfit");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const onSubmit = async (promo) => {
-    console.log(promo);
     setIsLoading(true);
     const res = await firebaseInstance.addPromo(promo.code, promo);
     setIsLoading(false);
-    history.go(PROMO);
+    history.push(PROMO);
   };
 
   return (

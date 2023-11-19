@@ -10,6 +10,8 @@ import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
 import { useProducts } from "@/hooks";
 import { SortModel } from "@/components/common";
+import { useState } from "react";
+import { ProductGrid } from "@/components/product";
 
 const Products = () => {
   useDocumentTitle("Product List | Urbanfit Admin");
@@ -37,8 +39,7 @@ const Products = () => {
           />
         ) : (
           <>
-            <SortModel setProducts={sortProducts} products={filteredProducts} />
-            <ProductGrid products={filteredProducts} skeletonCount={6} />
+            <ProductsTable filteredProducts={products} />
           </>
         )}
       </div>
