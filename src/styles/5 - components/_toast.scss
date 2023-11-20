@@ -4,7 +4,7 @@
   right: $l-size;
   background: $white;
   animation: slideInToast 3s ease;
-  padding: $s-size $m-size;
+padding: $s-size $m-size;
   border: 1px solid $border-color-focus;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
   z-index: map-get($z-index, 'toast');

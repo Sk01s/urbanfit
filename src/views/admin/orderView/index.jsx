@@ -27,6 +27,7 @@ const EditProduct = () => {
     },
     items: [],
     fulfillment: false,
+    promo: { percentage: 0 },
   });
 
   const subtotal = orderDetails?.items?.reduce(
@@ -162,7 +163,10 @@ const EditProduct = () => {
                 )}
               </span>
             </div>
-            <OrderPaymentSummery subtotal={totalPrice} />
+            <OrderPaymentSummery
+              subtotal={subtotal}
+              promo={orderDetails.promo}
+            />
 
             <div
               style={{

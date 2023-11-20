@@ -31,11 +31,11 @@ class Firebase {
       );
     }
 
-    const result = [];
+    let result = "";
     while (result.length < 6) {
-      const randomNumber = Math.floor(Math.random() * 9);
+      const randomNumber = Math.floor(Math.random() * 9).toString();
       if (!result.includes(randomNumber)) {
-        result.push(randomNumber);
+        result += randomNumber;
       }
     }
 
@@ -370,10 +370,8 @@ class Firebase {
     order.items.map(async (item) => {
       item.totalQuantity -= item.quantity;
       item[`${item.selectedSize}Quantity`] -= item.quantity;
-      await this.db
-        .collection("products")
-        .doc(item.id)
-        .set(item, { merge: true });
+      console.log(item, `${item.selectedSize}Quantity`);
+      await this.db.collection("products").doc(item.id).set(item);
     });
     await this.db
       .collection("order")
