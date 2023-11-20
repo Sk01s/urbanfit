@@ -31,12 +31,12 @@ const EditProduct = () => {
   });
 
   const subtotal = orderDetails?.items?.reduce(
-    (acc, next) => parseInt(acc) + parseInt(next.price),
+    (acc, next) => parseInt(acc) + parseInt(next.price) * next.quantity,
     0
   );
-  const totalPrice = orderDetails.address.isInternational
-    ? subtotal + 50
-    : subtotal + 5;
+  // const totalPrice = orderDetails.address.isInternational
+  //   ? subtotal + 50
+  //   : subtotal + 5;
 
   const { orderId } = useParams();
 
