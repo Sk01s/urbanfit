@@ -404,7 +404,7 @@ class Firebase {
     const promoCode = await this.getPromo(promo);
     if (promoCode.exists) {
       const promoData = promoCode.data();
-      const currentDate = dayjs();
+      const currentDate = dayjs(new Date());
       const startDate = dayjs(promoData.startDate);
       const endDate = dayjs(promoData.endDate);
 
