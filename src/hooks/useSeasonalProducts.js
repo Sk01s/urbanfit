@@ -31,6 +31,7 @@ const useSeasonalProducts = (itemsCount) => {
         });
 
         if (didMount) {
+          localStorage.setItem("seasonals", JSON.stringify(items));
           setSeasonalProducts(items);
           setLoading(false);
         }

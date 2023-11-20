@@ -31,6 +31,7 @@ const useEssentialProducts = (itemsCount) => {
         });
 
         if (didMount) {
+          localStorage.setItem("essentials", JSON.stringify(items));
           setEssentialProducts(items);
           setLoading(false);
         }

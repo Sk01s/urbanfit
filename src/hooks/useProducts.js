@@ -30,6 +30,7 @@ const useProducts = () => {
         });
 
         if (didMount) {
+          localStorage.setItem("products", JSON.stringify(items));
           setProducts(items);
           setLoading(false);
         }

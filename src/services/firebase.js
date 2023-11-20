@@ -5,6 +5,7 @@ import "firebase/auth";
 import firebaseConfig from "./config";
 import { displayActionMessage } from "@/helpers/utils";
 import dayjs from "dayjs";
+import { isTodayBetweenDates } from "@/helpers/utils";
 
 class Firebase {
   constructor() {
@@ -404,11 +405,10 @@ class Firebase {
     const promoCode = await this.getPromo(promo);
     if (promoCode.exists) {
       const promoData = promoCode.data();
-      const currentDate = dayjs(new Date());
-      const startDate = dayjs(promoData.startDate);
-      const endDate = dayjs(promoData.endDate);
+      const startDate = promoData.startDate;
+      const endDate = promoData.endDate;
 
-      if (currentDate.isBetween(startDate, endDate)) {
+      if (isTodayBetweenDates(startDate, endDate)) {
         if (promoData.uses < promoData.max) {
           // promoData.uses++;
 
