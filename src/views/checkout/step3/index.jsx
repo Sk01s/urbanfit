@@ -42,7 +42,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     address: state.checkout.shipping,
     date: new Date(),
     uid: firebase.getCurrentUser(),
-    id: crypto.randomUUID(),
+    id: firebase.generateRandomNumbers(),
   }));
   useEffect(() => {
     state = {

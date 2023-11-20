@@ -33,7 +33,7 @@ const PromoBox = () => {
     >
       <TextField
         variant="outlined"
-        placeholder="Discout code"
+        placeholder="Discount code"
         disabled={used.percentage}
         type="text"
         value={used.percentage ? used.code : code}

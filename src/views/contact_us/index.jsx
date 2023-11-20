@@ -128,16 +128,17 @@ const Contact = () => {
             className="align-center"
             style={{ textAlign: "center", fontSize: "1.3rem" }}
           >
-            <div className="rte ">
-              <h4>Phone Number</h4>
+            <div className="rte">
               <p>WhatsApp - +961 711 08 084</p>
-              <h4>Customer service email</h4>
               <p>
-                <a href="mailto:customer-service@urbanfitlb.com">
+                <a
+                  href="mailto:customer-service@urbanfitlb.com"
+                  style={{ textDecoration: "underline" }}
+                >
                   customer-service@urbanfitlb.com
                 </a>
               </p>
-              <p>Available everyday, 9AM-9PM UAE time</p>
+              <p>Available everyday, 10AM-5PM (GMT + 2)</p>
               {/* <p>
                 <em>
                   <strong>Unresolved Request?</strong>
@@ -154,9 +155,10 @@ const Contact = () => {
                 <strong>MARKETING &amp; INFLUENCER COLLABORATIONS</strong>
                 <br />
                 <a
-                  href="https://forms.office.com/e/AhRbtiU2hU"
+                  href="https://forms.office.com/r/N1bLFXckU3"
                   target="_blank"
-                  title="https://forms.office.com/e/AhRbtiU2hU"
+                  title="https://forms.office.com/r/N1bLFXckU3"
+                  style={{ textDecoration: "underline" }}
                 >
                   Submit a Form
                 </a>

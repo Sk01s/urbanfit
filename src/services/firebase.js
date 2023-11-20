@@ -23,6 +23,26 @@ class Firebase {
   signIn = (email, password) =>
     this.auth.signInWithEmailAndPassword(email, password);
 
+  generateRandomNumbers = () => {
+    if (10 < 6) {
+      throw new Error(
+        "Cannot generate unique random numbers. Range is too small."
+      );
+    }
+
+    const result = [];
+    while (result.length < 6) {
+      const randomNumber = Math.floor(Math.random() * 9);
+      if (!result.includes(randomNumber)) {
+        result.push(randomNumber);
+      }
+    }
+
+    return result;
+  };
+
+  // Example usage: Generate 6 random numbers between 1 and 49
+
   generateRecaptcha = (number, setModel, setError, setRec) => {
     const recaptchaVerifier = new app.auth.RecaptchaVerifier("container", {
       size: "normal",

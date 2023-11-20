@@ -13,6 +13,7 @@ import emailjs from "@emailjs/browser";
 import { OrderPaymentSummery } from "@/components/common";
 import { PromoBox } from "../components";
 import { setPromo } from "@/redux/actions/checkoutActions";
+import { shipping } from "@/constants/constants";
 function getOrdinalSuffix(number) {
   if (number === 0) {
     return "0"; // Special case for 0
@@ -57,6 +58,29 @@ const Total = ({ isInternational, subtotal, order }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const searchData = new URLSearchParams();
+  const summery = () => `
+    <div style="padding-inline: 3rem;">
+      <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
+        <div style="color: rgb(115, 115, 115);">Subtotal :</div>
+        <strong>$${subtotal}</strong>
+      </div>
+      <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
+        <div style="color: rgb(115, 115, 115);">Discount :</div>
+        <strong>-$${(subtotal * order.promo.percentage) / 100}</strong>
+      </div>
+      <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
+        <div style="color: rgb(115, 115, 115);">Shipping :</div>
+        <strong>$${shipping}</strong>
+      </div>
+      <div style="width: 100%; height: 1px; background-color: rgb(202, 202, 202); margin-block: 2rem;"></div>
+      <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
+        <div style="color: rgb(115, 115, 115);">Total:</div>
+        <strong>$${
+          subtotal + shipping - (subtotal * order.promo.percentage) / 100
+        }</strong>
+      </div>
+    </div>
+  `;
   const contact = () => `
     <div>
       <h4 style="margin-block: 1rem; font-size: 1.35rem; font-weight: 500;">
@@ -169,11 +193,12 @@ const Total = ({ isInternational, subtotal, order }) => {
         "service_vyw8iqt",
         "template_btzkhrc",
         {
-          id: order.id.split("-")[0],
+          id: order.id,
           name: order.address.fullname,
           email: order.address.email,
           items: createEmailItems(),
           contact: contact(),
+          summery: summery(),
         },
         "JPeR2g9TA1pVocFL4"
       )

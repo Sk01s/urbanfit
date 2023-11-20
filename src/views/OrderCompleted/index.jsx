@@ -13,7 +13,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(true);
+  const [otpRec, setOtpRec] = useState(false);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
@@ -43,6 +43,7 @@ const OrderCompleted = () => {
       .then((e) => {
         setOtpModel(false);
         firebase.unlinkMobile();
+        window.scrollTo({ top: 0, behavior: "smooth" });
       })
       .catch((error) => {
         setConfroming(false);
@@ -134,7 +135,49 @@ const OrderCompleted = () => {
           Verfity Phone Number
         </button> */}
       </div>
-      <main key={order} style={{ marginTop: "14.5rem" }}>
+      <main
+        key={order}
+        style={{
+          marginTop: "14.5rem",
+          maxWidth: "40rem",
+          marginInline: "auto",
+          marginBottom: "4rem",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "1rem",
+            fontSize: "1.4rem",
+            fontWeight: "300",
+            backgroundColor: "rgba(132, 247, 182, 0.84)",
+            padding: "1rem",
+            marginInline: "2rem",
+            marginBottom: "2rem",
+            borderRadius: "1rem",
+          }}
+        >
+          <svg
+            width={18}
+            height={18}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 50 50"
+            fill="none"
+            stroke-width="2"
+            class="checkmark"
+            stroke="#000"
+          >
+            <path
+              class="checkmark__circle"
+              d="M25 49c13.255 0 24-10.745 24-24S38.255 1 25 1 1 11.745 1 25s10.745 24 24 24z"
+            ></path>
+            <path
+              class="checkmark__check"
+              d="M15 24.51l7.307 7.308L35.125 19"
+            ></path>
+          </svg>
+          <div>Your phone number has been verified</div>
+        </div>
         <div
           style={{
             display: "flex",
@@ -164,7 +207,7 @@ const OrderCompleted = () => {
             ></path>
           </svg>
           <div>
-            <span>Order #{id.split("-")[0]}</span>
+            <span>Order #{id}</span>
             <p style={{ margin: ".5rem 0 0 0 " }}>
               THANK YOU, {firebase.auth.currentUser.displayName}
             </p>
@@ -178,7 +221,7 @@ const OrderCompleted = () => {
             borderRadius: ".8rem",
             marginBlock: "2rem",
             zIndex: 1,
-            width: "calc(100vw - 4rem)",
+            width: "calc(100% - 4rem)",
             marginInline: "auto",
           }}
         >
@@ -193,7 +236,7 @@ const OrderCompleted = () => {
             padding: "1rem",
             fontWeight: "500",
             borderRadius: ".8rem",
-            width: "calc(100vw - 4rem)",
+            width: "calc(100% - 4rem)",
             marginInline: "auto",
           }}
         >
@@ -341,7 +384,7 @@ const OrderCompleted = () => {
             fontWeight: "500",
             marginTop: "2rem",
             borderRadius: ".8rem",
-            width: "calc(100vw - 4rem)",
+            width: "calc(100% - 4rem)",
             marginInline: "auto",
           }}
         >
@@ -356,7 +399,7 @@ const OrderCompleted = () => {
             (acc, next) => parseInt(acc) + parseInt(next.price),
             0
           )}
-          promo={location.state.promo}
+          promo={location?.state.promo || { percentage: 0 }}
         />
         <br />
         <Link
@@ -364,7 +407,7 @@ const OrderCompleted = () => {
           className="button"
           style={{
             marginTop: "2rem",
-            width: "calc(100vw - 4rem)",
+            width: "calc(100% - 4rem)",
             marginInline: "auto",
           }}
         >

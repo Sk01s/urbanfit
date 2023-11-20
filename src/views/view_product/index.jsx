@@ -402,7 +402,7 @@ const ViewProduct = () => {
                   }
                   description={
                     isOverSized()
-                      ? "This item is designed to be oversized for a regular fit."
+                      ? "This item is designed to be oversized for a regular fit. Please order 1size smaller"
                       : "This item is designed to have a regular fit and should correspond accurately to standard sizing."
                   }
                 />
