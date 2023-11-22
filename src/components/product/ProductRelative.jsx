@@ -217,13 +217,56 @@ const FeaturedProduct = ({ product, relative, add, handleSetState }) => {
         <div className="product-display-details">
           <h4>{product.name ? `${product.name} ` : <Skeleton width={80} />}</h4>
 
-          <p className="product-card-price ">
-            {product.price ? (
-              ` ${displayMoney(product.price)} USD `
-            ) : (
-              <Skeleton width={40} />
-            )}
-          </p>
+          {product.onSale ? (
+            <div
+              style={{
+                marginTop: ".5rem",
+                display: "flex",
+                gap: ".7rem",
+                letterSpacing: ".055rem",
+                fontSize: "1.35rem",
+              }}
+            >
+              <p style={{ color: "#da6d77" }}>
+                {product.price ? (
+                  ` ${displayMoney(
+                    Number(product.price) *
+                      (1 - Number(product.percentage) / 100)
+                  )}  `
+                ) : (
+                  <Skeleton width={40} />
+                )}
+              </p>
+              <p
+                style={{
+                  textDecoration: "line-through",
+                  color: "rgb(52, 58, 64)",
+                  opacity: 0.7,
+                }}
+              >
+                {product.price ? (
+                  ` ${displayMoney(product.price)} `
+                ) : (
+                  <Skeleton width={40} />
+                )}
+              </p>
+              <p style={{ color: "#da6d77" }}>{product.percentage}% off</p>
+            </div>
+          ) : (
+            <p
+              style={{
+                marginTop: ".5rem",
+                letterSpacing: ".055rem",
+                fontSize: "1.3rem",
+              }}
+            >
+              {product.price ? (
+                ` ${displayMoney(product.price)}  `
+              ) : (
+                <Skeleton width={40} />
+              )}
+            </p>
+          )}
         </div>
       </div>
     </SkeletonTheme>

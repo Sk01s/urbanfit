@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import firebase from "@/services/firebase";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
-import { displayActionMessage } from "@/helpers/utils";
+import { displayActionMessage, calculateSubtotal } from "@/helpers/utils";
 import { useScrollTop } from "@/hooks";
 import { OrderPaymentSummery } from "@/components/common";
 const OrderCompleted = () => {
@@ -13,7 +13,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(true);
+  const [otpRec, setOtpRec] = useState(false);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
@@ -393,10 +393,7 @@ const OrderCompleted = () => {
         <br />
         <br />
         <OrderPaymentSummery
-          subtotal={location.state?.items?.reduce(
-            (acc, next) => parseInt(acc) + parseInt(next.price),
-            0
-          )}
+          subtotal={calculateSubtotal(location.state?.items)}
           promo={location?.state.promo || { percentage: 0 }}
         />
         <br />

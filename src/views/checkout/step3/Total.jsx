@@ -139,7 +139,7 @@ const Total = ({ isInternational, subtotal, order }) => {
         gap: 1rem;
         align-items: center;;'
       >
-        <a
+      <a
           href="urbanfitlb.com/product/${product.id}"
           style="max-width: 30vw" 
         >
@@ -149,7 +149,11 @@ const Total = ({ isInternational, subtotal, order }) => {
         </a>
 
         <div class="basket-item-price">
-          <span class="my-0">${displayMoney(product.price)}</span>
+          <span class="my-0">${displayMoney(
+            product.onSale
+              ? Number(product.price) * (1 - Number(product.percentage / 100))
+              : product.price
+          )}</span>
         </div>
       </div>
 

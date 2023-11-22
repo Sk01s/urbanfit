@@ -53,6 +53,11 @@ const FormSchema = Yup.object().shape({
   relative: Yup.array()
     .of(Yup.string())
     .min(0, "Please enter at least 1 keyword for this product."),
+  onSale: Yup.boolean(),
+  percentage: Yup.number()
+    .min(0, "percentage should be postive")
+    .max(100, "should not exeed 100"),
+
   isSeasonal: Yup.boolean(),
   isEssential: Yup.boolean(),
   availableColors: Yup.array()
@@ -67,6 +72,8 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
     type: product?.type || { name: "", categories: "" },
     sex: product?.sex || "",
     price: product?.price || 0,
+    onSale: product?.onSale || false,
+    percentage: product?.percentage || 0,
     xlQuantity: product?.xlQuantity || 0,
     lgQuantity: product?.lgQuantity || 0,
     mdQuantity: product?.mdQuantity || 0,
@@ -296,6 +303,38 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                     label="* Sizes (Millimeter)"
                   />
                 </div> */}
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <CustomCreatableSelect
+                    defaultValue={{
+                      label: values.onSale ? "yes" : "no",
+                      value: values.onSale,
+                    }}
+                    name="onSale"
+                    iid="onSale"
+                    options={[
+                      { label: "yes", value: true },
+                      { label: "no", value: false },
+                    ]}
+                    disabled={isLoading}
+                    placeholder="on Sale"
+                    label="* On Sale"
+                  />
+                </div>
+                &nbsp;
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <Field
+                    disabled={!values.onSale}
+                    name="percentage"
+                    id="percentage"
+                    type="number"
+                    label="* Sale percentage"
+                    component={CustomInput}
+                  />
+                </div>
               </div>
               <div className="product-form-field">
                 <FieldArray

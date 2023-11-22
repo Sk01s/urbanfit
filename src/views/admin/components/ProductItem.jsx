@@ -59,12 +59,17 @@ const ProductItem = ({ product }) => {
             </span>
           </div>
           <div className="grid-col">
-            <span>{product.categories || <Skeleton  width={50} />}</span>
+            <span>{product.categories || <Skeleton width={50} />}</span>
           </div>
           <div className="grid-col">
             <span>
               {product.price ? (
-                displayMoney(product.price)
+                displayMoney(
+                  product.onSale
+                    ? Number(product.price) *
+                        (1 - Number(product.percentage / 100))
+                    : product.price
+                )
               ) : (
                 <Skeleton width={30} />
               )}
