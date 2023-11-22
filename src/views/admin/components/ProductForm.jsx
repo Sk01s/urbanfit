@@ -53,7 +53,6 @@ const FormSchema = Yup.object().shape({
   relative: Yup.array()
     .of(Yup.string())
     .min(0, "Please enter at least 1 keyword for this product."),
-
   isSeasonal: Yup.boolean(),
   isEssential: Yup.boolean(),
   availableColors: Yup.array()

@@ -139,8 +139,6 @@ const OrderCompleted = () => {
         key={order}
         style={{
           marginTop: "14.5rem",
-          maxWidth: "40rem",
-          marginInline: "auto",
           marginBottom: "4rem",
         }}
       >

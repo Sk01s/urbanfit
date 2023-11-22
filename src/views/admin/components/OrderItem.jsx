@@ -12,13 +12,17 @@ import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import firebase from "@/services/firebase";
+import { shipping } from "@/constants/constants";
 
 const OrderItem = ({ order, index }) => {
   const price = order?.items?.reduce(
-    (acc, next) => parseInt(acc) + parseInt(next.price),
+    (acc, next) =>
+      parseInt(acc) + parseInt(next.price) * parseInt(next.quantity),
     0
   );
-  const totalPrice = order?.address?.isInternational ? price + 50 : price + 5;
+  const discount = order.promo ? price * (order.promo?.percentage / 100) : 0;
+  console.log(discount);
+  const totalPrice = price + shipping - discount;
   const dispatch = useDispatch();
   const history = useHistory();
   const orderRef = useRef(null);

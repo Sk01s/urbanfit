@@ -362,21 +362,23 @@ class Firebase {
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
 
   addOrder = async (id, order) => {
-    order.promo.uses++;
+    if (order.promo.code) {
+      order.promo.uses++;
+      await this.db
+        .collection("promo")
+        .doc(order.promo.code)
+        .update({ uses: order.promo.uses });
+    }
     await this.db
-      .collection("promo")
-      .doc(order.promo.code)
-      .set(order.promo, { merge: true });
+      .collection("order")
+      .doc(id)
+      .set({ ...order, otp: false });
     order.items.map(async (item) => {
       item.totalQuantity -= item.quantity;
       item[`${item.selectedSize}Quantity`] -= item.quantity;
       console.log(item, `${item.selectedSize}Quantity`);
       await this.db.collection("products").doc(item.id).set(item);
     });
-    await this.db
-      .collection("order")
-      .doc(id)
-      .set({ ...order, otp: false });
   };
 
   getOrders = () => this.db.collection("order").get();

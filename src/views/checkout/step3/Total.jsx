@@ -3,7 +3,7 @@ import { CHECKOUT_STEP_2, ORDER_COMPLETED } from "@/constants/routes";
 import { useFormikContext } from "formik";
 import { displayMoney, displayActionMessage } from "@/helpers/utils";
 import PropType from "prop-types";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { setPaymentDetails } from "@/redux/actions/checkoutActions";
@@ -39,6 +39,7 @@ function getOrdinalSuffix(number) {
 }
 
 const Total = ({ isInternational, subtotal, order }) => {
+  const [loading, setLoading] = useState(false);
   const isNotOrderValide = () =>
     !!order.items.find(
       (product) => product[`${product.selectedSize}Quantity`] <= 0
@@ -175,7 +176,7 @@ const Total = ({ isInternational, subtotal, order }) => {
     return `<div>${items}</div>`;
   };
   createEmailItems();
-  const handleOrder = () => {
+  const handleOrder = async () => {
     if (order.payment !== "COD")
       return displayActionMessage("Feature not ready yet :)", "info");
     // Update the Orders date
@@ -185,10 +186,12 @@ const Total = ({ isInternational, subtotal, order }) => {
         "info"
       );
     }
+    setLoading(true);
     order.date = new Date();
     order.otp = false;
-    firebase.addOrder(order.id, order);
-    emailjs
+    console.log(order);
+    await firebase.addOrder(order.id, order);
+    await emailjs
       .send(
         "service_vyw8iqt",
         "template_btzkhrc",
@@ -205,7 +208,7 @@ const Total = ({ isInternational, subtotal, order }) => {
       .then((e) => console.log(e));
     dispatch(clearBasket());
     dispatch(setPromo({ percentage: 0 }));
-
+    setLoading(false);
     history.push(`/order-completed/${order.id}`, order);
   };
   const onClickBack = () => {
@@ -242,9 +245,27 @@ const Total = ({ isInternational, subtotal, order }) => {
           disabled={false}
           onClick={handleOrder}
           type="button"
-          style={{ fontSize: "1.3rem" }}
+          style={{
+            fontSize: "1.3rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+          }}
         >
-          <CheckOutlined />
+          {loading ? (
+            <div
+              style={{
+                width: "2rem",
+                height: "2rem",
+                borderRadius: "50%",
+                borderTop: "solid 1px ",
+                borderRight: "solid 1px",
+              }}
+              className="spining"
+            />
+          ) : (
+            <CheckOutlined />
+          )}
           &nbsp; Confirm
         </button>
       </div>

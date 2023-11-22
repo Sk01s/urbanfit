@@ -50,7 +50,6 @@ const Payment = ({ shipping, payment, subtotal }) => {
       payment: paymentType || state.payment,
       uid: firebase.auth.currentUser.uid,
     };
-    console.log(state);
   }, [paymentType, firebase.auth]);
   useDocumentTitle("Check Out Final Step | Urbanfit");
   useScrollTop();
