@@ -33,8 +33,8 @@ const BasketItem = ({ product, display = false }) => {
         <div className="basket-item-details">
           <div
             style={{
+              marginTop: "0.5rem",
               display: "flex",
-              alignItems: "center",
               justifyContent: "space-between",
             }}
           >
@@ -43,13 +43,59 @@ const BasketItem = ({ product, display = false }) => {
               onClick={() => document.body.classList.remove("is-basket-open")}
               style={{ maxWidth: "30vw" }}
             >
-              <h4 className="basket-item-name">{product.name}</h4>
+              <h3 className="basket-item-name " style={{ margin: 0 }}>
+                {product.name}
+              </h3>
             </Link>
             {display ? (
               <></>
             ) : (
               <div className="basket-item-price">
-                <h4 className="my-0">{displayMoney(product.price)}</h4>
+                {product.onSale ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: ".7rem",
+                      letterSpacing: ".055rem",
+                      fontSize: "1.4rem",
+                    }}
+                  >
+                    <div className="m-0">
+                      {product.price ? (
+                        ` ${displayMoney(
+                          Number(product.price) *
+                            (1 - Number(product.percentage) / 100)
+                        )}  `
+                      ) : (
+                        <Skeleton width={40} />
+                      )}
+                    </div>
+                    <div
+                      className="m-0"
+                      style={{
+                        marginTop: ".5rem",
+                        textDecoration: "line-through",
+                        color: "rgb(52, 58, 64)",
+                        fontSize: "1.1rem",
+                      }}
+                    >
+                      {product.price ? (
+                        ` ${displayMoney(product.price)} `
+                      ) : (
+                        <Skeleton width={40} />
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="m-0">
+                    {product.price ? (
+                      ` ${displayMoney(product.price)}  `
+                    ) : (
+                      <Skeleton width={40} />
+                    )}
+                  </div>
+                )}
               </div>
             )}
           </div>

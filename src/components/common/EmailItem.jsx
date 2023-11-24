@@ -46,7 +46,15 @@ const EmailItem = ({ product, display = false }) => {
             </Link>
 
             <div className="basket-item-price">
-              <h4 className="my-0">{displayMoney(product.price)}</h4>
+              <h4 className="my-0">
+                {displayMoney(
+                  product.onSale
+                    ? Number(product.price) *
+                        (1 - Number(product.percentage / 100)) *
+                        Number(product.quantity || 1)
+                    : Number(product.price) * Number(product.quantity || 1)
+                )}
+              </h4>
             </div>
           </div>
 

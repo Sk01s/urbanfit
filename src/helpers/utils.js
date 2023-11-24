@@ -92,3 +92,16 @@ export function isTodayBetweenDates(startDateStr, endDateStr) {
 
   return today >= startDate && today <= endDate;
 }
+export const calculateSubtotal = (items) => {
+  return items.reduce((acc, next) => {
+    if (next.onSale) {
+      return (
+        acc +
+        Number(next.price) *
+          (1 - Number(next.percentage / 100)) *
+          Number(next.quantity)
+      );
+    }
+    return acc + Number(next.price) * Number(next.quantity);
+  }, 0);
+};

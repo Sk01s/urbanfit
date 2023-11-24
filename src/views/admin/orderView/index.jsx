@@ -7,8 +7,7 @@ import { Redirect, withRouter, useParams } from "react-router-dom";
 import { editProduct } from "@/redux/actions/productActions";
 import firebase from "@/services/firebase";
 import Skeleton from "react-loading-skeleton";
-import { displayMoney } from "@/helpers/utils";
-import { displayDate } from "@/helpers/utils";
+import { displayMoney, displayDate, calculateSubtotal } from "@/helpers/utils";
 import { OrderPaymentSummery } from "@/components/common";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
@@ -30,10 +29,7 @@ const EditProduct = () => {
     promo: { percentage: 0 },
   });
 
-  const subtotal = orderDetails?.items?.reduce(
-    (acc, next) => parseInt(acc) + parseInt(next.price) * next.quantity,
-    0
-  );
+  const subtotal = calculateSubtotal(orderDetails?.items);
   // const totalPrice = orderDetails.address.isInternational
   //   ? subtotal + 50
   //   : subtotal + 5;

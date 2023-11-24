@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { SIGNIN } from "@/constants/routes";
-import { calculateTotal } from "@/helpers/utils";
+import { calculateSubtotal } from "@/helpers/utils";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, withRouter } from "react-router-dom";
@@ -16,9 +16,7 @@ const withCheckout = (Component) =>
     }));
 
     const shippingFee = state.shipping.isInternational ? 50 : 0;
-    const subtotal = calculateTotal(
-      state.basket.map((product) => product.price * product.quantity)
-    );
+    const subtotal = calculateSubtotal(state.basket);
 
     if (!state.isAuth) {
       return <Redirect to={SIGNIN} />;

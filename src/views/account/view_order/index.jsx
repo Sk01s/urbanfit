@@ -10,6 +10,7 @@ import {
   displayMoney,
   displayActionMessage,
   displayDate,
+  calculateSubtotal,
 } from "@/helpers/utils";
 import { BasketItem } from "@/components/basket";
 import { OrderPaymentSummery } from "@/components/common";
@@ -59,10 +60,7 @@ const OrderView = () => {
     },
   });
 
-  const price = orderDetails?.items?.reduce(
-    (acc, next) => parseInt(acc) + parseInt(next.price),
-    0
-  );
+  const price = calculateSubtotal(orderDetails?.items);
   const totalPrice = orderDetails?.address?.isInternational
     ? price + 50
     : price + 5;
