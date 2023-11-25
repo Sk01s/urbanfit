@@ -1,6 +1,8 @@
+import { useScrollTop } from "@/hooks";
 import React from "react";
 
 const PrivacyPolicy = () => {
+  useScrollTop();
   return (
     <div className="privacy-container">
       <h2 className="privacy-heading" style={{ textAlign: "center" }}>
