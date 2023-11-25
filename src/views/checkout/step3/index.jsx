@@ -59,7 +59,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
     cardnumber: payment.cardnumber || "",
     expiry: payment.expiry || "",
     ccv: payment.ccv || "",
-    type: payment.type || "paypal",
+    type: payment.type || "COD",
   };
 
   const onConfirm = (e) => {
@@ -87,9 +87,12 @@ const Payment = ({ shipping, payment, subtotal }) => {
       >
         {({ values, setValues }) => (
           <Form className="checkout-step-3" onSubmit={onConfirm}>
+            <h3 className="text-center">Payment</h3>
+            <br />
+            <span className="d-block padding-s">Payment Option</span>
+            <CODPayment setPaymentType={setPaymentType} />
             <CreditPayment setPaymentType={setPaymentType} />
             {/* <PayPalPayment setPaymentType={setPaymentType} /> */}
-            <CODPayment setPaymentType={setPaymentType} />
             {state && (
               <Total
                 key={state}

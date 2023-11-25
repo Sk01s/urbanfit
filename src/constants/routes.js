@@ -7,6 +7,7 @@ export const HOODIES_SWEATS = "/category/hoodies-sweats";
 export const JACKETS = "/category/jackets";
 export const MEN = "/men";
 export const SEX_CATEGORY = "/store/:sex/:category";
+export const SEX = "/store/:sex";
 export const TYPE_CATEGORY = "/type/:sex/:type";
 export const WOMEN = "/women";
 export const WOMEN_CATEGORIES = "/women/:category";

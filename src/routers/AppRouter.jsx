@@ -49,6 +49,7 @@ const AppRouter = () => {
           <Route component={view.Privacy} exact path={ROUTES.PRIVACY} />
           <Route component={view.Men} exact path={ROUTES.MEN} />
           <Route component={view.Women} exact path={ROUTES.WOMEN} />
+          <Route component={view.Sex} exact path={ROUTES.SEX} />
           <Route
             component={view.SexCategory}
             exact

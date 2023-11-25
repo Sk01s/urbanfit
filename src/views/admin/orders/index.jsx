@@ -17,7 +17,9 @@ const Orders = () => {
   useEffect(() => {
     const getOrders = async () => {
       const res = await firebase.getOrders();
-      const orders = await res.docs.map((res) => res.data());
+      const orders = res.docs
+        .map((res) => res.data())
+        .sort((a, b) => b.date - a.date);
       setOrders(orders);
     };
     getOrders();

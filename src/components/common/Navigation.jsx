@@ -29,6 +29,7 @@ const Navigation = () => {
   const navbar = useRef(null);
   const [isMenPopupVisible, setMenPopupVisible] = useState(false);
   const [isWomenPopupVisible, setWomenPopupVisible] = useState(false);
+  const [isInfoPopupVisible, setInfoPopupVisible] = useState(false);
   const [isSmall, setSmall] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(handleScroll());
 
@@ -38,6 +39,9 @@ const Navigation = () => {
   const handleMouseEnterMen = () => {
     setMenPopupVisible(true);
   };
+  const handleMouseEnterInfo = () => {
+    setInfoPopupVisible(true);
+  };
   const handleMouseEnterWomen = () => {
     setWomenPopupVisible(true);
   };
@@ -45,6 +49,7 @@ const Navigation = () => {
   const handleMouseLeave = () => {
     setMenPopupVisible(false);
     setWomenPopupVisible(false);
+    setInfoPopupVisible(false);
   };
 
   function isInVisable() {
@@ -154,10 +159,21 @@ const Navigation = () => {
                   onClick={() => {
                     handleMouseLeave();
                   }}
-                  to="/women"
+                  to="/store/women"
                   className="type-link"
                 >
                   View all women
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={() => {
+                    handleMouseLeave();
+                  }}
+                  to="/women"
+                  className="type-link"
+                >
+                  Collections
                 </Link>
               </li>
               {/* <li>
@@ -251,10 +267,19 @@ const Navigation = () => {
               <li>
                 <Link
                   onClick={handleMouseLeave}
-                  to="/men"
+                  to="/store/men"
                   className="type-link"
                 >
                   View all men
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/men"
+                  className="type-link"
+                >
+                  Collections
                 </Link>
               </li>
               {/* <li>
@@ -318,10 +343,54 @@ const Navigation = () => {
           </div>
         </li>
 
-        <li>
+        <li style={{ position: "relative" }} className="info-popup-container">
           <NavLink activeClassName="navigation-menu-active" to={Route.ABOUT_US}>
-            About Us
+            Info
           </NavLink>
+          <div
+            className="info-popup"
+            onMouseEnter={() => setTimeout(handleMouseEnterInfo, 100)}
+            style={{
+              position: "absolute",
+              top: "100% ",
+              left: "-2.5rem",
+              background: " #fff",
+              width: "calc(100% + 5rem )",
+              paddingTop: "2rem",
+              padding: "1.5rem",
+              borderRadius: " 0 0 0.4rem 0.4rem",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                flexDirection: "column",
+                display: "flex",
+                gap: "1rem",
+                fontSize: "1.5rem",
+                fontWeight: "400",
+                color: "#555",
+              }}
+            >
+              <Link
+                onClick={handleMouseLeave}
+                to="/about-us"
+                className="type-link"
+              >
+                Our Story
+              </Link>
+              <Link onClick={handleMouseLeave} to="/faqs" className="type-link">
+                FAQS
+              </Link>
+              <Link
+                onClick={handleMouseLeave}
+                to="/contact-us"
+                className="type-link"
+              >
+                Contact us
+              </Link>
+            </div>
+          </div>
         </li>
       </ul>
       <div className="logo">

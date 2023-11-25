@@ -26,30 +26,39 @@ const about = () => {
         >
           We are a group of people based in Lebanon. Faced with the challenges,
           we've chosen to break away from the conventional path, aspiring to
-          make a positive impact on both our society and personal lives. As a
-          Lebanese brand, our mission is encapsulated in the slogan 'Made by
-          society.' We strive to redefine the norms in Lebanon, Nevertheless,
-          our unwavering commitment is to maintain our primary goal — having an
-          entirely local team, dedicated to fostering positive change in
-          society. We represent authenticity in design and expression. Each
-          UrbanFit piece is a genuine reflection of our dedication to
-          originality, setting us apart in the fashion landscape.  Our objective
-          is clear: to promote local production and create opportunities for the
-          new generation. We want to convey a powerful message to the youth —
-          the potential to effect change and contribute to their own success
-          lies within them. We encourage self-improvement, skill development,
-          and active engagement across diverse fields. UrbanFit stands as a
-          beacon for all Lebanese youth. We believe in your capabilities and
-          urge you to seize control of your success. Be innovative, be
-          distinctive, and chart your own course. Now is the time to excel, not
-          just for personal success but also for the betterment of society.
-          Branded as 'Made by society,' our success is intertwined with yours,
-          creating a positive cycle. We are confident that this generation will
-          usher in a different era, contributing collectively to a better
-          society
+          make a positive impact. As a Lebanese brand, our mission is
+          encapsulated in the slogan 'Made by society.' We strive to redefine
+          the norms in Lebanon, Nevertheless, our unwavering commitment is to
+          maintain our primary goal . We represent authenticity in design and
+          expression. Each UrbanFit piece is a genuine reflection of our
+          dedication to originality, setting us apart in the fashion landscape.
+          We want to convey a powerful message to the youth — the potential to
+          effect change and contribute to their own success lies within them.
+          UrbanFit stands as a beacon for all Lebanese youth. Now is the time to
+          excel, not just for personal success but also for the betterment of
+          society. Branded as 'Made by society,' our success is intertwined with
+          yours, creating a positive cycle. We are confident that this
+          generation will usher in a different era, contributing collectively to
+          a better societyWe are a group of people based in Lebanon. Faced with
+          the challenges, we've chosen to break away from the conventional path,
+          aspiring to make a positive impact. As a Lebanese brand, our mission
+          is encapsulated in the slogan 'Made by society.' We strive to redefine
+          the norms in Lebanon, Nevertheless, our unwavering commitment is to
+          maintain our primary goal . We represent authenticity in design and
+          expression. Each UrbanFit piece is a genuine reflection of our
+          dedication to originality, setting us apart in the fashion landscape.
+          We want to convey a powerful message to the youth — the potential to
+          effect change and contribute to their own success lies within them.
+          UrbanFit stands as a beacon for all Lebanese youth. Now is the time to
+          excel, not just for personal success but also for the betterment of
+          society. Branded as 'Made by society,' our success is intertwined with
+          yours, creating a positive cycle. We are confident that this
+          generation will usher in a different era, contributing collectively to
+          a better society
         </p>
         {/* <div className="about-banner" /> */}
         <div
+          id="core"
           style={{
             marginTop: "5rem",
             width: "100%",

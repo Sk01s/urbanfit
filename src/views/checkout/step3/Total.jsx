@@ -1,4 +1,8 @@
-import { ArrowLeftOutlined, CheckOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  CheckOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import { CHECKOUT_STEP_2, ORDER_COMPLETED } from "@/constants/routes";
 import { useFormikContext } from "formik";
 import { displayMoney, displayActionMessage } from "@/helpers/utils";
@@ -14,6 +18,7 @@ import { OrderPaymentSummery } from "@/components/common";
 import { PromoBox } from "../components";
 import { setPromo } from "@/redux/actions/checkoutActions";
 import { shipping } from "@/constants/constants";
+import firebaseInstance from "@/services/firebase";
 function getOrdinalSuffix(number) {
   if (number === 0) {
     return "0"; // Special case for 0
@@ -181,39 +186,46 @@ const Total = ({ isInternational, subtotal, order }) => {
   };
   createEmailItems();
   const handleOrder = async () => {
-    if (order.payment !== "COD")
-      return displayActionMessage("Feature not ready yet :)", "info");
-    // Update the Orders date
-    if (isNotOrderValide()) {
-      return displayActionMessage(
-        "one or more of your item/items is out of stock",
-        "info"
-      );
+    try {
+      if (order.payment !== "COD")
+        return displayActionMessage("Feature not ready yet :)", "info");
+      // Update the Orders date
+      if (isNotOrderValide()) {
+        return displayActionMessage(
+          "one or more of your item/items is out of stock",
+          "info"
+        );
+      }
+      setLoading(true);
+      order.date = new Date();
+      order.otp = false;
+      if (!order.uid) {
+        order.uid = firebaseInstance.getCurrentUser();
+      }
+      console.log(order);
+      await firebase.addOrder(order.id, order);
+      await emailjs
+        .send(
+          "service_vyw8iqt",
+          "template_btzkhrc",
+          {
+            id: order.id,
+            name: order.address.fullname,
+            email: order.address.email,
+            items: createEmailItems(),
+            contact: contact(),
+            summery: summery(),
+          },
+          "JPeR2g9TA1pVocFL4"
+        )
+        .then((e) => console.log(e));
+      dispatch(clearBasket());
+      dispatch(setPromo({ percentage: 0 }));
+      setLoading(false);
+      history.push(`/order-completed/${order.id}`, order);
+    } catch (error) {
+      displayActionMessage(error, "error");
     }
-    setLoading(true);
-    order.date = new Date();
-    order.otp = false;
-    console.log(order);
-    await firebase.addOrder(order.id, order);
-    await emailjs
-      .send(
-        "service_vyw8iqt",
-        "template_btzkhrc",
-        {
-          id: order.id,
-          name: order.address.fullname,
-          email: order.address.email,
-          items: createEmailItems(),
-          contact: contact(),
-          summery: summery(),
-        },
-        "JPeR2g9TA1pVocFL4"
-      )
-      .then((e) => console.log(e));
-    dispatch(clearBasket());
-    dispatch(setPromo({ percentage: 0 }));
-    setLoading(false);
-    history.push(`/order-completed/${order.id}`, order);
   };
   const onClickBack = () => {
     // destructure to only select left fields omitting cardnumber and ccv
@@ -256,20 +268,7 @@ const Total = ({ isInternational, subtotal, order }) => {
             gap: "1rem",
           }}
         >
-          {loading ? (
-            <div
-              style={{
-                width: "2rem",
-                height: "2rem",
-                borderRadius: "50%",
-                borderTop: "solid 1px ",
-                borderRight: "solid 1px",
-              }}
-              className="spining"
-            />
-          ) : (
-            <CheckOutlined />
-          )}
+          {loading ? <LoadingOutlined /> : <CheckOutlined />}
           &nbsp; Confirm
         </button>
       </div>

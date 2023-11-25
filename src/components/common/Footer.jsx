@@ -147,12 +147,7 @@ const Footer = () => {
                     Returns &amp; Refund Policy
                   </Link>
                 </li>
-                <li
-                  id="menu-item-7139"
-                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7139"
-                >
-                  <Link to="/contact-us/">Contact Us</Link>
-                </li>
+
                 <li
                   id="menu-item-40817"
                   className="menu-item menu-item-type-post_type menu-item-object-page menu-item-40817"
@@ -181,13 +176,13 @@ const Footer = () => {
                   id="menu-item-7181"
                   className="menu-item menu-item-type-custom menu-item-object-custom menu-item-7181"
                 >
-                  <Link to="/about-us">Our Impact</Link>
+                  <Link to="/about-us/#core">Our Impact</Link>
                 </li>
                 <li
-                  id="menu-item-7127"
-                  className="menu-item menu-item-type-custom menu-item-object-custom menu-item-7127"
+                  id="menu-item-7139"
+                  className="menu-item menu-item-type-post_type menu-item-object-page menu-item-7139"
                 >
-                  <Link to="/about-us">Who we are</Link>
+                  <Link to="/contact-us/">Contact Us</Link>
                 </li>
               </ul>
             </div>

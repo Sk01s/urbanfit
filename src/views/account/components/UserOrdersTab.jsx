@@ -3,21 +3,30 @@ import firebase from "@/services/firebase";
 import { useDispatch } from "react-redux";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const UserOrdersTab = () => {
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
-    firebase
-      .getUserOrders()
-      .then((res) => res.docs.map((doc) => doc.data()))
-      .then((orders) => setOrders(orders));
+    const get = async () => {
+      setLoading(true);
+      await firebase
+        .getUserOrders()
+        .then((res) => res.docs.map((doc) => doc.data()))
+        .then((orders) => setOrders(orders));
+      setLoading(false);
+    };
+    get();
   }, []);
   return (
     <div className="loader" style={{ minHeight: "80dvh" }}>
       <h3>My Orders</h3>
       <ol style={{ padding: 0 }}>
-        {orders?.length ? (
+        {loading ? (
+          <LoadingOutlined />
+        ) : orders?.length ? (
           orders?.map((item, index) => {
             return (
               <li
@@ -28,6 +37,7 @@ const UserOrdersTab = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
+                key={index}
               >
                 <h4 style={{ fontWeight: 400 }}>
                   {index + 1}. Order Id : #{item.id.split("-")[0]}

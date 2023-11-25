@@ -14,6 +14,7 @@ import {
 } from "@/helpers/utils";
 import { BasketItem } from "@/components/basket";
 import { OrderPaymentSummery } from "@/components/common";
+import { shipping } from "@/constants/constants";
 
 function getOrdinalSuffix(number) {
   if (number === 0) {
@@ -61,9 +62,7 @@ const OrderView = () => {
   });
 
   const price = calculateSubtotal(orderDetails?.items);
-  const totalPrice = orderDetails?.address?.isInternational
-    ? price + 50
-    : price + 5;
+  const totalPrice = price + shipping;
 
   const { id } = useParams();
 
