@@ -48,9 +48,6 @@ const CreditPayment = ({ setPaymentType }) => {
 
   return (
     <>
-      <h3 className="text-center">Payment</h3>
-      <br />
-      <span className="d-block padding-s">Payment Option</span>
       <div
         ref={containerRef}
         className={`checkout-fieldset-collapse ${

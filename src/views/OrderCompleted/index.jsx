@@ -13,7 +13,7 @@ const OrderCompleted = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
-  const [otpRec, setOtpRec] = useState(false);
+  const [otpRec, setOtpRec] = useState(true);
   const [confroming, setConfroming] = useState(false);
   const [order, setOrder] = useState({});
   const recaptchaRef = useRef();
@@ -100,9 +100,9 @@ const OrderCompleted = () => {
             alignItems: "center",
             backgroundColor: "#fff",
             backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
-            backgroundSize: "20rem",
+            backgroundSize: window.innerWidth <= 500 ? "99vw" : "33vw",
 
-            filter: "blur(0.75px)",
+            filter: "blur(0.7px)",
             top: 0,
             left: 0,
           }}
@@ -505,7 +505,7 @@ const OrderCompleted = () => {
                 height: "100vh",
                 backgroundColor: "#fff",
                 backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
-                backgroundSize: "20rem",
+                backgroundSize: window.innerWidth <= 500 ? "99vw" : "33vw",
                 filter: "blur(0.75px)",
                 top: 0,
                 zIndex: 100,

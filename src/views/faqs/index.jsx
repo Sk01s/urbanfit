@@ -33,13 +33,14 @@ const FAQS = () => {
         backgroundColor: "white",
         maxWidth: "90vw",
         marginInline: "auto",
+        marginTop: "10rem",
       }}
     >
       <section>
-        <h1>FAQS</h1>
+        <h2>FAQS</h2>
       </section>
       <section id="">
-        <h2>1. PLACING YOUR ORDER</h2>
+        <h3>1. PLACING YOUR ORDER</h3>
         <InfoBox
           title={" How do I place an order at urbanfitlb.com"}
           description={
@@ -118,31 +119,34 @@ const FAQS = () => {
         />
       </section>
       <section id="order-payment">
-        <h2>2. PAYMENT</h2>
+        <h3>2. PAYMENT</h3>
         <InfoBox
           title="What are my payment options when I place an order online?"
           description="You can  pay only with cash on delivery ."
         />
         <InfoBox
           title="What currency do I pay in?"
-          description="You can  pay only in USD ."
+          description="You can pay in LBP and USD."
         />
       </section>
       <section id="order-delivery">
-        <h2>3. DELIVERY & SHIPPING</h2>
-        <InfoBox title="Where do you deliver to?" description={<></>} />
+        <h3>3. DELIVERY & SHIPPING</h3>
         <InfoBox
-          title="What is the cost of delivering to my home?"
-          description={<></>}
+          title="Where do you deliver to?"
+          description={<>We deliver overall Lebanon and worldwide soon.</>}
         />
+
         <InfoBox
           title="How long will it take to receive my order?"
           description={
             <>
-              We do our best to ship your orders as fast as we can, and you can
-              expect to receive your order within a maximum of 10 working days.
-              Once shipped, you will receive an email to know your order is on
-              its way to you.
+              We do our best to ship your orders as fast as possible, and you
+              can expect to receive your order within 3-5 working days. <br />
+              Once shipped, you will receive an email to let you know your order
+              is on its way to you. <br /> Once your order is dispatched, you
+              will receive an email notification confirming its shipment. <br />{" "}
+              In the rare event of any exceptions, delivery may take up to a
+              maximum of 15 days.
             </>
           }
         />
@@ -184,14 +188,27 @@ const FAQS = () => {
         />
       </section>
       <section id="refund-policy">
-        <h2>4. RETURNS & REFUNDS</h2>
+        <h3>4. RETURNS & REFUNDS</h3>
         <InfoBox
           title="What is your policy on returning items?"
-          description=""
+          description={
+            <>
+              Our return policy stipulates that items must be returned in their
+              original condition, undamaged and unworn, accompanied by the
+              original tag and packaging. <br /> Eligibility for returns is
+              applicable to full-price items only, within a 12-hour timeframe.
+            </>
+          }
         />
         <InfoBox
-          title="Can I return my order if I change my mind?"
-          description=""
+          title="Can i return my order if it arrives damaged or has a defect or mistake in the fabric?"
+          description={
+            <>
+              Certainly, you can contact our customer service to initiate the
+              process, and a replacement item will be sent your way. <br />
+              Please ensure to inspect your item immediately upon receipt.
+            </>
+          }
         />
       </section>
     </main>

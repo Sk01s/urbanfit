@@ -13,6 +13,9 @@ const PromoBox = () => {
   // dispatch(setPromo({ percentage: 0 }));
   const applyPromoCode = async () => {
     try {
+      if (code.length === 0) {
+        displayActionMessage(" your Promo code is empty", "error");
+      }
       const promo = await firebaseInstance.usePromoCode(code);
       dispatch(setPromo(promo));
       displayActionMessage("Promo code is set Sucssesfully", "success");

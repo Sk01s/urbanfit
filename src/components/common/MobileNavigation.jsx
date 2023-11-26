@@ -341,6 +341,24 @@ const Navigation = (props) => {
               About us
             </Link>
           </li>
+          <li>
+            <Link
+              to="/contact-us"
+              onClick={() => closeMenu()}
+              style={{ fontWeight: 700, marginLeft: "1rem" }}
+            >
+              Contact us
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/faqs"
+              onClick={() => closeMenu()}
+              style={{ fontWeight: 700, marginLeft: "1rem" }}
+            >
+              FAQS
+            </Link>
+          </li>
         </ul>
         <ul
           className="menu-links"
@@ -357,8 +375,13 @@ const Navigation = (props) => {
           }}
         >
           <li>
-            <Link onClick={closeMenu} to="/men">
+            <Link onClick={closeMenu} to="/store/men">
               View All Men
+            </Link>
+          </li>
+          <li>
+            <Link onClick={closeMenu} to="/men">
+              Collections
             </Link>
           </li>
           <li>
@@ -403,8 +426,13 @@ const Navigation = (props) => {
           }}
         >
           <li>
-            <Link onClick={closeMenu} to="/women">
+            <Link onClick={closeMenu} to="/store/women">
               View All Women
+            </Link>
+          </li>
+          <li>
+            <Link onClick={closeMenu} to="/women">
+              Collections
             </Link>
           </li>
           <li>

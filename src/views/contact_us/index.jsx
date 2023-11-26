@@ -30,11 +30,7 @@ const Contact = () => {
   return (
     <main style={{ marginTop: "12rem" }}>
       <h2 style={{ textAlign: "center", marginBottom: 0 }}>Contact Us</h2>
-      <img
-        src="https://thegivingmovement.com/cdn/shop/files/DESKTOP_754060f7-785f-4301-91e1-29c41d7bcddd_1296x.jpg?v=1679580629"
-        className="contact-banner"
-        alt=""
-      />
+      <img src="/contact-us.jpg" className="contact-banner" alt="" />
       <form
         style={{
           display: "flex",

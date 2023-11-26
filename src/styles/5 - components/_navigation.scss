@@ -222,3 +222,13 @@
   text-decoration: none;
   color: #333;
 }
+.info-popup {
+  visibility: hidden;
+}
+.info-popup-container:hover .info-popup {
+  visibility: visible;
+}
+
+.info-popup:hover {
+  visibility: visible;
+}
