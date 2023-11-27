@@ -45,7 +45,18 @@ const about = () => {
             width: "85vw",
           }}
         >
-We are a group of people based in Lebanon. Faced with the challenges, we've chosen to break away from the conventional path, aspiring to make a positive impact. As a Lebanese brand, our mission is encapsulated in the slogan 'Made by society.' We strive to redefine the norms in Lebanon, Nevertheless, our unwavering commitment is to maintain our primary goal . We represent authenticity in design and expression. Each UrbanFit piece is a genuine reflection of our dedication to originality, setting us apart in the fashion landscape. UrbanFit stands as a beacon for all Lebanese youth. Branded as 'Made by society,' our success is intertwined with yours, creating a positive cycle. We are confident that this generation will usher in a different era, contributing collectively to a better society.
+          We are a group of people based in Lebanon. Faced with the challenges,
+          we've chosen to break away from the conventional path, aspiring to
+          make a positive impact. As a Lebanese brand, our mission is
+          encapsulated in the slogan 'Made by society.' We strive to redefine
+          the norms in Lebanon, Nevertheless, our unwavering commitment is to
+          maintain our primary goal . We represent authenticity in design and
+          expression. Each UrbanFit piece is a genuine reflection of our
+          dedication to originality, setting us apart in the fashion landscape.
+          UrbanFit stands as a beacon for all Lebanese youth. Branded as 'Made
+          by society,' our success is intertwined with yours, creating a
+          positive cycle. We are confident that this generation will usher in a
+          different era, contributing collectively to a better society.
         </p>
       </section>
       {/* <div className="about-banner" /> */}

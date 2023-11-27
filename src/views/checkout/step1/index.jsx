@@ -14,7 +14,8 @@ import { OrderPaymentSummery } from "@/components/common";
 const OrderSummary = ({ basket, subtotal }) => {
   useDocumentTitle("Check Out Step 1 | Urbanfit");
   useScrollTop();
-  const promo = useSelector((store) => store.checkout.promo);
+  const { promo } = useSelector((store) => store.checkout);
+  console.log(promo);
   const dispatch = useDispatch();
   const history = useHistory();
   const onClickPrevious = () => history.push("/");
