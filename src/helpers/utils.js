@@ -105,3 +105,6 @@ export const calculateSubtotal = (items) => {
     return acc + Number(next.price) * Number(next.quantity);
   }, 0);
 };
+
+export const HighProducts = (products) =>
+  products.filter((item) => item.priority === 1);

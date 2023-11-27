@@ -376,7 +376,9 @@ class Firebase {
     order.items.map(async (item) => {
       item.totalQuantity -= item.quantity;
       item[`${item.selectedSize}Quantity`] -= item.quantity;
-      console.log(item, `${item.selectedSize}Quantity`);
+      if (item[`${item.selectedSize}Quantity`] < 0 || item.totalQuantity < 0) {
+        throw "Product is out of stock";
+      }
       await this.db.collection("products").doc(item.id).set(item);
     });
   };

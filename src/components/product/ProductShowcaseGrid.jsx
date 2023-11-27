@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { BasketToggle } from "@/components/basket";
+import { HighProducts } from "@/helpers/utils";
 const ProductShowcase = ({
   products,
   skeletonCount,
@@ -14,8 +15,8 @@ const ProductShowcase = ({
   close,
   cart,
   view = false,
+  high,
 }) => {
-  console.log(view);
   const settings = {
     infinite: true,
     centerMode: center,
@@ -25,6 +26,7 @@ const ProductShowcase = ({
     arrows: false,
     variableWidth: true,
   };
+  const filteredProducts = high ? HighProducts(products) : products;
 
   const sliderRef = useRef(null);
 
@@ -130,7 +132,7 @@ const ProductShowcase = ({
         </Link>
       )}
       <Slider ref={sliderRef} {...settings}>
-        {products.length === 0
+        {filteredProducts.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (
               <FeaturedProduct
                 // eslint-disable-next-line react/no-array-index-key
@@ -140,7 +142,7 @@ const ProductShowcase = ({
                 // onClick={close}
               />
             ))
-          : products.map((product, index) => (
+          : filteredProducts.map((product, index) => (
               <FeaturedProduct
                 key={product.id + index}
                 product={product}

@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useProducts } from "@/hooks";
 
 const ProductRelative = ({ values }) => {
   const [modelRelationProduct, setModelRelationProduct] = useState(false);
@@ -17,48 +18,58 @@ const ProductRelative = ({ values }) => {
     setState(newState);
     values.relative = newState;
   };
-  const store = useSelector(
-    (state) => ({
-      filteredProducts: selectFilter(state.products.items, state.filter),
-      products: state.products,
-      requestStatus: state.app.requestStatus,
-      isLoading: state.app.loading,
-    }),
-    shallowEqual
-  );
+  const { products, fetchProducts, error, isLoading } = useProducts();
 
   const relatedProduct = useMemo(
-    () =>
-      store.products.items.filter((product) =>
-        values.relative?.includes(product.id)
-      ),
+    () => products.filter((product) => values.relative?.includes(product.id)),
     [state]
   );
   return (
     <div style={{ maxWidth: "70vw" }}>
       <div style={{ maxWeight: "30vw" }}>
-        <ProductShowcase
-          products={relatedProduct}
-          skeletonCount={4}
-          relative={state}
-          handleSetState={handleSetState}
-          title={"remove by clicking"}
-          add={false}
-        />
+        {error && !isLoading ? (
+          <MessageDisplay
+            message={error}
+            action={fetchProducts}
+            buttonLabel="Try Again"
+          />
+        ) : (
+          <>
+            <ProductShowcase
+              products={relatedProduct}
+              skeletonCount={4}
+              relative={state}
+              handleSetState={handleSetState}
+              title={"remove by clicking"}
+              add={false}
+            />
+          </>
+        )}
       </div>
       {modelRelationProduct ? (
         <div>
-          <ProductShowcase
-            products={store.products.items}
-            skeletonCount={4}
-            relative={state}
-            handleSetState={handleSetState}
-            title={"Choose by clicking"}
-            add={true}
-          />
+          {error && !isLoading ? (
+            <MessageDisplay
+              message={error}
+              action={fetchProducts}
+              buttonLabel="Try Again"
+            />
+          ) : (
+            <>
+              <ProductShowcase
+                products={products}
+                skeletonCount={4}
+                relative={state}
+                handleSetState={handleSetState}
+                title={"Choose by clicking"}
+                add={true}
+              />
+            </>
+          )}
         </div>
       ) : (
         <button
+          className="button"
           type="button"
           onClick={(e) => {
             e.preventDefault();
