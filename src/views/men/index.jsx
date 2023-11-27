@@ -1,7 +1,9 @@
 import React from "react";
 import { useSeason } from "@/hooks";
 import { Link } from "react-router-dom";
+import { useScrollTop } from "@/hooks";
 const index = () => {
+  useScrollTop();
   const season = useSeason();
 
   return (

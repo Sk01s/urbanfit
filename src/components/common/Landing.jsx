@@ -32,9 +32,14 @@ const VideoSlider = () => {
   const handleSlideChange = (newSlide) => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
-  const isSmall = window.innerWidth <= 728;
-  const isBig = window.innerWidth >= 1200;
+  const [isSmall, setSmall] = useState(window.innerWidth <= 728);
+  const [isBig, setBig] = useState(window.innerWidth >= 1200);
+
   useEffect(() => {
+    window.addEventListener("resize", () => {
+      setSmall(window.innerWidth <= 728);
+      setBig(window.innerWidth >= 1200);
+    });
     timerArray.current[currentSlide].classList.add("active");
 
     return () => {
@@ -71,7 +76,7 @@ const VideoSlider = () => {
                 file: {
                   attributes: {
                     style: {
-                      width: isBig ? "100vw" : "", // Override the width of the inner video element
+                      width: isBig ? "100vw" : "100%", // Override the width of the inner video element
                     },
                   },
                 },

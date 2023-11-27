@@ -9,6 +9,7 @@ import firebase from "@/services/firebase";
 import Skeleton from "react-loading-skeleton";
 import { displayMoney, displayDate, calculateSubtotal } from "@/helpers/utils";
 import { OrderPaymentSummery } from "@/components/common";
+import { BasketItem } from "@/components/basket";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
@@ -112,30 +113,7 @@ const EditProduct = () => {
               <h4>items</h4>
               <ol style={{ paddingLeft: "1.8rem", fontSize: "1.4rem" }}>
                 {orderDetails.items?.map((item, index) => (
-                  <li key={index}>
-                    <div>
-                      <p>Name : {item?.name || <Skeleton width={40} />}</p>
-                      <p>
-                        Description :{" "}
-                        {item?.description || <Skeleton width={40} />}
-                      </p>
-                      <p>
-                        Selected Size :{" "}
-                        {item?.selectedSize || <Skeleton width={40} />}
-                      </p>
-                      {item?.availableColors.length === 1 ? (
-                        ""
-                      ) : (
-                        <p>
-                          Selected Color :{" "}
-                          {item?.selectedColor || <Skeleton width={40} />}
-                        </p>
-                      )}
-                      <p>
-                        Quantity : {item.quantity || <Skeleton width={40} />}
-                      </p>
-                    </div>
-                  </li>
+                  <BasketItem display product={item} key={index} />
                 ))}
               </ol>
             </section>
@@ -149,8 +127,8 @@ const EditProduct = () => {
                 <Skeleton width={50} />
               )} */}
             </div>
-            <div>
-              <h4>Order's Date</h4>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <strong>Order's Date : </strong>
               <span>
                 {orderDetails.date ? (
                   displayDate(orderDetails.date.toDate())
@@ -159,6 +137,20 @@ const EditProduct = () => {
                 )}
               </span>
             </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <strong>Time : </strong>
+              <span>
+                {orderDetails.date ? (
+                  <>
+                    {new Date(orderDetails.date.toDate()).getHours()} :{" "}
+                    {new Date(orderDetails.date.toDate()).getMinutes()}
+                  </>
+                ) : (
+                  <Skeleton width={30} />
+                )}
+              </span>
+            </div>
+            <br />
             <OrderPaymentSummery
               subtotal={subtotal}
               promo={orderDetails.promo}

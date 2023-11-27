@@ -11,6 +11,7 @@ import { clearBasket } from "@/redux/actions/basketActions";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useEssentialProducts } from "@/hooks";
 import firebaseInstance from "@/services/firebase";
+import { useProducts } from "@/hooks";
 
 const Basket = () => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
@@ -56,8 +57,7 @@ const Basket = () => {
       dispatch(clearBasket());
     }
   };
-  const { essentialProducts, EssentialProduct, isLoading, error } =
-    useEssentialProducts();
+  const { products, isLoading, error } = useProducts();
 
   return user && user.role === "ADMIN" ? null : (
     <Boundary>
@@ -84,20 +84,40 @@ const Basket = () => {
       </Modal>
       <div className="basket">
         {basket.length <= 0 ? (
-          <div className="basket-empty">
-            <h5 className="basket-empty-msg">Your Cart is empty</h5>
-            <BasketToggle>
-              {({ onClickToggle }) => (
-                <button
-                  className="button"
-                  onClick={onClickToggle}
-                  role="presentation"
-                >
-                  Start Shopping
-                </button>
-              )}
-            </BasketToggle>
-          </div>
+          <>
+            <div className="basket-header-btn">
+              <BasketToggle>
+                {({ onClickToggle }) => (
+                  <span
+                    style={{
+                      marginLeft: "auto",
+                      marginTop: ".5rem",
+                      marginRight: "0.5rem",
+                    }}
+                    className="basket-toggle button button-border button-border-gray button-small"
+                    onClick={onClickToggle}
+                    role="presentation"
+                  >
+                    Close
+                  </span>
+                )}
+              </BasketToggle>
+            </div>
+            <div className="basket-empty">
+              <h5 className="basket-empty-msg">Your Cart is empty</h5>
+              <BasketToggle>
+                {({ onClickToggle }) => (
+                  <button
+                    className="button"
+                    onClick={onClickToggle}
+                    role="presentation"
+                  >
+                    Start Shopping
+                  </button>
+                )}
+              </BasketToggle>
+            </div>
+          </>
         ) : (
           <>
             <div className="basket-list">
@@ -148,13 +168,15 @@ const Basket = () => {
                     <br />
                     <br />
                     <ProductShowcaseGrid
-                      products={essentialProducts}
+                      products={products.filter(
+                        (item) => item.sex === basket[0].sex
+                      )}
                       skeletonCount={6}
                       title={"You may also like"}
                       titleStyle={{}}
                       infinite={false}
                       center={false}
-                      to={ESSENTIAL_PRODUCTS}
+                      to={""}
                       cart
                     />
                     <br />

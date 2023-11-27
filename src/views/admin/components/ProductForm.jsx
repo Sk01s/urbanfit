@@ -47,9 +47,7 @@ const FormSchema = Yup.object().shape({
     .min(0, "number is invalid.")
     .integer(" quantity should be an integer.")
     .required(" quantity is required."),
-  keywords: Yup.array()
-    .of(Yup.string())
-    .min(1, "Please enter at least 1 keyword for this product."),
+  keywords: Yup.array().of(Yup.string()),
   relative: Yup.array()
     .of(Yup.string())
     .min(0, "Please enter at least 1 keyword for this product."),
@@ -58,6 +56,7 @@ const FormSchema = Yup.object().shape({
     .min(0, "percentage should be postive")
     .max(100, "should not exeed 100"),
 
+  priority: Yup.number().min(-1).max(1).required("Set priority "),
   isSeasonal: Yup.boolean(),
   isEssential: Yup.boolean(),
   availableColors: Yup.array()
@@ -74,6 +73,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
     price: product?.price || 0,
     onSale: product?.onSale || false,
     percentage: product?.percentage || 0,
+    priority: product?.priority || 0,
     xlQuantity: product?.xlQuantity || 0,
     lgQuantity: product?.lgQuantity || 0,
     mdQuantity: product?.mdQuantity || 0,
@@ -114,6 +114,11 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
       // eslint-disable-next-line no-alert
       alert("Product thumbnail image is required.");
     }
+  };
+  const priority = (value) => {
+    if (value === 0) return "Normal";
+    if (value === 1) return "High";
+    if (value === -1) return "Low";
   };
 
   return (
@@ -323,6 +328,25 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   />
                 </div>
                 &nbsp;
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <CustomCreatableSelect
+                    defaultValue={{
+                      label: priority(values.priority),
+                      value: values.priority,
+                    }}
+                    name="priority"
+                    iid="priority"
+                    options={[
+                      { value: 1, label: "High" },
+                      { value: 0, label: "Normal" },
+                      { value: -1, label: "Low" },
+                    ]}
+                    disabled={isLoading}
+                    label="* Priority"
+                  />
+                </div>
               </div>
               <div className="d-flex">
                 <div className="product-form-field">

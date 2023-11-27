@@ -103,6 +103,7 @@ const Home = () => {
               products={seasonalProducts}
               skeletonCount={6}
               to={SEASONAL_PRODUCTS}
+              high
             />
           )}
         </div>
@@ -129,6 +130,7 @@ const Home = () => {
               products={essentialProducts}
               skeletonCount={6}
               to={ESSENTIAL_PRODUCTS}
+              high
             />
           )}
         </div>

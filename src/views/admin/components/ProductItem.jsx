@@ -85,7 +85,7 @@ const ProductItem = ({ product }) => {
             </span>
           </div>
           <div className="grid-col">
-            <span>{product.totalQuantity || <Skeleton width={20} />}</span>
+            <span>{product.totalQuantity ?? <Skeleton width={20} />}</span>
           </div>
         </div>
         {product.id && (
