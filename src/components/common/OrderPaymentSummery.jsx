@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 const OrderPaymentSummery = ({ subtotal, promo }) => {
   const [discount, setDiscount] = useState(
-    calculateDiscount(subtotal, (promo = { percentage: 0 }))
+    calculateDiscount(subtotal, promo || { percentage: 0 })
   );
   const total = subtotal - discount + shipping;
   useEffect(() => {

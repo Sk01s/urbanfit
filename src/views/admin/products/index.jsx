@@ -12,6 +12,7 @@ import { useProducts } from "@/hooks";
 import { SortModel } from "@/components/common";
 import { useState } from "react";
 import { ProductGrid } from "@/components/product";
+import { useEffect } from "react";
 
 const Products = () => {
   useDocumentTitle("Product List | Urbanfit Admin");
@@ -23,7 +24,12 @@ const Products = () => {
   const sortProducts = (products) => {
     setFilterdProducts(products);
   };
-
+  useEffect(() => {
+    async function fetch() {
+      await fetchProducts();
+    }
+    fetch();
+  }, []);
   return (
     <Boundary>
       <ProductsNavbar
