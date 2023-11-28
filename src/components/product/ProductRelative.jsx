@@ -92,80 +92,13 @@ const ProductShowcase = ({
   add,
   handleSetState,
 }) => {
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: false,
-    centerPadding: "0",
-    slidesToShow: 1,
-    speed: 500,
-    arrows: false,
-    variableWidth: true,
-  };
-
-  const sliderRef = useRef(null);
-
-  const goToNext = () => {
-    sliderRef.current.slickNext(); // Go to the next slide
-  };
-
-  const goToPrevious = () => {
-    sliderRef.current.slickPrev(); // Go to the previous slide
-  };
-
   return (
     <>
       <div className="display-header">
-        <button
-          type="button"
-          onClick={goToPrevious}
-          style={{
-            background: "rgba(255, 255, 255, 0)",
-            border: "none",
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <title>Left</title>
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
         <h1 style={titleStyle}>{title}</h1>
-        <button
-          type="button"
-          onClick={goToNext}
-          style={{
-            background: "rgba(255, 255, 255, 0)",
-            border: "none",
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="feather feather-chevron-right"
-          >
-            <title>Right</title>
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+        <br />
       </div>
-      <Slider ref={sliderRef} {...settings}>
+      <div className="product-grid">
         {products.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (
               <FeaturedProduct
@@ -187,7 +120,7 @@ const ProductShowcase = ({
                 products={products}
               />
             ))}
-      </Slider>
+      </div>
     </>
   );
 };
@@ -203,7 +136,6 @@ const FeaturedProduct = ({
   handleSetState,
   products,
 }) => {
-
   const history = useHistory();
   const onClickItem = () => {
     if (!product) return;
@@ -223,7 +155,7 @@ const FeaturedProduct = ({
         role="presentation"
       >
         {product.totalQuantity === 0 && <div className="badge">Sold Out</div>}
-        <div className="product-display-img" style={{ height: "20rem" }}>
+        <div className="product-display-img">
           {product.image ? (
             <ImageLoader
               className="product-card-img"
