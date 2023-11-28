@@ -14,7 +14,7 @@ const AddProduct = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (product) => {
-    console.log(product);
+  
     dispatch(addProduct(product));
   };
 

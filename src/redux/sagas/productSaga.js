@@ -68,19 +68,17 @@ function* productSaga({ type, payload }) {
       break;
 
     case ADD_PRODUCT: {
-      console.log(payload);
       try {
         yield initRequest();
 
-        const { imageCollection } = payload;
-        const key = yield call(firebase.generateKey);
+        const { imageCollection, id } = payload;
         const downloadURL = yield call(
           firebase.storeImage,
-          key,
+          id,
           "products",
           payload.image
         );
-        const image = { id: key, url: downloadURL };
+        const image = { id: id, url: downloadURL };
         let images = [];
 
         if (imageCollection.length !== 0) {
@@ -104,10 +102,10 @@ function* productSaga({ type, payload }) {
           imageCollection: [image, ...images],
         };
 
-        yield call(firebase.addProduct, key, product);
+        yield call(firebase.addProduct, id, product);
         yield put(
           addProductSuccess({
-            id: key,
+            id: id,
             ...product,
           })
         );
@@ -127,22 +125,17 @@ function* productSaga({ type, payload }) {
       try {
         yield initRequest();
 
-        const { image, imageCollection } = payload.updates;
+        const { image, imageCollection, id } = payload.updates;
         let newUpdates = { ...payload.updates };
 
         if (image.constructor === File && typeof image === "object") {
           try {
-            yield call(firebase.deleteImage, payload.id);
+            yield call(firebase.deleteImage, id);
           } catch (e) {
             console.error("Failed to delete image ", e);
           }
 
-          const url = yield call(
-            firebase.storeImage,
-            payload.id,
-            "products",
-            image
-          );
+          const url = yield call(firebase.storeImage, id, "products", image);
           newUpdates = { ...newUpdates, image: url };
         }
 
@@ -185,10 +178,10 @@ function* productSaga({ type, payload }) {
           // make sure you're adding the url not the file object.
         }
 
-        yield call(firebase.editProduct, payload.id, newUpdates);
+        yield call(firebase.editProduct, id, newUpdates);
         yield put(
           editProductSuccess({
-            id: payload.id,
+            id: id,
             updates: newUpdates,
           })
         );

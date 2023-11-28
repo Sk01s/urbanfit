@@ -15,9 +15,10 @@ const EditProduct = ({ match }) => {
   const dispatch = useDispatch();
 
   const onSubmitForm = (updates) => {
-    dispatch(editProduct(product.id, updates));
+    dispatch(editProduct(updates));
   };
 
+  console.log(error);
   return (
     <div className="product-form-container">
       {error && <Redirect to="/dashboard/products" />}

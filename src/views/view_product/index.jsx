@@ -510,7 +510,9 @@ Returns eligible on full-price items only.`}
                     <br />
                     <br />
                     <ProductShowcase
-                      products={relatedProduct}
+                      products={relatedProduct.filter(
+                        (product) => product.id !== id
+                      )}
                       skeletonCount={4}
                       title={"Make your look perfect "}
                       to={false}
@@ -531,7 +533,7 @@ Returns eligible on full-price items only.`}
               ) : (
                 <ProductShowcaseGrid
                   products={essentialProducts.filter(
-                    (product) => product.id !== id
+                    (item) => item.id !== id && item.sex === product.sex
                   )}
                   title={"Essentials"}
                   skeletonCount={2}

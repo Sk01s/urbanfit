@@ -108,3 +108,9 @@ export const calculateSubtotal = (items) => {
 
 export const HighProducts = (products) =>
   products.filter((item) => item.priority === 1);
+
+export function arraysHaveSameValues(arr1, arr2) {
+  return (
+    arr1.length === arr2.length && arr1.every((value) => arr2.includes(value))
+  );
+}

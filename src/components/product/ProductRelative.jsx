@@ -184,6 +184,7 @@ const ProductShowcase = ({
                 relative={relative}
                 add={add}
                 handleSetState={handleSetState}
+                products={products}
               />
             ))}
       </Slider>
@@ -195,12 +196,20 @@ ProductShowcase.defaultProps = {
   skeletonCount: 4,
 };
 
-const FeaturedProduct = ({ product, relative, add, handleSetState }) => {
+const FeaturedProduct = ({
+  product,
+  relative,
+  add,
+  handleSetState,
+  products,
+}) => {
+
   const history = useHistory();
   const onClickItem = () => {
     if (!product) return;
     if (add) {
       if (relative.includes(product.id)) return;
+
       handleSetState([...relative, product.id]);
     } else {
       handleSetState(relative.filter((id) => id !== product.id));

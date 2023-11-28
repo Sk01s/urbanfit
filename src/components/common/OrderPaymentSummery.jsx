@@ -10,7 +10,6 @@ const OrderPaymentSummery = ({ subtotal, promo }) => {
   );
   const total = subtotal - discount + shipping;
   useEffect(() => {
-    console.log(subtotal);
     setDiscount(calculateDiscount(subtotal, promo));
   }, [subtotal, promo]);
   return (

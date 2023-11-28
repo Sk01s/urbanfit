@@ -15,6 +15,9 @@ import * as Yup from "yup";
 import { categories, type } from "@/constants/constants";
 import { useState } from "react";
 import { ProductRelative } from "@/components/product";
+import firebaseInstance from "@/services/firebase";
+import { useProducts } from "@/hooks";
+import { arraysHaveSameValues } from "@/helpers/utils";
 // Default type names that I used. You can use what you want
 
 const FormSchema = Yup.object().shape({
@@ -93,9 +96,35 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
       imageCollection: product?.imageCollection || [],
     });
 
-  const onSubmitForm = (form) => {
+  const { products } = useProducts();
+  const onSubmitForm = async (form) => {
     if (imageFile.image.file || product.imageUr || isEditing) {
+      const productId = product.id || (await firebaseInstance.generateKey());
+      const setRelatives = (relativeIdArray) =>
+        relativeIdArray.map(async (id) => {
+          if (productId === id) return;
+          const currentProduct = products.find((product) => product.id === id);
+          const relatives = [...relativeIdArray, productId].filter(
+            (itemId) => id !== itemId
+          );
+
+          if (arraysHaveSameValues(currentProduct.relative, relatives)) {
+            return;
+          }
+          currentProduct.relative = relatives;
+          await firebaseInstance.editProduct(currentProduct.id, currentProduct);
+        });
+      setRelatives(form.relative);
+      product.relative.map(async (productId) => {
+        if (form.relative.includes(productId)) return;
+        const currentProduct = products.find(
+          (product) => product.id === productId
+        );
+        currentProduct.relative = [];
+        await firebaseInstance.editProduct(currentProduct.id, currentProduct);
+      });
       onSubmit({
+        id: productId,
         ...form,
         totalQuantity:
           form.xlQuantity +
