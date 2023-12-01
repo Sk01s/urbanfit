@@ -19,9 +19,6 @@ const FeaturedProducts = () => {
           <div className="banner-desc">
             <h1>Featured Products</h1>
           </div>
-          <div className="banner-img">
-            <img src={bannerImg} alt="" />
-          </div>
         </div>
         <div className="display" style={{ marginTop: "5rem" }}>
           {error && !isLoading ? (

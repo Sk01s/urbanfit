@@ -5,11 +5,11 @@ const Index = (props) => {
   const { setAccepeted } = props;
   return (
     <div className="terms">
-    <div>
+      <div>
         We use cookies to ensure you have the best browsing experience on our
         website. By using our site, you acknowledge that you have read and
         understood our
-        <Link to={"/terms"}>Cookie Policy & Privacy Policy</Link>
+        <Link to={"/terms-conditions"}>Cookie Policy & Privacy Policy</Link>
       </div>
       <button
         className="bg-primeColor text-white text-lg font-bodyFont w-fit px-2 h-[50px] hover:bg-white duration-300 font-bold hover:text-primeColor"

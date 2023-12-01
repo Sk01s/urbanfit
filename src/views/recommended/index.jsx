@@ -19,11 +19,8 @@ const EssentialProducts = () => {
           <div className="banner-desc">
             <h1>Essential Products</h1>
           </div>
-          <div className="banner-img">
-            <img src={bannerImg} alt="" />
-          </div>
         </div>
-        <div className="display" style={{marginTop:"5rem"}}>
+        <div className="display" style={{ marginTop: "5rem" }}>
           {error && !isLoading ? (
             <MessageDisplay
               message={error}

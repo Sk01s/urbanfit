@@ -9,6 +9,7 @@ import { useProducts } from "@/hooks";
 
 const Shop = () => {
   const { products, fetchProducts, error, isLoading } = useProducts();
+  const [filteredProducts, setFilterdProducts] = useState(products || []);
   const sortProducts = (products) => {
     setFilterdProducts(products);
   };
@@ -28,8 +29,8 @@ const Shop = () => {
           />
         ) : (
           <>
-            <SortModel setProducts={sortProducts} products={products} />
-            <ProductGrid products={products} skeletonCount={6} />
+            <SortModel setProducts={sortProducts} products={filteredProducts} />
+            <ProductGrid products={filteredProducts} skeletonCount={6} />
           </>
         )}
       </section>
