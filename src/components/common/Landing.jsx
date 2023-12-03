@@ -10,8 +10,7 @@ import {
 } from "@/constants/routes";
 const slides = [
   {
-    videoUrl:
-      "https://house-fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/1268729919001/44fb1ed0-9a76-4f2a-87b3-fbbfbd87e778/e27d090d-28a7-4312-8e26-d54a696e92fe/main.mp4?fastly_token=NjcwOTQ4ZTdfNzVjN2I5YTI0MDY2MjAyNGUwMWY3Nzg4OWY3ZjIzNDQxMWZmZGI1ZjhlNjcyZjMyOWFkOTg2ODk4NGI5MjMzZl8vL2hvdXNlLWZhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMTI2ODcyOTkxOTAwMS80NGZiMWVkMC05YTc2LTRmMmEtODdiMy1mYmJmYmQ4N2U3NzgvZTI3ZDA5MGQtMjhhNy00MzEyLThlMjYtZDU0YTY5NmU5MmZlL21haW4ubXA0",
+    videoUrl: "/video-1.mp4",
     mobileUrl: "/mobile-1.mp4",
   },
   {
@@ -67,39 +66,46 @@ const VideoSlider = () => {
       >
         {slides.map((slide, index) => (
           <div key={index} style={{ position: "relative" }}>
-            <ReactPlayer
-              ref={playerRef}
-              url={isSmall ? slide.mobileUrl : slide.videoUrl}
-              controls={false}
-              loop={true}
-              config={{
-                file: {
-                  attributes: {
-                    style: {
-                      width: isBig ? "100vw" : "100%", // Override the width of the inner video element
+            {slide.videoUrl ? (
+              <>
+                <ReactPlayer
+                  ref={playerRef}
+                  url={isSmall ? slide.mobileUrl : slide.videoUrl}
+                  controls={false}
+                  loop={true}
+                  config={{
+                    file: {
+                      attributes: {
+                        style: {
+                          width: isBig ? "100vw" : "100%", // Override the width of the inner video element
+                        },
+                      },
                     },
-                  },
-                },
-              }}
-              muted={true}
-              playing={true}
-              width={isSmall ? "100vw" : "100%"}
-              height="auto"
-              style={{
-                position: currentSlide === index ? "relative" : "initial",
-                zIndex: currentSlide === index ? "1" : "0",
-              }}
-              playsinline
-            />
-            <div style={{ display: "none" }}>
-              <video
-                controls={false}
-                ref={(video) => (playerRef.current = video)}
-                width={isSmall ? "auto" : "100%"}
-              >
-                <source src={slide.videoUrl} type="video/mp4" />
-              </video>
-            </div>
+                  }}
+                  muted={true}
+                  playing={true}
+                  width={isSmall ? "100vw" : "100%"}
+                  height="auto"
+                  style={{
+                    position: currentSlide === index ? "relative" : "initial",
+                    zIndex: currentSlide === index ? "1" : "0",
+                  }}
+                  playsinline
+                />
+                <div style={{ display: "none" }}>
+                  <video
+                    controls={false}
+                    ref={(video) => (playerRef.current = video)}
+                    width={isSmall ? "auto" : "100%"}
+                  >
+                    <source src={slide.videoUrl} type="video/mp4" />
+                  </video>
+                </div>
+              </>
+            ) : (
+              <img src={slide.imgUrl} alt="" />
+            )}
+
             <div
               className=""
               style={{

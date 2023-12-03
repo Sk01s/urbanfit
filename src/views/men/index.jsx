@@ -35,7 +35,7 @@ const index = () => {
           </Link>
           <Link to={"/store/men/essential"} className="category-card">
             <div>
-              <h3>Essential</h3>
+              <h3>Essentials</h3>
               <button className="button">Shop Now</button>
             </div>
           </Link>

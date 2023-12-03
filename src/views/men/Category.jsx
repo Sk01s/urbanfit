@@ -21,6 +21,7 @@ import { useProducts } from "@/hooks";
 const Category = (props) => {
   const { pathname } = useLocation();
   const { category, sex } = useParams();
+  const [name, setName] = useState(category);
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
 
@@ -67,6 +68,7 @@ const Category = (props) => {
       );
     }
     if (category === "essential") {
+      setName("essentials");
       setFilterdProducts(
         essentialProducts.filter(
           (product) =>
@@ -84,7 +86,7 @@ const Category = (props) => {
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex}'s {category}
+          {sex}'s {name}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
