@@ -660,6 +660,10 @@
     transition-duration: 0;
   }
 }
+.card {
+  aspect-ratio: 10/16 !important;
+  max-height: 60rem;
+}
 .hover .image {
   translate: 0 -100%;
 }

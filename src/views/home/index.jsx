@@ -24,6 +24,8 @@ import { categories } from "@/constants/constants";
 import { Landing } from "@/components/common";
 import { useEffect } from "react";
 import firebase from "@/services/firebase";
+import { CategoryCards } from "@/components/common";
+
 const Home = () => {
   useDocumentTitle("Urbanfit | Home");
   useScrollTop();
@@ -107,6 +109,7 @@ const Home = () => {
             />
           )}
         </div>
+        <CategoryCards />
         <div
           className="display "
           style={{

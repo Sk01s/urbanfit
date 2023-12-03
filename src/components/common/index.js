@@ -20,3 +20,4 @@ export { default as SocialLogin } from "./SocialLogin";
 export { default as CategoryDisplay } from "./CategoryDisplay";
 export { default as SortModel } from "./SortModel";
 export { default as OrderPaymentSummery } from "./OrderPaymentSummery";
+export { default as CategoryCards } from "./CategoryCards";
