@@ -255,7 +255,7 @@ const Navigation = () => {
               <Link to={"/shop"}>
                 <img
                   src="/nav-women-1.jpg"
-                  alt="ste"
+                  alt="New Season Image"
                   style={{ width: "20rem" }}
                 />
                 <p>New Season</p>

@@ -88,6 +88,7 @@ const VideoSlider = () => {
                   style={{
                     position: currentSlide === index ? "relative" : "initial",
                     zIndex: currentSlide === index ? "1" : "0",
+                    backgroundColor: "#333",
                   }}
                   playsinline
                 />
