@@ -481,8 +481,6 @@ const ViewProduct = () => {
                     </>
                   }
                   description={`You can expect to receive your order within 3-5 working days.
-Once shipped, you will receive an email to let you know your order is on its way to you.
-Once your order is dispatched, you will receive an email notification confirming its shipment.
 In the rare event of any exceptions, delivery may take up to a maximum of 15 days.`}
                 />
                 <InfoBox

@@ -11,11 +11,10 @@ import {
 const slides = [
   {
     videoUrl: "/video-1.mp4",
-    mobileUrl: "/mobile-1.mp4",
+    mobileUrl: "/mobile-2.mp4",
   },
   {
-    videoUrl:
-      "https://house-fastly-signed-eu-west-1-prod.brightcovecdn.com/media/v1/pmp4/static/clear/1268729919001/9dbda366-67d9-434b-b6d8-0dfad1f2fb58/6bfbfb62-fd1e-43f7-b68a-97b432ecca11/main.mp4?fastly_token=NjcwOTQ4ZWFfZGMxZDJmZmQ2NjdlNjNkZTUyZTdjYmQ5YzliOTYzZGI1MWVlMzI2MTMxMzkwMTcwMmZhODBjNzNmOThkMzUxN18vL2hvdXNlLWZhc3RseS1zaWduZWQtZXUtd2VzdC0xLXByb2QuYnJpZ2h0Y292ZWNkbi5jb20vbWVkaWEvdjEvcG1wNC9zdGF0aWMvY2xlYXIvMTI2ODcyOTkxOTAwMS85ZGJkYTM2Ni02N2Q5LTQzNGItYjZkOC0wZGZhZDFmMmZiNTgvNmJmYmZiNjItZmQxZS00M2Y3LWI2OGEtOTdiNDMyZWNjYTExL21haW4ubXA0",
+    imgUrl: "/landing-bg.webp",
     mobileUrl: "/mobile-1.mp4",
   },
   // Add more slides as needed
@@ -66,7 +65,7 @@ const VideoSlider = () => {
       >
         {slides.map((slide, index) => (
           <div key={index} style={{ position: "relative" }}>
-            {slide.videoUrl ? (
+            {slide.videoUrl || isSmall ? (
               <>
                 <ReactPlayer
                   ref={playerRef}
@@ -103,7 +102,9 @@ const VideoSlider = () => {
                 </div>
               </>
             ) : (
-              <img src={slide.imgUrl} alt="" />
+              <div>
+                <img src={slide.imgUrl} style={{ width: "100%" }} />
+              </div>
             )}
 
             <div
@@ -111,7 +112,7 @@ const VideoSlider = () => {
               style={{
                 position: "absolute",
                 left: `${30 + 20 * index}%`,
-                top: "80%",
+                top: "70%",
                 translate: "-50% -50%",
                 zIndex: 2,
               }}

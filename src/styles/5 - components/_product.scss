@@ -244,7 +244,6 @@
   height: inherit;
   position: relative;
   width: 50vw;
-  max-width: 550px;
   margin-top: 4.2rem;
   input[type="color"] {
     position: absolute;
@@ -738,4 +737,7 @@
 .react-international-phone-input-container
   .react-international-phone-country-selector-button {
   min-height: 46px;
+}
+.show-case {
+  overflow: hidden;
 }

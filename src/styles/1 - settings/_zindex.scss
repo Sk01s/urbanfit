@@ -1,9 +1,13 @@
 $z-index: (
-	toast: 100,
-	modal: 80,
+  toast: 100,
+  modal: 80,
   basket: 60,
   navigation: 55,
   filter: 40,
   search: 30,
   content: 10,
 );
+body {
+  max-width: 250rem;
+  margin-inline: auto;
+}

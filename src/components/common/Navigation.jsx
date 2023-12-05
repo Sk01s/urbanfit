@@ -149,7 +149,10 @@ const Navigation = () => {
           <NavLink activeClassName="navigation-menu-active" to={Route.WOMEN}>
             Women
           </NavLink>
-          <div className={`popup-menu ${isWomenPopupVisible && "open"}`}>
+          <div
+            className={`popup-menu ${isWomenPopupVisible && "open"}`}
+            style={{ justifyContent: "space-between" }}
+          >
             <ul style={{ flexDirection: "column", display: "flex" }}>
               <li>
                 <h4>Women</h4>
@@ -248,6 +251,16 @@ const Navigation = () => {
               </Link>
             </li> */}
             </ul>
+            <div>
+              <Link to={"/shop"}>
+                <img
+                  src="/nav-women-1.jpg"
+                  alt="ste"
+                  style={{ width: "20rem" }}
+                />
+                <p>New Season</p>
+              </Link>
+            </div>
           </div>
         </li>
         <li
