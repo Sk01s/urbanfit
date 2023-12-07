@@ -10,7 +10,9 @@
 .featured {
   width: 100%;
 }
-
+.card-container .slick-list {
+  max-height: 60rem;
+}
 .category-container {
   margin-top: 3rem;
   // display: grid;

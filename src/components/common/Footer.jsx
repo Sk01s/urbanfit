@@ -39,6 +39,7 @@ const Footer = () => {
                   aria-label="Facebook"
                   className="facebook"
                   target="_blank"
+                  href="https://www.facebook.com/profile.php?id=61553420679639&mibextid=LQQJ4d"
                   rel="noopener"
                 >
                   <svg
@@ -102,7 +103,7 @@ const Footer = () => {
                   className="whatsapp"
                   target="_blank"
                   rel="noopener"
-                  href="https://api.whatsapp.com/send?phone=96171108084"
+                  href="https://api.whatsapp.com/send?phone=96176875941"
                 >
                   <svg
                     aria-hidden="true"

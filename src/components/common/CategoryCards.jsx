@@ -23,6 +23,7 @@ const CategoryCards = () => {
   };
   return (
     <div
+    className="card-container"
       style={{
         width: "100%",
         // display: "grid",
@@ -198,7 +199,7 @@ const CategoryCards = () => {
         <Link
           to={"/store/men/seasonal-collection"}
           className="product-display card"
-          card
+      
           style={{
             marginInline: ".5rem",
           }}

@@ -4,7 +4,7 @@ const newsItems = [
   "EASY RETURNS",
   "3-5 DAYS DELIVERY",
   "SAME DAY DELIVERY (Express Service)",
-  "World wide Delivery (DHL)",
+  // "World wide Delivery (DHL)",
   "Wear the change Be URBANFIT!",
 ];
 const delay = 4000;

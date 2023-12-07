@@ -153,72 +153,56 @@ const Navigation = () => {
             className={`popup-menu ${isWomenPopupVisible && "open"}`}
             style={{ justifyContent: "space-between" }}
           >
-            <ul style={{ flexDirection: "column", display: "flex" }}>
-              <li>
-                <h4>Women</h4>
-              </li>
-              <li>
-                <Link
-                  onClick={() => {
-                    handleMouseLeave();
-                  }}
-                  to="/store/women"
-                  className="type-link"
-                >
-                  View all women
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={() => {
-                    handleMouseLeave();
-                  }}
-                  to="/women"
-                  className="type-link"
-                >
-                  Collections
-                </Link>
-              </li>
-              {/* <li>
+            <div style={{ display: "flex", gap: "4rem" }}>
+              <ul style={{ flexDirection: "column", display: "flex" }}>
+                <li>
+                  <h4>Women</h4>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => {
+                      handleMouseLeave();
+                    }}
+                    to="/store/women"
+                    className="type-link"
+                  >
+                    View all women
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => {
+                      handleMouseLeave();
+                    }}
+                    to="/women"
+                    className="type-link"
+                  >
+                    Collections
+                  </Link>
+                </li>
+                {/* <li>
                 <Link onClick={()=>handleMouseLeave()} to="/type/men/" className="type-link">New Arrivals</Link>
               </li> */}
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/store/women/essential"
-                  className="type-link"
-                >
-                  Essentials
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/t-shrit"
-                  className="type-link"
-                >
-                  T-shrits
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/active-wear"
-                  className="type-link"
-                >
-                  Active wear
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/leggings"
-                  className="type-link"
-                >
-                  Leggings
-                </Link>
-              </li>
-              <li>
+                <li>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to="/store/women/essential"
+                    className="type-link"
+                  >
+                    Essentials
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to="/type/women/t-shrit"
+                    className="type-link"
+                  >
+                    T-shrits
+                  </Link>
+                </li>
+
+                {/* <li>
                 <Link
                   onClick={handleMouseLeave}
                   to="/type/women/jacket"
@@ -226,31 +210,77 @@ const Navigation = () => {
                 >
                   Jackets
                 </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/hoodies-&-sweatshrits"
-                  className="type-link"
-                >
-                  Hoodies & Sweatshrits
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/sweatpants-&-pants"
-                  className="type-link"
-                >
-                  Sweatpants & Pants
-                </Link>
-              </li>
-              {/* <li>
+              </li> */}
+
+                {/* <li>
               <Link onClick={handleMouseLeave} to="" className="type-link">
                 Sets
               </Link>
             </li> */}
-            </ul>
+              </ul>
+              <ul style={{ flexDirection: "column", display: "flex" }}>
+                <li>
+                  <br />
+                  <br />
+                </li>
+
+                {/* <li>
+                <Link onClick={()=>handleMouseLeave()} to="/type/men/" className="type-link">New Arrivals</Link>
+              </li> */}
+
+                <li>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to="/type/women/active-wear"
+                    className="type-link"
+                  >
+                    Active wear
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to="/type/women/leggings"
+                    className="type-link"
+                  >
+                    Leggings
+                  </Link>
+                </li>
+                {/* <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/type/women/jacket"
+                  className="type-link"
+                >
+                  Jackets
+                </Link>
+              </li> */}
+                <li>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to="/type/women/hoodies-&-sweatshrits"
+                    className="type-link"
+                  >
+                    Hoodies & Sweatshrits
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to="/type/women/sweatpants-&-pants"
+                    className="type-link"
+                  >
+                    Sweatpants & Pants
+                  </Link>
+                </li>
+                {/* <li>
+              <Link onClick={handleMouseLeave} to="" className="type-link">
+                Sets
+              </Link>
+            </li> */}
+              </ul>
+            </div>
+
             <div>
               <Link to={"/shop"}>
                 <img
@@ -307,6 +337,36 @@ const Navigation = () => {
                   Essentials
                 </Link>
               </li>
+
+              {/* <li>
+                <Link
+                  onClick={handleMouseLeave}
+                  to="/type/men/jacket"
+                  className="type-link"
+                >
+                  Jackets
+                </Link>
+              </li> */}
+
+              {/* <li>
+              <Link
+                onClick={handleMouseLeave}
+                to="/type/men/"
+                className="type-link"
+              >
+                Sets
+              </Link>
+            </li> */}
+            </ul>
+            <ul style={{ flexDirection: "column", display: "flex" }}>
+              <li>
+                <br />
+                <br />
+              </li>
+              {/* <li>
+                <Link onClick={()=>handleMouseLeave()} to="" className="type-link">New Arrivals</Link>
+              </li> */}
+
               <li>
                 <Link
                   onClick={handleMouseLeave}
@@ -316,7 +376,7 @@ const Navigation = () => {
                   T-shrits
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   onClick={handleMouseLeave}
                   to="/type/men/jacket"
@@ -324,7 +384,7 @@ const Navigation = () => {
                 >
                   Jackets
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   onClick={handleMouseLeave}

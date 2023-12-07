@@ -116,7 +116,7 @@ const OrderCompleted = () => {
             console.log(location.state.address.mobile.value);
             firebase
               .requestPhoneOtp(
-                location.state.address.mobile.value || "+96171108084"
+                location.state.address.mobile.value || "+96176875941"
               )
               .then(() => {
                 console.log(location.state);

@@ -660,8 +660,14 @@
   }
 }
 .card {
+  max-width: 100%;
   aspect-ratio: 10/16 !important;
   max-height: 60rem;
+}
+@media (max-width: 440px) {
+  .card {
+    max-height: 125vw;
+  }
 }
 .hover .image {
   translate: 0 -100%;
