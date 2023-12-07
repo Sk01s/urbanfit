@@ -17,7 +17,7 @@ const EssentialProducts = () => {
       <div className="featured">
         <div className="banner">
           <div className="banner-desc">
-            <h1>Essential Products</h1>
+            <h1>Essentials</h1>
           </div>
         </div>
         <div className="display" style={{ marginTop: "5rem" }}>

@@ -4,9 +4,11 @@ import { useDocumentTitle, useSeasonalProducts, useScrollTop } from "@/hooks";
 import bannerImg from "@/images/banner-guy.png";
 import { ProductGrid } from "@/components/product";
 import React from "react";
+import { useSeason } from "@/hooks";
 
 const FeaturedProducts = () => {
-  useDocumentTitle("Featured Products | Urbanfit");
+  const seasonal = useSeason();
+  useDocumentTitle(`${seasonal} Collection | Urbanfit`);
   useScrollTop();
 
   const { seasonalProducts, fetchSeasonalProducts, isLoading, error } =
@@ -17,7 +19,7 @@ const FeaturedProducts = () => {
       <div className="featured">
         <div className="banner">
           <div className="banner-desc">
-            <h1>Featured Products</h1>
+            <h1>{seasonal} Collection</h1>
           </div>
         </div>
         <div className="display" style={{ marginTop: "5rem" }}>

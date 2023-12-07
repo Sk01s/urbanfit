@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const newsItems = [
   "EASY RETURNS",
   "3-5 DAYS DELIVERY",
-  "SAME DAY DELIVERY (Express Service)",
+  // "SAME DAY DELIVERY (Express Service)",
   // "World wide Delivery (DHL)",
   "Wear the change Be URBANFIT!",
 ];

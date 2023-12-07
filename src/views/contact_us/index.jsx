@@ -125,7 +125,12 @@ const Contact = () => {
             style={{ textAlign: "center", fontSize: "1.3rem" }}
           >
             <div className="rte">
-              <p>WhatsApp - +961 711 08 084</p>
+              <p>
+                WhatsApp -{" "}
+                <a href="https://api.whatsapp.com/send?phone=96176875941">
+                  +961 76 875 941
+                </a>
+              </p>
               <p>
                 <a
                   href="mailto:customer-service@urbanfitlb.com"
