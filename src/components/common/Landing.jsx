@@ -12,16 +12,34 @@ const slides = [
   {
     videoUrl: "/video-1.mp4",
     mobileUrl: "/mobile-2.mp4",
+    mobile: {
+      width: 480,
+      height: 848,
+    },
   },
   {
     imgUrl: "/landing-bg.webp",
     mobileUrl: "/mobile-1.mp4",
+    mobile: {
+      width: 448,
+      height: 848,
+    },
   },
   // Add more slides as needed
 ];
 
 const updateInterval = 70; // Update every 10 milliseconds
 
+function calcVideoHeight(aspectRatio) {
+  const windowWidth = window.innerWidth;
+  // const windowAspectRatio = windowWidth / window.innerHeight;
+  const videoAspectRatio = aspectRatio.width / aspectRatio.height;
+  const difference = window.innerWidth / aspectRatio.width;
+
+  let videoHeight = aspectRatio.height * difference;
+  console.log(videoHeight);
+  return videoHeight;
+}
 const VideoSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const playerRef = useRef(null);
@@ -51,7 +69,13 @@ const VideoSlider = () => {
       style={{
         position: "relative",
         overflow: "hidden",
-        minHeight: isSmall ? "70vh" : "auto",
+        minHeight: isSmall
+          ? calcVideoHeight({
+              width: 480,
+              height: 848,
+            })
+          : "auto",
+        backgroundColor: "#333",
       }}
     >
       <Slider
@@ -62,6 +86,8 @@ const VideoSlider = () => {
         infinite={true}
         autoplaySpeed={5000}
         autoplay={true}
+        swipeToSlide={false}
+        swipe={false}
       >
         {slides.map((slide, index) => (
           <div key={index} style={{ position: "relative" }}>
@@ -77,7 +103,9 @@ const VideoSlider = () => {
                       attributes: {
                         style: {
                           width: isBig ? "100vw" : "100%", // Override the width of the inner video element
+                          
                         },
+
                       },
                     },
                   }}
@@ -88,7 +116,6 @@ const VideoSlider = () => {
                   style={{
                     position: currentSlide === index ? "relative" : "initial",
                     zIndex: currentSlide === index ? "1" : "0",
-                    backgroundColor: "#333",
                   }}
                   playsinline
                 />

@@ -31,6 +31,7 @@ import {} from "@/hooks";
 import firebase from "@/services/firebase";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { BasketToggle } from "@/components/basket";
+import { useProducts } from "@/hooks";
 
 const ViewProduct = () => {
   const { pathname } = useLocation();
@@ -47,13 +48,13 @@ const ViewProduct = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantitiy] = useState(1);
   const [maxQuantity, setMaxQuantity] = useState(10);
-  const [relatedProduct, setRelatedProduct] = useState([]);
-  // const products = useSelector((state) => state.products.items);
+  const [relatedProduct, setRelatedProduct] = useState();
+  const { products } = useProducts();
   useEffect(() => {
     (async () => {
-      const docs = await firebase.getProducts();
+      // const docs = await firebase.getProducts();
       setRelatedProduct(
-        docs.products.filter((item) => product?.relative?.includes(item.id))
+        products.filter((item) => product?.relative?.includes(item.id))
       );
       console.log(relatedProduct.length === 0);
     })();
@@ -103,7 +104,6 @@ const ViewProduct = () => {
     }
   };
 
-  console.log(product);
   const handleAddToBasket = (onClickToggle, e) => {
     addToBasket(
       {

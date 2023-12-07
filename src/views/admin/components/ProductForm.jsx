@@ -100,38 +100,38 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
   const onSubmitForm = async (form) => {
     if (imageFile.image.file || product.imageUr || isEditing) {
       const productId = product.id || (await firebaseInstance.generateKey());
-      const setRelatives = (relativeIdArray) =>
-        relativeIdArray.length === 0
-          ? []
-          : relativeIdArray.map(async (id) => {
-              if (productId === id) return;
-              const currentProduct = products.find(
-                (product) => product.id === id
-              );
-              const relatives = [...relativeIdArray, productId].filter(
-                (itemId) => id !== itemId
-              );
+      // const setRelatives = (relativeIdArray) =>
+      //   relativeIdArray.length === 0
+      //     ? []
+      //     : relativeIdArray.map(async (id) => {
+      //         if (productId === id) return;
+      //         const currentProduct = products.find(
+      //           (product) => product.id === id
+      //         );
+      //         const relatives = [...relativeIdArray, productId].filter(
+      //           (itemId) => id !== itemId
+      //         );
 
-              if (arraysHaveSameValues(currentProduct.relative, relatives)) {
-                return;
-              }
-              currentProduct.relative = relatives;
-              await firebaseInstance.editProduct(
-                currentProduct.id,
-                currentProduct
-              );
-            });
-      setRelatives(form.relative || []);
-      if (product.relative) {
-        product.relative.map(async (productId) => {
-          if (form.relative.includes(productId)) return;
-          const currentProduct = products.find(
-            (product) => product.id === productId
-          );
-          currentProduct.relative = [];
-          await firebaseInstance.editProduct(currentProduct.id, currentProduct);
-        });
-      }
+      //         if (arraysHaveSameValues(currentProduct.relative, relatives)) {
+      //           return;
+      //         }
+      //         currentProduct.relative = relatives;
+      //         await firebaseInstance.editProduct(
+      //           currentProduct.id,
+      //           currentProduct
+      //         );
+      //       });
+      // setRelatives(form.relative || []);
+      // if (product.relative) {
+      //   product.relative.map(async (productId) => {
+      //     if (form.relative.includes(productId)) return;
+      //     const currentProduct = products.find(
+      //       (product) => product.id === productId
+      //     );
+      //     currentProduct.relative = [];
+      //     await firebaseInstance.editProduct(currentProduct.id, currentProduct);
+      //   });
+      // }
       onSubmit({
         id: productId,
         ...form,

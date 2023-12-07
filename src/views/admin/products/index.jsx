@@ -24,12 +24,7 @@ const Products = () => {
   const sortProducts = (products) => {
     setFilterdProducts(products);
   };
-  useEffect(() => {
-    async function fetch() {
-      await fetchProducts();
-    }
-    fetch();
-  }, []);
+
   return (
     <Boundary>
       <ProductsNavbar
