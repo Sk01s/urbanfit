@@ -86,8 +86,6 @@ const VideoSlider = () => {
         infinite={true}
         autoplaySpeed={5000}
         autoplay={true}
-        swipeToSlide={false}
-        swipe={false}
       >
         {slides.map((slide, index) => (
           <div key={index} style={{ position: "relative" }}>
@@ -103,9 +101,7 @@ const VideoSlider = () => {
                       attributes: {
                         style: {
                           width: isBig ? "100vw" : "100%", // Override the width of the inner video element
-                          
                         },
-
                       },
                     },
                   }}

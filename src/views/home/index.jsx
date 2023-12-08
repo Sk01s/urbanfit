@@ -60,7 +60,7 @@ const Home = () => {
   }, []);
   console.log(seasonalProducts);
   return (
-    <main className="content">
+    <main className="content" style={{ padding: 0 }}>
       <div className="home">
         {/* <div className="banner">
           <div className="banner-desc">
