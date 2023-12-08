@@ -62,6 +62,9 @@ const FormSchema = Yup.object().shape({
   priority: Yup.number().min(-1).max(1).required("Set priority "),
   isSeasonal: Yup.boolean(),
   isEssential: Yup.boolean(),
+  isCool: Yup.boolean(),
+  isLuxury: Yup.boolean(),
+  isNew: Yup.boolean(),
   availableColors: Yup.array()
     .of(Yup.string().required())
     .min(1, "Please add a default color for this product."),
@@ -85,8 +88,11 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
     description: product?.description || "",
     keywords: product?.keywords || [],
     relative: product?.relative || [],
-    isSeasonal: product?.isSeasonal || product.isFeatured || false,
-    isEssential: product?.isEssential || product.isRecommended || false,
+    isSeasonal: product?.isSeasonal || false,
+    isEssential: product?.isEssential || false,
+    isCool: product?.isCool || false,
+    isNew: product?.isNew || false,
+    isLuxury: product?.isLuxury || false,
     availableColors: product?.availableColors || [],
   };
 
@@ -498,6 +504,67 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   <label htmlFor="essentails">
                     <h5 className="d-flex-grow-1 margin-0">
                       &nbsp; Add to Essential &nbsp;
+                    </h5>
+                  </label>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <input
+                    checked={values.isLuxury}
+                    className=""
+                    id="luxury"
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        isLuxury: e.target.checked,
+                      })
+                    }
+                    type="checkbox"
+                  />
+                  <label htmlFor="luxury">
+                    <h5 className="d-flex-grow-1 margin-0">
+                      &nbsp; Add to Luxury &nbsp;
+                    </h5>
+                  </label>
+                </div>
+                <div className="product-form-field">
+                  <input
+                    checked={values.isCool}
+                    className=""
+                    id="cool"
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        isCool: e.target.checked,
+                      })
+                    }
+                    type="checkbox"
+                  />
+                  <label htmlFor="cool">
+                    <h5 className="d-flex-grow-1 margin-0">
+                      &nbsp; Add to Cool &nbsp;
+                    </h5>
+                  </label>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <input
+                    checked={values.isNew}
+                    className=""
+                    id="new"
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        isNew: e.target.checked,
+                      })
+                    }
+                    type="checkbox"
+                  />
+                  <label htmlFor="new">
+                    <h5 className="d-flex-grow-1 margin-0">
+                      &nbsp; Add to New &nbsp;
                     </h5>
                   </label>
                 </div>

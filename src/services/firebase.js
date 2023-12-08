@@ -381,7 +381,7 @@ class Firebase {
       product.quantity = item.quantity;
       product.totalQuantity -= item.quantity;
       product[`${item.selectedSize}Quantity`] -= item.quantity;
-      if (item[`${item.selectedSize}Quantity`] < 0 || item.totalQuantity < 0) {
+      if (product[`${item.selectedSize}Quantity`] < 0 || product.totalQuantity < 0) {
         throw "Product is out of stock";
       }
       await this.db.collection("products").doc(item.id).set(product);

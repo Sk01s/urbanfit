@@ -218,7 +218,7 @@ const Total = ({ isInternational, subtotal, order }) => {
       );
       dispatch(clearBasket());
       dispatch(setPromo({ percentage: 0 }));
-      setLoading(false);
+      // setLoading(false);
       history.push(`/order-completed/${order.id}`, order);
     } catch (error) {
       displayActionMessage(error, "error");

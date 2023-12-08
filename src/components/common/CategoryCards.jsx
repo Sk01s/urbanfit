@@ -23,7 +23,7 @@ const CategoryCards = () => {
   };
   return (
     <div
-    className="card-container"
+      className="card-container"
       style={{
         width: "100%",
         // display: "grid",
@@ -84,7 +84,7 @@ const CategoryCards = () => {
       </div>
       <Slider ref={sliderRef} {...settings}>
         <Link
-          to={"/store/men/tops"}
+          to={"/cool/men"}
           className="product-display card"
           style={{
             marginInline: ".5rem",
@@ -103,7 +103,7 @@ const CategoryCards = () => {
           />
         </Link>
         <Link
-          to={"/store/men/bottoms"}
+          to={"/luxury/men/"}
           className="product-display card"
           style={{
             marginInline: ".5rem",
@@ -121,7 +121,7 @@ const CategoryCards = () => {
           />
         </Link>
         <Link
-          to={"/store/men/active"}
+          to={"/type/women/active-wear"}
           className="product-display card"
           card
           style={{
@@ -140,7 +140,7 @@ const CategoryCards = () => {
           />
         </Link>
         <Link
-          to={"/store/men/essential"}
+          to={"/new/men"}
           className="product-display card"
           card
           style={{
@@ -159,7 +159,7 @@ const CategoryCards = () => {
           />
         </Link>
         <Link
-          to={"/store/men/seasonal-collection"}
+          to={"/luxury/women/"}
           className="product-display card"
           card
           style={{
@@ -178,7 +178,7 @@ const CategoryCards = () => {
           />
         </Link>
         <Link
-          to={"/store/men/seasonal-collection"}
+          to={"/new/women/"}
           className="product-display card"
           card
           style={{
@@ -197,9 +197,8 @@ const CategoryCards = () => {
           />
         </Link>
         <Link
-          to={"/store/men/seasonal-collection"}
+          to={"/type/women/t-shrit"}
           className="product-display card"
-      
           style={{
             marginInline: ".5rem",
           }}
