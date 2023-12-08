@@ -21,6 +21,7 @@
   // align-items: center;
   gap: 3rem;
   .category-card {
+    position: relative;
     display: flex;
     justify-content: left;
     align-items: end;
@@ -30,8 +31,21 @@
     font-size: 2rem;
     min-height: 100px;
     background: linear-gradient(to right, antiquewhite, aliceblue);
+    background-size: cover !important;
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, #3d3d3d52, #dadada13);
+    }
     &:hover {
       text-decoration: none;
+    }
+    h3,
+    button {
+      position: relative;
+      z-index: 1;
+      color: #fff;
     }
   }
   @media (max-width: 728px) {

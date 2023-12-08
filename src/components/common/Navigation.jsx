@@ -426,9 +426,9 @@ const Navigation = () => {
             style={{
               position: "absolute",
               top: "100% ",
-              left: "-2.5rem",
+              left: "-3.5rem",
               background: " #fff",
-              width: "calc(100% + 5rem )",
+              width: "calc(100% + 7rem )",
               paddingTop: "2rem",
               padding: "1.5rem",
               borderRadius: " 0 0 0.4rem 0.4rem",
@@ -447,20 +447,20 @@ const Navigation = () => {
             >
               <Link
                 onClick={handleMouseLeave}
-                to="/about-us"
+                to="/contact-us"
                 className="type-link"
               >
-                Our Story
+                Contact us
               </Link>
               <Link onClick={handleMouseLeave} to="/faqs" className="type-link">
                 FAQS
               </Link>
               <Link
                 onClick={handleMouseLeave}
-                to="/contact-us"
+                to="/about-us"
                 className="type-link"
               >
-                Contact us
+                Our Story
               </Link>
             </div>
           </div>

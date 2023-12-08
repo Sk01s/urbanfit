@@ -15,32 +15,56 @@ const index = () => {
         }}
       >
         <div className="category-gender">
-          <Link to={"/store/women/tops"} className="category-card">
+          <Link
+            to={"/store/women/tops"}
+            className="category-card"
+            style={{ backgroundImage: "url('/women-card-1.jpg')" }}
+          >
             <div>
               <h3>Tops</h3>
               <button className="button">Shop Now</button>
             </div>
           </Link>
-          <Link to={"/store/women/bottoms"} className="category-card">
+          <Link
+            to={"/store/women/bottoms"}
+            className="category-card"
+            style={{ backgroundImage: "url('/women-card-2.jpg')" }}
+          >
             <div>
               <h3>Bottoms</h3>
               <button className="button">Shop Now</button>
             </div>
           </Link>
-          <Link to={"/store/women/active"} className="category-card">
+          <Link
+            to={"/store/women/active"}
+            className="category-card"
+            style={{ backgroundImage: "url('/women-card-3.jpg')" }}
+          >
             <div>
               <h3>Active</h3>
               <button className="button">Shop Now</button>
             </div>
           </Link>
-          <Link to={"/store/women/essential"} className="category-card">
+          <Link
+            to={"/store/women/essential"}
+            className="category-card"
+            style={{ backgroundImage: "url('/women-card-4.jpg')" }}
+          >
             <div>
               <h3>Essentials</h3>
               <button className="button">Shop Now</button>
             </div>
           </Link>
         </div>
-        <Link to={"/store/women/seasonal-collection"} className="category-card">
+        <Link
+          to={"/store/women/seasonal-collection"}
+          className="category-card"
+          style={{
+            backgroundImage: "url('/card-5.jpg')",
+            aspectRatio: "auto",
+            height: "60rem",
+          }}
+        >
           <div>
             <h3>{season}</h3>
             <button className="button">Shop Now</button>

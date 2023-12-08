@@ -58,7 +58,6 @@ const Home = () => {
       (document.getElementsByClassName("content")[0].style.padding =
         "10rem 2rem");
   }, []);
-  console.log(seasonalProducts);
   return (
     <main className="content" style={{ padding: 0 }}>
       <div className="home">

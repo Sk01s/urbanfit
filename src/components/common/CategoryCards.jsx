@@ -120,7 +120,7 @@ const CategoryCards = () => {
             }}
           />
         </Link>
-        <Link
+        {/* <Link
           to={"/type/women/active-wear"}
           className="product-display card"
           card
@@ -138,7 +138,7 @@ const CategoryCards = () => {
               padding: " 0 1rem",
             }}
           />
-        </Link>
+        </Link> */}
         <Link
           to={"/new/men"}
           className="product-display card"
