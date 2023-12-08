@@ -202,23 +202,20 @@ const Total = ({ isInternational, subtotal, order }) => {
       if (!order.uid) {
         order.uid = firebaseInstance.getCurrentUser();
       }
-      console.log(order);
       await firebase.addOrder(order.id, order);
-      await emailjs
-        .send(
-          "service_vyw8iqt",
-          "template_btzkhrc",
-          {
-            id: order.id,
-            name: order.address.fullname,
-            email: order.address.email,
-            items: createEmailItems(),
-            contact: contact(),
-            summery: summery(),
-          },
-          "JPeR2g9TA1pVocFL4"
-        )
-        .then((e) => console.log(e));
+      await emailjs.send(
+        "service_vyw8iqt",
+        "template_btzkhrc",
+        {
+          id: order.id,
+          name: order.address.fullname,
+          email: order.address.email,
+          items: createEmailItems(),
+          contact: contact(),
+          summery: summery(),
+        },
+        "JPeR2g9TA1pVocFL4"
+      );
       dispatch(clearBasket());
       dispatch(setPromo({ percentage: 0 }));
       setLoading(false);

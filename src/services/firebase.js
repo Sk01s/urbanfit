@@ -362,6 +362,9 @@ class Firebase {
   removeProduct = (id) => this.db.collection("products").doc(id).delete();
 
   addOrder = async (id, order) => {
+    const products = (await this.getProductsAll()).docs.map((doc) =>
+      doc.data()
+    );
     if (order.promo.code) {
       order.promo.uses++;
       await this.db
@@ -374,12 +377,14 @@ class Firebase {
       .doc(id)
       .set({ ...order, otp: false });
     order.items.map(async (item) => {
-      item.totalQuantity -= item.quantity;
-      item[`${item.selectedSize}Quantity`] -= item.quantity;
+      const product = products.find(({ id }) => id === item.id);
+      product.quantity = item.quantity;
+      product.totalQuantity -= item.quantity;
+      product[`${item.selectedSize}Quantity`] -= item.quantity;
       if (item[`${item.selectedSize}Quantity`] < 0 || item.totalQuantity < 0) {
         throw "Product is out of stock";
       }
-      await this.db.collection("products").doc(item.id).set(item);
+      await this.db.collection("products").doc(item.id).set(product);
     });
   };
 

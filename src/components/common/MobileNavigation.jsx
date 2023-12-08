@@ -399,11 +399,11 @@ const Navigation = (props) => {
               Hoodies & Sweatshrits
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link onClick={closeMenu} to="/type/men/jacket">
               Jacket
             </Link>
-          </li>
+          </li> */}
 
           <li>
             <Link onClick={closeMenu} to="/type/men/sweatpants-&-pants">
@@ -450,11 +450,11 @@ const Navigation = (props) => {
               Hoodies & Sweatshrits
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link onClick={closeMenu} to="/type/women/jacket">
               Jacket
             </Link>
-          </li>
+          </li> */}
 
           <li>
             <Link onClick={closeMenu} to="/type/women/sweatpants-&-pants">
