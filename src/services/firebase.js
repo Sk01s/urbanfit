@@ -327,19 +327,11 @@ class Firebase {
     });
   };
 
-  getSeasonalProducts = (itemsCount = 12) =>
-    this.db
-      .collection("products")
-      .where("isSeasonal", "==", true)
-      .limit(itemsCount)
-      .get();
+  getSeasonalProducts = () =>
+    this.db.collection("products").where("isSeasonal", "==", true).get();
 
-  getEsssentialProducts = (itemsCount = 12) =>
-    this.db
-      .collection("products")
-      .where("isEssential", "==", true)
-      .limit(itemsCount)
-      .get();
+  getEsssentialProducts = () =>
+    this.db.collection("products").where("isEssential", "==", true).get();
   getProductsAll = () => this.db.collection("products").get();
 
   addProduct = (id, product) =>
@@ -381,7 +373,10 @@ class Firebase {
       product.quantity = item.quantity;
       product.totalQuantity -= item.quantity;
       product[`${item.selectedSize}Quantity`] -= item.quantity;
-      if (product[`${item.selectedSize}Quantity`] < 0 || product.totalQuantity < 0) {
+      if (
+        product[`${item.selectedSize}Quantity`] < 0 ||
+        product.totalQuantity < 0
+      ) {
         throw "Product is out of stock";
       }
       await this.db.collection("products").doc(item.id).set(product);

@@ -54,13 +54,11 @@ const Home = () => {
   } = useEssentialProducts(6);
 
   useEffect(() => {
-    console.log(
-      (document.getElementsByClassName("content")[0].style.padding = 0)
-    );
     return () =>
       (document.getElementsByClassName("content")[0].style.padding =
         "10rem 2rem");
   }, []);
+  console.log(seasonalProducts);
   return (
     <main className="content">
       <div className="home">
