@@ -99,7 +99,7 @@ function* productSaga({ type, payload }) {
         const product = {
           ...payload,
           image: downloadURL,
-          imageCollection: [image, ...images],
+          imageCollection: [...images],
         };
 
         yield call(firebase.addProduct, id, product);
