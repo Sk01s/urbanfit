@@ -107,7 +107,7 @@ const VideoSlider = () => {
                   }}
                   muted={true}
                   playing={true}
-                  width={isSmall ? "100vw" : "100%"}
+                  width={"100vw"}
                   height="auto"
                   style={{
                     position: currentSlide === index ? "relative" : "initial",

@@ -44,7 +44,7 @@ const Luxury = (props) => {
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex}'s Cool
+          Weekend cool
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
