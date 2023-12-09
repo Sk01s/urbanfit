@@ -670,7 +670,11 @@
   }
 }
 .hover .image {
-  translate: 0 -100%;
+  transform: translateY(calc(-100% - 0.5rem)) scale(1.025);
+  -webkit-transform: translateY(calc(-100% - 0.5rem)) scale(1.025);
+  -moz-transform: translateY(calc(-100% - 0.5rem)) scale(1.025);
+  -ms-transform: translateY(calc(-100% - 0.5rem)) scale(1.025);
+  -o-transform: translateY(calc(-100% - 0.5rem)) scale(1.025);
 }
 .product-display-details {
   padding-top: 0.7rem;

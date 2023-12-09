@@ -38,12 +38,17 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
           <div className="product-display-img">
             {product.image ? (
               <>
-                <ImageLoader src={product.image} draggable={false} />
+                <ImageLoader
+                  src={product.image}
+                  draggable={false}
+                  style={{ margin: 0, padding: 0 }}
+                />
                 {product.imageCollection[3] && (
                   <ImageLoader
                     className="image"
                     src={product.imageCollection[3].url}
                     draggable={false}
+                    style={{ margin: 0, padding: 0 }}
                   />
                 )}
               </>
