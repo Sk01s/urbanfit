@@ -56,7 +56,7 @@ const index = () => {
             </div>
           </Link>
         </div>
-        <Link
+        {/* <Link
           to={"/store/men/seasonal-collection"}
           className="category-card"
           style={{
@@ -69,7 +69,7 @@ const index = () => {
             <h3>{season}</h3>
             <button className="button">Shop Now</button>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </main>
   );
