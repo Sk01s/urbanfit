@@ -357,6 +357,10 @@ class Firebase {
     const products = (await this.getProductsAll()).docs.map((doc) =>
       doc.data()
     );
+    const items = order.items.map((item) => {
+      const product = products.find(({ id }) => id === item.id);
+      return { ...item, ...product };
+    });
     if (order.promo.code) {
       order.promo.uses++;
       await this.db
@@ -367,10 +371,9 @@ class Firebase {
     await this.db
       .collection("order")
       .doc(id)
-      .set({ ...order, otp: false });
+      .set({ ...order, otp: false, items });
     order.items.map(async (item) => {
       const product = products.find(({ id }) => id === item.id);
-      product.quantity = item.quantity;
       product.totalQuantity -= item.quantity;
       product[`${item.selectedSize}Quantity`] -= item.quantity;
       if (
