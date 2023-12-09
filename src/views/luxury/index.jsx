@@ -44,7 +44,7 @@ const Luxury = (props) => {
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex}'s Luxury
+          {sex == "women" ? "Timeless Luxury" : "Luxury Layers"}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products

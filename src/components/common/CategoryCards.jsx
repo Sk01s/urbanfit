@@ -140,7 +140,7 @@ const CategoryCards = () => {
           />
         </Link> */}
         <Link
-          to={"/new/men"}
+          to={"/new/none"}
           className="product-display card"
           card
           style={{

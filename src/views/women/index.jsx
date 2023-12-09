@@ -60,7 +60,7 @@ const index = () => {
           to={"/store/women/seasonal-collection"}
           className="category-card"
           style={{
-            backgroundImage: "url('/card-5.jpg')",
+            backgroundImage: "url('/women-card-5.jpg')",
             aspectRatio: "auto",
             height: "60rem",
           }}

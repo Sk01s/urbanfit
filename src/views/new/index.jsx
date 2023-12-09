@@ -33,18 +33,20 @@ const Luxury = (props) => {
   };
   useEffect(() => {
     setFilterdProducts(
-      products?.filter(
-        (product) =>
-          product.isNew &&
-          product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-      )
+      sex === "none"
+        ? products?.filter((product) => product.isNew)
+        : products?.filter(
+            (product) =>
+              product.isNew &&
+              product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
+          )
     );
   }, [pathname, products]);
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex}'s New
+          {sex === "women" ? "Comfort Sets" : "Just Landed"}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
