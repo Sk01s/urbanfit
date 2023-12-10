@@ -7,7 +7,6 @@ import { addQtyItem, minusQtyItem } from "@/redux/actions/basketActions";
 const BasketItemControl = ({ product }) => {
   const dispatch = useDispatch();
   const selectedSizeQuantity = product[`${product.selectedSize}Quantity`];
-  console.log(selectedSizeQuantity);
 
   const onAddQty = () => {
     if (product.quantity < selectedSizeQuantity) {

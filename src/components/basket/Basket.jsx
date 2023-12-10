@@ -12,6 +12,8 @@ import { ProductShowcaseGrid } from "@/components/product";
 import { useEssentialProducts } from "@/hooks";
 import firebaseInstance from "@/services/firebase";
 import { useProducts } from "@/hooks";
+import { useState } from "react";
+import { setBasketItems } from "@/redux/actions/basketActions";
 
 const Basket = () => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
@@ -23,6 +25,8 @@ const Basket = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const didMount = useDidMount();
+  const { products, isLoading, error } = useProducts();
+  const basketItemId = basket.map((item) => item.id);
 
   useEffect(() => {
     if (didMount && firebaseInstance.auth.currentUser && basket.length !== 0) {
@@ -36,6 +40,19 @@ const Basket = () => {
         });
     }
   }, [basket.length]);
+  useEffect(() => {
+    dispatch(
+      setBasketItems(
+        products
+          .filter((item) => basketItemId.includes(item.id))
+          .map((item) => {
+            const { quantity } = basket.find(({ id }) => id === item.id);
+            console.log({ ...item, quantity });
+            return { ...item, quantity };
+          })
+      )
+    );
+  }, [products]);
 
   const onCheckOut = () => {
     if (basket.length !== 0 && user) {
@@ -57,7 +74,6 @@ const Basket = () => {
       dispatch(clearBasket());
     }
   };
-  const { products, isLoading, error } = useProducts();
 
   return user && user.role === "ADMIN" ? null : (
     <Boundary>
