@@ -19,7 +19,7 @@ const slides = [
   },
   {
     imgUrl: "/landing-bg.webp",
-    mobileUrl: "/mobile-1.mp4",
+    mobileUrl: "/mobile-2.mp4",
     mobile: {
       width: 448,
       height: 848,
