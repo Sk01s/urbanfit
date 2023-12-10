@@ -11,6 +11,7 @@ const useProducts = () => {
   const didMount = useDidMount(true);
 
   const fetchProducts = async () => {
+    console.log("getting");
     try {
       setLoading(true);
       setError("");

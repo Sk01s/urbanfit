@@ -1,48 +1,38 @@
 import { useDidMount } from "@/hooks";
 import { useEffect, useState } from "react";
 import firebase from "@/services/firebase";
+import useProducts from "./useProducts";
 
 const useSeasonalProducts = (itemsCount) => {
+  const { products, isLoading, error, fetchProducts } = useProducts();
   const [seasonalProducts, setSeasonalProducts] = useState(
-    JSON.parse(localStorage.getItem("seasonals")) || []
+    JSON.parse(localStorage.getItem("seasonals")) ||
+      products.filter((item) => item.isSeasonal) ||
+      []
   );
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+
+  const [seasonalError, setError] = useState(error);
+  const [seasonalLoading, setLoading] = useState(isLoading);
   const didMount = useDidMount(true);
 
   const fetchSeasonalProducts = async () => {
     try {
-      setLoading(true);
-      setError("");
-
-      const docs = await firebase.getSeasonalProducts(itemsCount);
-
-      if (docs.empty) {
-        if (didMount) {
-          setError("No Seasonal products found.");
-          setLoading(false);
-        }
-      } else {
-        const items = [];
-
-        docs.forEach((snap) => {
-          const data = snap.data();
-          items.push({ id: snap.ref.id, ...data });
-        });
-
-        if (didMount) {
-          localStorage.setItem("seasonals", JSON.stringify(items));
-          setSeasonalProducts(items);
-          setLoading(false);
-        }
+      if (!isLoading && products.length === 0) {
+        fetchProducts();
       }
-    } catch (e) {
-      if (didMount) {
-        setError("Failed to fetch featured products");
-        setLoading(false);
-      }
+    } catch (error) {
+      console.log(error);
     }
   };
+  useEffect(() => {
+    setSeasonalProducts(products.filter((item) => item.isSeasonal));
+  }, [products]);
+  useEffect(() => {
+    setError(error);
+  }, [error]);
+  useEffect(() => {
+    setLoading(isLoading);
+  }, [isLoading]);
 
   useEffect(() => {
     if (seasonalProducts.length === 0 && didMount) {
@@ -53,8 +43,8 @@ const useSeasonalProducts = (itemsCount) => {
   return {
     seasonalProducts,
     fetchSeasonalProducts,
-    isLoading,
-    error,
+    isLoading: seasonalLoading,
+    error: seasonalError,
   };
 };
 
