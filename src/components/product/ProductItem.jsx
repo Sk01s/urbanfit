@@ -43,7 +43,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
                   draggable={false}
                   style={{ margin: 0, padding: 0 }}
                 />
-                {product.imageCollection[3] && (
+                {product.imageCollection[3] && window.innerWidth > 700 && (
                   <ImageLoader
                     className="image"
                     src={product.imageCollection[3].url}

@@ -45,14 +45,15 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
                         draggable={false}
                         style={{ minWidth: "200px" }}
                       />
-                      {product.imageCollection[3] && (
-                        <ImageLoader
-                          className="image"
-                          src={product.imageCollection[3].url}
-                          draggable={false}
-                          style={{ minWidth: "200px" }}
-                        />
-                      )}
+                      {product.imageCollection[3] &&
+                        window.innerWidth > 700 && (
+                          <ImageLoader
+                            className="image"
+                            src={product.imageCollection[3].url}
+                            draggable={false}
+                            style={{ minWidth: "200px" }}
+                          />
+                        )}
                     </>
                   ) : (
                     <Skeleton width="50vw" height="100%" />
@@ -179,7 +180,7 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
                     draggable={false}
                     style={{ minWidth: "200px" }}
                   />
-                  {product.imageCollection[3] && (
+                  {product.imageCollection[3] && window.innerWidth > 700 && (
                     <ImageLoader
                       className="image"
                       src={product.imageCollection[3].url}
