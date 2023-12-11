@@ -67,7 +67,7 @@ const useSeasonalProducts = (itemsCount) => {
   const { products, isLoading, error, fetchProducts } = useProducts();
   const [essentialProducts, setSeasonalProducts] = useState(
     JSON.parse(localStorage.getItem("seasonals")) ||
-      products.filter((item) => item.isSeasonal) ||
+      products.filter((item) => item.isEssential) ||
       []
   );
 
@@ -85,7 +85,7 @@ const useSeasonalProducts = (itemsCount) => {
     }
   };
   useEffect(() => {
-    setSeasonalProducts(products.filter((item) => item.isSeasonal));
+    setSeasonalProducts(products.filter((item) => item.isEssential));
   }, [products]);
   useEffect(() => {
     setError(error);

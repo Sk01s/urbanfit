@@ -288,7 +288,6 @@ const Navigation = () => {
                   alt="New Season Image"
                   style={{ width: "20rem" }}
                 />
-                <p>New Season</p>
               </Link>
             </div>
           </div>

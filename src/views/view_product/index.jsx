@@ -130,6 +130,11 @@ const ViewProduct = () => {
     <>
       <Helmet>
         <meta name="description" content={product?.description} />
+        <meta property="og:title" content={product?.name} />
+        <meta property="og:description" content={product?.description} />
+        <meta property="og:image" content={product?.image} />
+        <meta property="og:url" content={window.location.href} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
       <main>
