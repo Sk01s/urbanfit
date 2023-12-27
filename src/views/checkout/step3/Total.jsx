@@ -187,8 +187,13 @@ const Total = ({ isInternational, subtotal, order }) => {
   createEmailItems();
   const handleOrder = async () => {
     try {
+      if (order.payment !== "")
+        return displayActionMessage("Please select payment method.", "info");
       if (order.payment !== "COD")
-        return displayActionMessage("Feature not ready yet :)", "info");
+        return displayActionMessage(
+          "Unfortunately, we are not accepting online payments.",
+          "info"
+        );
       // Update the Orders date
       if (isNotOrderValide()) {
         return displayActionMessage(

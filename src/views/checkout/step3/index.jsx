@@ -78,8 +78,13 @@ const Payment = ({ shipping, payment, subtotal }) => {
         validateOnChange
         validationSchema={FormSchema}
         validate={(form) => {
-          if (form.type !== "COD") {
-            displayActionMessage("Feature not ready yet :)", "info");
+          if (form.type === "") {
+            displayActionMessage("Please select payment method.", "info");
+          } else if (form.type === "credit") {
+            displayActionMessage(
+              "Unfortunately, we are not accepting online payments.",
+              "info"
+            );
           } else {
             return true;
           }
