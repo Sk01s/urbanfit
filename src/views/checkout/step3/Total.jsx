@@ -187,11 +187,11 @@ const Total = ({ isInternational, subtotal, order }) => {
   createEmailItems();
   const handleOrder = async () => {
     try {
-      if (order.payment !== "")
+      if (order.payment === "")
         return displayActionMessage("Please select payment method.", "info");
-      if (order.payment !== "COD")
+      if (order.payment === "credit")
         return displayActionMessage(
-          "Unfortunately, we are not accepting online payments.",
+          "Unfortunately, we are not accepting online payments yet.",
           "info"
         );
       // Update the Orders date
