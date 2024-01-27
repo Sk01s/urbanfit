@@ -1,4 +1,4 @@
-import { displayActionMessage } from "helpers/utils";
+import { displayActionMessage } from "@/helpers/utils";
 import PropType from "prop-types";
 import React, { Component } from "react";
 // import firebaseInstance from "services/firebase";
