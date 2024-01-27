@@ -1,6 +1,7 @@
+import { displayActionMessage } from "helpers/utils";
 import PropType from "prop-types";
 import React, { Component } from "react";
-import firebaseInstance from "@/services/firebase";
+// import firebaseInstance from "services/firebase";
 
 class Boundary extends Component {
   static getDerivedStateFromError() {
@@ -16,7 +17,8 @@ class Boundary extends Component {
   }
 
   componentDidCatch(error) {
-    firebaseInstance.addError(crypto.randomUUID(), error);
+    displayActionMessage(error);
+    // firebaseInstance.addError(crypto.randomUUID(), error);
     console.log(error);
   }
 
