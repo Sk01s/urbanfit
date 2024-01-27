@@ -8,8 +8,8 @@ const useSeasonalProducts = (itemsCount) => {
     const currentMonth = currentDate.getMonth(); // 0 to 11 (January is 0, December is 11)
 
     // Define the start months for each season
-    const springStartMonth = 0; // March
-    const summerStartMonth = 3; // June
+    const springStartMonth = 2; // March
+    const summerStartMonth = 4; // June
     const autumnStartMonth = 6; // September
     const winterStartMonth = 9; // December
 

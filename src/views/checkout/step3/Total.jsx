@@ -56,7 +56,7 @@ const Total = ({ isInternational, subtotal, order }) => {
     if (size === "sm") {
       return "S";
     } else {
-      return size.toLocaleUpperCase();
+      return size?.toLocaleUpperCase();
     }
   };
   const { values, submitForm } = useFormikContext();

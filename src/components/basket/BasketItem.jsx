@@ -17,7 +17,7 @@ const BasketItem = ({ product, display = false }) => {
     if (size === "sm") {
       return "S";
     } else {
-      return size.toLocaleUpperCase();
+      return size?.toLocaleUpperCase();
     }
   };
   return (
