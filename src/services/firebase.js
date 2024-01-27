@@ -130,6 +130,7 @@ class Firebase {
 
   addUser = (id, user) => this.db.collection("users").doc(id).set(user);
   addPromo = (id, user) => this.db.collection("promo").doc(id).set(user);
+  addError = (id, error) => this.db.collection("error").doc(id).set(error);
 
   getUser = (id) => this.db.collection("users").doc(id).get();
 
