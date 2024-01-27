@@ -21,7 +21,6 @@ const AppRouter = () => {
   return (
     <Router history={history}>
       <>
-        <Analytics />
         <SpeedInsights />
         <NewsDisplay />
         <Navigation />
