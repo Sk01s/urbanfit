@@ -1,6 +1,6 @@
 import PropType from "prop-types";
 import React, { Component } from "react";
-import firebaseInstance from "services/firebase";
+import firebaseInstance from "@/services/firebase";
 
 class Boundary extends Component {
   static getDerivedStateFromError() {
