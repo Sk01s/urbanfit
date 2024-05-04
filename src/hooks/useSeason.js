@@ -20,7 +20,7 @@ const useSeasonalProducts = (itemsCount) => {
       currentMonth >= summerStartMonth &&
       currentMonth < autumnStartMonth
     ) {
-      return "Summer";
+      return "End of season";
     } else if (
       currentMonth >= autumnStartMonth &&
       currentMonth < winterStartMonth

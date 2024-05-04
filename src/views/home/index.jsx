@@ -98,7 +98,9 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
-              title={season + " collection"}
+              title={
+                season === "End of season" ? season : season + " collection"
+              }
               products={seasonalProducts}
               skeletonCount={6}
               to={SEASONAL_PRODUCTS}
