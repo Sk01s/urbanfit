@@ -661,8 +661,9 @@
 }
 .card {
   max-width: 100%;
-  aspect-ratio: 10/16 !important;
+  aspect-ratio: 1066 / 1600 !important;
   max-height: 60rem;
+  padding: 0 1rem;
 }
 @media (max-width: 440px) {
   .card {
