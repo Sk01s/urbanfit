@@ -45,7 +45,6 @@ function calcVideoHeight(aspectRatio) {
   const difference = window.innerWidth / aspectRatio.width;
 
   let videoHeight = aspectRatio.height * difference;
-  console.log(videoHeight);
   return videoHeight;
 }
 const VideoSlider = () => {
@@ -100,7 +99,11 @@ const VideoSlider = () => {
             {isSmall ? (
               slide.mobile.img ? (
                 <div>
-                  <img src={slide.mobile.url} style={{ width: "100%" }} />
+                  <img
+                    src={slide.mobile.url}
+                    style={{ width: "100%" }}
+                    alt="landing image"
+                  />
                 </div>
               ) : (
                 <>
@@ -142,7 +145,11 @@ const VideoSlider = () => {
               )
             ) : slide.desktop.img ? (
               <div>
-                <img src={slide.desktop.url} style={{ width: "100%" }} />
+                <img
+                  src={slide.desktop.url}
+                  style={{ width: "100%" }}
+                  alt="landing image"
+                />
               </div>
             ) : (
               <>

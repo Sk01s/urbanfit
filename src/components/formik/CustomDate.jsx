@@ -26,7 +26,6 @@ export default function DatePickerValue({
             newValue.isSame(comparedTo, "day") || newValue.isAfter(comparedTo);
           if (newValue.isValid() && isTodayOrFuture) {
             setValues({ ...values, [propName]: newValue.toDate() });
-            console.log(values);
             return newValue;
           } else {
             displayActionMessage("you date is not correct ");

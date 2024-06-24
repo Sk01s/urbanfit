@@ -32,9 +32,7 @@ const Basket = () => {
     if (didMount && firebaseInstance.auth.currentUser && basket.length !== 0) {
       firebaseInstance
         .saveBasketItems(basket, firebaseInstance.auth.currentUser.uid)
-        .then(() => {
-          console.log("Item saved to Cart");
-        })
+        .then(() => {})
         .catch((e) => {
           console.log(e);
         });
@@ -47,7 +45,7 @@ const Basket = () => {
           .filter((item) => basketItemId.includes(item.id))
           .map((item) => {
             const { quantity } = basket.find(({ id }) => id === item.id);
-            console.log({ ...item, quantity });
+
             return { ...item, quantity };
           })
       )

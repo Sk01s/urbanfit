@@ -65,7 +65,6 @@ const Orders = () => {
                   />
                 ))
               : orders.map((order, index) => {
-                  console.log(order);
                   return <OrderItem key={index} order={order} index={index} />;
                 })}
           </div>

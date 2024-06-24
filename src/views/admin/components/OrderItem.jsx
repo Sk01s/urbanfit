@@ -21,7 +21,6 @@ const OrderItem = ({ order, index }) => {
     0
   );
   const discount = order.promo ? price * (order.promo?.percentage / 100) : 0;
-  console.log(discount);
   const totalPrice = price + shipping - discount;
   const dispatch = useDispatch();
   const history = useHistory();

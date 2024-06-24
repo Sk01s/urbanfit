@@ -97,7 +97,7 @@ const CategoryCards = () => {
               width: "100%",
               height: "100%",
               backgroundSize: "cover",
-              aspectRatio: "10/16",
+              aspectRatio: "1066/600",
               padding: " 0 1rem",
             }}
           />
@@ -116,6 +116,8 @@ const CategoryCards = () => {
               width: "100%",
               height: "100%",
               backgroundSize: "cover",
+              aspectRatio: "1066/600",
+
               padding: " 0 1rem",
             }}
           />
@@ -154,6 +156,8 @@ const CategoryCards = () => {
               width: "100%",
               height: "100%",
               backgroundSize: "cover",
+              aspectRatio: "1066/600",
+
               padding: " 0 1rem",
             }}
           />
@@ -172,6 +176,7 @@ const CategoryCards = () => {
             style={{
               width: "100%",
               height: "100%",
+              aspectRatio: "1066/600",
               backgroundSize: "cover",
               padding: " 0 1rem",
             }}
@@ -192,6 +197,7 @@ const CategoryCards = () => {
               width: "100%",
               height: "100%",
               backgroundSize: "cover",
+              aspectRatio: "1066/600",
               padding: " 0 1rem",
             }}
           />
@@ -210,6 +216,7 @@ const CategoryCards = () => {
               width: "100%",
               height: "100%",
               backgroundSize: "cover",
+              aspectRatio: "1066/600",
               padding: " 0 1rem",
             }}
           />

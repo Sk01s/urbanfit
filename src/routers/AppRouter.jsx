@@ -16,7 +16,6 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 export const history = createBrowserHistory();
 
 const AppRouter = () => {
-  console.log(view.OrderView);
   const [accepeted, setAccepeted] = useState(localStorage.getItem("terms"));
   return (
     <Router history={history}>

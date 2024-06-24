@@ -22,8 +22,6 @@ const CustomCreatableSelect = (props) => {
 
   const handleChange = (newValue) => {
     if (Array.isArray(newValue)) {
-      console.log(newValue);
-      const arr = newValue.map((fieldKey) => fieldKey.value);
       setValue(arr);
     } else {
       setValue(newValue.value);

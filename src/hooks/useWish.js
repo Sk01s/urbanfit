@@ -19,7 +19,6 @@ const useWish = () => {
     if (isItemOnWish(product.id)) return removeFromWish(product);
     dispatch(dispatchAddToWish(product));
     displayActionMessage("Item added to wish list", "success");
-    console.log(wish);
   };
 
   return { wish, removeFromWish, addToWish, isItemOnWish };

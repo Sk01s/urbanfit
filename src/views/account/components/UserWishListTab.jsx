@@ -6,7 +6,6 @@ import { MessageDisplay } from "@/components/common";
 
 const UserWishListTab = () => {
   const { wish, addToWish, isItemOnWish } = useWish();
-  console.log(wish);
   return (
     <div className="loader" style={{ minHeight: "80dvh" }}>
       <h3>My Wish List</h3>

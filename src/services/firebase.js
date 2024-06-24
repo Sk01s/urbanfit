@@ -50,7 +50,6 @@ class Firebase {
 
       callback: (response) => {
         // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // console.log(number, recaptchaVerifier);
       },
       "expired-callback": () => {
         // Response expired. Ask user to solve reCAPTCHA again.
@@ -89,7 +88,6 @@ class Firebase {
         // User signed in successfully.
         const user = result.user;
         // ...
-        console.log("confirmed");
         return result;
       })
       .catch((error) => {
@@ -110,7 +108,6 @@ class Firebase {
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
-        console.log("good", confirmationResult);
         window.confirmationResult = confirmationResult;
         // ...
         return confirmationResult;

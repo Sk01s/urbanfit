@@ -56,7 +56,6 @@ const ViewProduct = () => {
       setRelatedProduct(
         products.filter((item) => product?.relative?.includes(item.id))
       );
-      console.log(relatedProduct.length === 0);
     })();
     return () => {
       setRelatedProduct([]);
@@ -90,7 +89,6 @@ const ViewProduct = () => {
   }, [product]);
 
   const onSelectedSizeChange = (index, newValue) => {
-    console.log(newValue);
     setSelectedSize(newValue);
     sizesBtnsEl.current.map((el, i) => {
       i === index ? el.classList.add("active") : el.classList.remove("active");

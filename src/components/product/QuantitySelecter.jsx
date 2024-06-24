@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const QuantitySelector = ({ setQuantity, quantity, maxQuantity = 10 }) => {
-  console.log(maxQuantity);
   const handleIncrement = () => {
     if (quantity === maxQuantity) return;
     const newQuantity = quantity + 1;

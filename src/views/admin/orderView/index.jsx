@@ -45,7 +45,6 @@ const EditProduct = () => {
     }
     getOrder();
   }, [orderId]);
-  console.log(orderDetails);
   const onSubmitForm = (updates) => {
     dispatch(editProduct(product.id, updates));
   };
