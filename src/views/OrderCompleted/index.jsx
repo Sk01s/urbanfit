@@ -4,12 +4,13 @@ import firebase from "@/services/firebase";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
 import { displayActionMessage, calculateSubtotal } from "@/helpers/utils";
-import { useScrollTop } from "@/hooks";
+import { useScrollTop, useFeatureFlag } from "@/hooks";
 import { OrderPaymentSummery } from "@/components/common";
 const OrderCompleted = () => {
   useScrollTop();
   const location = useLocation();
   const { id } = useParams();
+  const isOtpEnabled = useFeatureFlag("ENABLE_OTP_VERIFICATION");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [otpModel, setOtpModel] = useState(false);
@@ -21,7 +22,7 @@ const OrderCompleted = () => {
   useEffect(() => {
     const recaptcha = async () => {
       try {
-        if (location.state?.id) {
+        if (isOtpEnabled && location.state?.id) {
           firebase.generateRecaptcha(
             location.state.address.mobile.value,
             setOtpModel,
@@ -35,7 +36,7 @@ const OrderCompleted = () => {
     };
 
     recaptcha();
-  }, []);
+  }, [isOtpEnabled]);
   const confiremOtp = (otp) => {
     setConfroming(true);
     firebase
@@ -77,64 +78,66 @@ const OrderCompleted = () => {
 
   return (
     <>
-      <div
-        style={{
-          position: "fixed",
-          display: otpRec ? "flex" : "none",
-          top: 0,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 10000,
-        }}
-      >
+      {isOtpEnabled && (
         <div
           style={{
-            position: "absolute",
-            width: "100vw",
-            height: "100vh",
+            position: "fixed",
             display: otpRec ? "flex" : "none",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#fff",
-            backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
-            backgroundSize: window.innerWidth <= 500 ? "99vw" : "33vw",
-
-            filter: "blur(0.7px)",
             top: 0,
             left: 0,
+            bottom: 0,
+            right: 0,
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 10000,
           }}
-        />
-        <div style={{ position: "relative" }} id="container"></div>
-
-        {/* <button
-          ref={recaptchaRef}
-          className="button"
-          onClick={() => {
-            console.log(location.state.address.mobile.value);
-            firebase
-              .requestPhoneOtp(
-                location.state.address.mobile.value || "+96176875941"
-              )
-              .then(() => {
-                console.log(location.state);
-                setOtpModel(true);
-                setOtpRec(false);
-              })
-              .catch((error) => {
-                console.log(error);
-                setOtpModel(false);
-                setError(error);
-                displayActionMessage(error);
-              });
-          }}
-          id="container"
         >
-          Verfity Phone Number
-        </button> */}
-      </div>
+          <div
+            style={{
+              position: "absolute",
+              width: "100vw",
+              height: "100vh",
+              display: otpRec ? "flex" : "none",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#fff",
+              backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
+              backgroundSize: window.innerWidth <= 500 ? "99vw" : "33vw",
+
+              filter: "blur(0.7px)",
+              top: 0,
+              left: 0,
+            }}
+          />
+          <div style={{ position: "relative" }} id="container"></div>
+
+          {/* <button
+            ref={recaptchaRef}
+            className="button"
+            onClick={() => {
+              console.log(location.state.address.mobile.value);
+              firebase
+                .requestPhoneOtp(
+                  location.state.address.mobile.value || "+96176875941"
+                )
+                .then(() => {
+                  console.log(location.state);
+                  setOtpModel(true);
+                  setOtpRec(false);
+                })
+                .catch((error) => {
+                  console.log(error);
+                  setOtpModel(false);
+                  setError(error);
+                  displayActionMessage(error);
+                });
+            }}
+            id="container"
+          >
+            Verfity Phone Number
+          </button> */}
+        </div>
+      )}
       <main
         key={order}
         style={{
@@ -153,6 +156,7 @@ const OrderCompleted = () => {
             marginInline: "2rem",
             marginBottom: "2rem",
             borderRadius: "1rem",
+            display: isOtpEnabled ? "flex" : "none",
           }}
         >
           <svg
@@ -408,7 +412,7 @@ const OrderCompleted = () => {
         >
           Continue shopping
         </Link>
-        {otpModel && (
+        {otpModel && isOtpEnabled && (
           <>
             <section
               style={{
