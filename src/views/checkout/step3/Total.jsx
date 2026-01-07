@@ -81,9 +81,8 @@ const Total = ({ isInternational, subtotal, order }) => {
       <div style="width: 100%; height: 1px; background-color: rgb(202, 202, 202); margin-block: 2rem;"></div>
       <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
         <div style="color: rgb(115, 115, 115);">Total:</div>
-        <strong>$${
-          subtotal + shipping - (subtotal * order.promo.percentage) / 100
-        }</strong>
+        <strong>$${subtotal + shipping - (subtotal * order.promo.percentage) / 100
+    }</strong>
       </div>
     </div>
   `;
@@ -155,10 +154,10 @@ const Total = ({ isInternational, subtotal, order }) => {
 
         <div class="basket-item-price">
           <span class="my-0">${displayMoney(
-            product.onSale
-              ? Number(product.price) * (1 - Number(product.percentage / 100))
-              : product.price
-          )}</span>
+          product.onSale
+            ? Number(product.price) * (1 - Number(product.percentage / 100))
+            : product.price
+        )}</span>
         </div>
       </div>
 
@@ -208,19 +207,19 @@ const Total = ({ isInternational, subtotal, order }) => {
         order.uid = firebaseInstance.getCurrentUser();
       }
       await firebase.addOrder(order.id, order);
-      await emailjs.send(
-        "service_vyw8iqt",
-        "template_btzkhrc",
-        {
-          id: order.id,
-          name: order.address.fullname,
-          email: order.address.email,
-          items: createEmailItems(),
-          contact: contact(),
-          summery: summery(),
-        },
-        "JPeR2g9TA1pVocFL4"
-      );
+      // await emailjs.send(
+      //   "service_vyw8iqt",
+      //   "template_btzkhrc",
+      //   {
+      //     id: order.id,
+      //     name: order.address.fullname,
+      //     email: order.address.email,
+      //     items: createEmailItems(),
+      //     contact: contact(),
+      //     summery: summery(),
+      //   },
+      //   "JPeR2g9TA1pVocFL4"
+      // );
       dispatch(clearBasket());
       dispatch(setPromo({ percentage: 0 }));
       // setLoading(false);
