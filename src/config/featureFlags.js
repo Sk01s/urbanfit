@@ -7,7 +7,7 @@
 
 const featureFlags = {
   // OTP verification for phone numbers during checkout
-  ENABLE_OTP_VERIFICATION: true,
+  ENABLE_OTP_VERIFICATION: false,
 
   // Add more flags here as needed
   // ENABLE_WISHLIST: true,
