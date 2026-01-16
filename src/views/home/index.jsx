@@ -13,7 +13,6 @@ import {
   useScrollTop,
   useSeason,
 } from "@/hooks";
-import bannerImg from "@/images/banner-girl.png";
 import React from "react";
 import { Link } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";

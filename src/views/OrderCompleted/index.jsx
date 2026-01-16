@@ -4,11 +4,12 @@ import firebase from "@/services/firebase";
 import { BasketItem } from "@/components/basket";
 import { Link } from "react-router-dom";
 import { displayActionMessage, calculateSubtotal } from "@/helpers/utils";
-import { useScrollTop, useFeatureFlag } from "@/hooks";
+import { useScrollTop, useFeatureFlag, useSiteImages } from "@/hooks";
 import { OrderPaymentSummery } from "@/components/common";
 const OrderCompleted = () => {
   useScrollTop();
   const location = useLocation();
+  const { getImageUrl } = useSiteImages();
   const { id } = useParams();
   const isOtpEnabled = useFeatureFlag("ENABLE_OTP_VERIFICATION");
   const [message, setMessage] = useState("");
@@ -101,7 +102,7 @@ const OrderCompleted = () => {
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "#fff",
-              backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
+              backgroundImage: `url(${getImageUrl("urbanfit-stamp")})`,
               backgroundSize: window.innerWidth <= 500 ? "99vw" : "33vw",
 
               filter: "blur(0.7px)",
@@ -508,7 +509,7 @@ const OrderCompleted = () => {
                 position: "fixed",
                 height: "100vh",
                 backgroundColor: "#fff",
-                backgroundImage: "url('/urbanfitpng-removebg-preview.png')",
+                backgroundImage: `url(${getImageUrl("urbanfit-stamp")})`,
                 backgroundSize: window.innerWidth <= 500 ? "99vw" : "33vw",
                 filter: "blur(0.75px)",
                 top: 0,

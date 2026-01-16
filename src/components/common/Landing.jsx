@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import ReactPlayer from "react-player";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
@@ -8,33 +8,7 @@ import {
   ESSENTIAL_PRODUCTS,
   SHOP,
 } from "@/constants/routes";
-const slides = [
-  {
-    desktop: {
-      url: "/video-1.mp4",
-      img: false,
-    },
-    mobile: {
-      url: "/mobile-1.jpeg",
-      img: true,
-      width: 470,
-      height: 848,
-    },
-  },
-  {
-    desktop: {
-      url: "/landing-bg.webp",
-      img: true,
-    },
-    mobile: {
-      url: "/mobile-2.JPG",
-      img: true,
-      width: 448,
-      height: 848,
-    },
-  },
-  // Add more slides as needed
-];
+import { useSiteImages } from "@/hooks";
 
 const updateInterval = 70; // Update every 10 milliseconds
 
@@ -51,6 +25,37 @@ const VideoSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const playerRef = useRef(null);
   const timerArray = useRef([]);
+  const { getImageUrl } = useSiteImages();
+
+  const slides = useMemo(
+    () => [
+      {
+        desktop: {
+          url: getImageUrl("landing-video-1"),
+          img: false,
+        },
+        mobile: {
+          url: getImageUrl("mobile-1"),
+          img: true,
+          width: 470,
+          height: 848,
+        },
+      },
+      {
+        desktop: {
+          url: getImageUrl("landing-bg"),
+          img: true,
+        },
+        mobile: {
+          url: getImageUrl("mobile-2"),
+          img: true,
+          width: 448,
+          height: 848,
+        },
+      },
+    ],
+    [getImageUrl]
+  );
 
   const handleSlideChange = (newSlide) => {
     setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));

@@ -79,6 +79,7 @@ const AppRouter = () => {
           />
 
           <Route component={view.ViewProduct} path={ROUTES.VIEW_PRODUCT} />
+          <Route component={view.SpecialPage} path={ROUTES.SPECIAL_PAGE} />
           <ClientRoute
             component={view.UserAccount}
             exact
@@ -109,6 +110,25 @@ const AppRouter = () => {
             component={view.Dashboard}
             exact
             path={ROUTES.ADMIN_DASHBOARD}
+          />
+          <AdminRoute
+            component={view.AdminImages}
+            exact
+            path={ROUTES.ADMIN_IMAGES}
+          />
+          <AdminRoute
+            component={view.SpecialPages}
+            exact
+            path={ROUTES.ADMIN_SPECIAL_PAGES}
+          />
+          <AdminRoute
+            component={view.AddSpecialPage}
+            exact
+            path={ROUTES.ADD_SPECIAL_PAGE}
+          />
+          <AdminRoute
+            component={view.EditSpecialPage}
+            path={`${ROUTES.EDIT_SPECIAL_PAGE}/:id`}
           />
           <AdminRoute
             component={view.Orders}

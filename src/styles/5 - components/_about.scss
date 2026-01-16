@@ -8,7 +8,7 @@
   .image {
     width: 40vw;
     height: 100%;
-    background-image: url("/our-story-1.png");
+    background-image: var(--site-image-our-story-1, url("/our-story-1.png"));
     background: linear-gradient(to right, antiquewhite, aliceblue);
   }
   .text {
@@ -31,5 +31,5 @@
 .about-banner {
   width: 100%;
   height: 100%;
-  background-image: url("/our-story-1.png");
+  background-image: var(--site-image-our-story-1, url("/our-story-1.png"));
 }

@@ -1,7 +1,6 @@
 /* eslint-disable indent */
 import { FilterOutlined, ShoppingOutlined } from "@ant-design/icons";
 import * as Route from "@/constants/routes";
-import logo from "@/images/logo-full.png";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, useLocation } from "react-router-dom";
@@ -12,7 +11,7 @@ import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useEssentialProducts } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSpecialPages } from "@/hooks";
 
 const handleScroll = () => {
   const scrollY = window.scrollY;
@@ -30,12 +29,15 @@ const Navigation = () => {
   const [isMenPopupVisible, setMenPopupVisible] = useState(false);
   const [isWomenPopupVisible, setWomenPopupVisible] = useState(false);
   const [isInfoPopupVisible, setInfoPopupVisible] = useState(false);
+  const [isSpecialPopupVisible, setSpecialPopupVisible] = useState(false);
   const [isSmall, setSmall] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(handleScroll());
 
   const { pathname } = useLocation();
   const { essentialProducts, fetchEssentialProducts, isLoading, error } =
     useEssentialProducts();
+  const { specialPages } = useSpecialPages();
+  const { getImageUrl } = useSiteImages();
   const handleMouseEnterMen = () => {
     setMenPopupVisible(true);
   };
@@ -45,11 +47,15 @@ const Navigation = () => {
   const handleMouseEnterWomen = () => {
     setWomenPopupVisible(true);
   };
+  const handleMouseEnterSpecial = () => {
+    setSpecialPopupVisible(true);
+  };
 
   const handleMouseLeave = () => {
     setMenPopupVisible(false);
     setWomenPopupVisible(false);
     setInfoPopupVisible(false);
+    setSpecialPopupVisible(false);
   };
 
   function isInVisable() {
@@ -66,6 +72,12 @@ const Navigation = () => {
   const onClickLink = (e) => {
     if (store.isAuthenticating) e.preventDefault();
   };
+
+  const womenSpecialPages = specialPages.filter(
+    (page) => page.gender === "Women"
+  );
+  const menSpecialPages = specialPages.filter((page) => page.gender === "Men");
+  const defaultSpecialPage = specialPages[0];
 
   // disable the basket toggle to these pathnames
   const basketDisabledpathnames = [
@@ -284,7 +296,7 @@ const Navigation = () => {
             <div>
               <Link to={"/shop"}>
                 <img
-                  src="/nav-women-1.jpg"
+                  src={getImageUrl("nav-women-1")}
                   alt="New Season Image"
                   style={{ width: "20rem" }}
                 />
@@ -415,6 +427,71 @@ const Navigation = () => {
           </div>
         </li>
 
+        <li
+          onMouseEnter={handleMouseEnterSpecial}
+          onMouseLeave={() => {
+            handleMouseLeave();
+          }}
+        >
+          <NavLink
+            activeClassName="navigation-menu-active"
+            to={
+              defaultSpecialPage
+                ? Route.SPECIAL_PAGE.replace(":id", defaultSpecialPage.id)
+                : "#"
+            }
+          >
+            Special
+          </NavLink>
+          <div className={`popup-menu ${isSpecialPopupVisible && "open"}`}>
+            <div style={{ display: "flex", gap: "4rem" }}>
+              <ul style={{ flexDirection: "column", display: "flex" }}>
+                <li>
+                  <h4>Women</h4>
+                </li>
+                {womenSpecialPages.length === 0 ? (
+                  <li>
+                    <span className="type-link">No pages yet</span>
+                  </li>
+                ) : (
+                  womenSpecialPages.map((page) => (
+                    <li key={page.id}>
+                      <Link
+                        onClick={handleMouseLeave}
+                        to={Route.SPECIAL_PAGE.replace(":id", page.id)}
+                        className="type-link"
+                      >
+                        {page.title}
+                      </Link>
+                    </li>
+                  ))
+                )}
+              </ul>
+              <ul style={{ flexDirection: "column", display: "flex" }}>
+                <li>
+                  <h4>Men</h4>
+                </li>
+                {menSpecialPages.length === 0 ? (
+                  <li>
+                    <span className="type-link">No pages yet</span>
+                  </li>
+                ) : (
+                  menSpecialPages.map((page) => (
+                    <li key={page.id}>
+                      <Link
+                        onClick={handleMouseLeave}
+                        to={Route.SPECIAL_PAGE.replace(":id", page.id)}
+                        className="type-link"
+                      >
+                        {page.title}
+                      </Link>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
+          </div>
+        </li>
         <li style={{ position: "relative" }} className="info-popup-container">
           <NavLink activeClassName="navigation-menu-active" to={Route.ABOUT_US}>
             Info
@@ -467,7 +544,7 @@ const Navigation = () => {
       </ul>
       <div className="logo">
         <Link onClick={onClickLink} to="/">
-          <img alt="Logo" src={logo} />
+          <img alt="Logo" src={getImageUrl("logo-full")} />
         </Link>
       </div>
       <div style={{ display: "flex" }}>

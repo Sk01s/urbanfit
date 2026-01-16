@@ -1,19 +1,20 @@
 import app from "firebase/app";
 import "firebase/firestore";
-import "firebase/storage";
 import "firebase/auth";
 import firebaseConfig from "./config";
 import { displayActionMessage } from "@/helpers/utils";
 import dayjs from "dayjs";
 import { isTodayBetweenDates } from "@/helpers/utils";
 
+const IMAGE_SERVICE_BASE_URL = import.meta.env.VITE_IMAGE_SERVICE_URL;
+
 class Firebase {
   constructor() {
     this.app = app.initializeApp(firebaseConfig);
 
-    this.storage = app.storage();
     this.db = app.firestore();
     this.auth = app.auth();
+    this.imageServiceBaseUrl = IMAGE_SERVICE_BASE_URL;
   }
 
   // AUTH ACTIONS ------------
@@ -337,14 +338,93 @@ class Firebase {
 
   generateKey = () => this.db.collection("products").doc().id;
 
-  storeImage = async (id, folder, imageFile) => {
-    const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
-    const downloadURL = await snapshot.ref.getDownloadURL();
+  async getJsonSafe(response) {
+    try {
+      return await response.json();
+    } catch {
+      return null;
+    }
+  }
 
-    return downloadURL;
+  async uploadImageToService({ folder, key, file }) {
+    if (!this.imageServiceBaseUrl) {
+      throw new Error("Image service URL is not configured.");
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("folder", folder);
+    formData.append("key", key);
+
+    const response = await fetch(`${this.imageServiceBaseUrl}/images`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await this.getJsonSafe(response);
+    if (!response.ok) {
+      throw new Error(
+        data?.message || "Failed to upload image to the storage service."
+      );
+    }
+
+    if (!data?.url) {
+      throw new Error("Image service did not return an accessible URL.");
+    }
+
+    return data.url;
+  }
+
+  storeImage = async (id, folder, imageFile) =>
+    this.uploadImageToService({ folder, key: id, file: imageFile });
+
+  storeSiteImage = async (key, imageFile) =>
+    this.uploadImageToService({ folder: "site-images", key, file: imageFile });
+
+  getSiteImages = () => this.db.collection("siteImages").get();
+
+  setSiteImage = (key, image) =>
+    this.db.collection("siteImages").doc(key).set(image, { merge: true });
+
+  generateSpecialPageKey = () => this.db.collection("specialPages").doc().id;
+
+  storeSpecialPageImage = async (id, imageFile) =>
+    this.uploadImageToService({ folder: "special-pages", key: id, file: imageFile });
+
+  getSpecialPages = () => this.db.collection("specialPages").get();
+
+  getSpecialPage = (id) => this.db.collection("specialPages").doc(id).get();
+
+  addSpecialPage = (id, page) =>
+    this.db.collection("specialPages").doc(id).set(page);
+
+  editSpecialPage = (id, updates) =>
+    this.db.collection("specialPages").doc(id).update(updates);
+
+  removeSpecialPage = (id) =>
+    this.db.collection("specialPages").doc(id).delete();
+
+  deleteImage = async (id, folder = "products") => {
+    if (!this.imageServiceBaseUrl) {
+      return;
+    }
+
+    const response = await fetch(
+      `${this.imageServiceBaseUrl}/images/${encodeURIComponent(
+        folder
+      )}/${encodeURIComponent(id)}`,
+      { method: "DELETE" }
+    );
+
+    if (response.ok) {
+      return;
+    }
+
+    const data = await this.getJsonSafe(response);
+    throw new Error(
+      data?.message || "Failed to delete image from the storage service."
+    );
   };
-
-  deleteImage = (id) => this.storage.ref("products").child(id).delete();
 
   editProduct = (id, updates) =>
     this.db.collection("products").doc(id).update(updates);

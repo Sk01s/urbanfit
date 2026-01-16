@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import { useDocumentTitle, useScrollTop } from "@/hooks";
+import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
-import bannerImg from "@/images/banner-guy.png";
 
 const CategoryDisplay = () => {
   useDocumentTitle("Tops | Urbanfit");
   useScrollTop();
+  const { getImageUrl } = useSiteImages();
 
   const store = useSelector(
     (state) => ({
@@ -29,7 +29,7 @@ const CategoryDisplay = () => {
           <h1>Tops</h1>
         </div>
         <div className="banner-img">
-          <img src={bannerImg} alt="" />
+          <img src={getImageUrl("banner-guy")} alt="" />
         </div>
       </div>
       <section className="product-list-wrapper">

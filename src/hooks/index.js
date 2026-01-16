@@ -10,4 +10,6 @@ export { default as useProduct } from "./useProduct";
 export { default as useEssentialProducts } from "./useEssentialProducts";
 export { default as useScrollTop } from "./useScrollTop";
 export { default as useProducts } from "./useProducts";
+export { default as useSpecialPages } from "./useSpecialPages";
 export { default as useFeatureFlag } from "./useFeatureFlag";
+export { SiteImagesProvider, useSiteImages } from "./useSiteImages";
