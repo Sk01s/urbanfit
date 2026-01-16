@@ -11,4 +11,5 @@ debug.log
 service-account.json*
 b2-image-migration-status.json
 migration-status.json
-backend/logs
+new/backend/
+backend/
