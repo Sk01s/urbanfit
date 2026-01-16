@@ -1,7 +1,6 @@
 import { MessageDisplay } from "@/components/common";
 import { ProductShowcaseGrid } from "@/components/product";
 import { useDocumentTitle, useSeasonalProducts, useScrollTop } from "@/hooks";
-import bannerImg from "@/images/banner-guy.png";
 import { ProductGrid } from "@/components/product";
 import React from "react";
 import { useSeason } from "@/hooks";

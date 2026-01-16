@@ -1,10 +1,10 @@
 import React from "react";
-import { useSeason } from "@/hooks";
+import { useSeason, useScrollTop, useSiteImages } from "@/hooks";
 import { Link } from "react-router-dom";
-import { useScrollTop } from "@/hooks";
 const index = () => {
   useScrollTop();
   const season = useSeason();
+  const { getImageUrl } = useSiteImages();
 
   return (
     <main className="content">
@@ -18,7 +18,7 @@ const index = () => {
           <Link
             to={"/store/women/tops"}
             className="category-card"
-            style={{ backgroundImage: "url('/women-card-1.jpg')" }}
+            style={{ backgroundImage: `url(${getImageUrl("women-card-1")})` }}
           >
             <div>
               <h3>Tops</h3>
@@ -28,7 +28,7 @@ const index = () => {
           <Link
             to={"/store/women/bottoms"}
             className="category-card"
-            style={{ backgroundImage: "url('/women-card-2.jpg')" }}
+            style={{ backgroundImage: `url(${getImageUrl("women-card-2")})` }}
           >
             <div>
               <h3>Bottoms</h3>
@@ -38,7 +38,7 @@ const index = () => {
           <Link
             to={"/store/women/active"}
             className="category-card"
-            style={{ backgroundImage: "url('/women-card-3.jpg')" }}
+            style={{ backgroundImage: `url(${getImageUrl("women-card-3")})` }}
           >
             <div>
               <h3>Active</h3>
@@ -48,7 +48,7 @@ const index = () => {
           <Link
             to={"/store/women/essential"}
             className="category-card"
-            style={{ backgroundImage: "url('/women-card-4.jpg')" }}
+            style={{ backgroundImage: `url(${getImageUrl("women-card-4")})` }}
           >
             <div>
               <h3>Essentials</h3>

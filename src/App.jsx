@@ -8,6 +8,7 @@ import AppRouter from "@/routers/AppRouter";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect } from "react";
+import { SiteImagesProvider } from "@/hooks";
 
 const App = ({ store, persistor }) => {
   useEffect(() => {
@@ -19,7 +20,9 @@ const App = ({ store, persistor }) => {
     <StrictMode>
       <Provider store={store}>
         <PersistGate loading={<Preloader />} persistor={persistor}>
-          <AppRouter />
+          <SiteImagesProvider>
+            <AppRouter />
+          </SiteImagesProvider>
         </PersistGate>
       </Provider>
     </StrictMode>

@@ -11,8 +11,7 @@ import {
   SIGNUP,
 } from "@/constants/constants";
 import { SIGNIN as ROUTE_SIGNIN } from "@/constants/routes";
-import defaultAvatar from "@/images/defaultAvatar.svg";
-import defaultBanner from "@/images/defaultBanner.jpg";
+import { getStoredSiteImageUrl } from "@/config/siteImages";
 import { call, put } from "redux-saga/effects";
 import { signInSuccess, signOutSuccess } from "@/redux/actions/authActions";
 import { clearBasket, setBasketItems } from "@/redux/actions/basketActions";
@@ -123,8 +122,8 @@ function* authSaga({ type, payload }) {
           .join(" ");
         const user = {
           fullname,
-          avatar: defaultAvatar,
-          banner: defaultBanner,
+          avatar: getStoredSiteImageUrl("default-avatar"),
+          banner: getStoredSiteImageUrl("default-banner"),
           email: payload.email,
           street: "",
           city: "",
@@ -202,8 +201,10 @@ function* authSaga({ type, payload }) {
         // add the user if auth provider is not password
         const user = {
           fullname: payload.displayName ? payload.displayName : "User",
-          avatar: payload.photoURL ? payload.photoURL : defaultAvatar,
-          banner: defaultBanner,
+          avatar: payload.photoURL
+            ? payload.photoURL
+            : getStoredSiteImageUrl("default-avatar"),
+          banner: getStoredSiteImageUrl("default-banner"),
           email: payload.email,
           address: "",
           basket: [],

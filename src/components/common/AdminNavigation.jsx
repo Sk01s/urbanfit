@@ -1,15 +1,16 @@
 import { ADMIN_DASHBOARD } from "@/constants/routes";
-import logo from "@/images/logo-full.png";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserAvatar from "@/views/account/components/UserAvatar";
+import { useSiteImages } from "@/hooks";
 
 const AdminNavigation = () => {
   const { isAuthenticating, profile } = useSelector((state) => ({
     isAuthenticating: state.app.isAuthenticating,
     profile: state.profile,
   }));
+  const { getImageUrl } = useSiteImages();
 
   return (
     <nav className="navigation navigation-admin">
@@ -18,7 +19,7 @@ const AdminNavigation = () => {
           to={ADMIN_DASHBOARD}
           style={{ display: "flex", alignItems: "center" }}
         >
-          <img alt="Logo" src={logo} />
+          <img alt="Logo" src={getImageUrl("logo-full")} />
           <h3>ADMIN PANEL</h3>
         </Link>
       </div>

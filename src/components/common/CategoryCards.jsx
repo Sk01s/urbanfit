@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Slider from "react-slick";
+import { useSiteImages } from "@/hooks";
 const CategoryCards = () => {
   const settings = {
     infinite: true,
@@ -13,6 +14,7 @@ const CategoryCards = () => {
     variableWidth: true,
   };
   const sliderRef = useRef(null);
+  const { getImageUrl } = useSiteImages();
 
   const goToNext = () => {
     sliderRef.current.slickNext(); // Go to the next slide
@@ -91,7 +93,7 @@ const CategoryCards = () => {
           }}
         >
           <img
-            src="/category-card-1.jpg"
+            src={getImageUrl("category-card-1")}
             alt=""
             style={{
               width: "100%",
@@ -108,7 +110,7 @@ const CategoryCards = () => {
           }}
         >
           <img
-            src="/category-card-2.jpg"
+            src={getImageUrl("category-card-2")}
             alt=""
             style={{
               width: "100%",
@@ -145,7 +147,7 @@ const CategoryCards = () => {
           }}
         >
           <img
-            src="/category-card-4.jpg"
+            src={getImageUrl("category-card-4")}
             alt=""
             style={{
               width: "100%",
@@ -163,7 +165,7 @@ const CategoryCards = () => {
           }}
         >
           <img
-            src="/category-card-5.jpg"
+            src={getImageUrl("category-card-5")}
             alt=""
             style={{
               width: "100%",
@@ -182,7 +184,7 @@ const CategoryCards = () => {
           }}
         >
           <img
-            src="/category-card-6.jpg"
+            src={getImageUrl("category-card-6")}
             alt=""
             style={{
               width: "100%",
@@ -199,7 +201,7 @@ const CategoryCards = () => {
           }}
         >
           <img
-            src="/category-card-7.jpg"
+            src={getImageUrl("category-card-7")}
             alt=""
             style={{
               width: "100%",

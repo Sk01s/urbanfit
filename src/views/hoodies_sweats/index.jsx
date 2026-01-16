@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import { useDocumentTitle, useScrollTop } from "@/hooks";
+import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
-import bannerImg from "@/images/banner-guy.png";
 import { useLocation } from "react-router-dom";
 import { SortModel } from "@/components/common";
 import { useProducts } from "@/hooks";
@@ -12,6 +11,7 @@ import { useProducts } from "@/hooks";
 const CategoryDisplay = () => {
   useDocumentTitle("Hoodies & Sweats | Urbanfit");
   useScrollTop();
+  const { getImageUrl } = useSiteImages();
   const { pathname } = useLocation();
   const { products, fetchProducts, error, isLoading } = useProducts();
 
@@ -32,7 +32,7 @@ const CategoryDisplay = () => {
           <h1>Hoodies & Sweats</h1>
         </div>
         <div className="banner-img">
-          <img src={bannerImg} alt="" />
+          <img src={getImageUrl("banner-guy")} alt="" />
         </div>
       </div>
       <section className="product-list-wrapper">

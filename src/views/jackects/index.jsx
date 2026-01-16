@@ -1,15 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import { useDocumentTitle, useScrollTop } from "@/hooks";
+import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
-import bannerImg from "@/images/banner-guy.png";
 import { SortModel } from "@/components/common";
 
 const CategoryDisplay = () => {
   useDocumentTitle("Jackets | Urbanfit");
   useScrollTop();
+  const { getImageUrl } = useSiteImages();
 
   const { pathname } = useLocation();
   const { products, fetchProducts, error, isLoading } = useProducts();
@@ -32,7 +32,7 @@ const CategoryDisplay = () => {
           <h1>Jackets</h1>
         </div>
         <div className="banner-img">
-          <img src={bannerImg} alt="" />
+          <img src={getImageUrl("banner-guy")} alt="" />
         </div>
       </div>
       <section className="product-list-wrapper">

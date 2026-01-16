@@ -1,11 +1,12 @@
 import * as Route from "@/constants/routes";
-import logo from "@/images/logo-full.png";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSiteImages } from "@/hooks";
 
 const Footer = () => {
   const { pathname } = useLocation();
+  const { getImageUrl } = useSiteImages();
 
   function isVisable() {
     return !pathname.startsWith("/admin");
@@ -223,7 +224,11 @@ const Footer = () => {
           alignItems: "center",
         }}
       >
-        <img alt="Footer logo" className="footer-logo" src={logo} />
+        <img
+          alt="Footer logo"
+          className="footer-logo"
+          src={getImageUrl("logo-full")}
+        />
         <h5>
           &copy;&nbsp;
           {new Date().getFullYear()}

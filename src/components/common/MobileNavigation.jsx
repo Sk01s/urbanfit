@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import UserNav from "@/views/account/components/UserAvatar";
 import Badge from "./Badge";
-import logo from "@/images/logo-full.png";
 import FiltersToggle from "./FiltersToggle";
 import * as ROUTE from "@/constants/routes";
 import SearchBar from "./SearchBar";
@@ -15,7 +14,7 @@ import * as Route from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
 import { ProductGrid } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useEssentialProducts } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSpecialPages } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
 
 const handleScroll = () => {
@@ -32,9 +31,12 @@ const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
   const [isSearching, setIsSearching] = useState(false);
+  const { getImageUrl } = useSiteImages();
+  const { specialPages } = useSpecialPages();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWomenOpen, setIsWomenOpen] = useState(false);
   const [isMenOpen, setIsMenOpen] = useState(false);
+  const [isSpecialOpen, setIsSpecialOpen] = useState(false);
   const [scrollOpacity, setScrollOpacity] = useState(handleScroll());
   const searchEl = useRef();
 
@@ -50,6 +52,11 @@ const Navigation = (props) => {
   }));
   const { essentialProducts, EssentialProduct, isLoading, error } =
     useEssentialProducts();
+
+  const womenSpecialPages = specialPages.filter(
+    (page) => page.gender === "Women"
+  );
+  const menSpecialPages = specialPages.filter((page) => page.gender === "Men");
   const toggleNav = () => {
     setIsMenuOpen((prev) => !prev);
   };
@@ -57,6 +64,7 @@ const Navigation = (props) => {
     setIsMenOpen(false);
     setIsMenuOpen(false);
     setIsWomenOpen(false);
+    setIsSpecialOpen(false);
   };
   useEffect(() => {
     let close = (e) => {
@@ -124,7 +132,7 @@ const Navigation = (props) => {
           onClick={onClickLink}
           to={HOME}
         >
-          <img alt="Logo" src={logo} />
+          <img alt="Logo" src={getImageUrl("logo-full")} />
         </Link>
         <ul className="mobile-navigation-menu">
           <li className="mobile-navigation-item">
@@ -224,12 +232,14 @@ const Navigation = (props) => {
             borderBottom: "solid 1px #cacaca",
           }}
         >
-          {isMenOpen || isWomenOpen ? (
-            <svg
-              onClick={() => {
-                setIsMenOpen(false);
-                setIsWomenOpen(false);
-              }}
+          {isMenOpen || isWomenOpen || isSpecialOpen ? (
+              <svg
+                onClick={() => {
+                  setIsMenOpen(false);
+                  setIsWomenOpen(false);
+                  setIsSpecialOpen(false);
+                }}
+
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -247,7 +257,7 @@ const Navigation = (props) => {
           ) : (
             <img
               alt="Logo"
-              src={logo}
+              src={getImageUrl("logo-full")}
               style={{ width: "12rem", height: "4rem", objectFit: "cover" }}
             />
           )}{" "}
@@ -283,7 +293,11 @@ const Navigation = (props) => {
                 padding: "0 3rem 0 1rem",
                 cursor: "pointer",
               }}
-              onClick={() => setIsWomenOpen(true)}
+              onClick={() => {
+                setIsWomenOpen(true);
+                setIsMenOpen(false);
+                setIsSpecialOpen(false);
+              }}
             >
               <h4 style={{ margin: 0 }}>Women</h4>
               <svg
@@ -312,9 +326,46 @@ const Navigation = (props) => {
                 padding: "0 3rem 0 1rem",
                 cursor: "pointer",
               }}
-              onClick={() => setIsMenOpen(true)}
+              onClick={() => {
+                setIsMenOpen(true);
+                setIsWomenOpen(false);
+                setIsSpecialOpen(false);
+              }}
             >
               <h4 style={{ margin: 0 }}>Men</h4>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="feather feather-chevron-right"
+              >
+                <title>Right</title>
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </li>
+          <li>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 3rem 0 1rem",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setIsSpecialOpen(true);
+                setIsMenOpen(false);
+                setIsWomenOpen(false);
+              }}
+            >
+              <h4 style={{ margin: 0 }}>Special</h4>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -472,6 +523,59 @@ const Navigation = (props) => {
               Active wear
             </Link>
           </li>
+        </ul>
+        <ul
+          className="menu-links"
+          style={{
+            position: "absolute",
+            left: isSpecialOpen ? 0 : "100vw",
+            transitionDuration: "300ms",
+            top: 0,
+            width: "100%",
+            top: "5rem",
+            backgroundColor: "white",
+            height: "100%",
+            zIndex: 10,
+          }}
+        >
+          <li>
+            <h4 style={{ margin: "0 0 1rem" }}>Women</h4>
+          </li>
+          {womenSpecialPages.length === 0 ? (
+            <li>
+              <span>No special pages yet</span>
+            </li>
+          ) : (
+            womenSpecialPages.map((page) => (
+              <li key={page.id}>
+                <Link
+                  onClick={closeMenu}
+                  to={Route.SPECIAL_PAGE.replace(":id", page.id)}
+                >
+                  {page.title}
+                </Link>
+              </li>
+            ))
+          )}
+          <li>
+            <h4 style={{ margin: "2rem 0 1rem" }}>Men</h4>
+          </li>
+          {menSpecialPages.length === 0 ? (
+            <li>
+              <span>No special pages yet</span>
+            </li>
+          ) : (
+            menSpecialPages.map((page) => (
+              <li key={page.id}>
+                <Link
+                  onClick={closeMenu}
+                  to={Route.SPECIAL_PAGE.replace(":id", page.id)}
+                >
+                  {page.title}
+                </Link>
+              </li>
+            ))
+          )}
         </ul>
         <section style={{ overflow: "hidden", height: " 95dvh; " }}>
           <div
