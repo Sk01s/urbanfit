@@ -1,7 +1,7 @@
 .sidenavigation {
-  width: 250px;
+  min-width: 15rem;
   height: 100%;
-  background: $black; 
+  background: $black;
   position: relative;
   padding-top: 1rem;
   border-right: 1px solid $border-color;
@@ -19,7 +19,7 @@
   display: block;
   color: $white;
   font-weight: bold;
-  opacity: .8;
+  opacity: 0.8;
 
   &:hover {
     background: lighten($black, 5%);

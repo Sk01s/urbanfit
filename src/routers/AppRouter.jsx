@@ -144,6 +144,16 @@ const AppRouter = () => {
             component={view.EditProduct}
             path={`${ROUTES.EDIT_PRODUCT}/:id`}
           />
+          <AdminRoute
+            component={view.AdminSettings}
+            exact
+            path={ROUTES.ADMIN_SETTINGS}
+          />
+          <Route
+            component={view.AdminVerify}
+            exact
+            path={ROUTES.ADMIN_OTP_VERIFY}
+          />
           <PublicRoute component={view.Terms} path={ROUTES.TERMS} />
           <PublicRoute component={view.PageNotFound} />
         </Switch>

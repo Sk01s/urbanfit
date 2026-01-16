@@ -1,0 +1,888 @@
+Migrating product: aotRhyJd6csYEgu4ninH - "Oversized Softskin T-Shirt"
+  Found 5 images to migrate
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2Fa...
+  ✓ Uploaded: https://f003.backblazeb2.com/file/urbanfitMediaBucket/produc...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2F3...
+  ✓ Uploaded: https://f003.backblazeb2.com/file/urbanfitMediaBucket/produc...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2Fe...
+  ✓ Uploaded: https://f003.backblazeb2.com/file/urbanfitMediaBucket/produc...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2F6...
+  ✓ Uploaded: https://f003.backblazeb2.com/file/urbanfitMediaBucket/produc...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FI...
+Failed to upload file from URL: AxiosError: read ECONNRESET
+    at AxiosError.from (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/core/AxiosError.js:96:14)
+    at RedirectableRequest.handleRequestError (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/adapters/http.js:817:25)
+    at RedirectableRequest.emit (node:events:524:28)
+    at eventHandlers.<computed> (/home/youssef/projects/urbanfit/backend/node_modules/follow-redirects/index.js:49:24)
+    at ClientRequest.emit (node:events:524:28)
+    at emitErrorEvent (node:_http_client:101:11)
+    at TLSSocket.socketErrorListener (node:_http_client:504:5)
+    at TLSSocket.emit (node:events:524:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at Axios.request (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BackblazeB2Service.uploadFileFromUrl (file:///home/youssef/projects/urbanfit/backend/src/services/backblazeB2.js:121:24)
+    at async B2ImageMigration.uploadImageToB2 (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:114:22)
+    at async B2ImageMigration.migrateProduct (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:189:26)
+    at async B2ImageMigration.migrateAllProducts (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:367:28)
+    at async main (file:///home/youssef/projects/urbanfit/backend/scripts/migrate-b2-images.js:46:24) {
+  syscall: 'read',
+  code: 'ECONNRESET',
+  errno: -104,
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': undefined,
+      'User-Agent': 'axios/1.13.2',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    responseType: 'arraybuffer',
+    method: 'get',
+    url: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    allowAbsoluteUrls: true,
+    data: undefined
+  },
+  request: <ref *1> Writable {
+    _events: {
+      close: undefined,
+      error: [Function: handleRequestError],
+      prefinish: undefined,
+      finish: undefined,
+      drain: undefined,
+      response: [Function: handleResponse],
+      socket: [Array],
+      timeout: undefined,
+      abort: undefined
+    },
+    _writableState: WritableState {
+      highWaterMark: 16384,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      [Symbol(kState)]: 17580812,
+      [Symbol(kBufferedValue)]: null
+    },
+    _maxListeners: undefined,
+    _options: {
+      maxRedirects: 21,
+      maxBodyLength: Infinity,
+      protocol: 'https:',
+      path: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      method: 'GET',
+      headers: [Object: null prototype],
+      agents: [Object],
+      auth: undefined,
+      family: undefined,
+      beforeRedirect: [Function: dispatchBeforeRedirect],
+      beforeRedirects: [Object],
+      http2Options: undefined,
+      hostname: 'firebasestorage.googleapis.com',
+      port: '',
+      agent: undefined,
+      nativeProtocols: [Object],
+      pathname: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa',
+      search: '?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80'
+    },
+    _ended: true,
+    _ending: true,
+    _redirectCount: 0,
+    _redirects: [],
+    _requestBodyLength: 0,
+    _requestBodyBuffers: [],
+    _eventsCount: 3,
+    _onNativeResponse: [Function (anonymous)],
+    _currentRequest: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: true,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: false,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 0,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      socket: [TLSSocket],
+      _header: 'GET /v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80 HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: firebasestorage.googleapis.com\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'GET',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      _ended: false,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: [Function: emitRequestTimeout],
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'firebasestorage.googleapis.com',
+      protocol: 'https:',
+      _redirectable: [Circular *1],
+      [Symbol(shapeMode)]: false,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kOutHeaders)]: [Object: null prototype],
+      [Symbol(errored)]: null,
+      [Symbol(kHighWaterMark)]: 16384,
+      [Symbol(kRejectNonStandardBodyWrites)]: false,
+      [Symbol(kUniqueHeaders)]: null
+    },
+    _currentUrl: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    _timeout: null,
+    [Symbol(shapeMode)]: true,
+    [Symbol(kCapture)]: false
+  },
+  [cause]: Error: read ECONNRESET
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:218:20) {
+    errno: -104,
+    code: 'ECONNRESET',
+    syscall: 'read'
+  }
+}
+  Retry 1/3 for: https://firebasestorage.googleapis.com/v0/b/urben-...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FI...
+Failed to upload file from URL: AxiosError: stream has been aborted
+    at IncomingMessage.handlerStreamAborted (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/adapters/http.js:765:23)
+    at IncomingMessage.emit (node:events:524:28)
+    at IncomingMessage._destroy (node:_http_incoming:221:10)
+    at _destroy (node:internal/streams/destroy:121:10)
+    at IncomingMessage.destroy (node:internal/streams/destroy:83:5)
+    at TLSSocket.socketCloseListener (node:_http_client:464:11)
+    at TLSSocket.emit (node:events:536:35)
+    at node:net:343:12
+    at TCP.done (node:_tls_wrap:665:7)
+    at Axios.request (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BackblazeB2Service.uploadFileFromUrl (file:///home/youssef/projects/urbanfit/backend/src/services/backblazeB2.js:121:24)
+    at async B2ImageMigration.uploadImageToB2 (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:114:22)
+    at async B2ImageMigration.migrateProduct (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:189:26)
+    at async B2ImageMigration.migrateAllProducts (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:367:28)
+    at async main (file:///home/youssef/projects/urbanfit/backend/scripts/migrate-b2-images.js:46:24) {
+  code: 'ERR_BAD_RESPONSE',
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': undefined,
+      'User-Agent': 'axios/1.13.2',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    responseType: 'arraybuffer',
+    method: 'get',
+    url: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    allowAbsoluteUrls: true,
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      finish: [Function: requestOnFinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: true,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: true,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    strictContentLength: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: true,
+    socket: TLSSocket {
+      _tlsOptions: [Object],
+      _secureEstablished: true,
+      _securePending: false,
+      _newSessionPending: false,
+      _controlReleased: true,
+      secureConnecting: false,
+      _SNICallback: null,
+      servername: 'firebasestorage.googleapis.com',
+      alpnProtocol: false,
+      authorized: true,
+      authorizationError: null,
+      encrypted: true,
+      _events: [Object: null prototype],
+      _eventsCount: 11,
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'firebasestorage.googleapis.com',
+      _closeAfterHandlingError: false,
+      _readableState: [ReadableState],
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _maxListeners: undefined,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: undefined,
+      _server: null,
+      ssl: null,
+      _requestCert: true,
+      _rejectUnauthorized: true,
+      timeout: 30000,
+      parser: null,
+      _httpMessage: [Circular *1],
+      autoSelectFamilyAttemptedAddresses: [Array],
+      handle: [TLSWrap],
+      [Symbol(alpncallback)]: null,
+      [Symbol(res)]: null,
+      [Symbol(verified)]: true,
+      [Symbol(pendingSession)]: null,
+      [Symbol(async_id_symbol)]: 144286,
+      [Symbol(kHandle)]: null,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: Timeout {
+        _idleTimeout: -1,
+        _idlePrev: null,
+        _idleNext: null,
+        _idleStart: 8023376,
+        _onTimeout: null,
+        _timerArgs: undefined,
+        _repeat: null,
+        _destroyed: true,
+        [Symbol(refed)]: false,
+        [Symbol(kHasPrimitive)]: false,
+        [Symbol(asyncId)]: 144242,
+        [Symbol(triggerId)]: 144237
+      },
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(shapeMode)]: true,
+      [Symbol(kCapture)]: false,
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(kSetKeepAlive)]: true,
+      [Symbol(kSetKeepAliveInitialDelay)]: 60,
+      [Symbol(kBytesRead)]: 1260810,
+      [Symbol(kBytesWritten)]: 308,
+      [Symbol(connect-options)]: [Object]
+    },
+    _header: 'GET /v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80 HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'User-Agent: axios/1.13.2\r\n' +
+      'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+      'Host: firebasestorage.googleapis.com\r\n' +
+      'Connection: keep-alive\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 443,
+      protocol: 'https:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype] {},
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: true,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 0,
+      maxCachedSessions: 100,
+      _sessionCache: [Object],
+      [Symbol(shapeMode)]: false,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    joinDuplicateHeaders: undefined,
+    path: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    _ended: false,
+    res: IncomingMessage {
+      _events: [Object],
+      _readableState: [ReadableState],
+      _maxListeners: undefined,
+      socket: [TLSSocket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: false,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      joinDuplicateHeaders: undefined,
+      aborted: true,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [TLSSocket],
+      _consuming: true,
+      _dumped: false,
+      req: [Circular *1],
+      _eventsCount: 4,
+      responseUrl: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      redirects: [],
+      [Symbol(shapeMode)]: true,
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 40,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0
+    },
+    aborted: false,
+    timeoutCb: [Function: emitRequestTimeout],
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'firebasestorage.googleapis.com',
+    protocol: 'https:',
+    _redirectable: Writable {
+      _events: [Object],
+      _writableState: [WritableState],
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _eventsCount: 3,
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      _timeout: null,
+      [Symbol(shapeMode)]: true,
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(shapeMode)]: false,
+    [Symbol(kCapture)]: false,
+    [Symbol(kBytesWritten)]: 0,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'user-agent': [Array],
+      'accept-encoding': [Array],
+      host: [Array]
+    },
+    [Symbol(errored)]: null,
+    [Symbol(kHighWaterMark)]: 16384,
+    [Symbol(kRejectNonStandardBodyWrites)]: false,
+    [Symbol(kUniqueHeaders)]: null
+  }
+}
+  Retry 2/3 for: https://firebasestorage.googleapis.com/v0/b/urben-...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FI...
+Failed to upload file from URL: <ref *1> AxiosError: timeout of 30000ms exceeded
+    at RedirectableRequest.handleRequestTimeout (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/adapters/http.js:854:15)
+    at RedirectableRequest.emit (node:events:524:28)
+    at Timeout._onTimeout (/home/youssef/projects/urbanfit/backend/node_modules/follow-redirects/index.js:221:12)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+    at Axios.request (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BackblazeB2Service.uploadFileFromUrl (file:///home/youssef/projects/urbanfit/backend/src/services/backblazeB2.js:121:24)
+    at async B2ImageMigration.uploadImageToB2 (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:114:22)
+    at async B2ImageMigration.migrateProduct (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:189:26)
+    at async B2ImageMigration.migrateAllProducts (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:367:28)
+    at async main (file:///home/youssef/projects/urbanfit/backend/scripts/migrate-b2-images.js:46:24) {
+  code: 'ECONNABORTED',
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': undefined,
+      'User-Agent': 'axios/1.13.2',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    responseType: 'arraybuffer',
+    method: 'get',
+    url: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    allowAbsoluteUrls: true,
+    data: undefined
+  },
+  request: <ref *2> Writable {
+    _events: {
+      close: undefined,
+      error: [Function: handleRequestError],
+      prefinish: undefined,
+      finish: undefined,
+      drain: undefined,
+      response: [Function: handleResponse],
+      socket: [Array],
+      timeout: undefined,
+      abort: undefined
+    },
+    _writableState: WritableState {
+      highWaterMark: 16384,
+      length: 0,
+      corked: 0,
+      onwrite: [Function: bound onwrite],
+      writelen: 0,
+      bufferedIndex: 0,
+      pendingcb: 0,
+      [Symbol(kState)]: 17581054,
+      [Symbol(kBufferedValue)]: null,
+      [Symbol(kErroredValue)]: [Circular *1]
+    },
+    _maxListeners: undefined,
+    _options: {
+      maxRedirects: 21,
+      maxBodyLength: Infinity,
+      protocol: 'https:',
+      path: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      method: 'GET',
+      headers: [Object: null prototype],
+      agents: [Object],
+      auth: undefined,
+      family: undefined,
+      beforeRedirect: [Function: dispatchBeforeRedirect],
+      beforeRedirects: [Object],
+      http2Options: undefined,
+      hostname: 'firebasestorage.googleapis.com',
+      port: '',
+      agent: undefined,
+      nativeProtocols: [Object],
+      pathname: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa',
+      search: '?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80'
+    },
+    _ended: true,
+    _ending: true,
+    _redirectCount: 0,
+    _redirects: [],
+    _requestBodyLength: 0,
+    _requestBodyBuffers: [],
+    _eventsCount: 3,
+    _onNativeResponse: [Function (anonymous)],
+    _currentRequest: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: true,
+      _last: true,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: false,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 0,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      socket: [TLSSocket],
+      _header: 'GET /v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80 HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: firebasestorage.googleapis.com\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'GET',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      _ended: false,
+      res: null,
+      aborted: false,
+      timeoutCb: [Function: emitRequestTimeout],
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'firebasestorage.googleapis.com',
+      protocol: 'https:',
+      _redirectable: [Circular *2],
+      [Symbol(shapeMode)]: false,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kOutHeaders)]: [Object: null prototype],
+      [Symbol(errored)]: null,
+      [Symbol(kHighWaterMark)]: 16384,
+      [Symbol(kRejectNonStandardBodyWrites)]: false,
+      [Symbol(kUniqueHeaders)]: null,
+      [Symbol(kError)]: [Circular *1]
+    },
+    _currentUrl: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    _timeout: null,
+    [Symbol(shapeMode)]: true,
+    [Symbol(kCapture)]: false
+  }
+}
+  Retry 3/3 for: https://firebasestorage.googleapis.com/v0/b/urben-...
+  Uploading: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FI...
+Failed to upload file from URL: AxiosError: stream has been aborted
+    at IncomingMessage.handlerStreamAborted (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/adapters/http.js:765:23)
+    at IncomingMessage.emit (node:events:524:28)
+    at IncomingMessage._destroy (node:_http_incoming:221:10)
+    at _destroy (node:internal/streams/destroy:121:10)
+    at IncomingMessage.destroy (node:internal/streams/destroy:83:5)
+    at TLSSocket.socketCloseListener (node:_http_client:464:11)
+    at TLSSocket.emit (node:events:536:35)
+    at node:net:343:12
+    at TCP.done (node:_tls_wrap:665:7)
+    at Axios.request (file:///home/youssef/projects/urbanfit/backend/node_modules/axios/lib/core/Axios.js:45:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BackblazeB2Service.uploadFileFromUrl (file:///home/youssef/projects/urbanfit/backend/src/services/backblazeB2.js:121:24)
+    at async B2ImageMigration.uploadImageToB2 (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:114:22)
+    at async B2ImageMigration.migrateProduct (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:189:26)
+    at async B2ImageMigration.migrateAllProducts (file:///home/youssef/projects/urbanfit/backend/src/services/b2ImageMigration.js:367:28)
+    at async main (file:///home/youssef/projects/urbanfit/backend/scripts/migrate-b2-images.js:46:24) {
+  code: 'ERR_BAD_RESPONSE',
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http', 'fetch' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 30000,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: [class Blob] },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': undefined,
+      'User-Agent': 'axios/1.13.2',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    responseType: 'arraybuffer',
+    method: 'get',
+    url: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    allowAbsoluteUrls: true,
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      finish: [Function: requestOnFinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: true,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: true,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    strictContentLength: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: true,
+    socket: TLSSocket {
+      _tlsOptions: [Object],
+      _secureEstablished: true,
+      _securePending: false,
+      _newSessionPending: false,
+      _controlReleased: true,
+      secureConnecting: false,
+      _SNICallback: null,
+      servername: 'firebasestorage.googleapis.com',
+      alpnProtocol: false,
+      authorized: true,
+      authorizationError: null,
+      encrypted: true,
+      _events: [Object: null prototype],
+      _eventsCount: 11,
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'firebasestorage.googleapis.com',
+      _closeAfterHandlingError: false,
+      _readableState: [ReadableState],
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _maxListeners: undefined,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: undefined,
+      _server: null,
+      ssl: null,
+      _requestCert: true,
+      _rejectUnauthorized: true,
+      timeout: 30000,
+      parser: null,
+      _httpMessage: [Circular *1],
+      autoSelectFamilyAttemptedAddresses: [Array],
+      handle: [TLSWrap],
+      [Symbol(alpncallback)]: null,
+      [Symbol(res)]: null,
+      [Symbol(verified)]: true,
+      [Symbol(pendingSession)]: null,
+      [Symbol(async_id_symbol)]: 146076,
+      [Symbol(kHandle)]: null,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: Timeout {
+        _idleTimeout: -1,
+        _idlePrev: null,
+        _idleNext: null,
+        _idleStart: 8343770,
+        _onTimeout: null,
+        _timerArgs: undefined,
+        _repeat: null,
+        _destroyed: true,
+        [Symbol(refed)]: false,
+        [Symbol(kHasPrimitive)]: false,
+        [Symbol(asyncId)]: 146008,
+        [Symbol(triggerId)]: 146003
+      },
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(shapeMode)]: true,
+      [Symbol(kCapture)]: false,
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(kSetKeepAlive)]: true,
+      [Symbol(kSetKeepAliveInitialDelay)]: 60,
+      [Symbol(kBytesRead)]: 1539285,
+      [Symbol(kBytesWritten)]: 308,
+      [Symbol(connect-options)]: [Object]
+    },
+    _header: 'GET /v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80 HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'User-Agent: axios/1.13.2\r\n' +
+      'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+      'Host: firebasestorage.googleapis.com\r\n' +
+      'Connection: keep-alive\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 443,
+      protocol: 'https:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype] {},
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: true,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 0,
+      maxCachedSessions: 100,
+      _sessionCache: [Object],
+      [Symbol(shapeMode)]: false,
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    joinDuplicateHeaders: undefined,
+    path: '/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+    _ended: false,
+    res: IncomingMessage {
+      _events: [Object],
+      _readableState: [ReadableState],
+      _maxListeners: undefined,
+      socket: [TLSSocket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: false,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      joinDuplicateHeaders: undefined,
+      aborted: true,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 200,
+      statusMessage: 'OK',
+      client: [TLSSocket],
+      _consuming: true,
+      _dumped: false,
+      req: [Circular *1],
+      _eventsCount: 4,
+      responseUrl: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      redirects: [],
+      [Symbol(shapeMode)]: true,
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 40,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0
+    },
+    aborted: false,
+    timeoutCb: [Function: emitRequestTimeout],
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'firebasestorage.googleapis.com',
+    protocol: 'https:',
+    _redirectable: Writable {
+      _events: [Object],
+      _writableState: [WritableState],
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _eventsCount: 3,
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'https://firebasestorage.googleapis.com/v0/b/urben-fit.appspot.com/o/products%2FITTwba3lGs15oQ8c0soa?alt=media&token=d1fcc78d-660a-49b4-8065-4de486ecbd80',
+      _timeout: null,
+      [Symbol(shapeMode)]: true,
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(shapeMode)]: false,
+    [Symbol(kCapture)]: false,
+    [Symbol(kBytesWritten)]: 0,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'user-agent': [Array],
+      'accept-encoding': [Array],
+      host: [Array]
+    },
+    [Symbol(errored)]: null,
+    [Symbol(kHighWaterMark)]: 16384,
+    [Symbol(kRejectNonStandardBodyWrites)]: false,
+    [Symbol(kUniqueHeaders)]: null
+  }
+}
+  ✗ Failed: https://firebasestorage.googleapis.com/v0/b/urben-fit.appspo... - stream has been aborted
+  ✓ Updated product document with 4 B2 images
