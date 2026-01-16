@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useProducts } from "@/hooks";
 
-const ProductRelative = ({ values }) => {
+const ProductRelative = ({ values, admin }) => {
   const [modelRelationProduct, setModelRelationProduct] = useState(false);
   const [state, setState] = useState(values.relative || []);
   const handleSetState = (newState) => {
@@ -25,8 +25,18 @@ const ProductRelative = ({ values }) => {
     [state]
   );
   return (
-    <div style={{ maxWidth: "70vw" }}>
-      <div style={{ maxWeight: "30vw" }}>
+    <div
+      style={{
+        maxWidth: "70vw",
+      }}
+    >
+      <div
+        style={{
+          maxWeight: "30vw",
+          height: admin ? "500px" : "auto",
+          overflowY: admin ? "scroll" : "auto",
+        }}
+      >
         {error && !isLoading ? (
           <MessageDisplay
             message={error}
@@ -37,17 +47,23 @@ const ProductRelative = ({ values }) => {
           <>
             <ProductShowcase
               products={relatedProduct}
-              skeletonCount={4}
+              skeletonCount={0}
               relative={state}
               handleSetState={handleSetState}
               title={"remove by clicking"}
               add={false}
+              admin={admin}
             />
           </>
         )}
       </div>
       {modelRelationProduct ? (
-        <div>
+        <div
+          style={{
+            height: admin ? "500px" : "auto",
+            overflowY: admin ? "scroll" : "auto",
+          }}
+        >
           {error && !isLoading ? (
             <MessageDisplay
               message={error}
@@ -63,6 +79,7 @@ const ProductRelative = ({ values }) => {
                 handleSetState={handleSetState}
                 title={"Choose by clicking"}
                 add={true}
+                admin={admin}
               />
             </>
           )}
@@ -91,6 +108,7 @@ const ProductShowcase = ({
   relative,
   add,
   handleSetState,
+  admin,
 }) => {
   return (
     <>
@@ -99,8 +117,11 @@ const ProductShowcase = ({
         <br />
       </div>
       <div className="product-grid">
-        {products.length === 0
-          ? new Array(skeletonCount).fill({}).map((product, index) => (
+        {products.length === 0 ? (
+          admin ? (
+            <p>No related Item</p>
+          ) : (
+            new Array(skeletonCount).fill({}).map((product, index) => (
               <FeaturedProduct
                 // eslint-disable-next-line react/no-array-index-key
                 key={`product-skeleton ${index}`}
@@ -110,16 +131,19 @@ const ProductShowcase = ({
                 skeleton
               />
             ))
-          : products.map((product) => (
-              <FeaturedProduct
-                key={product.id}
-                product={product}
-                relative={relative}
-                add={add}
-                handleSetState={handleSetState}
-                products={products}
-              />
-            ))}
+          )
+        ) : (
+          products.map((product) => (
+            <FeaturedProduct
+              key={product.id}
+              product={product}
+              relative={relative}
+              add={add}
+              handleSetState={handleSetState}
+              products={products}
+            />
+          ))
+        )}
       </div>
     </>
   );

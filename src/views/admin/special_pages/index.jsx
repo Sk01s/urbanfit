@@ -2,6 +2,8 @@ import { Boundary, MessageDisplay } from "@/components/common";
 import { ProductsNavbar } from "@/views/admin/components";
 import { useDocumentTitle, useScrollTop, useSpecialPages } from "@/hooks";
 import { ADD_SPECIAL_PAGE, EDIT_SPECIAL_PAGE } from "@/constants/routes";
+import { displayActionMessage } from "@/helpers/utils";
+import firebase from "@/services/firebase";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -10,6 +12,24 @@ const SpecialPages = () => {
   useScrollTop();
   const { specialPages, fetchSpecialPages, isLoading, error } =
     useSpecialPages();
+
+  const handleDelete = async (page) => {
+    const shouldDelete = window.confirm(
+      `Delete special page "${page.title}"?`
+    );
+    if (!shouldDelete) return;
+
+    try {
+      await firebase.removeSpecialPage(page.id);
+      displayActionMessage("Special page deleted.", "success");
+      fetchSpecialPages();
+    } catch (deleteError) {
+      displayActionMessage(
+        deleteError?.message || "Failed to delete special page.",
+        "error"
+      );
+    }
+  };
 
   return (
     <Boundary>
@@ -29,7 +49,7 @@ const SpecialPages = () => {
         ) : (
           <div>
             {specialPages.length > 0 && (
-              <div className="grid grid-product grid-count-4">
+              <div className="grid grid-product grid-count-5">
                 <div className="grid-col">
                   <h5>Title</h5>
                 </div>
@@ -40,7 +60,10 @@ const SpecialPages = () => {
                   <h5>Items</h5>
                 </div>
                 <div className="grid-col">
-                  <h5>Action</h5>
+                  <h5>Edit</h5>
+                </div>
+                <div className="grid-col">
+                  <h5>Delete</h5>
                 </div>
               </div>
             )}
@@ -50,7 +73,7 @@ const SpecialPages = () => {
               </div>
             ) : (
               specialPages.map((page) => (
-                <div key={page.id} className="grid grid-product grid-count-4">
+                <div key={page.id} className="grid grid-product grid-count-5">
                   <div className="grid-col">
                     <h5>{page.title}</h5>
                   </div>
@@ -67,6 +90,15 @@ const SpecialPages = () => {
                     >
                       Edit
                     </Link>
+                  </div>
+                  <div className="grid-col">
+                    <button
+                      type="button"
+                      className="button button-small button-muted"
+                      onClick={() => handleDelete(page)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               ))

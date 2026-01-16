@@ -52,3 +52,5 @@ export const USER_VIEW_ORDER = "/order/:id";
 export const PROMO = "/admin/promo";
 export const VIEW_PROMO = "/admin/promo/:id";
 export const ADD_PROMO = "/admin/promo/add";
+export const ADMIN_OTP_VERIFY = "/admin/verify";
+export const ADMIN_SETTINGS = "/admin/settings";

@@ -29,7 +29,7 @@ const ProductsNavbar = (props) => {
         type="button"
       >
         <PlusOutlined />
-        &nbsp; Add New {name ? "Promo" : "Product"}
+        &nbsp; Add New {name}
       </button>
     </div>
   );

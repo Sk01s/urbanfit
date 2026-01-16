@@ -1,20 +1,22 @@
 import app from "firebase/app";
 import "firebase/firestore";
+import "firebase/storage";
 import "firebase/auth";
 import firebaseConfig from "./config";
 import { displayActionMessage } from "@/helpers/utils";
 import dayjs from "dayjs";
 import { isTodayBetweenDates } from "@/helpers/utils";
 
-const IMAGE_SERVICE_BASE_URL = import.meta.env.VITE_IMAGE_SERVICE_URL;
+// Backend API URL - configured via environment variable
+const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3001";
 
 class Firebase {
   constructor() {
     this.app = app.initializeApp(firebaseConfig);
 
+    this.storage = app.storage();
     this.db = app.firestore();
     this.auth = app.auth();
-    this.imageServiceBaseUrl = IMAGE_SERVICE_BASE_URL;
   }
 
   // AUTH ACTIONS ------------
@@ -338,48 +340,89 @@ class Firebase {
 
   generateKey = () => this.db.collection("products").doc().id;
 
-  async getJsonSafe(response) {
-    try {
-      return await response.json();
-    } catch {
-      return null;
+  storeImage = async (id, folder, imageFile, useBackblazeB2 = true) => {
+    // Check if Backblaze B2 should be used (based on feature flag or parameter)
+    if (useBackblazeB2) {
+      try {
+        // Use backend API endpoint for file uploads
+        const formData = new FormData();
+        
+        if (imageFile instanceof File) {
+          formData.append("file", imageFile, `${folder}/${id}-${Date.now()}.${folder}/${id}`);
+        } else {
+          throw new Error("Unsupported file format for upload");
+        }
+
+        const response = await fetch(`${BACKEND_API_URL}/api/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Upload failed: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log(`Image uploaded via backend: ${result.url}`);
+        return result.url;
+      } catch (error) {
+        console.error(
+          "Failed to upload via backend, falling back to Firebase Storage:",
+          error
+        );
+        // Fall back to Firebase Storage if backend upload fails
+      }
     }
-  }
 
-  async uploadImageToService({ folder, key, file }) {
-    if (!this.imageServiceBaseUrl) {
-      throw new Error("Image service URL is not configured.");
+    // Original Firebase Storage implementation
+    const snapshot = await this.storage.ref(folder).child(id).put(imageFile);
+    const downloadURL = await snapshot.ref.getDownloadURL();
+
+    return downloadURL;
+  };
+
+  storeSiteImage = async (key, imageFile, useBackblazeB2 = false) => {
+    // Check if Backblaze B2 should be used
+    if (useBackblazeB2) {
+      try {
+        // Use backend API endpoint for file uploads
+        const formData = new FormData();
+        
+        if (imageFile instanceof File) {
+          formData.append("file", imageFile, `site-images-${key}-${imageFile.name}`);
+        } else {
+          throw new Error("Unsupported file format for upload");
+        }
+
+        const response = await fetch(`${BACKEND_API_URL}/api/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Upload failed: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log(`Site image uploaded via backend: ${result.url}`);
+        return result.url;
+      } catch (error) {
+        console.error(
+          "Failed to upload site image via backend, falling back to Firebase Storage:",
+          error
+        );
+      }
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("folder", folder);
-    formData.append("key", key);
+    // Original Firebase Storage implementation
+    const snapshot = await this.storage
+      .ref("site-images")
+      .child(key)
+      .put(imageFile);
+    const downloadURL = await snapshot.ref.getDownloadURL();
 
-    const response = await fetch(`${this.imageServiceBaseUrl}/images`, {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await this.getJsonSafe(response);
-    if (!response.ok) {
-      throw new Error(
-        data?.message || "Failed to upload image to the storage service."
-      );
-    }
-
-    if (!data?.url) {
-      throw new Error("Image service did not return an accessible URL.");
-    }
-
-    return data.url;
-  }
-
-  storeImage = async (id, folder, imageFile) =>
-    this.uploadImageToService({ folder, key: id, file: imageFile });
-
-  storeSiteImage = async (key, imageFile) =>
-    this.uploadImageToService({ folder: "site-images", key, file: imageFile });
+    return downloadURL;
+  };
 
   getSiteImages = () => this.db.collection("siteImages").get();
 
@@ -388,8 +431,48 @@ class Firebase {
 
   generateSpecialPageKey = () => this.db.collection("specialPages").doc().id;
 
-  storeSpecialPageImage = async (id, imageFile) =>
-    this.uploadImageToService({ folder: "special-pages", key: id, file: imageFile });
+  storeSpecialPageImage = async (id, imageFile, useBackblazeB2 = true) => {
+    // Check if Backblaze B2 should be used
+    if (useBackblazeB2) {
+      try {
+        // Use backend API endpoint for file uploads
+        const formData = new FormData();
+        
+        if (imageFile instanceof File) {
+          formData.append("file", imageFile, `special-pages-${id}-${imageFile.name}`);
+        } else {
+          throw new Error("Unsupported file format for upload");
+        }
+
+        const response = await fetch(`${BACKEND_API_URL}/api/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Upload failed: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        console.log(`Special page image uploaded via backend: ${result.url}`);
+        return result.url;
+      } catch (error) {
+        console.error(
+          "Failed to upload special page image via backend, falling back to Firebase Storage:",
+          error
+        );
+      }
+    }
+
+    // Original Firebase Storage implementation
+    const snapshot = await this.storage
+      .ref("special-pages")
+      .child(id)
+      .put(imageFile);
+    const downloadURL = await snapshot.ref.getDownloadURL();
+
+    return downloadURL;
+  };
 
   getSpecialPages = () => this.db.collection("specialPages").get();
 
@@ -404,27 +487,85 @@ class Firebase {
   removeSpecialPage = (id) =>
     this.db.collection("specialPages").doc(id).delete();
 
-  deleteImage = async (id, folder = "products") => {
-    if (!this.imageServiceBaseUrl) {
-      return;
-    }
-
-    const response = await fetch(
-      `${this.imageServiceBaseUrl}/images/${encodeURIComponent(
-        folder
-      )}/${encodeURIComponent(id)}`,
-      { method: "DELETE" }
+  // Check if URL is from Firebase Storage
+  isFirebaseStorageUrl(url) {
+    return (
+      url &&
+      (url.includes("firebasestorage.googleapis.com") ||
+        url.includes("firebaseapp.com") ||
+        url.includes("appspot.com"))
     );
+  }
 
-    if (response.ok) {
-      return;
+  // Check if URL is from Backblaze B2
+  isBackblazeB2Url(url) {
+    return url && url.includes("backblazeb2.com");
+  }
+
+  // Get migration status for a document
+  async getDocumentMigrationStatus(collectionName, docId) {
+    try {
+      const doc = await this.db.collection(collectionName).doc(docId).get();
+      if (!doc.exists) {
+        return { exists: false };
+      }
+
+      const data = doc.data();
+      const storageUrls = [];
+      const fieldsToCheck = [
+        "image",
+        "images",
+        "imageUrl",
+        "imageURL",
+        "photo",
+        "photos",
+        "thumbnail",
+        "gallery",
+      ];
+
+      for (const field of fieldsToCheck) {
+        if (data[field]) {
+          if (Array.isArray(data[field])) {
+            data[field].forEach((url, index) => {
+              if (this.isFirebaseStorageUrl(url)) {
+                storageUrls.push({ field, url, index, type: "firebase" });
+              } else if (this.isBackblazeB2Url(url)) {
+                storageUrls.push({ field, url, index, type: "backblaze" });
+              }
+            });
+          } else if (typeof data[field] === "string") {
+            if (this.isFirebaseStorageUrl(data[field])) {
+              storageUrls.push({ field, url: data[field], type: "firebase" });
+            } else if (this.isBackblazeB2Url(data[field])) {
+              storageUrls.push({ field, url: data[field], type: "backblaze" });
+            }
+          }
+        }
+      }
+
+      return {
+        exists: true,
+        documentId: docId,
+        collectionName: collectionName,
+        storageUrls: storageUrls,
+        migrationStatus: data.migrationMetadata || null,
+        needsMigration: storageUrls.some((url) => url.type === "firebase"),
+        totalFirebaseUrls: storageUrls.filter((url) => url.type === "firebase")
+          .length,
+        totalBackblazeUrls: storageUrls.filter(
+          (url) => url.type === "backblaze"
+        ).length,
+      };
+    } catch (error) {
+      console.error(
+        `Failed to get migration status for ${collectionName}/${docId}:`,
+        error
+      );
+      throw error;
     }
+  }
 
-    const data = await this.getJsonSafe(response);
-    throw new Error(
-      data?.message || "Failed to delete image from the storage service."
-    );
-  };
+  deleteImage = (id) => this.storage.ref("products").child(id).delete();
 
   editProduct = (id, updates) =>
     this.db.collection("products").doc(id).update(updates);

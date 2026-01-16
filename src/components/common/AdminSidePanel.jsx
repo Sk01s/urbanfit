@@ -3,6 +3,7 @@ import {
   ADMIN_PRODUCTS,
   ADMIN_ORDERS,
   ADMIN_SPECIAL_PAGES,
+  ADMIN_SETTINGS,
   PROMO,
 } from "@/constants/routes";
 
@@ -55,6 +56,15 @@ const SideNavigation = () => (
           className="sidenavigation-menu my-0"
         >
           Promo
+        </NavLink>
+      </div>
+      <div className="sidenavigation-item">
+        <NavLink
+          to={ADMIN_SETTINGS}
+          activeClassName="sidenavigation-menu-active"
+          className="sidenavigation-menu my-0"
+        >
+          Settings
         </NavLink>
       </div>
     </div>

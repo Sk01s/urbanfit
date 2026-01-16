@@ -13,12 +13,14 @@ import { useHistory, useLocation } from "react-router-dom";
 import { setPaymentDetails } from "@/redux/actions/checkoutActions";
 import firebase from "@/services/firebase";
 import { clearBasket } from "@/redux/actions/basketActions";
-import emailjs from "@emailjs/browser";
 import { OrderPaymentSummery } from "@/components/common";
 import { PromoBox } from "../components";
 import { setPromo } from "@/redux/actions/checkoutActions";
 import { shipping } from "@/constants/constants";
 import firebaseInstance from "@/services/firebase";
+
+// Backend API URL
+const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3001";
 function getOrdinalSuffix(number) {
   if (number === 0) {
     return "0"; // Special case for 0
@@ -190,7 +192,7 @@ const Total = ({ isInternational, subtotal, order }) => {
         return displayActionMessage("Please select payment method.", "info");
       if (order.payment === "credit")
         return displayActionMessage(
-          "Unfortunately, we are not accepting online payments yet.",
+          "Unfortunately, we are not accepting online payments yet.",
           "info"
         );
       // Update the Orders date
@@ -207,22 +209,23 @@ const Total = ({ isInternational, subtotal, order }) => {
         order.uid = firebaseInstance.getCurrentUser();
       }
       await firebase.addOrder(order.id, order);
-      // await emailjs.send(
-      //   "service_vyw8iqt",
-      //   "template_btzkhrc",
-      //   {
-      //     id: order.id,
-      //     name: order.address.fullname,
-      //     email: order.address.email,
-      //     items: createEmailItems(),
-      //     contact: contact(),
-      //     summery: summery(),
-      //   },
-      //   "JPeR2g9TA1pVocFL4"
-      // );
+      
+      // Send order confirmation emails via backend
+      try {
+        await fetch(`${BACKEND_API_URL}/api/email/order-confirmation`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ order }),
+        });
+      } catch (emailError) {
+        console.error("Failed to send order confirmation emails:", emailError);
+        // Don't fail the order if email fails
+      }
+      
       dispatch(clearBasket());
       dispatch(setPromo({ percentage: 0 }));
-      // setLoading(false);
       history.push(`/order-completed/${order.id}`, order);
     } catch (error) {
       displayActionMessage(error, "error");

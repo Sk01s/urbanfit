@@ -466,8 +466,8 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                 </>
               </div>
               <br />
-              <div className="d-flex">
-                <ProductRelative values={values} />
+              <div className="d-flex" >
+                <ProductRelative values={values} admin />
               </div>
               <br />
 

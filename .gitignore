@@ -2,8 +2,13 @@ node_modules/
 .env
 .env.prod
 .env.dev
+.env.*
 dist/
 .firebase/
 package-lock.json
 debug.log
 .vercel
+service-account.json*
+b2-image-migration-status.json
+migration-status.json
+backend/logs
