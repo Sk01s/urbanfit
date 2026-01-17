@@ -28,6 +28,9 @@ const BasketItem = ({ product, display = false }) => {
             alt={product.name}
             className="basket-item-img"
             src={product.image}
+            minWidth="90px"
+            minHeight="90px"
+            aspectRatio="auto"
           />
         </div>
         <div className="basket-item-details">

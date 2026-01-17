@@ -7,8 +7,70 @@ import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useHistory } from "react-router-dom";
 
-const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
+const ProductFeatured = ({
+  product,
+  skeleton,
+  onClick,
+  cart,
+  eagerLoad = false,
+  isSlider = false,
+}) => {
   const { wish, addToWish, isItemOnWish } = useWish(product.id);
+
+  // Responsive dimensions for slider vs non-slider contexts
+  const getImageDimensions = () => {
+    if (!isSlider) {
+      // Default dimensions for non-slider (grid layouts, etc.)
+      return {
+        minWidth: "100%",
+        minHeight: "auto",
+        aspectRatio: "250/444",
+      };
+    }
+
+    // Cart slider (inside basket) - smaller dimensions
+    if (cart) {
+      const isMobile =
+        typeof window !== "undefined" && window.innerWidth <= 480;
+      if (isMobile) {
+        return {
+          minWidth: "120px",
+          minHeight: "160px",
+          aspectRatio: "250/444",
+        };
+      }
+      return {
+        minWidth: "150px",
+        minHeight: "200px",
+        aspectRatio: "250/444",
+      };
+    }
+
+    // Regular slider - responsive based on screen width
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 480;
+    const isTablet = typeof window !== "undefined" && window.innerWidth <= 768;
+
+    if (isMobile) {
+      return {
+        minWidth: "150px",
+        minHeight: "200px",
+        aspectRatio: "250/444",
+      };
+    } else if (isTablet) {
+      return {
+        minWidth: "200px",
+        minHeight: "267px",
+        aspectRatio: "250/444",
+      };
+    }
+    return {
+      minWidth: "250px",
+      minHeight: "333px",
+      aspectRatio: "250/444",
+    };
+  };
+
+  const imageDimensions = getImageDimensions();
   const history = useHistory();
   const onClickItem = (onClickToggle, e) => {
     if (!product) return;
@@ -43,15 +105,21 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
                       <ImageLoader
                         src={product.image}
                         draggable={false}
-                        style={{ minWidth: "200px" }}
+                        minWidth={imageDimensions.minWidth}
+                        minHeight={imageDimensions.minHeight}
+                        aspectRatio={imageDimensions.aspectRatio}
+                        lazy={!eagerLoad}
                       />
-                      {product.imageCollection[3] &&
+                      {product.imageCollection?.[3] &&
                         window.innerWidth > 700 && (
                           <ImageLoader
                             className="image"
                             src={product.imageCollection[3].url}
                             draggable={false}
-                            style={{ minWidth: "200px" }}
+                            minWidth={imageDimensions.minWidth}
+                            minHeight={imageDimensions.minHeight}
+                            aspectRatio={imageDimensions.aspectRatio}
+                            lazy={!eagerLoad}
                           />
                         )}
                     </>
@@ -178,14 +246,20 @@ const ProductFeatured = ({ product, skeleton, onClick, cart }) => {
                   <ImageLoader
                     src={product.image}
                     draggable={false}
-                    style={{ minWidth: "200px" }}
+                    minWidth={imageDimensions.minWidth}
+                    minHeight={imageDimensions.minHeight}
+                    aspectRatio={imageDimensions.aspectRatio}
+                    lazy={!eagerLoad}
                   />
-                  {product.imageCollection[3] && window.innerWidth > 700 && (
+                  {product.imageCollection?.[3] && window.innerWidth > 700 && (
                     <ImageLoader
                       className="image"
                       src={product.imageCollection[3].url}
                       draggable={false}
-                      style={{ minWidth: "200px" }}
+                      minWidth={imageDimensions.minWidth}
+                      minHeight={imageDimensions.minHeight}
+                      aspectRatio={imageDimensions.aspectRatio}
+                      lazy={!eagerLoad}
                     />
                   )}
                 </>
@@ -287,6 +361,11 @@ ProductFeatured.propTypes = {
     id: PropType.string,
     type: PropType.string,
   }).isRequired,
+  skeleton: PropType.bool,
+  onClick: PropType.func,
+  cart: PropType.bool,
+  eagerLoad: PropType.bool,
+  isSlider: PropType.bool,
 };
 
 export default ProductFeatured;

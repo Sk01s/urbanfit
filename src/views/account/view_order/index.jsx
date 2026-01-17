@@ -14,7 +14,7 @@ import {
 } from "@/helpers/utils";
 import { BasketItem } from "@/components/basket";
 import { OrderPaymentSummery } from "@/components/common";
-import { shipping } from "@/constants/constants";
+import { shipping as defaultShipping } from "@/constants/constants";
 
 function getOrdinalSuffix(number) {
   if (number === 0) {
@@ -62,7 +62,9 @@ const OrderView = () => {
   });
 
   const price = calculateSubtotal(orderDetails?.items);
-  const totalPrice = price + shipping;
+  // Use stored shipping rate from order, or fall back to default
+  const shippingRate = orderDetails?.shippingRate ?? defaultShipping;
+  const totalPrice = price + shippingRate;
 
   const { id } = useParams();
 
@@ -320,7 +322,12 @@ const OrderView = () => {
               <span> {orderDetails?.fulfillment ? "Yes" : "No"}</span>
             </div>
             <br />
-            <OrderPaymentSummery subtotal={price} promo={orderDetails.promo} />
+            <OrderPaymentSummery 
+              subtotal={price} 
+              promo={orderDetails.promo} 
+              city={orderDetails?.address?.city}
+              storedShippingRate={orderDetails?.shippingRate}
+            />
             <br />
             <button
               className="button"

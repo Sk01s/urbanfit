@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import firebase from "@/services/firebase";
-import { shipping } from "@/constants/constants";
+import { shipping as defaultShipping } from "@/constants/constants";
 
 const OrderItem = ({ order, index }) => {
   const price = order?.items?.reduce(
@@ -21,7 +21,9 @@ const OrderItem = ({ order, index }) => {
     0
   );
   const discount = order.promo ? price * (order.promo?.percentage / 100) : 0;
-  const totalPrice = price + shipping - discount;
+  // Use stored shipping rate from order, or fall back to default
+  const shippingRate = order.shippingRate ?? defaultShipping;
+  const totalPrice = price + shippingRate - discount;
   const dispatch = useDispatch();
   const history = useHistory();
   const orderRef = useRef(null);

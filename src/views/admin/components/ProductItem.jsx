@@ -44,10 +44,11 @@ const ProductItem = ({ product }) => {
         <div className="grid grid-count-6">
           <div className="grid-col item-img-wrapper">
             {product.image ? (
-              <ImageLoader
+              <img
                 alt={product.name}
                 className="item-img"
                 src={product.image}
+                loading="lazy"
               />
             ) : (
               <Skeleton width={50} height={30} />

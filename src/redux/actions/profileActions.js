@@ -28,7 +28,8 @@ export const updateProfile = (newProfile) => ({
   payload: {
     updates: newProfile.updates,
     files: newProfile.files,
-    credentials: newProfile.credentials
+    credentials: newProfile.credentials,
+    redirect: newProfile.redirect
   }
 });
 

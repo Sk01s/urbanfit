@@ -41,14 +41,20 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
                 <ImageLoader
                   src={product.image}
                   draggable={false}
-                  style={{ margin: 0, padding: 0 }}
+                  minWidth="100%"
+                  minHeight="280px"
+                  aspectRatio="250/444"
+                  lazy={true}
                 />
-                {product.imageCollection[3] && window.innerWidth > 700 && (
+                {product.imageCollection?.[3] && window.innerWidth > 700 && (
                   <ImageLoader
                     className="image"
                     src={product.imageCollection[3].url}
                     draggable={false}
-                    style={{ margin: 0, padding: 0 }}
+                    minWidth="100%"
+                    minHeight="280px"
+                    aspectRatio="250/444"
+                    lazy={true}
                   />
                 )}
               </>

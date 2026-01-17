@@ -25,6 +25,7 @@ const ProductShowcase = ({
     speed: 500,
     arrows: false,
     variableWidth: true,
+    slidesToScroll: 1,
   };
   const filteredProducts = high ? HighProducts(products) : products;
 
@@ -139,6 +140,8 @@ const ProductShowcase = ({
                 key={`product-skeleton ${index}`}
                 product={product}
                 skeleton
+                isSlider
+                cart={cart}
                 // onClick={close}
               />
             ))
@@ -147,6 +150,9 @@ const ProductShowcase = ({
                 key={product.id + index}
                 product={product}
                 onClick={close}
+                eagerLoad={index < 5}
+                isSlider
+                cart={cart}
               />
             ))}
       </Slider>

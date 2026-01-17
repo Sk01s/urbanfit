@@ -8,7 +8,8 @@ import dayjs from "dayjs";
 import { isTodayBetweenDates } from "@/helpers/utils";
 
 // Backend API URL - configured via environment variable
-const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3001";
+const BACKEND_API_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://0.0.0.0:3001";
 
 class Firebase {
   constructor() {
@@ -346,9 +347,13 @@ class Firebase {
       try {
         // Use backend API endpoint for file uploads
         const formData = new FormData();
-        
+
         if (imageFile instanceof File) {
-          formData.append("file", imageFile, `${folder}/${id}-${Date.now()}.${folder}/${id}`);
+          formData.append(
+            "file",
+            imageFile,
+            `${folder}/${id}-${Date.now()}.${folder}/${id}`
+          );
         } else {
           throw new Error("Unsupported file format for upload");
         }
@@ -387,9 +392,13 @@ class Firebase {
       try {
         // Use backend API endpoint for file uploads
         const formData = new FormData();
-        
+
         if (imageFile instanceof File) {
-          formData.append("file", imageFile, `site-images-${key}-${imageFile.name}`);
+          formData.append(
+            "file",
+            imageFile,
+            `site-images-${key}-${imageFile.name}`
+          );
         } else {
           throw new Error("Unsupported file format for upload");
         }
@@ -437,9 +446,13 @@ class Firebase {
       try {
         // Use backend API endpoint for file uploads
         const formData = new FormData();
-        
+
         if (imageFile instanceof File) {
-          formData.append("file", imageFile, `special-pages-${id}-${imageFile.name}`);
+          formData.append(
+            "file",
+            imageFile,
+            `special-pages-${id}-${imageFile.name}`
+          );
         } else {
           throw new Error("Unsupported file format for upload");
         }

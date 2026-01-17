@@ -161,6 +161,10 @@ const ViewProduct = () => {
                       src={image.url}
                       key={index}
                       draggable={false}
+                      minWidth="100%"
+                      minHeight="auto"
+                      aspectRatio="3/4"
+                      lazy={index > 0}
                     />
                   ))}
                 </SwipeableViews>

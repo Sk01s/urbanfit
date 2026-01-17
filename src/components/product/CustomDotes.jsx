@@ -17,6 +17,9 @@ const CustomDots = ({ currentSlide, onDotClick, imageCollection }) => {
           currentSlide === index ? "active" : ""
         }`}
         src={image.url}
+        minWidth="60px"
+        minHeight="80px"
+        aspectRatio="255/444"
       />
     </div>
   ));
