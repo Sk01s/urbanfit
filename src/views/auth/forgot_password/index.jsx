@@ -24,7 +24,11 @@ const ForgotPassword = () => {
     }
   }, [authStatus, isAuthenticating]);
 
-  const onEmailChange = (value, error) => {
+  const onEmailChange = (e) => {
+    const value = e.target.value;
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const error = value && !emailRegex.test(value) ? "Invalid email format" : null;
     setField({ email: value, error });
   };
 
@@ -51,17 +55,20 @@ const ForgotPassword = () => {
       </p>
       <br />
       <input
-        field="email"
+        name="email"
         required
         className="input-form"
-        label="* Email"
         maxLength={40}
+        value={field.email || ""}
         onChange={onEmailChange}
         placeholder="Enter your email"
         readOnly={isSendingForgotPWRequest || authStatus?.success}
         type="email"
         style={{ width: "100%" }}
       />
+      {field.error && (
+        <span style={{ color: "red", fontSize: "1.2rem" }}>{field.error}</span>
+      )}
       <br />
       <br />
       <button

@@ -128,6 +128,52 @@ function* productSaga({ type, payload }) {
         const { image, imageCollection, id } = payload.updates;
         let newUpdates = { ...payload.updates };
 
+        // Fetch the current product from database to preserve quantities unless explicitly changed
+        const currentProductDoc = yield call(firebase.getSingleProduct, id);
+        const currentProduct = currentProductDoc.exists
+          ? currentProductDoc.data()
+          : {};
+
+        // List of quantity fields to protect
+        const quantityFields = [
+          "xlQuantity",
+          "lgQuantity",
+          "mdQuantity",
+          "smQuantity",
+          "xsQuantity",
+          "totalQuantity",
+        ];
+
+        // Only include quantity fields in update if they differ from the original product
+        // This prevents accidental quantity changes when editing other fields
+        quantityFields.forEach((field) => {
+          // If the new value equals the original value, remove it from updates
+          // to avoid overwriting with potentially stale data
+          if (
+            currentProduct[field] !== undefined &&
+            newUpdates[field] === currentProduct[field]
+          ) {
+            // Keep the original value - no change needed
+          } else if (
+            payload.originalQuantities &&
+            payload.originalQuantities[field] !== undefined
+          ) {
+            // If original quantities were passed and current value matches original,
+            // it means user didn't change it - use database value
+            if (newUpdates[field] === payload.originalQuantities[field]) {
+              newUpdates[field] = currentProduct[field];
+            }
+          }
+        });
+
+        // Recalculate totalQuantity based on the final quantity values
+        newUpdates.totalQuantity =
+          (newUpdates.xlQuantity ?? currentProduct.xlQuantity ?? 0) +
+          (newUpdates.lgQuantity ?? currentProduct.lgQuantity ?? 0) +
+          (newUpdates.mdQuantity ?? currentProduct.mdQuantity ?? 0) +
+          (newUpdates.smQuantity ?? currentProduct.smQuantity ?? 0) +
+          (newUpdates.xsQuantity ?? currentProduct.xsQuantity ?? 0);
+
         if (image.constructor === File && typeof image === "object") {
           try {
             yield call(firebase.deleteImage, id);
