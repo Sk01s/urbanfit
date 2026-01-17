@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LoadingOutlined, SaveOutlined, SettingOutlined, MailOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined, SettingOutlined, MailOutlined, CarOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { displayActionMessage } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 
@@ -8,10 +8,18 @@ const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhos
 const AdminSettings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [savingShipping, setSavingShipping] = useState(false);
   const [settings, setSettings] = useState({
     delayHours: 12,
     enabled: true,
   });
+  const [shippingSettings, setShippingSettings] = useState({
+    rates: [],
+    defaultRate: 5,
+    enabled: true,
+  });
+  const [newCity, setNewCity] = useState("");
+  const [newRate, setNewRate] = useState("");
 
   useScrollTop();
   useDocumentTitle("Settings | Admin | Urbanfit");
@@ -20,13 +28,20 @@ const AdminSettings = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch(
-          `${BACKEND_API_URL}/api/admin/settings/wishlist-email`
-        );
-        const data = await response.json();
+        // Fetch both wishlist and shipping settings in parallel
+        const [wishlistRes, shippingRes] = await Promise.all([
+          fetch(`${BACKEND_API_URL}/api/admin/settings/wishlist-email`),
+          fetch(`${BACKEND_API_URL}/api/shipping/rates`),
+        ]);
 
-        if (data.success) {
-          setSettings(data.data);
+        const wishlistData = await wishlistRes.json();
+        const shippingData = await shippingRes.json();
+
+        if (wishlistData.success) {
+          setSettings(wishlistData.data);
+        }
+        if (shippingData.success) {
+          setShippingSettings(shippingData.data);
         }
       } catch (err) {
         console.error("Failed to fetch settings:", err);
@@ -39,7 +54,7 @@ const AdminSettings = () => {
     fetchSettings();
   }, []);
 
-  const handleSave = async () => {
+  const handleSaveWishlist = async () => {
     setSaving(true);
 
     try {
@@ -60,13 +75,94 @@ const AdminSettings = () => {
         throw new Error(data.error || "Failed to save settings");
       }
 
-      displayActionMessage("Settings saved successfully!", "success");
+      displayActionMessage("Wishlist settings saved!", "success");
     } catch (err) {
       console.error("Failed to save settings:", err);
       displayActionMessage(err.message, "error");
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleSaveShipping = async () => {
+    setSavingShipping(true);
+
+    try {
+      const response = await fetch(
+        `${BACKEND_API_URL}/api/admin/shipping/rates`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(shippingSettings),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to save shipping rates");
+      }
+
+      displayActionMessage("Shipping rates saved!", "success");
+    } catch (err) {
+      console.error("Failed to save shipping rates:", err);
+      displayActionMessage(err.message, "error");
+    } finally {
+      setSavingShipping(false);
+    }
+  };
+
+  const handleAddCity = async () => {
+    if (!newCity.trim() || !newRate) {
+      displayActionMessage("Please enter both city name and rate", "info");
+      return;
+    }
+
+    const rate = parseFloat(newRate);
+    if (isNaN(rate) || rate < 0) {
+      displayActionMessage("Please enter a valid rate", "error");
+      return;
+    }
+
+    // Check if city already exists
+    const existingIndex = shippingSettings.rates.findIndex(
+      (r) => r.city.toLowerCase().trim() === newCity.toLowerCase().trim()
+    );
+
+    const newRates = [...shippingSettings.rates];
+    if (existingIndex >= 0) {
+      newRates[existingIndex].rate = rate;
+    } else {
+      newRates.push({ city: newCity.trim(), rate });
+    }
+
+    setShippingSettings({ ...shippingSettings, rates: newRates });
+    setNewCity("");
+    setNewRate("");
+    displayActionMessage(
+      existingIndex >= 0 ? "Rate updated" : "City added",
+      "success"
+    );
+  };
+
+  const handleDeleteCity = (cityToDelete) => {
+    const newRates = shippingSettings.rates.filter(
+      (r) => r.city.toLowerCase() !== cityToDelete.toLowerCase()
+    );
+    setShippingSettings({ ...shippingSettings, rates: newRates });
+    displayActionMessage("City removed", "info");
+  };
+
+  const handleRateChange = (city, newRate) => {
+    const rate = parseFloat(newRate);
+    if (isNaN(rate) || rate < 0) return;
+
+    const newRates = shippingSettings.rates.map((r) =>
+      r.city === city ? { ...r, rate } : r
+    );
+    setShippingSettings({ ...shippingSettings, rates: newRates });
   };
 
   if (loading) {
@@ -86,8 +182,232 @@ const AdminSettings = () => {
           Admin Settings
         </h2>
         <p style={{ color: "#6b7280", margin: "0" }}>
-          Configure email notifications and other system settings
+          Configure email notifications, shipping rates, and other system settings
         </p>
+      </div>
+
+      {/* Shipping Rates Settings */}
+      <div style={{ 
+        background: "#fff", 
+        borderRadius: "12px", 
+        padding: "24px",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+        marginBottom: "24px"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
+          <div style={{ 
+            width: "48px", 
+            height: "48px", 
+            background: "linear-gradient(135deg, #059669 0%, #047857 100%)", 
+            borderRadius: "12px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            <CarOutlined style={{ fontSize: "24px", color: "#fff" }} />
+          </div>
+          <div>
+            <h3 style={{ margin: "0", fontSize: "18px", fontWeight: "600" }}>
+              Shipping Rates
+            </h3>
+            <p style={{ margin: "4px 0 0", color: "#6b7280", fontSize: "14px" }}>
+              Set shipping prices per city/region
+            </p>
+          </div>
+        </div>
+
+        <div style={{ 
+          background: "#f9fafb", 
+          borderRadius: "8px", 
+          padding: "20px",
+          marginBottom: "20px"
+        }}>
+          {/* Default Rate */}
+          <div style={{ marginBottom: "20px", paddingBottom: "20px", borderBottom: "1px solid #e5e7eb" }}>
+            <label style={{ fontWeight: "500", fontSize: "15px", color: "#111827", display: "block", marginBottom: "8px" }}>
+              Default Shipping Rate
+            </label>
+            <p style={{ margin: "0 0 12px", color: "#6b7280", fontSize: "13px" }}>
+              This rate is used when the customer's city is not in the list below
+            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ color: "#6b7280" }}>$</span>
+              <input
+                type="number"
+                min="0"
+                step="0.5"
+                value={shippingSettings.defaultRate}
+                onChange={(e) => setShippingSettings({ 
+                  ...shippingSettings, 
+                  defaultRate: parseFloat(e.target.value) || 0 
+                })}
+                style={{
+                  width: "100px",
+                  padding: "10px 14px",
+                  fontSize: "16px",
+                  fontWeight: "500",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "8px",
+                  outline: "none",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* City Rates List */}
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{ fontWeight: "500", fontSize: "15px", color: "#111827", display: "block", marginBottom: "12px" }}>
+              City-Specific Rates
+            </label>
+            
+            {shippingSettings.rates.length === 0 ? (
+              <p style={{ color: "#9ca3af", fontSize: "14px", textAlign: "center", padding: "20px" }}>
+                No city rates configured. Add cities below.
+              </p>
+            ) : (
+              <div style={{ display: "grid", gap: "8px" }}>
+                {shippingSettings.rates.map((rate, index) => (
+                  <div 
+                    key={index} 
+                    style={{ 
+                      display: "flex", 
+                      alignItems: "center", 
+                      gap: "12px",
+                      background: "#fff",
+                      padding: "12px 16px",
+                      borderRadius: "8px",
+                      border: "1px solid #e5e7eb"
+                    }}
+                  >
+                    <span style={{ flex: 1, fontWeight: "500", color: "#111827" }}>
+                      {rate.city}
+                    </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ color: "#6b7280" }}>$</span>
+                      <input
+                        type="number"
+                        min="0"
+                        step="0.5"
+                        value={rate.rate}
+                        onChange={(e) => handleRateChange(rate.city, e.target.value)}
+                        style={{
+                          width: "80px",
+                          padding: "8px 12px",
+                          fontSize: "14px",
+                          border: "1px solid #e5e7eb",
+                          borderRadius: "6px",
+                          outline: "none",
+                        }}
+                      />
+                    </div>
+                    <button
+                      onClick={() => handleDeleteCity(rate.city)}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#ef4444",
+                        cursor: "pointer",
+                        padding: "4px",
+                      }}
+                    >
+                      <DeleteOutlined />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Add New City */}
+          <div style={{ 
+            background: "#fff", 
+            padding: "16px", 
+            borderRadius: "8px",
+            border: "1px dashed #d1d5db"
+          }}>
+            <label style={{ fontWeight: "500", fontSize: "14px", color: "#374151", display: "block", marginBottom: "12px" }}>
+              Add New City
+            </label>
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <input
+                type="text"
+                placeholder="City name"
+                value={newCity}
+                onChange={(e) => setNewCity(e.target.value)}
+                style={{
+                  flex: "1",
+                  minWidth: "150px",
+                  padding: "10px 14px",
+                  fontSize: "14px",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "6px",
+                  outline: "none",
+                }}
+              />
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <span style={{ color: "#6b7280" }}>$</span>
+                <input
+                  type="number"
+                  placeholder="Rate"
+                  min="0"
+                  step="0.5"
+                  value={newRate}
+                  onChange={(e) => setNewRate(e.target.value)}
+                  style={{
+                    width: "80px",
+                    padding: "10px 14px",
+                    fontSize: "14px",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "6px",
+                    outline: "none",
+                  }}
+                />
+              </div>
+              <button
+                onClick={handleAddCity}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "10px 16px",
+                  background: "#059669",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                }}
+              >
+                <PlusOutlined /> Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Save Button */}
+        <button
+          className="button"
+          onClick={handleSaveShipping}
+          disabled={savingShipping}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "12px 24px",
+            fontSize: "15px",
+          }}
+        >
+          {savingShipping ? (
+            <>
+              <LoadingOutlined /> Saving...
+            </>
+          ) : (
+            <>
+              <SaveOutlined /> Save Shipping Rates
+            </>
+          )}
+        </button>
       </div>
 
       {/* Wishlist Email Settings */}
@@ -262,7 +582,7 @@ const AdminSettings = () => {
         {/* Save Button */}
         <button
           className="button"
-          onClick={handleSave}
+          onClick={handleSaveWishlist}
           disabled={saving}
           style={{
             display: "flex",
@@ -278,23 +598,10 @@ const AdminSettings = () => {
             </>
           ) : (
             <>
-              <SaveOutlined /> Save Settings
+              <SaveOutlined /> Save Email Settings
             </>
           )}
         </button>
-      </div>
-
-      {/* Future settings sections can be added here */}
-      <div style={{ 
-        background: "#f9fafb", 
-        borderRadius: "12px", 
-        padding: "40px",
-        textAlign: "center",
-        border: "2px dashed #e5e7eb"
-      }}>
-        <p style={{ color: "#9ca3af", margin: "0", fontSize: "14px" }}>
-          More settings coming soon...
-        </p>
       </div>
     </div>
   );

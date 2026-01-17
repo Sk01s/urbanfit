@@ -153,6 +153,8 @@ const EditProduct = () => {
             <OrderPaymentSummery
               subtotal={subtotal}
               promo={orderDetails.promo}
+              city={orderDetails?.address?.city}
+              storedShippingRate={orderDetails?.shippingRate}
             />
 
             <div

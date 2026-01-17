@@ -10,6 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { setShippingDetails } from "@/redux/actions/checkoutActions";
+import { updateProfile } from "@/redux/actions/profileActions";
 import * as Yup from "yup";
 import { StepTracker } from "../components";
 import withCheckout from "../hoc/withCheckout";
@@ -85,6 +86,23 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
         isDone: true,
       })
     );
+    
+    // Save shipping details to user profile for future orders
+    // This ensures the phone number and other details are remembered
+    const profileUpdates = {
+      fullname: form.fullname,
+      country: form.country,
+      street: form.street,
+      city: form.city,
+      building: form.building,
+      floor: form.floor,
+      zipcode: form.zipcode,
+      mobile: form.mobile,
+    };
+    
+    // Silent update - don't redirect or show message
+    dispatch(updateProfile({ updates: profileUpdates, redirect: false }));
+    
     history.push(CHECKOUT_STEP_3);
   };
 

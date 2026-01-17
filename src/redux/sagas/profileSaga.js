@@ -25,8 +25,11 @@ function* profileSaga({ type, payload }) {
     case UPDATE_PROFILE: {
       try {
         const state = yield select();
-        const { email, password } = payload.credentials;
-        const { avatarFile, bannerFile } = payload.files;
+        const credentials = payload.credentials || {};
+        const { email, password } = credentials;
+        const files = payload.files || {};
+        const { avatarFile, bannerFile } = files;
+        const shouldRedirect = payload.redirect !== false;
 
         yield put(setLoading(true));
 
@@ -49,14 +52,19 @@ function* profileSaga({ type, payload }) {
         }
 
         yield put(setLoading(false));
-        yield call(history.push, ACCOUNT);
-        yield call(displayActionMessage, 'Profile Updated Successfully!', 'success');
+        
+        // Only redirect and show message if not a silent update (e.g., from checkout)
+        if (shouldRedirect) {
+          yield call(history.push, ACCOUNT);
+          yield call(displayActionMessage, 'Profile Updated Successfully!', 'success');
+        }
       } catch (e) {
         console.log(e);
         yield put(setLoading(false));
         if (e.code === 'auth/wrong-password') {
           yield call(displayActionMessage, 'Wrong password, profile update failed :(', 'error');
-        } else {
+        } else if (payload.redirect !== false) {
+          // Only show error message if not a silent update
           yield call(displayActionMessage, `:( Failed to update profile. ${e.message ? e.message : ''}`, 'error');
         }
       }

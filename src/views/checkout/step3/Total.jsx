@@ -7,7 +7,7 @@ import { CHECKOUT_STEP_2, ORDER_COMPLETED } from "@/constants/routes";
 import { useFormikContext } from "formik";
 import { displayMoney, displayActionMessage } from "@/helpers/utils";
 import PropType from "prop-types";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { setPaymentDetails } from "@/redux/actions/checkoutActions";
@@ -16,7 +16,7 @@ import { clearBasket } from "@/redux/actions/basketActions";
 import { OrderPaymentSummery } from "@/components/common";
 import { PromoBox } from "../components";
 import { setPromo } from "@/redux/actions/checkoutActions";
-import { shipping } from "@/constants/constants";
+import { shipping as defaultShipping } from "@/constants/constants";
 import firebaseInstance from "@/services/firebase";
 
 // Backend API URL
@@ -47,6 +47,39 @@ function getOrdinalSuffix(number) {
 
 const Total = ({ isInternational, subtotal, order }) => {
   const [loading, setLoading] = useState(false);
+  const [shippingRate, setShippingRate] = useState(defaultShipping);
+  
+  // Get the city from order address
+  const city = order?.address?.city;
+  
+  // Fetch shipping rate based on city
+  useEffect(() => {
+    const fetchShippingRate = async () => {
+      if (!city) {
+        setShippingRate(defaultShipping);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `${BACKEND_API_URL}/api/shipping/rate/${encodeURIComponent(city)}`
+        );
+        const data = await response.json();
+        
+        if (data.success) {
+          setShippingRate(data.rate);
+        } else {
+          setShippingRate(defaultShipping);
+        }
+      } catch (error) {
+        console.error("Failed to fetch shipping rate:", error);
+        setShippingRate(defaultShipping);
+      }
+    };
+
+    fetchShippingRate();
+  }, [city]);
+
   const isNotOrderValide = () =>
     !!order.items.find(
       (product) => product[`${product.selectedSize}Quantity`] <= 0
@@ -66,7 +99,7 @@ const Total = ({ isInternational, subtotal, order }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const searchData = new URLSearchParams();
-  const summery = () => `
+const summery = () => `
     <div style="padding-inline: 3rem;">
       <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
         <div style="color: rgb(115, 115, 115);">Subtotal :</div>
@@ -78,12 +111,12 @@ const Total = ({ isInternational, subtotal, order }) => {
       </div>
       <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
         <div style="color: rgb(115, 115, 115);">Shipping :</div>
-        <strong>$${shipping}</strong>
+        <strong>$${shippingRate}</strong>
       </div>
       <div style="width: 100%; height: 1px; background-color: rgb(202, 202, 202); margin-block: 2rem;"></div>
       <div style="font-size: 1.4rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-weight: 400;">
         <div style="color: rgb(115, 115, 115);">Total:</div>
-        <strong>$${subtotal + shipping - (subtotal * order.promo.percentage) / 100
+        <strong>$${subtotal + shippingRate - (subtotal * order.promo.percentage) / 100
     }</strong>
       </div>
     </div>
@@ -205,6 +238,7 @@ const Total = ({ isInternational, subtotal, order }) => {
       setLoading(true);
       order.date = new Date();
       order.otp = false;
+      order.shippingRate = shippingRate; // Store the shipping rate with the order
       if (!order.uid) {
         order.uid = firebaseInstance.getCurrentUser();
       }
@@ -245,8 +279,8 @@ const Total = ({ isInternational, subtotal, order }) => {
       <br />
       <br />
       <br />
-      <div className="basket-total text-right">
-        <OrderPaymentSummery subtotal={subtotal} promo={order.promo} />
+<div className="basket-total text-right">
+        <OrderPaymentSummery subtotal={subtotal} promo={order.promo} city={city} />
       </div>
       <br />
       <br />

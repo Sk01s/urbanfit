@@ -10,7 +10,6 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useFileHandler } from "@/hooks";
 
-
 const FormSchema = Yup.object().shape({
   title: Yup.string().required("Title is required."),
   gender: Yup.string().required("Gender is required."),
@@ -20,8 +19,12 @@ const FormSchema = Yup.object().shape({
 });
 
 const SpecialPageForm = ({ page, onSubmit, isLoading, isEditing }) => {
-  const { products, fetchProducts, error, isLoading: isProductsLoading } =
-    useProducts();
+  const {
+    products,
+    fetchProducts,
+    error,
+    isLoading: isProductsLoading,
+  } = useProducts();
   const { imageFile, isFileLoading, onFileChange } = useFileHandler({
     banner: {},
   });
@@ -37,7 +40,6 @@ const SpecialPageForm = ({ page, onSubmit, isLoading, isEditing }) => {
     gender: page?.gender || "",
     productIds: page?.productIds || [],
   };
-
 
   const onSubmitForm = async (values) => {
     const pageId = page?.id || (await firebase.generateSpecialPageKey());
@@ -137,7 +139,7 @@ const SpecialPageForm = ({ page, onSubmit, isLoading, isEditing }) => {
             </div>
             <div className="product-form-image-wrapper">
               {(imageFile.banner?.url || page?.bannerUrl) && (
-                <ImageLoader
+                <img
                   alt=""
                   className="product-form-image-preview"
                   src={imageFile.banner?.url || page?.bannerUrl}
@@ -155,7 +157,14 @@ const SpecialPageForm = ({ page, onSubmit, isLoading, isEditing }) => {
                   buttonLabel="Try Again"
                 />
               ) : (
-                <div className="product-grid">
+                <div
+                  className="product-grid"
+                  style={{
+                    overflowY: "scroll",
+                    overflowX: "visible",
+                    height: "50rem",
+                  }}
+                >
                   {products.map((product) => (
                     <button
                       key={product.id}
@@ -172,7 +181,7 @@ const SpecialPageForm = ({ page, onSubmit, isLoading, isEditing }) => {
                       }}
                     >
                       <div className="product-display-img">
-                        <ImageLoader
+                        <img
                           className="product-card-img"
                           src={product.image}
                           draggable={false}

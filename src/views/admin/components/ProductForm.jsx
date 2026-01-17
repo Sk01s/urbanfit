@@ -441,7 +441,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                         className="product-form-collection-image"
                         key={image.id}
                       >
-                        <ImageLoader alt="" src={image.url} />
+                        <img alt="" src={image.url} loading="lazy" />
                         <button
                           className="product-form-delete-image"
                           onClick={() =>
@@ -466,7 +466,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                 </>
               </div>
               <br />
-              <div className="d-flex" >
+              <div className="d-flex">
                 <ProductRelative values={values} admin />
               </div>
               <br />
@@ -602,7 +602,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
               </div>
               <div className="product-form-image-wrapper">
                 {(imageFile.image.url || product.image) && (
-                  <ImageLoader
+                  <img
                     alt=""
                     className="product-form-image-preview"
                     src={imageFile.image.url || product.image}
