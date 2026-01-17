@@ -67,6 +67,8 @@ export const editProduct = (updates) => ({
   type: EDIT_PRODUCT,
   payload: {
     updates,
+    // Pass original quantities to saga for comparison
+    originalQuantities: updates.originalQuantities,
   },
 });
 

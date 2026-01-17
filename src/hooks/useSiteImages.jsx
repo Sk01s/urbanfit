@@ -17,6 +17,7 @@ const SiteImagesContext = createContext({
   getImageUrl: () => "",
   updateImage: () => {},
   refreshImages: () => {},
+  deleteImage: () => {},
 });
 
 export const SiteImagesProvider = ({ children }) => {
@@ -102,6 +103,28 @@ export const SiteImagesProvider = ({ children }) => {
     });
   }, []);
 
+  const deleteImage = useCallback(async (key) => {
+    try {
+      await firebase.deleteSiteImage(key);
+      setImages((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        // Reset to default if available
+        if (SITE_IMAGE_DEFAULTS[key]) {
+          next[key] = SITE_IMAGE_DEFAULTS[key];
+        }
+        if (typeof window !== "undefined") {
+          localStorage.setItem("siteImages", JSON.stringify(next));
+        }
+        return next;
+      });
+      return true;
+    } catch (err) {
+      console.error("Failed to delete image:", err);
+      throw err;
+    }
+  }, []);
+
   const getImageUrl = useCallback(
     (key) => images[key] || SITE_IMAGE_DEFAULTS[key] || "",
     [images]
@@ -115,8 +138,9 @@ export const SiteImagesProvider = ({ children }) => {
       getImageUrl,
       updateImage,
       refreshImages: loadImages,
+      deleteImage,
     }),
-    [error, getImageUrl, images, isLoading, loadImages, updateImage]
+    [error, getImageUrl, images, isLoading, loadImages, updateImage, deleteImage]
   );
 
   return (

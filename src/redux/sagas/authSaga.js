@@ -173,7 +173,7 @@ function* authSaga({ type, payload }) {
         );
         yield put(setAuthenticating(false));
       } catch (e) {
-        handleError({ code: "auth/reset-password-error" });
+        yield handleError({ code: "auth/reset-password-error" });
       }
       break;
     }

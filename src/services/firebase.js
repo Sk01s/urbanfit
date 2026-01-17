@@ -438,6 +438,17 @@ class Firebase {
   setSiteImage = (key, image) =>
     this.db.collection("siteImages").doc(key).set(image, { merge: true });
 
+  deleteSiteImage = async (key) => {
+    // Delete from Firebase Storage
+    try {
+      await this.storage.ref("site-images").child(key).delete();
+    } catch (e) {
+      console.error("Failed to delete from storage (may not exist):", e);
+    }
+    // Delete from Firestore
+    await this.db.collection("siteImages").doc(key).delete();
+  };
+
   generateSpecialPageKey = () => this.db.collection("specialPages").doc().id;
 
   storeSpecialPageImage = async (id, imageFile, useBackblazeB2 = true) => {

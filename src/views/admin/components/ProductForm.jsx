@@ -71,6 +71,16 @@ const FormSchema = Yup.object().shape({
 });
 
 const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
+  // Store original quantity values to detect if they were actually changed
+  const originalQuantities = {
+    xlQuantity: product?.xlQuantity ?? 0,
+    lgQuantity: product?.lgQuantity ?? 0,
+    mdQuantity: product?.mdQuantity ?? 0,
+    smQuantity: product?.smQuantity ?? 0,
+    xsQuantity: product?.xsQuantity ?? 0,
+    totalQuantity: product?.totalQuantity ?? 0,
+  };
+
   const initFormikValues = {
     name: product?.name || "",
     categories: product?.categories || "",
@@ -80,11 +90,11 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
     onSale: product?.onSale || false,
     percentage: product?.percentage || 0,
     priority: product?.priority || 0,
-    xlQuantity: product?.xlQuantity || 0,
-    lgQuantity: product?.lgQuantity || 0,
-    mdQuantity: product?.mdQuantity || 0,
-    smQuantity: product?.smQuantity || 0,
-    xsQuantity: product?.xsQuantity || 0,
+    xlQuantity: product?.xlQuantity ?? 0,
+    lgQuantity: product?.lgQuantity ?? 0,
+    mdQuantity: product?.mdQuantity ?? 0,
+    smQuantity: product?.smQuantity ?? 0,
+    xsQuantity: product?.xsQuantity ?? 0,
     description: product?.description || "",
     keywords: product?.keywords || [],
     relative: product?.relative || [],
@@ -153,6 +163,8 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
         dateAdded: new Date().getTime(),
         image: imageFile.image.file || product.image,
         imageCollection: imageFile.imageCollection,
+        // Pass original quantities when editing to detect if values actually changed
+        ...(isEditing && { originalQuantities }),
       });
     } else {
       // eslint-disable-next-line no-alert
