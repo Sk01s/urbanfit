@@ -34,6 +34,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^6.2.0",
+    "firebase-admin": "^13.6.0",
     "group-css-media-queries-loader": "^3.0.2",
     "html-webpack-plugin": "^5.3.1",
     "jest": "^26.6.3",
