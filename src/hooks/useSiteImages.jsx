@@ -105,7 +105,7 @@ export const SiteImagesProvider = ({ children }) => {
 
   const deleteImage = useCallback(async (key) => {
     try {
-      await firebase.deleteSiteImage(key);
+      await firebase.deleteSiteImage(key, true);
       setImages((prev) => {
         const next = { ...prev };
         delete next[key];

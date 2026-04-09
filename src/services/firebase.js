@@ -9,7 +9,7 @@ import { isTodayBetweenDates } from "@/helpers/utils";
 
 // Backend API URL - configured via environment variable
 const BACKEND_API_URL =
-  import.meta.env.VITE_BACKEND_URL || "http://0.0.0.0:3001";
+  import.meta.env.VITE_BACKEND_API_URL || "http://0.0.0.0:3001";
 
 class Firebase {
   constructor() {
@@ -349,10 +349,11 @@ class Firebase {
         const formData = new FormData();
 
         if (imageFile instanceof File) {
+          const ext = imageFile.name.split('.').pop();
           formData.append(
             "file",
             imageFile,
-            `${folder}/${id}-${Date.now()}.${folder}/${id}`
+            `${folder}/${id}-${Date.now()}.${ext}`
           );
         } else {
           throw new Error("Unsupported file format for upload");
@@ -364,18 +365,20 @@ class Firebase {
         });
 
         if (!response.ok) {
-          throw new Error(`Upload failed: ${response.statusText}`);
+          const errorText = await response.text();
+          throw new Error(`Upload failed: ${response.status} - ${errorText}`);
         }
 
         const result = await response.json();
-        console.log(`Image uploaded via backend: ${result.url}`);
+        console.log(`Image uploaded via backend: ${result.url}, service: ${result.service}`);
         return result.url;
       } catch (error) {
         console.error(
-          "Failed to upload via backend, falling back to Firebase Storage:",
-          error
+          "Failed to upload via backend:",
+          error.message
         );
-        // Fall back to Firebase Storage if backend upload fails
+        // Don't fall back to Firebase Storage - throw error instead
+        throw new Error(`Upload failed: ${error.message}. Please check backend is running.`);
       }
     }
 
@@ -386,7 +389,7 @@ class Firebase {
     return downloadURL;
   };
 
-  storeSiteImage = async (key, imageFile, useBackblazeB2 = false) => {
+  storeSiteImage = async (key, imageFile, useBackblazeB2 = true) => {
     // Check if Backblaze B2 should be used
     if (useBackblazeB2) {
       try {
@@ -409,17 +412,20 @@ class Firebase {
         });
 
         if (!response.ok) {
-          throw new Error(`Upload failed: ${response.statusText}`);
+          const errorText = await response.text();
+          throw new Error(`Upload failed: ${response.status} - ${errorText}`);
         }
 
         const result = await response.json();
-        console.log(`Site image uploaded via backend: ${result.url}`);
+        console.log(`Site image uploaded via backend: ${result.url}, service: ${result.service}`);
         return result.url;
       } catch (error) {
         console.error(
-          "Failed to upload site image via backend, falling back to Firebase Storage:",
-          error
+          "Failed to upload site image via backend:",
+          error.message
         );
+        // Don't fall back to Firebase Storage - throw error instead
+        throw new Error(`Upload failed: ${error.message}. Please check backend is running.`);
       }
     }
 
@@ -438,13 +444,27 @@ class Firebase {
   setSiteImage = (key, image) =>
     this.db.collection("siteImages").doc(key).set(image, { merge: true });
 
-  deleteSiteImage = async (key) => {
-    // Delete from Firebase Storage
-    try {
-      await this.storage.ref("site-images").child(key).delete();
-    } catch (e) {
-      console.error("Failed to delete from storage (may not exist):", e);
+  deleteSiteImage = async (key, useBackblazeB2 = true) => {
+    // Try to delete from backend (B2) first if enabled
+    if (useBackblazeB2) {
+      try {
+        const response = await fetch(`${BACKEND_API_URL}/api/upload/delete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileName: key }),
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Delete failed: ${response.status} - ${errorText}`);
+        }
+        const result = await response.json();
+        console.log("Deleted from B2 via backend:", result);
+      } catch (e) {
+        console.error("Failed to delete from B2:", e);
+        throw new Error(`Delete failed: ${e.message}`);
+      }
     }
+
     // Delete from Firestore
     await this.db.collection("siteImages").doc(key).delete();
   };
@@ -474,17 +494,20 @@ class Firebase {
         });
 
         if (!response.ok) {
-          throw new Error(`Upload failed: ${response.statusText}`);
+          const errorText = await response.text();
+          throw new Error(`Upload failed: ${response.status} - ${errorText}`);
         }
 
         const result = await response.json();
-        console.log(`Special page image uploaded via backend: ${result.url}`);
+        console.log(`Special page image uploaded via backend: ${result.url}, service: ${result.service}`);
         return result.url;
       } catch (error) {
         console.error(
-          "Failed to upload special page image via backend, falling back to Firebase Storage:",
-          error
+          "Failed to upload special page image via backend:",
+          error.message
         );
+        // Don't fall back to Firebase Storage - throw error instead
+        throw new Error(`Upload failed: ${error.message}. Please check backend is running.`);
       }
     }
 

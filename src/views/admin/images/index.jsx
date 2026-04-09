@@ -84,7 +84,7 @@ const AdminImages = () => {
 
     setUploadingKey(image.key);
     try {
-      const url = await firebase.storeSiteImage(image.key, file);
+      const url = await firebase.storeSiteImage(image.key, file, true);
       const updatedAt = Date.now();
       await firebase.setSiteImage(image.key, {
         url,
