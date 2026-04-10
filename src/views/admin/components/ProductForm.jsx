@@ -195,7 +195,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                     name="name"
                     type="text"
                     label="* Product Name"
-                    placeholder="fuck you omar"
+                    placeholder="product name"
                     style={{ textTransform: "capitalize" }}
                     component={CustomInput}
                   />
