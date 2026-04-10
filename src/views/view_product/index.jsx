@@ -43,24 +43,29 @@ const ViewProduct = () => {
   const { wish, addToWish, isItemOnWish } = useWish(id);
   useScrollTop();
   useDocumentTitle(`${product?.name || ""}`);
+
+  console.log("[ViewProduct] DEBUG:", {
+    id,
+    product: product ? { name: product.name, imageCollection: product.imageCollection, availableColors: product.availableColors, relative: product.relative } : null,
+    isLoading,
+    error,
+  });
+
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantitiy] = useState(1);
   const [maxQuantity, setMaxQuantity] = useState(10);
-  const [relatedProduct, setRelatedProduct] = useState();
+  const [relatedProduct, setRelatedProduct] = useState([]);
   const { products } = useProducts();
   useEffect(() => {
-    (async () => {
-      // const docs = await firebase.getProducts();
-      setRelatedProduct(
-        products.filter((item) => product?.relative?.includes(item.id))
-      );
-    })();
+    setRelatedProduct(
+      products.filter((item) => product?.relative?.includes(item.id))
+    );
     return () => {
       setRelatedProduct([]);
     };
-  }, [product]);
+  }, [product, products]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -191,7 +196,7 @@ const ViewProduct = () => {
                     </svg>
                   )}
                 </button>
-                {product.imageCollection.length !== 0 && (
+                {product.imageCollection?.length !== 0 && (
                   <CustomDots
                     currentSlide={currentIndex}
                     onDotClick={setCurrentIndex} // Handle dot click
@@ -259,7 +264,7 @@ const ViewProduct = () => {
                 </div>
                 <div className="divider" />
                 <br />
-                {product.availableColors.length >= 1 && (
+                {product.availableColors?.length >= 1 && (
                   <div>
                     <span
                       style={{
