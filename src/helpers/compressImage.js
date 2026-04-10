@@ -7,6 +7,8 @@ const compressImage = (file, maxSizeKB = 200) => {
 
     const img = new Image();
     const url = URL.createObjectURL(file);
+    const ORIGINAL_WIDTH = img.width;
+    const ORIGINAL_HEIGHT = img.height;
 
     img.onload = async () => {
       URL.revokeObjectURL(url);
@@ -16,7 +18,10 @@ const compressImage = (file, maxSizeKB = 200) => {
 
       let width = img.width;
       let height = img.height;
-      let quality = 0.85;
+      let quality = 0.92;
+
+      const MIN_DIM = 100;
+      const MIN_QUALITY = 0.5;
 
       const doCompress = (w, h, q) => {
         return new Promise((res) => {
@@ -32,16 +37,25 @@ const compressImage = (file, maxSizeKB = 200) => {
         });
       };
 
+      const shrinkDimensions = (w, h) => {
+        const newW = Math.max(Math.floor(w * 0.85), MIN_DIM);
+        const newH = Math.max(Math.floor(h * 0.85), MIN_DIM);
+        return { width: newW, height: newH };
+      };
+
       let blob = await doCompress(width, height, quality);
 
-      while (blob.size / 1024 > maxSizeKB && quality > 0.1) {
-        quality -= 0.1;
+      while (blob.size / 1024 > maxSizeKB && quality > MIN_QUALITY) {
+        quality -= 0.05;
+        quality = Math.round(quality * 100) / 100;
         blob = await doCompress(width, height, quality);
       }
 
       while (blob.size / 1024 > maxSizeKB) {
-        width = Math.floor(width * 0.75);
-        height = Math.floor(height * 0.75);
+        const next = shrinkDimensions(width, height);
+        if (next.width === width && next.height === height) break;
+        width = next.width;
+        height = next.height;
         blob = await doCompress(width, height, quality);
       }
 
