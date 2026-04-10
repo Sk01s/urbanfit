@@ -13,3 +13,4 @@ export { default as useProducts } from "./useProducts";
 export { default as useSpecialPages } from "./useSpecialPages";
 export { default as useFeatureFlag } from "./useFeatureFlag";
 export { SiteImagesProvider, useSiteImages } from "./useSiteImages";
+export { LandingSlidesProvider, useLandingSlides } from "./useLandingSlides";

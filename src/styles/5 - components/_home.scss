@@ -2,6 +2,23 @@
   width: 100%;
 }
 
+.home .landing-slider {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
+  .slick-slide > div {
+    width: 100%;
+  }
+
+  .slick-track {
+    display: flex;
+  }
+}
+
 .home-featured {
   margin: 5rem;
   margin-top: 10rem;

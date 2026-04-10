@@ -4,6 +4,7 @@ import { displayActionMessage } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
 import firebase from "@/services/firebase";
 import React, { useEffect, useState, useCallback } from "react";
+import SlideManager from "./SlideManager";
 
 const AdminImages = () => {
   useDocumentTitle("Media Library | Urbanfit Admin");
@@ -177,10 +178,21 @@ const AdminImages = () => {
           >
             Videos
           </button>
+          <button
+            type="button"
+            onClick={() => setActiveFilter("landing-slides")}
+            className={`button button-small ${
+              activeFilter === "landing-slides" ? "" : "button-muted"
+            }`}
+          >
+            Landing Slides
+          </button>
         </div>
       </div>
       <div className="product-admin-items">
-        {isLoading ? (
+        {activeFilter === "landing-slides" ? (
+          <SlideManager />
+        ) : isLoading ? (
           <div className="loader">
             <h3>Loading images...</h3>
           </div>

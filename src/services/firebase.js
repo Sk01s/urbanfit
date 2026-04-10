@@ -469,6 +469,69 @@ class Firebase {
     await this.db.collection("siteImages").doc(key).delete();
   };
 
+  getLandingSlides = () => this.db.collection("landingSlides").orderBy("order").get();
+
+  addLandingSlide = (slide) =>
+    this.db.collection("landingSlides").add(slide);
+
+  updateLandingSlide = (id, data) =>
+    this.db.collection("landingSlides").doc(id).update(data);
+
+  deleteLandingSlide = async (id, useBackblazeB2 = true) => {
+    const doc = await this.db.collection("landingSlides").doc(id).get();
+    const data = doc.data();
+    const filesToDelete = [];
+    if (data?.desktopUrl && data.desktopUrl.includes("/")) filesToDelete.push(data.desktopUrl);
+    if (data?.mobileUrl && data.mobileUrl.includes("/")) filesToDelete.push(data.mobileUrl);
+    if (data?.publishedDesktopUrl && data.publishedDesktopUrl.includes("/")) filesToDelete.push(data.publishedDesktopUrl);
+    if (data?.publishedMobileUrl && data.publishedMobileUrl.includes("/")) filesToDelete.push(data.publishedMobileUrl);
+
+    if (useBackblazeB2) {
+      for (const fileUrl of filesToDelete) {
+        try {
+          const fileName = fileUrl.split("/").pop().split("?")[0];
+          await fetch(`${BACKEND_API_URL}/api/upload/delete`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ fileName }),
+          });
+        } catch (e) {
+          console.error("Failed to delete file from B2:", e);
+        }
+      }
+    }
+
+    await this.db.collection("landingSlides").doc(id).delete();
+  };
+
+  publishLandingSlides = async () => {
+    const snapshot = await this.db.collection("landingSlides").get();
+    const batch = this.db.batch();
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      const update = {
+        publishedDesktopUrl: data.desktopUrl || "",
+        publishedMobileUrl: data.mobileUrl || "",
+        publishedDesktopMediaType: data.desktopMediaType || "image",
+        publishedMobileMediaType: data.mobileMediaType || "image",
+        publishedLabel: data.label || { enabled: false, text: "", position: { x: 50, y: 90 }, style: { color: "#ffffff", fontSize: 16, bgColor: "#000000", bgOpacity: 0.7 } },
+        publishedVisible: data.visible !== undefined ? data.visible : true,
+        publishedOrder: data.order ?? 0,
+        hasDraftChanges: false,
+      };
+      batch.update(doc.ref, update);
+    });
+    await batch.commit();
+  };
+
+  reorderLandingSlides = async (orderedIds) => {
+    const batch = this.db.batch();
+    orderedIds.forEach((id, index) => {
+      batch.update(this.db.collection("landingSlides").doc(id), { order: index });
+    });
+    await batch.commit();
+  };
+
   generateSpecialPageKey = () => this.db.collection("specialPages").doc().id;
 
   storeSpecialPageImage = async (id, imageFile, useBackblazeB2 = true) => {
