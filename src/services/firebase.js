@@ -450,6 +450,9 @@ class Firebase {
 
 getSiteImages = () => this.db.collection("siteImages").get();
 
+  setSiteImage = (key, data) =>
+    this.db.collection("siteImages").doc(key).set(data, { merge: true });
+
   getCategoryPages = () => this.db.collection("categoryPages").get();
 
   setCategoryPage = (key, data) =>
