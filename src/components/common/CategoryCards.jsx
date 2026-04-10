@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Slider from "react-slick";
 import { useSiteImages } from "@/hooks";
+import SiteImageLabel from "./SiteImageLabel";
 const CategoryCards = () => {
   const settings = {
     infinite: true,
@@ -14,7 +15,7 @@ const CategoryCards = () => {
     variableWidth: true,
   };
   const sliderRef = useRef(null);
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
 
   const goToNext = () => {
     sliderRef.current.slickNext(); // Go to the next slide
@@ -90,6 +91,7 @@ const CategoryCards = () => {
           className="product-display card"
           style={{
             marginInline: ".5rem",
+            position: "relative",
           }}
         >
           <img
@@ -101,12 +103,14 @@ const CategoryCards = () => {
               backgroundSize: "cover",
             }}
           />
+          <SiteImageLabel labelOverlay={getLabelOverlay("category-card-1")} />
         </Link>
         <Link
           to={"/luxury/men/"}
           className="product-display card"
           style={{
             marginInline: ".5rem",
+            position: "relative",
           }}
         >
           <img
@@ -118,6 +122,7 @@ const CategoryCards = () => {
               backgroundSize: "cover",
             }}
           />
+          <SiteImageLabel labelOverlay={getLabelOverlay("category-card-2")} />
         </Link>
         {/* <Link
           to={"/type/women/active-wear"}
@@ -144,6 +149,7 @@ const CategoryCards = () => {
           card
           style={{
             marginInline: ".5rem",
+            position: "relative",
           }}
         >
           <img
@@ -155,6 +161,7 @@ const CategoryCards = () => {
               backgroundSize: "cover",
             }}
           />
+          <SiteImageLabel labelOverlay={getLabelOverlay("category-card-4")} />
         </Link>
         <Link
           to={"/luxury/women/"}
@@ -162,6 +169,7 @@ const CategoryCards = () => {
           card
           style={{
             marginInline: ".5rem",
+            position: "relative",
           }}
         >
           <img
@@ -174,6 +182,7 @@ const CategoryCards = () => {
               backgroundSize: "cover",
             }}
           />
+          <SiteImageLabel labelOverlay={getLabelOverlay("category-card-5")} />
         </Link>
         <Link
           to={"/new/women/"}
@@ -181,6 +190,7 @@ const CategoryCards = () => {
           card
           style={{
             marginInline: ".5rem",
+            position: "relative",
           }}
         >
           <img
@@ -192,12 +202,14 @@ const CategoryCards = () => {
               backgroundSize: "cover",
             }}
           />
+          <SiteImageLabel labelOverlay={getLabelOverlay("category-card-6")} />
         </Link>
         <Link
           to={"/type/women/t-shrit"}
           className="product-display card"
           style={{
             marginInline: ".5rem",
+            position: "relative",
           }}
         >
           <img
@@ -209,6 +221,7 @@ const CategoryCards = () => {
               backgroundSize: "cover",
             }}
           />
+          <SiteImageLabel labelOverlay={getLabelOverlay("category-card-7")} />
         </Link>
       </Slider>
     </div>

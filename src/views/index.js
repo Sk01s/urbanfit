@@ -50,3 +50,4 @@ export { default as New } from "./new/index";
 export { default as SpecialPage } from "./special_page";
 export { default as AdminVerify } from "./admin/verify";
 export { default as AdminSettings } from "./admin/settings";
+export { default as AdminCategories } from "./admin/categories";

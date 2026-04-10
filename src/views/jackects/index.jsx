@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
+import { SiteImageLabel } from "@/components/common";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
@@ -9,7 +10,7 @@ import { SortModel } from "@/components/common";
 const CategoryDisplay = () => {
   useDocumentTitle("Jackets | Urbanfit");
   useScrollTop();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
 
   const { pathname } = useLocation();
   const { products, fetchProducts, error, isLoading } = useProducts();
@@ -31,8 +32,9 @@ const CategoryDisplay = () => {
         <div className="banner-desc">
           <h1>Jackets</h1>
         </div>
-        <div className="banner-img">
+        <div className="banner-img" style={{ position: "relative" }}>
           <img src={getImageUrl("banner-guy")} alt="" />
+          <SiteImageLabel labelOverlay={getLabelOverlay("banner-guy")} />
         </div>
       </div>
       <section className="product-list-wrapper">

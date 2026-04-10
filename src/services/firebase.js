@@ -439,10 +439,12 @@ class Firebase {
     return downloadURL;
   };
 
-  getSiteImages = () => this.db.collection("siteImages").get();
+getSiteImages = () => this.db.collection("siteImages").get();
 
-  setSiteImage = (key, image) =>
-    this.db.collection("siteImages").doc(key).set(image, { merge: true });
+  getCategoryPages = () => this.db.collection("categoryPages").get();
+
+  setCategoryPage = (key, data) =>
+    this.db.collection("categoryPages").doc(key).set(data, { merge: true });
 
   deleteSiteImage = async (key, useBackblazeB2 = true) => {
     // Try to delete from backend (B2) first if enabled

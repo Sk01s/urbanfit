@@ -117,6 +117,11 @@ const AppRouter = () => {
             path={ROUTES.ADMIN_IMAGES}
           />
           <AdminRoute
+            component={view.AdminCategories}
+            exact
+            path={ROUTES.ADMIN_CATEGORIES}
+          />
+          <AdminRoute
             component={view.SpecialPages}
             exact
             path={ROUTES.ADMIN_SPECIAL_PAGES}

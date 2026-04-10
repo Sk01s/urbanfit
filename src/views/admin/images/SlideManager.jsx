@@ -50,28 +50,18 @@ const SlideManager = () => {
     }
   };
 
-  const handleMoveUp = async (index) => {
+  const handleMoveUp = (index) => {
     if (index <= 0) return;
     const newOrder = [...slides.map((s) => s.id)];
     [newOrder[index - 1], newOrder[index]] = [newOrder[index], newOrder[index - 1]];
-    try {
-      await reorderSlides(newOrder);
-      displayActionMessage("Slide moved up.", "success");
-    } catch (err) {
-      displayActionMessage("Failed to reorder slides.", "error");
-    }
+    reorderSlides(newOrder);
   };
 
-  const handleMoveDown = async (index) => {
+  const handleMoveDown = (index) => {
     if (index >= slides.length - 1) return;
     const newOrder = [...slides.map((s) => s.id)];
     [newOrder[index], newOrder[index + 1]] = [newOrder[index + 1], newOrder[index]];
-    try {
-      await reorderSlides(newOrder);
-      displayActionMessage("Slide moved down.", "success");
-    } catch (err) {
-      displayActionMessage("Failed to reorder slides.", "error");
-    }
+    reorderSlides(newOrder);
   };
 
   const handlePublishAll = async () => {
@@ -89,90 +79,29 @@ const SlideManager = () => {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem",
-          flexWrap: "wrap",
-          gap: "0.75rem",
-        }}
-      >
-        <h3 style={{ margin: 0, fontSize: "1.6rem" }}>
-          Landing Page Slides
-        </h3>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem", flexWrap: "wrap", gap: "0.75rem" }}>
+        <h3 style={{ margin: 0, fontSize: "1.6rem" }}>Landing Page Slides</h3>
         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-          <button
-            type="button"
-            onClick={handleAddSlide}
-            className="button button-small"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              opacity: adding ? 0.6 : 1,
-            }}
-            disabled={adding}
-          >
-            <PlusOutlined />
-            {adding ? "Adding..." : "Add Slide"}
+          <button type="button" onClick={handleAddSlide} className="button button-small" style={{ display: "flex", alignItems: "center", gap: "4px", opacity: adding ? 0.6 : 1 }} disabled={adding}>
+            <PlusOutlined /> {adding ? "Adding..." : "Add Slide"}
           </button>
-          <button
-            type="button"
-            onClick={() => setShowPreview(true)}
-            className="button button-small"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              backgroundColor: "#17a2b8",
-              color: "#fff",
-              border: "none",
-            }}
-          >
-            <EyeOutlined />
-            Preview Draft
+          <button type="button" onClick={() => setShowPreview(true)} className="button button-small" style={{ display: "flex", alignItems: "center", gap: "4px", backgroundColor: "#17a2b8", color: "#fff", border: "none" }}>
+            <EyeOutlined /> Preview Draft
           </button>
           {hasAnyDraftChanges && (
-            <button
-              type="button"
-              onClick={handlePublishAll}
-              className="button button-small"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                backgroundColor: "#28a745",
-                color: "#fff",
-                border: "none",
-                opacity: publishing ? 0.6 : 1,
-              }}
-              disabled={publishing}
-            >
-              <CloudUploadOutlined />
-              {publishing ? "Publishing..." : "Publish All Changes"}
+            <button type="button" onClick={handlePublishAll} className="button button-small" style={{ display: "flex", alignItems: "center", gap: "4px", backgroundColor: "#28a745", color: "#fff", border: "none", opacity: publishing ? 0.6 : 1 }} disabled={publishing}>
+              <CloudUploadOutlined /> {publishing ? "Publishing..." : "Publish All Changes"}
             </button>
           )}
         </div>
       </div>
 
       {isLoading ? (
-        <div className="loader">
-          <h3>Loading slides...</h3>
-        </div>
+        <div className="loader"><h3>Loading slides...</h3></div>
       ) : slides.length === 0 ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "3rem",
-            color: "#777",
-          }}
-        >
+        <div style={{ textAlign: "center", padding: "3rem", color: "#777" }}>
           <p style={{ fontSize: "1.4rem" }}>No slides yet.</p>
-          <p style={{ fontSize: "1.2rem" }}>
-            Click "Add Slide" to create your first landing slide.
-          </p>
+          <p style={{ fontSize: "1.2rem" }}>Click "Add Slide" to create your first landing slide.</p>
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
@@ -193,10 +122,7 @@ const SlideManager = () => {
         </div>
       )}
 
-      <SlidePreviewModal
-        isOpen={showPreview}
-        onClose={() => setShowPreview(false)}
-      />
+      <SlidePreviewModal isOpen={showPreview} onClose={() => setShowPreview(false)} />
     </div>
   );
 };

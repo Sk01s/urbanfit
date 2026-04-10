@@ -1,10 +1,11 @@
 import React from "react";
 import { useSeason, useScrollTop, useSiteImages } from "@/hooks";
+import { SiteImageLabel } from "@/components/common";
 import { Link } from "react-router-dom";
 const index = () => {
   useScrollTop();
   const season = useSeason();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
 
   return (
     <main className="content">
@@ -24,6 +25,7 @@ const index = () => {
               <h3>Tops</h3>
               <button className="button">Shop Now</button>
             </div>
+            <SiteImageLabel labelOverlay={getLabelOverlay("women-card-1")} />
           </Link>
           <Link
             to={"/store/women/bottoms"}
@@ -34,6 +36,7 @@ const index = () => {
               <h3>Bottoms</h3>
               <button className="button">Shop Now</button>
             </div>
+            <SiteImageLabel labelOverlay={getLabelOverlay("women-card-2")} />
           </Link>
           <Link
             to={"/store/women/active"}
@@ -44,6 +47,7 @@ const index = () => {
               <h3>Active</h3>
               <button className="button">Shop Now</button>
             </div>
+            <SiteImageLabel labelOverlay={getLabelOverlay("women-card-3")} />
           </Link>
           <Link
             to={"/store/women/essential"}
@@ -54,6 +58,7 @@ const index = () => {
               <h3>Essentials</h3>
               <button className="button">Shop Now</button>
             </div>
+            <SiteImageLabel labelOverlay={getLabelOverlay("women-card-4")} />
           </Link>
         </div>
         {/* <Link

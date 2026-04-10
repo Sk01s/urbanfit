@@ -3,10 +3,11 @@ import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useScrollTop, useSiteImages } from "@/hooks";
+import { SiteImageLabel } from "@/components/common";
 const Contact = () => {
   useScrollTop();
   const [error, setError] = useState();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState();
   const handleSubmit = (e) => {
@@ -31,11 +32,14 @@ const Contact = () => {
   return (
     <main style={{ marginTop: "12rem" }}>
       <h2 style={{ textAlign: "center", marginBottom: 0 }}>Contact Us</h2>
-      <img
-        src={getImageUrl("contact-us-banner")}
-        className="contact-banner"
-        alt=""
-      />
+      <div style={{ position: "relative" }}>
+        <img
+          src={getImageUrl("contact-us-banner")}
+          className="contact-banner"
+          alt=""
+        />
+        <SiteImageLabel labelOverlay={getLabelOverlay("contact-us-banner")} />
+      </div>
       <form
         style={{
           display: "flex",

@@ -4,6 +4,7 @@ import {
   ADMIN_ORDERS,
   ADMIN_SPECIAL_PAGES,
   ADMIN_SETTINGS,
+  ADMIN_CATEGORIES,
   PROMO,
 } from "@/constants/routes";
 
@@ -29,6 +30,15 @@ const SideNavigation = () => (
           to={ADMIN_IMAGES}
         >
           Media
+        </NavLink>
+      </div>
+      <div className="sidenavigation-item">
+        <NavLink
+          activeClassName="sidenavigation-menu-active"
+          className="sidenavigation-menu my-0"
+          to={ADMIN_CATEGORIES}
+        >
+          Categories
         </NavLink>
       </div>
       <div className="sidenavigation-item">

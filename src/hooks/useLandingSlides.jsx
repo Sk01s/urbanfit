@@ -5,6 +5,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import firebase from "@/services/firebase";
@@ -67,6 +68,7 @@ const LandingSlidesContext = createContext({
   error: null,
   addSlide: () => {},
   updateSlide: () => {},
+  updateSlideLocal: () => {},
   deleteSlide: () => {},
   reorderSlides: () => {},
   publishChanges: () => {},
@@ -78,6 +80,7 @@ export const LandingSlidesProvider = ({ children }) => {
   const [slides, setSlides] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const pendingSyncRef = useRef(false);
 
   const loadSlides = useCallback(async () => {
     setIsLoading(true);
@@ -146,13 +149,34 @@ export const LandingSlidesProvider = ({ children }) => {
     );
   }, []);
 
+  const updateSlideLocal = useCallback((id, data) => {
+    setSlides((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, ...data, updatedAt: Date.now(), hasDraftChanges: true } : s))
+    );
+    pendingSyncRef.current = true;
+  }, []);
+
+  const syncPendingToFirestore = useCallback(async () => {
+    if (!pendingSyncRef.current) return;
+    setSlides((prev) => {
+      prev.forEach((slide) => {
+        if (slide.hasDraftChanges || slide.id?.startsWith("__")) return;
+        firebase.updateLandingSlide(slide.id, {
+          ...slide,
+          updatedAt: Date.now(),
+        }).catch(console.error);
+      });
+      return prev;
+    });
+    pendingSyncRef.current = false;
+  }, []);
+
   const deleteSlide = useCallback(async (id) => {
     await firebase.deleteLandingSlide(id);
     setSlides((prev) => prev.filter((s) => s.id !== id));
   }, []);
 
-  const reorderSlides = useCallback(async (orderedIds) => {
-    await firebase.reorderLandingSlides(orderedIds);
+  const reorderSlides = useCallback((orderedIds) => {
     setSlides((prev) => {
       const map = {};
       prev.forEach((s) => {
@@ -164,9 +188,11 @@ export const LandingSlidesProvider = ({ children }) => {
         hasDraftChanges: true,
       }));
     });
+    pendingSyncRef.current = true;
   }, []);
 
   const publishChanges = useCallback(async () => {
+    const currentSlides = slides;
     await firebase.publishLandingSlides();
     setSlides((prev) =>
       prev.map((s) => ({
@@ -181,7 +207,8 @@ export const LandingSlidesProvider = ({ children }) => {
         hasDraftChanges: false,
       }))
     );
-  }, []);
+    pendingSyncRef.current = false;
+  }, [slides]);
 
   const publishSlide = useCallback(async (id) => {
     const slide = slides.find((s) => s.id === id);
@@ -235,6 +262,7 @@ export const LandingSlidesProvider = ({ children }) => {
       error,
       addSlide,
       updateSlide,
+      updateSlideLocal,
       deleteSlide,
       reorderSlides,
       publishChanges,
@@ -250,6 +278,7 @@ export const LandingSlidesProvider = ({ children }) => {
       error,
       addSlide,
       updateSlide,
+      updateSlideLocal,
       deleteSlide,
       reorderSlides,
       publishChanges,

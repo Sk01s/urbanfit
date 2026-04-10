@@ -15,6 +15,7 @@ const SiteImagesContext = createContext({
   isLoading: false,
   error: null,
   getImageUrl: () => "",
+  getLabelOverlay: () => null,
   updateImage: () => {},
   refreshImages: () => {},
   deleteImage: () => {},
@@ -37,6 +38,7 @@ export const SiteImagesProvider = ({ children }) => {
   };
 
   const [images, setImages] = useState(getInitialImages);
+  const [labelOverlays, setLabelOverlays] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -57,10 +59,14 @@ export const SiteImagesProvider = ({ children }) => {
     try {
       const snapshot = await firebase.getSiteImages();
       const loadedImages = {};
+      const loadedLabels = {};
       snapshot.forEach((doc) => {
         const data = doc.data();
         if (data?.url) {
           loadedImages[doc.id] = data.url;
+        }
+        if (data?.labelOverlay) {
+          loadedLabels[doc.id] = data.labelOverlay;
         }
       });
       setImages((prev) => {
@@ -74,6 +80,7 @@ export const SiteImagesProvider = ({ children }) => {
         }
         return mergedImages;
       });
+      setLabelOverlays((prev) => ({ ...prev, ...loadedLabels }));
       setError(null);
     } catch (err) {
       setError(err?.message || "Failed to load site images.");
@@ -130,17 +137,23 @@ export const SiteImagesProvider = ({ children }) => {
     [images]
   );
 
+  const getLabelOverlay = useCallback(
+    (key) => labelOverlays[key] || null,
+    [labelOverlays]
+  );
+
   const value = useMemo(
     () => ({
       images,
       isLoading,
       error,
       getImageUrl,
+      getLabelOverlay,
       updateImage,
       refreshImages: loadImages,
       deleteImage,
     }),
-    [error, getImageUrl, images, isLoading, loadImages, updateImage, deleteImage]
+    [error, getImageUrl, getLabelOverlay, images, isLoading, loadImages, updateImage, deleteImage]
   );
 
   return (

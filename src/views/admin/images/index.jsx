@@ -1,9 +1,11 @@
+import { EditOutlined, CloseOutlined } from "@ant-design/icons";
 import { Boundary } from "@/components/common";
 import { SITE_IMAGES, SITE_IMAGE_DEFAULTS } from "@/config/siteImages";
 import { displayActionMessage } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
 import firebase from "@/services/firebase";
 import React, { useEffect, useState, useCallback } from "react";
+import LabelEditor from "./LabelEditor";
 import SlideManager from "./SlideManager";
 
 const AdminImages = () => {
@@ -16,10 +18,33 @@ const AdminImages = () => {
   const [activeFilter, setActiveFilter] = useState("image");
   const [imageVersions, setImageVersions] = useState({});
   const [imageDimensions, setImageDimensions] = useState({});
+  const [labelOverlays, setLabelOverlays] = useState({});
+  const [editingLabelKey, setEditingLabelKey] = useState(null);
+  const [localLabel, setLocalLabel] = useState(null);
+  const [savingLabel, setSavingLabel] = useState("");
 
   useEffect(() => {
     refreshImages();
   }, [refreshImages]);
+
+  useEffect(() => {
+    const loadLabelOverlays = async () => {
+      try {
+        const snapshot = await firebase.getSiteImages();
+        const overlays = {};
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          if (data.labelOverlay) {
+            overlays[doc.id] = data.labelOverlay;
+          }
+        });
+        setLabelOverlays(overlays);
+      } catch (error) {
+        console.error("Failed to load label overlays:", error);
+      }
+    };
+    loadLabelOverlays();
+  }, []);
 
   // Load image dimensions when images change
   const loadImageDimensions = useCallback((key, url) => {
@@ -148,6 +173,42 @@ const AdminImages = () => {
     if (url) {
       window.open(url, "_blank", "noopener,noreferrer");
     }
+  };
+
+  const handleEditLabel = (key) => {
+    const existing = labelOverlays[key] || null;
+    setLocalLabel(
+      existing ? JSON.parse(JSON.stringify(existing)) : { enabled: false, text: "", position: { x: 50, y: 90 }, style: { color: "#ffffff", fontSize: 16, bgColor: "#000000", bgOpacity: 0.7 } }
+    );
+    setEditingLabelKey(key);
+  };
+
+  const handleLabelSave = async () => {
+    if (!editingLabelKey || !localLabel) return;
+    setSavingLabel(editingLabelKey);
+    try {
+      await firebase.setSiteImage(editingLabelKey, { labelOverlay: localLabel });
+      setLabelOverlays((prev) => ({
+        ...prev,
+        [editingLabelKey]: localLabel,
+      }));
+      displayActionMessage("Label saved.", "success");
+    } catch (error) {
+      displayActionMessage(error?.message || "Failed to save label.", "error");
+    } finally {
+      setSavingLabel("");
+      setEditingLabelKey(null);
+      setLocalLabel(null);
+    }
+  };
+
+  const hexToRgb = (hex) => {
+    if (!hex || typeof hex !== "string" || !hex.startsWith("#") || hex.length < 7) return { r: 0, g: 0, b: 0 };
+    return {
+      r: parseInt(hex.slice(1, 3), 16) || 0,
+      g: parseInt(hex.slice(3, 5), 16) || 0,
+      b: parseInt(hex.slice(5, 7), 16) || 0,
+    };
   };
 
   return (
@@ -286,6 +347,32 @@ const AdminImages = () => {
                   >
                     View Original
                   </button>
+                  {labelOverlays[asset.key]?.enabled && labelOverlays[asset.key]?.text && (() => {
+                    const lbl = labelOverlays[asset.key];
+                    const { r, g, b } = hexToRgb(lbl.style?.bgColor);
+                    const opacity = lbl.style?.bgOpacity ?? 0.7;
+                    return (
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: `${lbl.position?.x ?? 50}%`,
+                          top: `${lbl.position?.y ?? 90}%`,
+                          transform: "translate(-50%, -50%)",
+                          color: lbl.style?.color || "#ffffff",
+                          fontSize: `${lbl.style?.fontSize || 16}px`,
+                          backgroundColor: `rgba(${r}, ${g}, ${b}, ${opacity})`,
+                          padding: "4px 12px",
+                          borderRadius: "4px",
+                          whiteSpace: "nowrap",
+                          pointerEvents: "none",
+                          fontWeight: 600,
+                          zIndex: 5,
+                        }}
+                      >
+                        {lbl.text}
+                      </div>
+                    );
+                  })()}
                 </div>
                 <div
                   style={{
@@ -330,6 +417,27 @@ const AdminImages = () => {
                         {deletingKey === asset.key ? "Deleting..." : "Delete"}
                       </button>
                     )}
+                    <button
+                      type="button"
+                      onClick={() => handleEditLabel(asset.key)}
+                      disabled={savingLabel === asset.key}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px",
+                        padding: "4px 12px",
+                        borderRadius: "20px",
+                        border: `2px solid ${labelOverlays[asset.key]?.enabled ? "#722ed1" : "#adb5bd"}`,
+                        backgroundColor: labelOverlays[asset.key]?.enabled ? "#722ed1" : "transparent",
+                        color: labelOverlays[asset.key]?.enabled ? "#fff" : "#6c757d",
+                        fontSize: "1.2rem",
+                        fontWeight: 600,
+                        cursor: savingLabel === asset.key ? "not-allowed" : "pointer",
+                        transition: "all 0.15s ease",
+                      }}
+                    >
+                      <EditOutlined /> {savingLabel === asset.key ? "Saving..." : "Label"}
+                    </button>
                   </div>
                   <span style={{ fontSize: "1.2rem", color: "#777" }}>
                     {asset.key}
@@ -340,6 +448,64 @@ const AdminImages = () => {
           </div>
         )}
       </div>
+      {/* Label Editor Modal */}
+      {editingLabelKey && localLabel && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={() => { setEditingLabelKey(null); setLocalLabel(null); }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              borderRadius: "12px",
+              padding: "2rem",
+              maxWidth: "700px",
+              width: "90%",
+              maxHeight: "90vh",
+              overflowY: "auto",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+              <h3 style={{ margin: 0, fontSize: "1.6rem" }}>Label Settings</h3>
+              <button type="button" onClick={() => { setEditingLabelKey(null); setLocalLabel(null); }} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "1.8rem", color: "#666" }}>
+                <CloseOutlined />
+              </button>
+            </div>
+            <LabelEditor
+              label={localLabel}
+              onChange={(newLabel) => setLocalLabel(newLabel)}
+              previewImageUrl={getCacheBustedUrl(editingLabelKey)}
+            />
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.75rem", marginTop: "1.5rem" }}>
+              <button type="button" onClick={() => { setEditingLabelKey(null); setLocalLabel(null); }} className="button button-small" style={{ border: "1px solid #ccc" }}>
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleLabelSave}
+                disabled={savingLabel === editingLabelKey}
+                className="button button-small"
+                style={{ backgroundColor: "#28a745", color: "#fff", border: "none", cursor: savingLabel === editingLabelKey ? "not-allowed" : "pointer", opacity: savingLabel === editingLabelKey ? 0.7 : 1 }}
+              >
+                {savingLabel === editingLabelKey ? "Saving..." : "Save Label"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Boundary>
   );
 };

@@ -10,6 +10,7 @@ import {
   useEssentialProducts,
   useScrollTop,
   useSeason,
+  useSiteTexts,
 } from "@/hooks";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
@@ -24,6 +25,8 @@ const Luxury = (props) => {
   const { sex } = useParams();
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
+  const { getCategoryTitle } = useSiteTexts();
+  const titleKey = `new-${sex || "none"}`;
 
   const { products, fetchProducts, error, isLoading } = useProducts();
 
@@ -46,7 +49,7 @@ const Luxury = (props) => {
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {sex === "women" ? "Comfort Sets" : "Just Landed"}
+          {getCategoryTitle(titleKey)}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
