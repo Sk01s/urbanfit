@@ -40,7 +40,7 @@ const Products = () => {
           />
         ) : (
           <>
-            <ProductsTable filteredProducts={products} />
+            <ProductsTable filteredProducts={products} isLoading={isLoading} />
           </>
         )}
       </div>

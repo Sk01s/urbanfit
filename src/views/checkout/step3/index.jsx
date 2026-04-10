@@ -104,6 +104,7 @@ const Payment = ({ shipping, payment, subtotal }) => {
                 isInternational={shipping.isInternational}
                 subtotal={subtotal}
                 order={state}
+                paymentType={paymentType}
               />
             )}
           </Form>

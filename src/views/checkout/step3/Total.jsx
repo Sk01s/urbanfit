@@ -45,7 +45,7 @@ function getOrdinalSuffix(number) {
   }
 }
 
-const Total = ({ isInternational, subtotal, order }) => {
+const Total = ({ isInternational, subtotal, order, paymentType }) => {
   const [loading, setLoading] = useState(false);
   const [shippingRate, setShippingRate] = useState(defaultShipping);
   
@@ -296,7 +296,7 @@ const summery = () => `
         </button>
         <button
           className="button"
-          disabled={false}
+          disabled={!paymentType}
           onClick={handleOrder}
           type="button"
           style={{
@@ -317,6 +317,7 @@ const summery = () => `
 Total.propTypes = {
   isInternational: PropType.bool.isRequired,
   subtotal: PropType.number.isRequired,
+  paymentType: PropType.string,
 };
 
 export default Total;

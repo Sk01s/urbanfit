@@ -3,7 +3,7 @@ import PropType from 'prop-types';
 import React from 'react';
 import { ProductItem } from '.';
 
-const ProductsTable = ({ filteredProducts }) => (
+const ProductsTable = ({ filteredProducts, isLoading }) => (
   <div>
     {filteredProducts.length > 0 && (
       <div className="grid grid-product grid-count-6">
@@ -25,23 +25,35 @@ const ProductsTable = ({ filteredProducts }) => (
         </div>
       </div>
     )}
-    {filteredProducts.length === 0 ? new Array(10).fill({}).map((product, index) => (
-      <ProductItem
-        // eslint-disable-next-line react/no-array-index-key
-        key={`product-skeleton ${index}`}
-        product={product}
-      />
-    )) : filteredProducts.map((product) => (
-      <ProductItem
-        key={product.id}
-        product={product}
-      />
-    ))}
+    {!isLoading && filteredProducts.length === 0 ? (
+      <div style={{ textAlign: 'center', padding: '3rem 0', color: '#888' }}>
+        <p style={{ fontSize: '1.2rem' }}>No products found.</p>
+      </div>
+    ) : isLoading && filteredProducts.length === 0 ? (
+      new Array(10).fill({}).map((product, index) => (
+        <ProductItem
+          key={`product-skeleton ${index}`}
+          product={product}
+        />
+      ))
+    ) : (
+      filteredProducts.map((product) => (
+        <ProductItem
+          key={product.id}
+          product={product}
+        />
+      ))
+    )}
   </div>
 );
 
 ProductsTable.propTypes = {
-  filteredProducts: PropType.array.isRequired
+  filteredProducts: PropType.array.isRequired,
+  isLoading: PropType.bool,
+};
+
+ProductsTable.defaultProps = {
+  isLoading: false,
 };
 
 export default ProductsTable;

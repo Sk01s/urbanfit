@@ -27,7 +27,7 @@ const EssentialProducts = () => {
               buttonLabel="Try Again"
             />
           ) : (
-            <ProductGrid products={essentialProducts} skeletonCount={6} />
+            <ProductGrid products={essentialProducts} isLoading={isLoading} />
           )}
         </div>
       </div>

@@ -29,7 +29,7 @@ const FeaturedProducts = () => {
               buttonLabel="Try Again"
             />
           ) : (
-            <ProductGrid products={seasonalProducts} skeletonCount={6} />
+            <ProductGrid products={seasonalProducts} isLoading={isLoading} />
           )}
         </div>
       </div>

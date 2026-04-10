@@ -16,6 +16,7 @@ const ProductShowcase = ({
   cart,
   view = false,
   high,
+  isLoading,
 }) => {
   const settings = {
     infinite: true,
@@ -133,7 +134,11 @@ const ProductShowcase = ({
         </Link>
       )}
       <Slider ref={sliderRef} {...settings}>
-        {filteredProducts.length === 0
+        {!isLoading && filteredProducts.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 0', color: '#888' }}>
+            <p style={{ fontSize: '1.2rem' }}>No products found.</p>
+          </div>
+        ) : isLoading && filteredProducts.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (
               <FeaturedProduct
                 // eslint-disable-next-line react/no-array-index-key
@@ -160,13 +165,15 @@ const ProductShowcase = ({
   );
 };
 
-ProductShowcase.defaultProps = {
-  skeletonCount: 4,
-};
-
 ProductShowcase.propTypes = {
   products: PropType.array.isRequired,
   skeletonCount: PropType.number,
+  isLoading: PropType.bool,
+};
+
+ProductShowcase.defaultProps = {
+  skeletonCount: 4,
+  isLoading: false,
 };
 
 export default ProductShowcase;
