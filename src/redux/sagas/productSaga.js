@@ -109,6 +109,8 @@ function* productSaga({ type, payload }) {
             ...product,
           })
         );
+        localStorage.removeItem("products");
+        localStorage.removeItem("seasonals");
         yield handleAction(ADMIN_PRODUCTS, "Item succesfully added", "success");
         yield put(setLoading(false));
       } catch (e) {
@@ -127,6 +129,24 @@ function* productSaga({ type, payload }) {
 
         const { image, imageCollection, id } = payload.updates;
         let newUpdates = { ...payload.updates };
+
+        console.log("[EDIT_PRODUCT] Debug info:", {
+          id,
+          imageType: typeof image,
+          imageIsFile: image instanceof File,
+          imageConstructor: image?.constructor?.name,
+          imageCollectionLength: imageCollection?.length,
+          imageCollectionItems: imageCollection?.map((img) => ({
+            id: img.id,
+            hasFile: !!img.file,
+            fileType: img.file?.constructor?.name,
+            isFileInstance: img.file instanceof File,
+            fileName: img.file?.name,
+            fileSize: img.file?.size,
+            fileType2: img.file?.type,
+            url: typeof img.url === 'string' ? img.url.substring(0, 60) + '...' : img.url,
+          })),
+        });
 
         // Fetch the current product from database to preserve quantities unless explicitly changed
         const currentProductDoc = yield call(firebase.getSingleProduct, id);
@@ -175,6 +195,11 @@ function* productSaga({ type, payload }) {
           (newUpdates.xsQuantity ?? currentProduct.xsQuantity ?? 0);
 
         if (image.constructor === File && typeof image === "object") {
+          console.log("[EDIT_PRODUCT] Uploading new thumbnail image:", {
+            name: image.name,
+            size: image.size,
+            type: image.type,
+          });
           try {
             yield call(firebase.deleteImage, id);
           } catch (e) {
@@ -183,20 +208,34 @@ function* productSaga({ type, payload }) {
 
           const url = yield call(firebase.storeImage, id, "products", image);
           newUpdates = { ...newUpdates, image: url };
+        } else {
+          console.log("[EDIT_PRODUCT] Thumbnail unchanged (not a File):", typeof image, image?.constructor?.name);
         }
 
-        if (imageCollection.length > 1) {
-          const existingUploads = [];
-          const newUploads = [];
+        const existingUploads = [];
+        const newUploads = [];
 
-          imageCollection.forEach((img) => {
-            if (img.file) {
-              newUploads.push(img);
-            } else {
-              existingUploads.push(img);
-            }
-          });
+        imageCollection.forEach((img) => {
+          if (img.file) {
+            console.log("[EDIT_PRODUCT] New upload found:", {
+              id: img.id,
+              fileName: img.file?.name,
+              fileSize: img.file?.size,
+              fileType: img.file?.type,
+              isFileInstance: img.file instanceof File,
+            });
+            newUploads.push(img);
+          } else {
+            existingUploads.push(img);
+          }
+        });
 
+        console.log("[EDIT_PRODUCT] Image collection split:", {
+          existingCount: existingUploads.length,
+          newCount: newUploads.length,
+        });
+
+        if (newUploads.length > 0) {
           const imageKeys = yield all(
             newUploads.map(() => firebase.generateKey)
           );
@@ -216,12 +255,8 @@ function* productSaga({ type, payload }) {
         } else {
           newUpdates = {
             ...newUpdates,
-            imageCollection: [
-              { id: new Date().getTime(), url: newUpdates.image },
-            ],
+            imageCollection: [...existingUploads],
           };
-          // add image thumbnail to image collection from newUpdates to
-          // make sure you're adding the url not the file object.
         }
 
         yield call(firebase.editProduct, id, newUpdates);
@@ -231,6 +266,8 @@ function* productSaga({ type, payload }) {
             updates: newUpdates,
           })
         );
+        localStorage.removeItem("products");
+        localStorage.removeItem("seasonals");
         yield handleAction(
           ADMIN_PRODUCTS,
           "Item succesfully edited",
@@ -252,6 +289,8 @@ function* productSaga({ type, payload }) {
         yield initRequest();
         yield call(firebase.removeProduct, payload);
         yield put(removeProductSuccess(payload));
+        localStorage.removeItem("products");
+        localStorage.removeItem("seasonals");
         yield put(setLoading(false));
         yield handleAction(
           ADMIN_PRODUCTS,

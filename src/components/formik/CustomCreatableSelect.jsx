@@ -22,7 +22,7 @@ const CustomCreatableSelect = (props) => {
 
   const handleChange = (newValue) => {
     if (Array.isArray(newValue)) {
-      setValue(arr);
+      setValue(newValue.map((v) => v.value));
     } else {
       setValue(newValue.value);
     }

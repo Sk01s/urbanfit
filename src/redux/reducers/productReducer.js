@@ -5,6 +5,7 @@ import {
   GET_PRODUCTS_SUCCESS,
   REMOVE_PRODUCT_SUCCESS,
   SEARCH_PRODUCT_SUCCESS,
+  SET_ALL_PRODUCTS,
 } from "@/constants/constants";
 
 const initState = {
@@ -66,6 +67,11 @@ export default (
           }
           return product;
         }),
+      };
+    case SET_ALL_PRODUCTS:
+      return {
+        ...state,
+        items: action.payload,
       };
     default:
       return state;

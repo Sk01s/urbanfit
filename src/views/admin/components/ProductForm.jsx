@@ -116,38 +116,29 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
   const onSubmitForm = async (form) => {
     if (imageFile.image.file || product.imageUr || isEditing) {
       const productId = product.id || (await firebaseInstance.generateKey());
-      // const setRelatives = (relativeIdArray) =>
-      //   relativeIdArray.length === 0
-      //     ? []
-      //     : relativeIdArray.map(async (id) => {
-      //         if (productId === id) return;
-      //         const currentProduct = products.find(
-      //           (product) => product.id === id
-      //         );
-      //         const relatives = [...relativeIdArray, productId].filter(
-      //           (itemId) => id !== itemId
-      //         );
 
-      //         if (arraysHaveSameValues(currentProduct.relative, relatives)) {
-      //           return;
-      //         }
-      //         currentProduct.relative = relatives;
-      //         await firebaseInstance.editProduct(
-      //           currentProduct.id,
-      //           currentProduct
-      //         );
-      //       });
-      // setRelatives(form.relative || []);
-      // if (product.relative) {
-      //   product.relative.map(async (productId) => {
-      //     if (form.relative.includes(productId)) return;
-      //     const currentProduct = products.find(
-      //       (product) => product.id === productId
-      //     );
-      //     currentProduct.relative = [];
-      //     await firebaseInstance.editProduct(currentProduct.id, currentProduct);
-      //   });
-      // }
+      console.log("[ProductForm] Debug - imageFile state:", {
+        imageHasKey: !!imageFile.image,
+        imageHasFile: !!imageFile.image?.file,
+        imageFileDetails: imageFile.image?.file ? {
+          name: imageFile.image.file.name,
+          size: imageFile.image.file.size,
+          type: imageFile.image.file.type,
+          isFileInstance: imageFile.image.file instanceof File,
+          constructorName: imageFile.image.file?.constructor?.name,
+        } : null,
+        imageCollectionCount: imageFile.imageCollection?.length,
+        imageCollectionItems: imageFile.imageCollection?.map((img) => ({
+          id: img.id,
+          hasFile: !!img.file,
+          fileName: img.file?.name,
+          fileSize: img.file?.size,
+          fileType: img.file?.type,
+          isFileInstance: img.file instanceof File,
+          urlPreview: typeof img.url === 'string' ? img.url.substring(0, 80) + '...' : typeof img.url,
+        })),
+      });
+
       onSubmit({
         id: productId,
         ...form,

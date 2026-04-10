@@ -11,6 +11,7 @@ import {
   REMOVE_PRODUCT_SUCCESS,
   SEARCH_PRODUCT,
   SEARCH_PRODUCT_SUCCESS,
+  SET_ALL_PRODUCTS,
 } from "@/constants/constants";
 
 export const getProducts = (lastRef) => ({
@@ -75,4 +76,9 @@ export const editProduct = (updates) => ({
 export const editProductSuccess = (updates) => ({
   type: EDIT_PRODUCT_SUCCESS,
   payload: updates,
+});
+
+export const setAllProducts = (products) => ({
+  type: SET_ALL_PRODUCTS,
+  payload: products,
 });

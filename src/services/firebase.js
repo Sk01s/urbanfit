@@ -342,20 +342,32 @@ class Firebase {
   generateKey = () => this.db.collection("products").doc().id;
 
   storeImage = async (id, folder, imageFile, useBackblazeB2 = true) => {
-    // Check if Backblaze B2 should be used (based on feature flag or parameter)
     if (useBackblazeB2) {
       try {
-        // Use backend API endpoint for file uploads
         const formData = new FormData();
+
+        console.log("[storeImage] Debug info:", {
+          id,
+          folder,
+          imageFileType: typeof imageFile,
+          isFileInstance: imageFile instanceof File,
+          fileName: imageFile?.name,
+          fileSize: imageFile?.size,
+          fileType: imageFile?.type,
+          imageFileConstructor: imageFile?.constructor?.name,
+        });
 
         if (imageFile instanceof File) {
           const ext = imageFile.name.split('.').pop();
-          formData.append(
-            "file",
-            imageFile,
-            `${folder}/${id}-${Date.now()}.${ext}`
-          );
+          const uploadName = `${folder}/${id}-${Date.now()}.${ext}`;
+          formData.append("file", imageFile, uploadName);
+
+          console.log("[storeImage] FormData entries:");
+          for (const [key, value] of formData.entries()) {
+            console.log(`  ${key}:`, value instanceof File ? `File(name=${value.name}, size=${value.size}, type=${value.type})` : value);
+          }
         } else {
+          console.error("[storeImage] imageFile is not a File instance. Got:", imageFile);
           throw new Error("Unsupported file format for upload");
         }
 
@@ -366,18 +378,15 @@ class Firebase {
 
         if (!response.ok) {
           const errorText = await response.text();
+          console.error("[storeImage] Upload failed response:", response.status, errorText);
           throw new Error(`Upload failed: ${response.status} - ${errorText}`);
         }
 
         const result = await response.json();
-        console.log(`Image uploaded via backend: ${result.url}, service: ${result.service}`);
+        console.log(`[storeImage] Image uploaded via backend: ${result.url}, service: ${result.service}`);
         return result.url;
       } catch (error) {
-        console.error(
-          "Failed to upload via backend:",
-          error.message
-        );
-        // Don't fall back to Firebase Storage - throw error instead
+        console.error("[storeImage] Failed to upload via backend:", error.message);
         throw new Error(`Upload failed: ${error.message}. Please check backend is running.`);
       }
     }
