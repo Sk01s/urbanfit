@@ -69,6 +69,15 @@ export const EDIT_USER = "EDIT_USER";
 export const LOADING = "LOADING";
 export const IS_AUTHENTICATING = "IS_AUTHENTICATING";
 export const SET_REQUEST_STATUS = "SET_REQUEST_STATUS";
+
+export const SET_PRODUCTS_V2 = "SET_PRODUCTS_V2";
+export const SET_BASKET_V2_ITEMS = "SET_BASKET_V2_ITEMS";
+export const ADD_TO_BASKET_V2 = "ADD_TO_BASKET_V2";
+export const ADD_TO_WISH_V2 = "ADD_TO_WISH_V2";
+export const REMOVE_FROM_BASKET_V2 = "REMOVE_FROM_BASKET_V2";
+export const CLEAR_BASKET_V2 = "CLEAR_BASKET_V2";
+export const ADD_QTY_ITEM_V2 = "ADD_QTY_ITEM_V2";
+export const MINUS_QTY_ITEM_V2 = "MINUS_QTY_ITEM_V2";
 export const categories = [
   { value: "Tops", label: "Tops" },
   { value: "Bottoms", label: "Bottoms" },

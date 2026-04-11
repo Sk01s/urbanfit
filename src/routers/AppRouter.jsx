@@ -1,18 +1,27 @@
-import { Basket } from "@/components/basket";
 import { Footer, Navigation, NewsDisplay } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 import { createBrowserHistory } from "history";
 import React, { useState } from "react";
-import { Route, Router, Switch, Link } from "react-router-dom";
+import { Route, Router, Switch } from "react-router-dom";
 import * as view from "@/views";
 import AdminRoute from "./AdminRoute";
 import ClientRoute from "./ClientRoute";
 import PublicRoute from "./PublicRoute";
 import Terms from "./../components/terms/index";
-import { createPortal } from "react-dom";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-// Revert back to history v4.10.0 because
-// v5.0 breaks navigation
+import v2Enabled from "@/experimental/featureFlag";
+
+import { Basket } from "@/components/basket";
+import BasketV2 from "@/experimental/components/basket/BasketV2";
+
+import ViewProductV2 from "@/experimental/views/view_product";
+import ShopV2 from "@/experimental/views/shop";
+import CheckOutStep1V2 from "@/experimental/views/checkout/step1";
+import CheckOutStep2V2 from "@/experimental/views/checkout/step2";
+import CheckOutStep3V2 from "@/experimental/views/checkout/step3";
+import V2AddProduct from "@/experimental/views/admin/add_product";
+import V2EditProduct from "@/experimental/views/admin/edit_product";
+
 export const history = createBrowserHistory();
 
 const AppRouter = () => {
@@ -23,13 +32,13 @@ const AppRouter = () => {
         <SpeedInsights />
         <NewsDisplay />
         <Navigation />
-        <Basket />
+        {v2Enabled ? <BasketV2 /> : <Basket />}
         {!accepeted && <Terms setAccepeted={setAccepeted} />}
         <Switch>
           <Route component={view.Search} exact path={ROUTES.SEARCH} />
           <Route component={view.About} exact path={ROUTES.ABOUT_US} />
           <Route component={view.Home} exact path={ROUTES.HOME} />
-          <Route component={view.Shop} exact path={ROUTES.SHOP} />
+          <Route component={v2Enabled ? ShopV2 : view.Shop} exact path={ROUTES.SHOP} />
           <Route
             component={view.FeaturedProducts}
             exact
@@ -71,14 +80,15 @@ const AppRouter = () => {
             path={ROUTES.ORDER_COMPLETED}
           />
           <PublicRoute component={view.SignUp} path={ROUTES.SIGNUP} />
-
           <PublicRoute component={view.SignIn} exact path={ROUTES.SIGNIN} />
           <PublicRoute
             component={view.ForgotPassword}
             path={ROUTES.FORGOT_PASSWORD}
           />
-
-          <Route component={view.ViewProduct} path={ROUTES.VIEW_PRODUCT} />
+          <Route
+            component={v2Enabled ? ViewProductV2 : view.ViewProduct}
+            path={ROUTES.VIEW_PRODUCT}
+          />
           <Route component={view.SpecialPage} path={ROUTES.SPECIAL_PAGE} />
           <ClientRoute
             component={view.UserAccount}
@@ -95,15 +105,15 @@ const AppRouter = () => {
             path={ROUTES.ACCOUNT_EDIT}
           />
           <ClientRoute
-            component={view.CheckOutStep1}
+            component={v2Enabled ? CheckOutStep1V2 : view.CheckOutStep1}
             path={ROUTES.CHECKOUT_STEP_1}
           />
           <ClientRoute
-            component={view.CheckOutStep2}
+            component={v2Enabled ? CheckOutStep2V2 : view.CheckOutStep2}
             path={ROUTES.CHECKOUT_STEP_2}
           />
           <ClientRoute
-            component={view.CheckOutStep3}
+            component={v2Enabled ? CheckOutStep3V2 : view.CheckOutStep3}
             path={ROUTES.CHECKOUT_STEP_3}
           />
           <AdminRoute
@@ -120,6 +130,11 @@ const AppRouter = () => {
             component={view.AdminCategories}
             exact
             path={ROUTES.ADMIN_CATEGORIES}
+          />
+          <AdminRoute
+            component={view.AdminTypes}
+            exact
+            path={ROUTES.ADMIN_TYPES}
           />
           <AdminRoute
             component={view.SpecialPages}
@@ -141,12 +156,15 @@ const AppRouter = () => {
             path={ROUTES.ADMIN_ORDERS}
           />
           <AdminRoute component={view.Products} path={ROUTES.ADMIN_PRODUCTS} />
-          <AdminRoute component={view.AddProduct} path={ROUTES.ADD_PRODUCT} />
+          <AdminRoute
+            component={v2Enabled ? V2AddProduct : view.AddProduct}
+            path={ROUTES.ADD_PRODUCT}
+          />
           <AdminRoute component={view.AddPromo} path={ROUTES.ADD_PROMO} />
           <AdminRoute component={view.OrderView} path={ROUTES.ORDER_DETAILS} />
           <AdminRoute component={view.Promo} path={ROUTES.PROMO} />
           <AdminRoute
-            component={view.EditProduct}
+            component={v2Enabled ? V2EditProduct : view.EditProduct}
             path={`${ROUTES.EDIT_PRODUCT}/:id`}
           />
           <AdminRoute

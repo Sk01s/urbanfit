@@ -11,7 +11,8 @@ import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useEssentialProducts, useSiteImages, useSpecialPages } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
+import v2Enabled from "@/experimental/featureFlag";
 
 const handleScroll = () => {
   const scrollY = window.scrollY;
@@ -38,6 +39,9 @@ const Navigation = () => {
     useEssentialProducts();
   const { specialPages } = useSpecialPages();
   const { getImageUrl } = useSiteImages();
+  const { typesForSex, slugify } = useTypes();
+  const womenTypes = typesForSex("women");
+  const menTypes = typesForSex("men");
   const handleMouseEnterMen = () => {
     setMenPopupVisible(true);
   };
@@ -62,7 +66,7 @@ const Navigation = () => {
     return pathname.startsWith("/checkout");
   }
   const store = useSelector((state) => ({
-    basketLength: state.basket.length,
+    basketLength: v2Enabled ? state.basketV2.length : state.basket.length,
     wishLength: state.wish.length,
     user: state.auth,
     isAuthenticating: state.app.isAuthenticating,
@@ -204,92 +208,17 @@ const Navigation = () => {
                     Essentials
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    onClick={handleMouseLeave}
-                    to="/type/women/t-shrit"
-                    className="type-link"
-                  >
-                    T-shrits
-                  </Link>
-                </li>
-
-                {/* <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/jacket"
-                  className="type-link"
-                >
-                  Jackets
-                </Link>
-              </li> */}
-
-                {/* <li>
-              <Link onClick={handleMouseLeave} to="" className="type-link">
-                Sets
-              </Link>
-            </li> */}
-              </ul>
-              <ul style={{ flexDirection: "column", display: "flex" }}>
-                <li>
-                  <br />
-                  <br />
-                </li>
-
-                {/* <li>
-                <Link onClick={()=>handleMouseLeave()} to="/type/men/" className="type-link">New Arrivals</Link>
-              </li> */}
-
-                <li>
-                  <Link
-                    onClick={handleMouseLeave}
-                    to="/type/women/active-wear"
-                    className="type-link"
-                  >
-                    Active wear
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    onClick={handleMouseLeave}
-                    to="/type/women/leggings"
-                    className="type-link"
-                  >
-                    Leggings
-                  </Link>
-                </li>
-                {/* <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/women/jacket"
-                  className="type-link"
-                >
-                  Jackets
-                </Link>
-              </li> */}
-                <li>
-                  <Link
-                    onClick={handleMouseLeave}
-                    to="/type/women/hoodies-&-sweatshrits"
-                    className="type-link"
-                  >
-                    Hoodies & Sweatshrits
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    onClick={handleMouseLeave}
-                    to="/type/women/sweatpants-&-pants"
-                    className="type-link"
-                  >
-                    Sweatpants & Pants
-                  </Link>
-                </li>
-                {/* <li>
-              <Link onClick={handleMouseLeave} to="" className="type-link">
-                Sets
-              </Link>
-            </li> */}
+                {womenTypes.map((t) => (
+                  <li key={t.id}>
+                    <Link
+                      onClick={handleMouseLeave}
+                      to={`/type/women/${slugify(t.name)}`}
+                      className="type-link"
+                    >
+                      {t.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -348,81 +277,17 @@ const Navigation = () => {
                   Essentials
                 </Link>
               </li>
-
-              {/* <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/jacket"
-                  className="type-link"
-                >
-                  Jackets
-                </Link>
-              </li> */}
-
-              {/* <li>
-              <Link
-                onClick={handleMouseLeave}
-                to="/type/men/"
-                className="type-link"
-              >
-                Sets
-              </Link>
-            </li> */}
-            </ul>
-            <ul style={{ flexDirection: "column", display: "flex" }}>
-              <li>
-                <br />
-                <br />
-              </li>
-              {/* <li>
-                <Link onClick={()=>handleMouseLeave()} to="" className="type-link">New Arrivals</Link>
-              </li> */}
-
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/t-shrit"
-                  className="type-link"
-                >
-                  T-shrits
-                </Link>
-              </li>
-              {/* <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/jacket"
-                  className="type-link"
-                >
-                  Jackets
-                </Link>
-              </li> */}
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/hoodies-&-sweatshrits"
-                  className="type-link"
-                >
-                  Hoodies & Sweatshrits
-                </Link>
-              </li>
-              <li>
-                <Link
-                  onClick={handleMouseLeave}
-                  to="/type/men/sweatpants-&-pants"
-                  className="type-link"
-                >
-                  Sweatpants & Pants
-                </Link>
-              </li>
-              {/* <li>
-              <Link
-                onClick={handleMouseLeave}
-                to="/type/men/"
-                className="type-link"
-              >
-                Sets
-              </Link>
-            </li> */}
+              {menTypes.map((t) => (
+                <li key={t.id}>
+                  <Link
+                    onClick={handleMouseLeave}
+                    to={`/type/men/${slugify(t.name)}`}
+                    className="type-link"
+                  >
+                    {t.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </li>

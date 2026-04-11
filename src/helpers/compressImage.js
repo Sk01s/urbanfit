@@ -1,71 +1,71 @@
-const compressImage = (file, maxSizeKB = 200) => {
-  return new Promise((resolve) => {
-    if (file.size / 1024 <= maxSizeKB) {
-      resolve(file);
-      return;
-    }
+const compressImage = (file, options = {}) => {
+  const {
+    maxWidth = 1600,
+    maxHeight = 2000,
+    webpQuality = 0.8,
+  } = options;
 
+  return new Promise((resolve) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
     const img = new Image();
     const url = URL.createObjectURL(file);
-    const ORIGINAL_WIDTH = img.width;
-    const ORIGINAL_HEIGHT = img.height;
 
-    img.onload = async () => {
-      URL.revokeObjectURL(url);
+    const tryWebP = (width, height) => {
+      canvas.width = width;
+      canvas.height = height;
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-
-      let width = img.width;
-      let height = img.height;
-      let quality = 0.92;
-
-      const MIN_DIM = 100;
-      const MIN_QUALITY = 0.5;
-
-      const doCompress = (w, h, q) => {
-        return new Promise((res) => {
-          canvas.width = w;
-          canvas.height = h;
-          ctx.clearRect(0, 0, w, h);
-          ctx.drawImage(img, 0, 0, w, h);
-          canvas.toBlob(
-            (blob) => res(blob),
-            "image/jpeg",
-            q
-          );
-        });
-      };
-
-      const shrinkDimensions = (w, h) => {
-        const newW = Math.max(Math.floor(w * 0.85), MIN_DIM);
-        const newH = Math.max(Math.floor(h * 0.85), MIN_DIM);
-        return { width: newW, height: newH };
-      };
-
-      let blob = await doCompress(width, height, quality);
-
-      while (blob.size / 1024 > maxSizeKB && quality > MIN_QUALITY) {
-        quality -= 0.05;
-        quality = Math.round(quality * 100) / 100;
-        blob = await doCompress(width, height, quality);
-      }
-
-      while (blob.size / 1024 > maxSizeKB) {
-        const next = shrinkDimensions(width, height);
-        if (next.width === width && next.height === height) break;
-        width = next.width;
-        height = next.height;
-        blob = await doCompress(width, height, quality);
-      }
-
-      const compressedFile = new File(
-        [blob],
-        file.name.replace(/\.[^.]+$/, ".jpg"),
-        { type: "image/jpeg" }
+      canvas.toBlob(
+        (webpBlob) => {
+          if (webpBlob) {
+            const pngCanvas = document.createElement("canvas");
+            const pngCtx = pngCanvas.getContext("2d");
+            pngCanvas.width = width;
+            pngCanvas.height = height;
+            pngCtx.clearRect(0, 0, width, height);
+            pngCtx.drawImage(img, 0, 0, width, height);
+            pngCanvas.toBlob((pngBlob) => {
+              URL.revokeObjectURL(url);
+              if (pngBlob && webpBlob.size < pngBlob.size && webpBlob.size < file.size) {
+                const newName = file.name.replace(/\.[^.]+$/, "") + ".webp";
+                resolve(new File([webpBlob], newName, { type: "image/webp" }));
+              } else if (pngBlob && pngBlob.size < file.size) {
+                const newName = file.name.replace(/\.[^.]+$/, "") + ".png";
+                resolve(new File([pngBlob], newName, { type: "image/png" }));
+              } else {
+                resolve(file);
+              }
+            }, "image/png");
+          } else {
+            canvas.toBlob((pngBlob) => {
+              URL.revokeObjectURL(url);
+              if (pngBlob && pngBlob.size < file.size) {
+                const newName = file.name.replace(/\.[^.]+$/, "") + ".png";
+                resolve(new File([pngBlob], newName, { type: "image/png" }));
+              } else {
+                resolve(file);
+              }
+            }, "image/png");
+          }
+        },
+        "image/webp",
+        webpQuality
       );
+    };
 
-      resolve(compressedFile);
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > maxWidth) {
+        height = Math.round((height * maxWidth) / width);
+        width = maxWidth;
+      }
+      if (height > maxHeight) {
+        width = Math.round((width * maxHeight) / height);
+        height = maxHeight;
+      }
+      tryWebP(width, height);
     };
 
     img.onerror = () => {

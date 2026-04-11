@@ -8,11 +8,12 @@ import {
   CustomTextarea,
 } from "@/components/formik";
 import { Field, FieldArray, Form, Formik } from "formik";
-import { useFileHandler } from "@/hooks";
+import { useFileHandler, useSiteTexts } from "@/hooks";
 import PropType from "prop-types";
 import React from "react";
 import * as Yup from "yup";
-import { categories, type } from "@/constants/constants";
+import { categories } from "@/constants/constants";
+import { useTypes } from "@/hooks";
 import { useState } from "react";
 import { ProductRelative } from "@/components/product";
 import firebaseInstance from "@/services/firebase";
@@ -71,6 +72,8 @@ const FormSchema = Yup.object().shape({
 });
 
 const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
+  const { getCategoryTitle } = useSiteTexts();
+  const { typeOptions } = useTypes();
   // Store original quantity values to detect if they were actually changed
   const originalQuantities = {
     xlQuantity: product?.xlQuantity ?? 0,
@@ -218,7 +221,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                     }}
                     name="type"
                     iid="type"
-                    options={type}
+                    options={typeOptions}
                     disabled={isLoading}
                     placeholder="Select/Create Type"
                     label="* Type"
@@ -527,7 +530,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   />
                   <label htmlFor="luxury">
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Luxury &nbsp;
+                      &nbsp; Add to {getCategoryTitle("luxury-men")} &nbsp;
                     </h5>
                   </label>
                 </div>
@@ -546,7 +549,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   />
                   <label htmlFor="cool">
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Cool &nbsp;
+                      &nbsp; Add to {getCategoryTitle("cool-men")} &nbsp;
                     </h5>
                   </label>
                 </div>
@@ -567,7 +570,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   />
                   <label htmlFor="new">
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to New &nbsp;
+                      &nbsp; Add to {getCategoryTitle("new-none")} &nbsp;
                     </h5>
                   </label>
                 </div>

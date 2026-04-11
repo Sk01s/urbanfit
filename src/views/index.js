@@ -51,3 +51,4 @@ export { default as SpecialPage } from "./special_page";
 export { default as AdminVerify } from "./admin/verify";
 export { default as AdminSettings } from "./admin/settings";
 export { default as AdminCategories } from "./admin/categories";
+export { default as AdminTypes } from "./admin/types";
