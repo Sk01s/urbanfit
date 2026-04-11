@@ -10,6 +10,11 @@ import { isTodayBetweenDates } from "@/helpers/utils";
 const V2_ENABLED = import.meta.env.VITE_V2_ENABLED === "true";
 const PRODUCTS_COLLECTION = V2_ENABLED ? "products_v2" : "products";
 
+if (V2_ENABLED) {
+  localStorage.removeItem("products");
+  localStorage.removeItem("seasonals");
+}
+
 // Backend API URL - configured via environment variable
 const BACKEND_API_URL =
   import.meta.env.VITE_BACKEND_API_URL || "http://0.0.0.0:3001";

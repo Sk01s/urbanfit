@@ -28,7 +28,8 @@ const ProductShowcase = ({
     variableWidth: true,
     slidesToScroll: 1,
   };
-  const filteredProducts = high ? HighProducts(products) : products;
+  const highProduct =HighProducts(products);
+  const filteredProducts = high ? highProduct.length ===0 ? products:highProduct : products;
 
   const sliderRef = useRef(null);
 
@@ -39,7 +40,6 @@ const ProductShowcase = ({
   const goToPrevious = () => {
     sliderRef.current.slickPrev(); // Go to the previous slide
   };
-
   return (
     <div className={view ? "" : "show-case"}>
       <div className="display-header" style={{ marginBottom: to || "2rem" }}>
