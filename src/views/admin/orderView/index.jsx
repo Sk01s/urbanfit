@@ -10,6 +10,7 @@ import Skeleton from "react-loading-skeleton";
 import { displayMoney, displayDate, calculateSubtotal } from "@/helpers/utils";
 import { OrderPaymentSummery } from "@/components/common";
 import { BasketItem } from "@/components/basket";
+import v2Enabled from "@/experimental/featureFlag";
 
 const ProductForm = lazy(() => import("../components/ProductForm"));
 
@@ -39,7 +40,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     async function getOrder() {
-      const data = await firebase.getOrder(orderId);
+      const data = v2Enabled ? await firebase.getOrderV2(orderId) : await firebase.getOrder(orderId);
       const order = await data?.data();
       setOrderDetails(order);
     }
@@ -169,16 +170,19 @@ const EditProduct = () => {
                 {orderDetails.fulfillment ? "Yes" : "No"}
               </span>
               <button
-                onClick={() => {
-                  setOrderDetails((prev) => ({
-                    ...prev,
-                    fulfillment: !prev.fulfillment,
-                  }));
-                  firebase.updateOrder(orderDetails.id, {
-                    ...orderDetails,
-                    fulfillment: !orderDetails.fulfillment,
-                  });
-                }}
+               onClick={() => {
+                   setOrderDetails((prev) => ({
+                     ...prev,
+                     fulfillment: !prev.fulfillment,
+                   }));
+                   v2Enabled ? firebase.updateOrderV2(orderDetails.id, {
+                     ...orderDetails,
+                     fulfillment: !orderDetails.fulfillment,
+                   }) : firebase.updateOrder(orderDetails.id, {
+                     ...orderDetails,
+                     fulfillment: !orderDetails.fulfillment,
+                   });
+                 }}
                 style={{
                   borderRadius: 0,
                   border: "solid 1px #222",

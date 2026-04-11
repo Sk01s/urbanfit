@@ -756,6 +756,8 @@ getSiteImages = () => this.db.collection("siteImages").get();
 
   getOrder = (id) => this.db.collection("order").doc(id).get();
 
+  getOrderV2 = (id) => this.db.collection("orders_v2").doc(id).get();
+
   getPromo = (id) => this.db.collection("promo").doc(id).get();
 
   removeOrder = (id, order) => {
@@ -802,6 +804,10 @@ getSiteImages = () => this.db.collection("siteImages").get();
 
   updateOrder = (id, order) =>
     this.db.collection("order").doc(id).update(order);
+
+  updateOrderV2 = (id, order) =>
+    this.db.collection("orders_v2").doc(id).update(order);
+
   updatePromo = (promo) =>
     this.db.collection("promo").doc(promo.code).update(promo);
 }
