@@ -750,6 +750,8 @@ getSiteImages = () => this.db.collection("siteImages").get();
 
   getOrders = () => this.db.collection("order").get();
 
+  getOrdersV2 = () => this.db.collection("orders_v2").get();
+
   getPromos = () => this.db.collection("promo").get();
 
   getOrder = (id) => this.db.collection("order").doc(id).get();

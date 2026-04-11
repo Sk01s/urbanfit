@@ -12,11 +12,13 @@ import ProductsTable from "../components/ProductsTable";
 import { OrderItem } from "@/views/admin/components";
 import { FiltersToggle, SearchBar } from "@/components/common";
 import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
+import v2Enabled from "@/experimental/featureFlag";
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     const getOrders = async () => {
-      const res = await firebase.getOrders();
+      const res = v2Enabled ? await firebase.getOrdersV2() : await firebase.getOrders();
       const orders = res.docs
         .map((res) => res.data())
         .sort((a, b) => b.date - a.date);
