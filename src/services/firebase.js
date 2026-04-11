@@ -7,6 +7,9 @@ import { displayActionMessage } from "@/helpers/utils";
 import dayjs from "dayjs";
 import { isTodayBetweenDates } from "@/helpers/utils";
 
+const V2_ENABLED = import.meta.env.VITE_V2_ENABLED === "true";
+const PRODUCTS_COLLECTION = V2_ENABLED ? "products_v2" : "products";
+
 // Backend API URL - configured via environment variable
 const BACKEND_API_URL =
   import.meta.env.VITE_BACKEND_API_URL || "http://0.0.0.0:3001";
@@ -201,7 +204,7 @@ class Firebase {
 
   //  PRODUCT ACTIONS --------------
 
-  getSingleProduct = (id) => this.db.collection("products").doc(id).get();
+  getSingleProduct = (id) => this.db.collection(PRODUCTS_COLLECTION).doc(id).get();
 
   getProducts = (lastRefKey) => {
     let didTimeout = false;
@@ -211,7 +214,7 @@ class Firebase {
         if (lastRefKey) {
           try {
             const query = this.db
-              .collection("products")
+              .collection(PRODUCTS_COLLECTION)
               .orderBy(app.firestore.FieldPath.documentId())
               .startAfter(lastRefKey)
               .limit(12);
@@ -234,10 +237,10 @@ class Firebase {
           }, 15000);
 
           try {
-            const totalQuery = await this.db.collection("products").get();
+            const totalQuery = await this.db.collection(PRODUCTS_COLLECTION).get();
             const total = totalQuery.docs.length;
             const query = this.db
-              .collection("products")
+              .collection(PRODUCTS_COLLECTION)
               .orderBy(app.firestore.FieldPath.documentId())
               .limit(12);
             const snapshot = await query.get();
@@ -266,7 +269,7 @@ class Firebase {
 
     return new Promise((resolve, reject) => {
       (async () => {
-        const productsRef = this.db.collection("products");
+        const productsRef = this.db.collection(PRODUCTS_COLLECTION);
 
         const timeout = setTimeout(() => {
           didTimeout = true;
@@ -330,16 +333,16 @@ class Firebase {
   };
 
   getSeasonalProducts = () =>
-    this.db.collection("products").where("isSeasonal", "==", true).get();
+    this.db.collection(PRODUCTS_COLLECTION).where("isSeasonal", "==", true).get();
 
   getEsssentialProducts = () =>
-    this.db.collection("products").where("isEssential", "==", true).get();
-  getProductsAll = () => this.db.collection("products").get();
+    this.db.collection(PRODUCTS_COLLECTION).where("isEssential", "==", true).get();
+  getProductsAll = () => this.db.collection(PRODUCTS_COLLECTION).get();
 
   addProduct = (id, product) =>
-    this.db.collection("products").doc(id).set(product);
+    this.db.collection(PRODUCTS_COLLECTION).doc(id).set(product);
 
-  generateKey = () => this.db.collection("products").doc().id;
+  generateKey = () => this.db.collection(PRODUCTS_COLLECTION).doc().id;
 
   storeImage = async (id, folder, imageFile, useBackblazeB2 = true) => {
     if (useBackblazeB2) {
@@ -457,6 +460,17 @@ getSiteImages = () => this.db.collection("siteImages").get();
 
   setCategoryPage = (key, data) =>
     this.db.collection("categoryPages").doc(key).set(data, { merge: true });
+
+  getTypes = () => this.db.collection("types").orderBy("order", "asc").get();
+
+  addType = (id, data) =>
+    this.db.collection("types").doc(id).set(data);
+
+  updateType = (id, data) =>
+    this.db.collection("types").doc(id).set(data, { merge: true });
+
+  deleteType = (id) =>
+    this.db.collection("types").doc(id).delete();
 
   deleteSiteImage = async (key, useBackblazeB2 = true) => {
     // Try to delete from backend (B2) first if enabled
@@ -692,9 +706,9 @@ getSiteImages = () => this.db.collection("siteImages").get();
   deleteImage = (id) => this.storage.ref("products").child(id).delete();
 
   editProduct = (id, updates) =>
-    this.db.collection("products").doc(id).update(updates);
+    this.db.collection(PRODUCTS_COLLECTION).doc(id).update(updates);
 
-  removeProduct = (id) => this.db.collection("products").doc(id).delete();
+  removeProduct = (id) => this.db.collection(PRODUCTS_COLLECTION).doc(id).delete();
 
   addOrder = async (id, order) => {
     const products = (await this.getProductsAll()).docs.map((doc) =>
@@ -725,7 +739,7 @@ getSiteImages = () => this.db.collection("siteImages").get();
       ) {
         throw "Product is out of stock";
       }
-      await this.db.collection("products").doc(item.id).set(product);
+      await this.db.collection(PRODUCTS_COLLECTION).doc(item.id).set(product);
     });
   };
 
@@ -742,7 +756,7 @@ getSiteImages = () => this.db.collection("siteImages").get();
       item.totalQuantity += item.quantity;
       item[`${item.selectedSize}Quantity`] += item.quantity;
       await this.db
-        .collection("products")
+        .collection(PRODUCTS_COLLECTION)
         .doc(item.id)
         .set(item, { merge: true });
     });

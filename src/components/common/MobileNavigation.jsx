@@ -14,8 +14,9 @@ import * as Route from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
 import { ProductGrid } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useEssentialProducts, useSiteImages, useSpecialPages } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
+import v2Enabled from "@/experimental/featureFlag";
 
 const handleScroll = () => {
   const scrollY = window.scrollY;
@@ -33,6 +34,9 @@ const Navigation = (props) => {
   const [isSearching, setIsSearching] = useState(false);
   const { getImageUrl } = useSiteImages();
   const { specialPages } = useSpecialPages();
+  const { typesForSex, slugify } = useTypes();
+  const womenTypes = typesForSex("women");
+  const menTypes = typesForSex("men");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isWomenOpen, setIsWomenOpen] = useState(false);
   const [isMenOpen, setIsMenOpen] = useState(false);
@@ -44,7 +48,7 @@ const Navigation = (props) => {
     if (isAuthenticating) e.preventDefault();
   };
   const store = useSelector((state) => ({
-    basketLength: state.basket.length,
+    basketLength: v2Enabled ? state.basketV2.length : state.basket.length,
     wishLength: state.wish.length,
     user: state.auth,
     isAuthenticating: state.app.isAuthenticating,
@@ -440,27 +444,13 @@ const Navigation = (props) => {
               Essentials
             </Link>
           </li>
-          <li>
-            <Link onClick={closeMenu} to="/type/men/t-shrit">
-              T-shrits
-            </Link>
-          </li>
-          <li>
-            <Link onClick={closeMenu} to="/type/men/hoodies-&-sweatshrits">
-              Hoodies & Sweatshrits
-            </Link>
-          </li>
-          {/* <li>
-            <Link onClick={closeMenu} to="/type/men/jacket">
-              Jacket
-            </Link>
-          </li> */}
-
-          <li>
-            <Link onClick={closeMenu} to="/type/men/sweatpants-&-pants">
-              Sweatpants & Pants
-            </Link>
-          </li>
+          {menTypes.map((t) => (
+            <li key={t.id}>
+              <Link onClick={closeMenu} to={`/type/men/${slugify(t.name)}`}>
+                {t.name}
+              </Link>
+            </li>
+          ))}
         </ul>
         <ul
           className="menu-links"
@@ -491,38 +481,13 @@ const Navigation = (props) => {
               Essentials
             </Link>
           </li>
-          <li>
-            <Link onClick={closeMenu} to="/type/women/t-shrit">
-              T-shrits
-            </Link>
-          </li>
-          <li>
-            <Link onClick={closeMenu} to="/type/women/hoodies-&-sweatshrits">
-              Hoodies & Sweatshrits
-            </Link>
-          </li>
-          {/* <li>
-            <Link onClick={closeMenu} to="/type/women/jacket">
-              Jacket
-            </Link>
-          </li> */}
-
-          <li>
-            <Link onClick={closeMenu} to="/type/women/sweatpants-&-pants">
-              Sweatpants & Pants
-            </Link>
-          </li>
-          <li>
-            <Link onClick={closeMenu} to="/type/women/leggings">
-              Leggings
-            </Link>
-          </li>
-
-          <li>
-            <Link onClick={closeMenu} to="/type/women/active-wear">
-              Active wear
-            </Link>
-          </li>
+          {womenTypes.map((t) => (
+            <li key={t.id}>
+              <Link onClick={closeMenu} to={`/type/women/${slugify(t.name)}`}>
+                {t.name}
+              </Link>
+            </li>
+          ))}
         </ul>
         <ul
           className="menu-links"

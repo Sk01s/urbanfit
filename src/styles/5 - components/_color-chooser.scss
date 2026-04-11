@@ -14,7 +14,7 @@
   z-index: 1;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 0px 0px 4px white, 0 0 0 5px black;
+  //box-shadow: 0 0px 0px 4px white, 0 0 0 5px black;
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
@@ -28,7 +28,7 @@
 .color-item-selected,
 .color-item-deletable {
   flex-shrink: 0;
-  box-shadow: 0 0px 0px 5px white, 0 0 0 6px black;
+  //box-shadow: 0 0px 0px 5px white, 0 0 0 6px black;
 
   //   content: "✓";
   //   position: absolute;

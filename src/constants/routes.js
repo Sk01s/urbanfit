@@ -55,3 +55,4 @@ export const ADD_PROMO = "/admin/promo/add";
 export const ADMIN_OTP_VERIFY = "/admin/verify";
 export const ADMIN_SETTINGS = "/admin/settings";
 export const ADMIN_CATEGORIES = "/admin/categories";
+export const ADMIN_TYPES = "/admin/types";
