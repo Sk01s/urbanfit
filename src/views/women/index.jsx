@@ -1,11 +1,12 @@
 import React from "react";
-import { useSeason, useScrollTop, useSiteImages } from "@/hooks";
+import { useSeason, useScrollTop, useSiteImages, useSiteTexts } from "@/hooks";
 import { SiteImageLabel } from "@/components/common";
 import { Link } from "react-router-dom";
 const index = () => {
   useScrollTop();
   const season = useSeason();
   const { getImageUrl, getLabelOverlay } = useSiteImages();
+  const { getCategoryTitle } = useSiteTexts();
 
   return (
     <main className="content">
@@ -55,7 +56,7 @@ const index = () => {
             style={{ backgroundImage: `url(${getImageUrl("women-card-4")})` }}
           >
             <div>
-              <h3>Essentials</h3>
+              <h3>{getCategoryTitle("essential")}</h3>
               <button className="button">Shop Now</button>
             </div>
             <SiteImageLabel labelOverlay={getLabelOverlay("women-card-4")} />

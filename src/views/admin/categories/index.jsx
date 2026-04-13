@@ -6,12 +6,16 @@ import React, { useEffect, useState } from "react";
 import { SITE_IMAGES } from "@/config/siteImages";
 
 const CATEGORY_CARDS = [
-  { key: "category-card-1", titleKey: "cool-men", route: "/cool/men", label: "Category Card 1" },
-  { key: "category-card-2", titleKey: "luxury-men", route: "/luxury/men", label: "Category Card 2" },
-  { key: "category-card-4", titleKey: "new-none", route: "/new/none", label: "Category Card 4" },
-  { key: "category-card-5", titleKey: "luxury-women", route: "/luxury/women", label: "Category Card 5" },
-  { key: "category-card-6", titleKey: "new-women", route: "/new/women", label: "Category Card 6" },
-  { key: "category-card-7", titleKey: "type-women-t-shrit", route: "/type/women/t-shrit", label: "Category Card 7" },
+  { key: "category-card-1", titleKey: "cool-men", route: "/cool/men", label: "Category Card 1", flag: "isCool" },
+  { key: "category-card-2", titleKey: "luxury-men", route: "/luxury/men", label: "Category Card 2", flag: "isLuxury" },
+  { key: "category-card-4", titleKey: "new-none", route: "/new/none", label: "Category Card 4", flag: "isNew" },
+  { key: "category-card-5", titleKey: "luxury-women", route: "/luxury/women", label: "Category Card 5", flag: "isLuxury" },
+  { key: "category-card-6", titleKey: "new-women", route: "/new/women", label: "Category Card 6", flag: "isNew" },
+  { key: "category-card-7", titleKey: "best-seller", route: "/best-seller", label: "Category Card 7", flag: "isBestSeller" },
+];
+
+const SECTION_TITLES = [
+  { titleKey: "essential", label: "Essentials Section", route: "/essential", flag: "isEssential" },
 ];
 
 const AdminCategories = () => {
@@ -91,14 +95,21 @@ const AdminCategories = () => {
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontWeight: 600 }}>{card.label}</span>
-                    <a
-                      href={card.route}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontSize: "1.2rem", color: "#1890ff" }}
-                    >
-                      {card.route}
-                    </a>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                      {card.flag && (
+                        <span style={{ fontSize: "1.1rem", color: "#888", fontFamily: "monospace" }}>
+                          {card.flag}
+                        </span>
+                      )}
+                      <a
+                        href={card.route}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontSize: "1.2rem", color: "#1890ff" }}
+                      >
+                        {card.route}
+                      </a>
+                    </div>
                   </div>
                   <div
                     style={{
@@ -166,6 +177,119 @@ const AdminCategories = () => {
                           type="button"
                           className="button button-small"
                           onClick={() => handleEdit(card.titleKey)}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+      <div className="product-admin-header" style={{ justifyContent: "space-between", marginTop: "3rem" }}>
+        <div>
+          <h3 className="product-admin-header-title">Section Titles</h3>
+          <p style={{ color: "#666", marginTop: "0.5rem", fontSize: "1.3rem" }}>
+            Edit section titles displayed across the site
+          </p>
+        </div>
+      </div>
+      <div className="product-admin-items">
+        {isLoading ? (
+          <div className="loader">
+            <h3>Loading...</h3>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gap: "2rem",
+            }}
+          >
+            {SECTION_TITLES.map((section) => {
+              const isEditing = editingKey === section.titleKey;
+              const isSaving = savingKey === section.titleKey;
+
+              return (
+                <div
+                  key={section.titleKey}
+                  style={{
+                    border: "1px solid #e5e5e5",
+                    borderRadius: "12px",
+                    padding: "1.5rem",
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontWeight: 600 }}>{section.label}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                      {section.flag && (
+                        <span style={{ fontSize: "1.1rem", color: "#888", fontFamily: "monospace" }}>
+                          {section.flag}
+                        </span>
+                      )}
+                      <a
+                        href={section.route}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontSize: "1.2rem", color: "#1890ff" }}
+                      >
+                        {section.route}
+                      </a>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    <label className="normal-label" style={{ fontWeight: 600, fontSize: "1.3rem" }}>Section Title</label>
+                    {isEditing ? (
+                      <div style={{ display: "flex", gap: "0.5rem" }}>
+                        <input
+                          type="text"
+                          value={editValue}
+                          onChange={(e) => setEditValue(e.target.value)}
+                          disabled={isSaving}
+                          style={{
+                            flex: 1,
+                            padding: "6px 10px",
+                            borderRadius: "4px",
+                            border: "1px solid #ccc",
+                            fontSize: "1.3rem",
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="button button-small"
+                          onClick={handleCancel}
+                          disabled={isSaving}
+                          style={{ border: "1px solid #ccc" }}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="button"
+                          className="button button-small"
+                          onClick={() => handleSave(section.titleKey)}
+                          disabled={isSaving}
+                          style={{ backgroundColor: "#28a745", color: "#fff", border: "none", opacity: isSaving ? 0.7 : 1 }}
+                        >
+                          {isSaving ? "Saving..." : "Save"}
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                        <span style={{ fontSize: "1.4rem", color: "#333", flex: 1 }}>
+                          {categoryTitles[section.titleKey] || "Untitled"}
+                        </span>
+                        <button
+                          type="button"
+                          className="button button-small"
+                          onClick={() => handleEdit(section.titleKey)}
                         >
                           Edit
                         </button>

@@ -68,6 +68,7 @@ const AppRouter = () => {
           <Route component={view.Cool} exact path={ROUTES.COOL} />
           <Route component={view.Luxury} exact path={ROUTES.LUXURY} />
           <Route component={view.New} exact path={ROUTES.NEW} />
+          <Route component={view.BestSeller} exact path={ROUTES.BEST_SELLER} />
           <Route
             component={view.TypeCategory}
             exact

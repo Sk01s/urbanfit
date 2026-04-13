@@ -44,6 +44,7 @@ const FormSchema = Yup.object().shape({
   isCool: Yup.boolean(),
   isLuxury: Yup.boolean(),
   isNew: Yup.boolean(),
+  isBestSeller: Yup.boolean(),
 });
 
 const defaultColorVariant = () => ({
@@ -356,6 +357,7 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
     isCool: product?.isCool || false,
     isNew: product?.isNew || false,
     isLuxury: product?.isLuxury || false,
+    isBestSeller: product?.isBestSeller || false,
   };
 
   return (
@@ -500,6 +502,10 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
                   <input checked={values.isNew} id="new" onChange={(e) => setValues({ ...values, isNew: e.target.checked })} type="checkbox" />
                   <label htmlFor="new"><h5>&nbsp; Add to {getCategoryTitle("new-none")} &nbsp;</h5></label>
                 </div>
+                <div className="product-form-field">
+                  <input checked={values.isBestSeller} id="bestSeller" onChange={(e) => setValues({ ...values, isBestSeller: e.target.checked })} type="checkbox" />
+                  <label htmlFor="bestSeller"><h5>&nbsp; Add to {getCategoryTitle("best-seller")} &nbsp;</h5></label>
+                </div>
               </div>
               <br /><br /><br />
               <div className="product-form-field product-form-submit">
@@ -552,7 +558,9 @@ ProductFormV2.propTypes = {
     isEssential: PropType.bool,
     isCool: PropType.bool,
     isNew: PropType.bool,
-    isLuxury: PropType.bool,
+isLuxury: PropType.bool,
+    isNew: PropType.bool,
+    isBestSeller: PropType.bool,
     colors: PropType.array,
     sharedImages: PropType.array,
   }),

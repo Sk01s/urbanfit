@@ -14,7 +14,7 @@ import * as Route from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
 import { ProductGrid } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes, useSiteTexts } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
 import v2Enabled from "@/experimental/featureFlag";
 
@@ -34,6 +34,7 @@ const Navigation = (props) => {
   const [isSearching, setIsSearching] = useState(false);
   const { getImageUrl } = useSiteImages();
   const { specialPages } = useSpecialPages();
+  const { getCategoryTitle } = useSiteTexts();
   const { typesForSex, slugify } = useTypes();
   const womenTypes = typesForSex("women");
   const menTypes = typesForSex("men");
@@ -441,7 +442,7 @@ const Navigation = (props) => {
           </li>
           <li>
             <Link onClick={closeMenu} to="/store/men/essential">
-              Essentials
+              {getCategoryTitle("essential")}
             </Link>
           </li>
           {menTypes.map((t) => (
@@ -478,7 +479,7 @@ const Navigation = (props) => {
           </li>
           <li>
             <Link onClick={closeMenu} to="/store/women/essential">
-              Essentials
+              {getCategoryTitle("essential")}
             </Link>
           </li>
           {womenTypes.map((t) => (
@@ -558,7 +559,7 @@ const Navigation = (props) => {
               close={closeMenu}
               products={essentialProducts}
               skeletonCount={6}
-              title={"Essentials"}
+              title={getCategoryTitle("essential")}
               infinite={false}
               center={false}
               to={ROUTE.ESSENTIAL_PRODUCTS}

@@ -5,6 +5,7 @@ const CustomDots = ({ currentSlide, onDotClick, imageCollection }) => {
   const dots = imageCollection.map((image, index) => (
     <div
       className="product-modal-image-collection-wrapper"
+      style={{marginTop:"1rem"}}
       key={image.id}
       onClick={() => {
         onDotClick(index);

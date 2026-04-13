@@ -205,7 +205,7 @@ const CategoryCards = () => {
           <SiteImageLabel labelOverlay={getLabelOverlay("category-card-6")} />
         </Link>
         <Link
-          to={"/type/women/t-shrit"}
+          to={"/best-seller"}
           className="product-display card"
           style={{
             marginInline: ".5rem",

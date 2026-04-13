@@ -1,12 +1,13 @@
 import { MessageDisplay } from "@/components/common";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useDocumentTitle, useEssentialProducts, useScrollTop } from "@/hooks";
+import { useDocumentTitle, useEssentialProducts, useScrollTop, useSiteTexts } from "@/hooks";
 import { ProductGrid } from "@/components/product";
 import React from "react";
 
 const EssentialProducts = () => {
   useDocumentTitle("Essential Products | Urbanfit");
   useScrollTop();
+  const { getCategoryTitle } = useSiteTexts();
 
   const { essentialProducts, fetchEssentialProducts, isLoading, error } =
     useEssentialProducts();
@@ -16,7 +17,7 @@ const EssentialProducts = () => {
       <div className="featured">
         <div className="banner">
           <div className="banner-desc">
-            <h1>Essentials</h1>
+            <h1>{getCategoryTitle("essential")}</h1>
           </div>
         </div>
         <div className="display" style={{ marginTop: "5rem" }}>

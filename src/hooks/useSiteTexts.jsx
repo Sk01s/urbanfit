@@ -14,7 +14,8 @@ const DEFAULT_TITLES = {
   "luxury-women": "Timeless Luxury",
   "new-none": "Just Landed",
   "new-women": "Comfort Sets",
-  "type-women-t-shrit": "Women's T-Shirts",
+  "best-seller": "Best Seller",
+  "essential": "Essentials",
 };
 
 const SiteTextsContext = createContext({

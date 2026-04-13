@@ -14,6 +14,7 @@ import {
   useScrollTop,
   useDocumentTitle,
   useWish,
+  useSiteTexts,
 } from "@/hooks";
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -35,6 +36,7 @@ const ViewProductV2 = () => {
   const { product, variant, selectedColor, setSelectedColor, isLoading, error } = useProductV2(id);
   const { addToBasket, isItemOnBasket } = useBasketV2();
   const { wish, addToWish, isItemOnWish } = useWish();
+  const { getCategoryTitle } = useSiteTexts();
   useScrollTop();
   useDocumentTitle(`${product?.name || ""}`);
 
@@ -304,6 +306,16 @@ const ViewProductV2 = () => {
                     </div>
                     <div className="product-sizes-container">
                       <button
+                        ref={(el) => (sizesBtnsEl.current[4] = el)}
+                        className={`product-size  ${
+                          variant.xsQuantity || "not-available"
+                        }`}
+                        disabled={variant.xsQuantity > 0 ? false : true}
+                        onClick={(e) => onSelectedSizeChange(4, "xs")}
+                      >
+                        XS
+                      </button>
+                      <button
                         ref={(el) => (sizesBtnsEl.current[3] = el)}
                         className={`product-size  ${
                           variant.smQuantity || "not-available"
@@ -545,7 +557,7 @@ Returns eligible on full-price items only.`}
                   products={essentialProducts.filter(
                     (item) => item.id !== id && item.sex === product.sex
                   )}
-                  title={"Essentials"}
+                  title={getCategoryTitle("essential")}
                   skeletonCount={2}
                   to={ESSENTIAL_PRODUCTS}
                   view

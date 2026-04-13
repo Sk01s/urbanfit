@@ -10,6 +10,7 @@ import {
   useEssentialProducts,
   useScrollTop,
   useSeason,
+  useSiteTexts,
 } from "@/hooks";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectFilter } from "@/selectors/selector";
@@ -24,6 +25,7 @@ const Category = (props) => {
   const [name, setName] = useState(category);
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
+  const { getCategoryTitle } = useSiteTexts();
 
   const { products, fetchProducts, error, isLoading } = useProducts();
   let [filteredProducts, setFilterdProducts] = useState(() =>
@@ -68,7 +70,7 @@ const Category = (props) => {
       );
     }
     if (category === "essential") {
-      setName("essentials");
+      setName(getCategoryTitle("essential").toLowerCase());
       setFilterdProducts(
         essentialProducts.filter(
           (product) =>

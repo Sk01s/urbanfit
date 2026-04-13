@@ -36,11 +36,7 @@ const Luxury = (props) => {
   };
   useEffect(() => {
     setFilterdProducts(
-      products?.filter(
-        (product) =>
-          product.isCool &&
-          product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-      )
+      products?.filter((product) => product.isCool)
     );
   }, [pathname, products]);
   return (

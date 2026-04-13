@@ -11,6 +11,7 @@ import {
   useEssentialProducts,
   useScrollTop,
   useDidMount,
+  useSiteTexts,
 } from "@/hooks";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -41,6 +42,7 @@ const ViewProduct = () => {
   const { product, isLoading, error } = useProduct(id);
   const { addToBasket, isItemOnBasket } = useBasket(id);
   const { wish, addToWish, isItemOnWish } = useWish(id);
+  const { getCategoryTitle } = useSiteTexts();
   useScrollTop();
   useDocumentTitle(`${product?.name || ""}`);
 
@@ -158,7 +160,7 @@ const ViewProduct = () => {
                   onChangeIndex={handleChangeIndex}
                   enableMouseEvents
                   height={"90dvh"}
-                  style={{ overflowY: "hidden" }}
+                  style={{ overflowY: "hidden" }}  
                 >
                   {product.imageCollection.map((image, index) => (
                     <ImageLoader
@@ -548,7 +550,7 @@ Returns eligible on full-price items only.`}
                   products={essentialProducts.filter(
                     (item) => item.id !== id && item.sex === product.sex
                   )}
-                  title={"Essentials"}
+                  title={getCategoryTitle("essential")}
                   skeletonCount={2}
                   to={ESSENTIAL_PRODUCTS}
                   view

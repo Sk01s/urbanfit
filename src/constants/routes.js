@@ -12,6 +12,7 @@ export const COOL = "/cool/:sex";
 export const LUXURY = "/luxury/:sex";
 export const NEW = "/new/:sex";
 export const TYPE_CATEGORY = "/type/:sex/:type";
+export const BEST_SELLER = "/best-seller";
 export const WOMEN = "/women";
 export const WOMEN_CATEGORIES = "/women/:category";
 export const WISH = "/wish-list";

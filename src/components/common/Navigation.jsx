@@ -11,7 +11,7 @@ import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
 import { ProductShowcaseGrid } from "@/components/product";
-import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes, useSiteTexts } from "@/hooks";
 import v2Enabled from "@/experimental/featureFlag";
 
 const handleScroll = () => {
@@ -39,6 +39,7 @@ const Navigation = () => {
     useEssentialProducts();
   const { specialPages } = useSpecialPages();
   const { getImageUrl } = useSiteImages();
+  const { getCategoryTitle } = useSiteTexts();
   const { typesForSex, slugify } = useTypes();
   const womenTypes = typesForSex("women");
   const menTypes = typesForSex("men");
@@ -205,7 +206,7 @@ const Navigation = () => {
                     to="/store/women/essential"
                     className="type-link"
                   >
-                    Essentials
+                    {getCategoryTitle("essential")}
                   </Link>
                 </li>
                 {womenTypes.map((t) => (
@@ -274,7 +275,7 @@ const Navigation = () => {
                   to="/store/men/essential"
                   className="type-link"
                 >
-                  Essentials
+                  {getCategoryTitle("essential")}
                 </Link>
               </li>
               {menTypes.map((t) => (

@@ -47,6 +47,7 @@ export { default as AddPromo } from "./admin/add_promo/index";
 export { default as Cool } from "./cool/index";
 export { default as Luxury } from "./luxury/index";
 export { default as New } from "./new/index";
+export { default as BestSeller } from "./best-seller/index";
 export { default as SpecialPage } from "./special_page";
 export { default as AdminVerify } from "./admin/verify";
 export { default as AdminSettings } from "./admin/settings";

@@ -66,6 +66,7 @@ const FormSchema = Yup.object().shape({
   isCool: Yup.boolean(),
   isLuxury: Yup.boolean(),
   isNew: Yup.boolean(),
+  isBestSeller: Yup.boolean(),
   availableColors: Yup.array()
     .of(Yup.string().required())
     .min(1, "Please add a default color for this product."),
@@ -106,6 +107,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
     isCool: product?.isCool || false,
     isNew: product?.isNew || false,
     isLuxury: product?.isLuxury || false,
+    isBestSeller: product?.isBestSeller || false,
     availableColors: product?.availableColors || [],
   };
 
@@ -509,7 +511,7 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   />
                   <label htmlFor="essentails">
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Essential &nbsp;
+                      &nbsp; Add to {getCategoryTitle("essential")} &nbsp;
                     </h5>
                   </label>
                 </div>
@@ -571,6 +573,27 @@ const ProductForm = ({ product, onSubmit, isLoading, isEditing }) => {
                   <label htmlFor="new">
                     <h5 className="d-flex-grow-1 margin-0">
                       &nbsp; Add to {getCategoryTitle("new-none")} &nbsp;
+                    </h5>
+                  </label>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <input
+                    checked={values.isBestSeller}
+                    className=""
+                    id="bestSeller"
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        isBestSeller: e.target.checked,
+                      })
+                    }
+                    type="checkbox"
+                  />
+                  <label htmlFor="bestSeller">
+                    <h5 className="d-flex-grow-1 margin-0">
+                      &nbsp; Add to {getCategoryTitle("best-seller")} &nbsp;
                     </h5>
                   </label>
                 </div>
@@ -642,6 +665,10 @@ ProductForm.propTypes = {
     imageUrl: PropType.string,
     isSeasonal: PropType.bool,
     isEssential: PropType.bool,
+    isCool: PropType.bool,
+    isLuxury: PropType.bool,
+    isNew: PropType.bool,
+    isBestSeller: PropType.bool,
     availableColors: PropType.arrayOf(PropType.string),
   }).isRequired,
   onSubmit: PropType.func.isRequired,

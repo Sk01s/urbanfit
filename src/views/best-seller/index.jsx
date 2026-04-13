@@ -1,32 +1,22 @@
 import React from "react";
-import {
-  useLocation,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import {
   useDocumentTitle,
-  useSeasonalProducts,
-  useEssentialProducts,
   useScrollTop,
-  useSeason,
   useSiteTexts,
 } from "@/hooks";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
 import { SortModel } from "@/components/common";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useProducts } from "@/hooks";
 import { MessageDisplay } from "@/components/common";
 
-const Luxury = (props) => {
+const BestSeller = () => {
   const { pathname } = useLocation();
-  const { sex } = useParams();
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
   const { getCategoryTitle } = useSiteTexts();
-  const titleKey = `luxury-${sex || "men"}`;
 
   const { products, fetchProducts, error, isLoading } = useProducts();
 
@@ -36,14 +26,14 @@ const Luxury = (props) => {
   };
   useEffect(() => {
     setFilterdProducts(
-      products?.filter((product) => product.isLuxury)
+      products?.filter((product) => product.isBestSeller)
     );
   }, [pathname, products]);
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-          {getCategoryTitle(titleKey)}
+          {getCategoryTitle("best-seller")}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
@@ -70,4 +60,4 @@ const Luxury = (props) => {
   );
 };
 
-export default Luxury;
+export default BestSeller;

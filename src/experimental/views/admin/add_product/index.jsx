@@ -59,9 +59,10 @@ const V2AddProduct = ({ history }) => {
             priority: 0,
             isSeasonal: false,
             isEssential: false,
-            isCool: false,
-            isNew: false,
-            isLuxury: false,
+isCool: false,
+             isNew: false,
+             isLuxury: false,
+             isBestSeller: false,
             colors: [],
             sharedImages: [],
           }}

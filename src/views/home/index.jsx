@@ -12,6 +12,7 @@ import {
   useEssentialProducts,
   useScrollTop,
   useSeason,
+  useSiteTexts,
 } from "@/hooks";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -28,6 +29,7 @@ import { CategoryCards } from "@/components/common";
 const Home = () => {
   useDocumentTitle("Urbanfit | Home");
   useScrollTop();
+  const { getCategoryTitle } = useSiteTexts();
   const store = useSelector(
     (state) => ({
       filteredProducts: selectFilter(state.products.items, state.filter),
@@ -128,7 +130,7 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
-              title={"Essentials"}
+              title={getCategoryTitle("essential")}
               products={essentialProducts}
               skeletonCount={6}
               to={ESSENTIAL_PRODUCTS}
