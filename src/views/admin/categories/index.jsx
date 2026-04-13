@@ -7,10 +7,10 @@ import { SITE_IMAGES } from "@/config/siteImages";
 
 const CATEGORY_CARDS = [
   { key: "category-card-1", titleKey: "cool-men", route: "/cool/men", label: "Category Card 1", flag: "isCool" },
-  { key: "category-card-2", titleKey: "luxury-men", route: "/luxury/men", label: "Category Card 2", flag: "isLuxury" },
-  { key: "category-card-4", titleKey: "new-none", route: "/new/none", label: "Category Card 4", flag: "isNew" },
-  { key: "category-card-5", titleKey: "luxury-women", route: "/luxury/women", label: "Category Card 5", flag: "isLuxury" },
-  { key: "category-card-6", titleKey: "new-women", route: "/new/women", label: "Category Card 6", flag: "isNew" },
+  { key: "category-card-2", titleKey: "luxury-men", route: "/luxury/men", label: "Category Card 2", flag: "isLuxuryMen" },
+  { key: "category-card-4", titleKey: "new-none", route: "/new/none", label: "Category Card 4", flag: "isNewMen" },
+  { key: "category-card-5", titleKey: "luxury-women", route: "/luxury/women", label: "Category Card 5", flag: "isLuxuryWomen" },
+  { key: "category-card-6", titleKey: "new-women", route: "/new/women", label: "Category Card 6", flag: "isNewWomen" },
   { key: "category-card-7", titleKey: "best-seller", route: "/best-seller", label: "Category Card 7", flag: "isBestSeller" },
 ];
 

@@ -42,8 +42,10 @@ const FormSchema = Yup.object().shape({
   isSeasonal: Yup.boolean(),
   isEssential: Yup.boolean(),
   isCool: Yup.boolean(),
-  isLuxury: Yup.boolean(),
-  isNew: Yup.boolean(),
+  isLuxuryMen: Yup.boolean(),
+  isLuxuryWomen: Yup.boolean(),
+  isNewMen: Yup.boolean(),
+  isNewWomen: Yup.boolean(),
   isBestSeller: Yup.boolean(),
 });
 
@@ -355,8 +357,10 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
     isSeasonal: product?.isSeasonal || false,
     isEssential: product?.isEssential || false,
     isCool: product?.isCool || false,
-    isNew: product?.isNew || false,
-    isLuxury: product?.isLuxury || false,
+    isNewMen: product?.isNewMen || false,
+    isNewWomen: product?.isNewWomen || false,
+    isLuxuryMen: product?.isLuxuryMen || false,
+    isLuxuryWomen: product?.isLuxuryWomen || false,
     isBestSeller: product?.isBestSeller || false,
   };
 
@@ -489,9 +493,15 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
               </div>
               <div className="d-flex">
                 <div className="product-form-field">
-                  <input checked={values.isLuxury} id="luxury" onChange={(e) => setValues({ ...values, isLuxury: e.target.checked })} type="checkbox" />
-                  <label htmlFor="luxury"><h5>&nbsp; Add to {getCategoryTitle("luxury-men")} &nbsp;</h5></label>
+                  <input checked={values.isLuxuryMen} id="luxuryMen" onChange={(e) => setValues({ ...values, isLuxuryMen: e.target.checked })} type="checkbox" />
+                  <label htmlFor="luxuryMen"><h5>&nbsp; Add to {getCategoryTitle("luxury-men")} &nbsp;</h5></label>
                 </div>
+                <div className="product-form-field">
+                  <input checked={values.isLuxuryWomen} id="luxuryWomen" onChange={(e) => setValues({ ...values, isLuxuryWomen: e.target.checked })} type="checkbox" />
+                  <label htmlFor="luxuryWomen"><h5>&nbsp; Add to {getCategoryTitle("luxury-women")} &nbsp;</h5></label>
+                </div>
+              </div>
+              <div className="d-flex">
                 <div className="product-form-field">
                   <input checked={values.isCool} id="cool" onChange={(e) => setValues({ ...values, isCool: e.target.checked })} type="checkbox" />
                   <label htmlFor="cool"><h5>&nbsp; Add to {getCategoryTitle("cool-men")} &nbsp;</h5></label>
@@ -499,9 +509,15 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
               </div>
               <div className="d-flex">
                 <div className="product-form-field">
-                  <input checked={values.isNew} id="new" onChange={(e) => setValues({ ...values, isNew: e.target.checked })} type="checkbox" />
-                  <label htmlFor="new"><h5>&nbsp; Add to {getCategoryTitle("new-none")} &nbsp;</h5></label>
+                  <input checked={values.isNewMen} id="newMen" onChange={(e) => setValues({ ...values, isNewMen: e.target.checked })} type="checkbox" />
+                  <label htmlFor="newMen"><h5>&nbsp; Add to {getCategoryTitle("new-none")} &nbsp;</h5></label>
                 </div>
+                <div className="product-form-field">
+                  <input checked={values.isNewWomen} id="newWomen" onChange={(e) => setValues({ ...values, isNewWomen: e.target.checked })} type="checkbox" />
+                  <label htmlFor="newWomen"><h5>&nbsp; Add to {getCategoryTitle("new-women")} &nbsp;</h5></label>
+                </div>
+              </div>
+              <div className="d-flex">
                 <div className="product-form-field">
                   <input checked={values.isBestSeller} id="bestSeller" onChange={(e) => setValues({ ...values, isBestSeller: e.target.checked })} type="checkbox" />
                   <label htmlFor="bestSeller"><h5>&nbsp; Add to {getCategoryTitle("best-seller")} &nbsp;</h5></label>
@@ -557,9 +573,10 @@ ProductFormV2.propTypes = {
     isSeasonal: PropType.bool,
     isEssential: PropType.bool,
     isCool: PropType.bool,
-    isNew: PropType.bool,
-isLuxury: PropType.bool,
-    isNew: PropType.bool,
+    isNewMen: PropType.bool,
+    isNewWomen: PropType.bool,
+    isLuxuryMen: PropType.bool,
+    isLuxuryWomen: PropType.bool,
     isBestSeller: PropType.bool,
     colors: PropType.array,
     sharedImages: PropType.array,
