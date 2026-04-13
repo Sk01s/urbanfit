@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import firebase from "@/services/firebase";
+import firebaseV2 from "@/experimental/services/firebaseV2";
+import v2Enabled from "@/experimental/featureFlag";
 import { shipping as defaultShipping } from "@/constants/constants";
 
 const OrderItem = ({ order, index }) => {
@@ -21,7 +23,6 @@ const OrderItem = ({ order, index }) => {
     0
   );
   const discount = order.promo ? price * (order.promo?.percentage / 100) : 0;
-  // Use stored shipping rate from order, or fall back to default
   const shippingRate = order.shippingRate ?? defaultShipping;
   const totalPrice = price + shippingRate - discount;
   const dispatch = useDispatch();
@@ -32,9 +33,11 @@ const OrderItem = ({ order, index }) => {
   };
 
   const onConfirmDelete = () => {
-    // dispatch(removeProduct(order.id));
-    firebase
-      .removeOrder(order.id, order)
+    const removeFn = v2Enabled
+      ? firebaseV2.removeOrderV2(order.id, order)
+      : firebase.removeOrder(order.id, order);
+
+    removeFn
       .then(() => {
         displayActionMessage("order has been deleted successfully ");
         orderRef.current.remove();

@@ -20,7 +20,7 @@ const Orders = () => {
     const getOrders = async () => {
       const res = v2Enabled ? await firebase.getOrdersV2() : await firebase.getOrders();
       const orders = res.docs
-        .map((res) => res.data())
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
         .sort((a, b) => b.date - a.date);
       setOrders(orders);
     };
