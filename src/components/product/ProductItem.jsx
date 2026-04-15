@@ -15,7 +15,8 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
     if (!product) return;
 
     if (product.id) {
-      history.push(`/product/${product.id}`);
+      const colorParam = product.displayColor ? `?color=${encodeURIComponent(product.displayColor)}` : "";
+      history.push(`/product/${product.id}${colorParam}`);
     }
   };
 

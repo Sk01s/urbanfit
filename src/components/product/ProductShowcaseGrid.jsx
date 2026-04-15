@@ -152,7 +152,7 @@ const ProductShowcase = ({
             ))
           : filteredProducts.map((product, index) => (
               <FeaturedProduct
-                key={product.id + index}
+                key={product._displayKey || product.id + index}
                 product={product}
                 onClick={close}
                 eagerLoad={index < 5}

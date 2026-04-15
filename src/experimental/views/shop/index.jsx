@@ -2,8 +2,7 @@ import { useProductsV2 } from "@/experimental/hooks";
 import { useDocumentTitle, useScrollTop, useDidMount } from "@/hooks";
 import React, { useState } from "react";
 import { ProductShowcaseGrid } from "@/components/product";
-import { getProductVariant } from "@/experimental/helpers/getProductVariant";
-import { ESSENTIAL_PRODUCTS } from "@/constants/routes";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
 
 const ShopV2 = () => {
   useDocumentTitle("Shop | Urbanfit");
@@ -11,10 +10,7 @@ const ShopV2 = () => {
   const { products, isLoading, error, fetchProducts } = useProductsV2();
   const didMount = useDidMount();
 
-  const normalizedProducts = products.map((p) => {
-    const variant = getProductVariant(p, p.colors?.[0]?.color);
-    return variant || p;
-  });
+  const normalizedProducts = products.flatMap((p) => expandProductForDisplay(p));
 
   return (
     <main>

@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import firebaseV2 from "@/experimental/services/firebaseV2";
 import { getProductVariant } from "@/experimental/helpers/getProductVariant";
 
 const useProductV2 = (id) => {
+  const location = useLocation();
+  const colorFromUrl = new URLSearchParams(location.search).get("color");
+
   const storeProduct = useSelector((state) =>
     state.productsV2.items.find((item) => item.id === id)
   );
@@ -25,7 +29,11 @@ const useProductV2 = (id) => {
               const data = { ...doc.data(), id: doc.ref.id };
               setProduct(data);
               if (data.colors && data.colors.length > 0) {
-                setSelectedColor(data.colors[0].color);
+                if (colorFromUrl && data.colors.find((c) => c.color === colorFromUrl)) {
+                  setSelectedColor(colorFromUrl);
+                } else {
+                  setSelectedColor(data.colors[0].color);
+                }
               }
               setLoading(false);
             } else {
@@ -36,7 +44,11 @@ const useProductV2 = (id) => {
         } else {
           setProduct(storeProduct);
           if (storeProduct.colors && storeProduct.colors.length > 0) {
-            setSelectedColor(storeProduct.colors[0].color);
+            if (colorFromUrl && storeProduct.colors.find((c) => c.color === colorFromUrl)) {
+              setSelectedColor(colorFromUrl);
+            } else {
+              setSelectedColor(storeProduct.colors[0].color);
+            }
           }
           setLoading(false);
         }
@@ -50,7 +62,7 @@ const useProductV2 = (id) => {
     return () => {
       cancelled = true;
     };
-  }, [id, storeProduct]);
+  }, [id, storeProduct, colorFromUrl]);
 
   const variant = product ? getProductVariant(product, selectedColor) : null;
 

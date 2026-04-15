@@ -1,28 +1,22 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
 import { SiteImageLabel } from "@/components/common";
-import React from "react";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
+import React, { useMemo } from "react";
 
 const CategoryDisplay = () => {
   useDocumentTitle("Sets | Urbanfit");
   useScrollTop();
   const { getImageUrl, getLabelOverlay } = useSiteImages();
 
-  const store = useSelector(
-    (state) => ({
-      filteredProducts: selectFilter(state.products.items, state.filter),
-      products: state.products,
-      requestStatus: state.app.requestStatus,
-      isLoading: state.app.loading,
-    }),
-    shallowEqual
+  const { products, isLoading } = useProductsV2();
+
+  const categoryProduct = useMemo(
+    () => products.filter((p) => p.categories === "Sets").flatMap((p) => expandProductForDisplay(p)),
+    [products]
   );
-  const categoryProduct = store.products.items.filter(
-    (product) => product.categories === "Sets"
-  );
+
   return (
     <main className="content" style={{ display: "block" }}>
       <div className="banner" style={{ marginBottom: "4rem" }}>
@@ -35,10 +29,7 @@ const CategoryDisplay = () => {
         </div>
       </div>
       <section className="product-list-wrapper">
-        <AppliedFilters filteredProductsCount={store.filteredProducts.length} />
-        <ProductList {...store}>
-          <ProductGrid products={categoryProduct} />
-        </ProductList>
+        <ProductGrid products={categoryProduct} isLoading={isLoading} />
       </section>
     </main>
   );

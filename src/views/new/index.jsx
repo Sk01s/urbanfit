@@ -1,49 +1,35 @@
-import React from "react";
-import {
-  useLocation,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import {
-  useDocumentTitle,
-  useSeasonalProducts,
-  useEssentialProducts,
-  useScrollTop,
-  useSeason,
-  useSiteTexts,
-} from "@/hooks";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
-import { SortModel } from "@/components/common";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useProducts } from "@/hooks";
-import { MessageDisplay } from "@/components/common";
+import { useDocumentTitle, useScrollTop, useSiteTexts } from "@/hooks";
+import { SortModel, MessageDisplay } from "@/components/common";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
 
-const Luxury = (props) => {
+const NewProducts = (props) => {
   const { pathname } = useLocation();
   const { sex } = useParams();
   useScrollTop();
-  useDocumentTitle("Shop | Urbanfit");
+  useDocumentTitle("New | Urbanfit");
   const { getCategoryTitle } = useSiteTexts();
   const titleKey = `new-${sex || "none"}`;
 
-  const { products, fetchProducts, error, isLoading } = useProducts();
+  const { products, fetchProducts, error, isLoading } = useProductsV2();
 
-  const [filteredProducts, setFilterdProducts] = useState(products);
-  const sortProducts = (products) => {
-    setFilterdProducts(products);
-  };
+  const filteredProducts = useMemo(
+    () =>
+      products
+        .filter((p) =>
+          sex?.toLocaleLowerCase() === "women" ? p.isNewWomen : p.isNewMen
+        )
+        .flatMap((p) => expandProductForDisplay(p)),
+    [products, sex]
+  );
+  const [sortedProducts, setSortedProducts] = useState(filteredProducts);
   useEffect(() => {
-    setFilterdProducts(
-      products?.filter(
-        (product) =>
-          sex?.toLocaleLowerCase() === "women"
-            ? product.isNewWomen
-            : product.isNewMen
-      )
-    );
-  }, [pathname, products]);
+    setSortedProducts(filteredProducts);
+  }, [filteredProducts]);
+
   return (
     <main className="content">
       <section className="product-list-wrapper">
@@ -62,11 +48,8 @@ const Luxury = (props) => {
             />
           ) : (
             <>
-              <SortModel
-                setProducts={sortProducts}
-                products={filteredProducts}
-              />
-              <ProductGrid products={filteredProducts} skeletonCount={6} />
+              <SortModel setProducts={setSortedProducts} products={sortedProducts} />
+              <ProductGrid products={sortedProducts} skeletonCount={6} isLoading={isLoading} />
             </>
           )}
         </div>
@@ -75,4 +58,4 @@ const Luxury = (props) => {
   );
 };
 
-export default Luxury;
+export default NewProducts;

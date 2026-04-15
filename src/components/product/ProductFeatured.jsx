@@ -76,7 +76,8 @@ const ProductFeatured = ({
     if (!product) return;
     onClick?.();
     document.body.classList.remove("is-basket-open");
-    history.push(`/product/${product.id}`);
+    const colorParam = product.displayColor ? `?color=${encodeURIComponent(product.displayColor)}` : "";
+    history.push(`/product/${product.id}${colorParam}`);
   };
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">

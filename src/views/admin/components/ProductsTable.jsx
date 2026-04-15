@@ -39,7 +39,7 @@ const ProductsTable = ({ filteredProducts, isLoading }) => (
     ) : (
       filteredProducts.map((product) => (
         <ProductItem
-          key={product.id}
+          key={product._displayKey || product.id}
           product={product}
         />
       ))

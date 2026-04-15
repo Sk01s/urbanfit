@@ -1,23 +1,10 @@
-import React from "react";
-import {
-  useLocation,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import {
-  useDocumentTitle,
-  useSeasonalProducts,
-  useEssentialProducts,
-  useScrollTop,
-  useSeason,
-} from "@/hooks";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
-import { SortModel } from "@/components/common";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useProducts } from "@/hooks";
-import { MessageDisplay } from "@/components/common";
+import { useDocumentTitle, useScrollTop } from "@/hooks";
+import { SortModel, MessageDisplay } from "@/components/common";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
 
 const TypeCategory = (props) => {
   const { pathname } = useLocation();
@@ -25,29 +12,30 @@ const TypeCategory = (props) => {
   useScrollTop();
   useDocumentTitle("Shop | Urbanfit");
 
+  const { products, fetchProducts, error, isLoading } = useProductsV2();
 
-
-  const { products, fetchProducts, error, isLoading } = useProducts();
-
-  const [filteredProducts, setFilterdProducts] = useState(products);
-  const sortProducts = (products) => {
-    setFilterdProducts(products);
-  };
+  const filteredProducts = useMemo(
+    () =>
+      products
+        .filter(
+          (p) =>
+            p?.type?.name?.toLocaleLowerCase().replaceAll(" ", "-") ===
+              type?.toLocaleLowerCase() &&
+            p?.sex?.toLocaleLowerCase() === sex?.toLocaleLowerCase()
+        )
+        .flatMap((p) => expandProductForDisplay(p)),
+    [products, type, sex]
+  );
+  const [sortedProducts, setSortedProducts] = useState(filteredProducts);
   useEffect(() => {
-    setFilterdProducts(
-      products?.filter(
-        (product) =>
-          product?.type?.name?.toLocaleLowerCase().replaceAll(" ", "-") ===
-            type.toLocaleLowerCase() &&
-          product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-      )
-    );
-  }, [pathname, products]);
+    setSortedProducts(filteredProducts);
+  }, [filteredProducts]);
+
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textTransform: "capitalize", textAlign: "center" }}>
-             {sex}'s {type}
+          {sex}'s {type}
         </h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
           {filteredProducts.length} products
@@ -61,11 +49,8 @@ const TypeCategory = (props) => {
             />
           ) : (
             <>
-              <SortModel
-                setProducts={sortProducts}
-                products={filteredProducts}
-              />
-              <ProductGrid products={filteredProducts} skeletonCount={6} />
+              <SortModel setProducts={setSortedProducts} products={sortedProducts} />
+              <ProductGrid products={sortedProducts} skeletonCount={6} isLoading={isLoading} />
             </>
           )}
         </div>

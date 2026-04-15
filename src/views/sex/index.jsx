@@ -1,22 +1,10 @@
-import React from "react";
-import {
-  useLocation,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import {
-  useDocumentTitle,
-  useSeasonalProducts,
-  useEssentialProducts,
-  useScrollTop,
-  useSeason,
-} from "@/hooks";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
-import { SortModel } from "@/components/common";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useProducts } from "@/hooks";
+import { useDocumentTitle, useScrollTop } from "@/hooks";
+import { SortModel, MessageDisplay } from "@/components/common";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
 
 const Sex = (props) => {
   const { pathname } = useLocation();
@@ -24,23 +12,19 @@ const Sex = (props) => {
   useScrollTop();
   useDocumentTitle(`${sex} | Urbanfit`);
 
-  const { products, fetchProducts, error, isLoading } = useProducts();
-  let [filteredProducts, setFilterdProducts] = useState(() =>
-    products?.filter(
-      (product) => product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase()
-    )
+  const { products, fetchProducts, error, isLoading } = useProductsV2();
+
+  const filteredProducts = useMemo(
+    () =>
+      products
+        .filter((p) => p?.sex?.toLocaleLowerCase() === sex?.toLocaleLowerCase())
+        .flatMap((p) => expandProductForDisplay(p)),
+    [products, sex]
   );
+  const [sortedProducts, setSortedProducts] = useState(filteredProducts);
   useEffect(() => {
-    setFilterdProducts(
-      products?.filter(
-        (product) =>
-          product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase()
-      )
-    );
-  }, [pathname, products]);
-  const sortProducts = (products) => {
-    setFilterdProducts(products);
-  };
+    setSortedProducts(filteredProducts);
+  }, [filteredProducts]);
 
   return (
     <main className="content">
@@ -59,8 +43,8 @@ const Sex = (props) => {
           />
         ) : (
           <>
-            <SortModel setProducts={sortProducts} products={filteredProducts} />
-            <ProductGrid products={filteredProducts} skeletonCount={6} />
+            <SortModel setProducts={setSortedProducts} products={sortedProducts} />
+            <ProductGrid products={sortedProducts} skeletonCount={6} isLoading={isLoading} />
           </>
         )}
       </section>

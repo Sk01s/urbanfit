@@ -1,17 +1,22 @@
 import { MessageDisplay } from "@/components/common";
-import { ProductShowcaseGrid } from "@/components/product";
-import { useDocumentTitle, useSeasonalProducts, useScrollTop } from "@/hooks";
-import { ProductGrid } from "@/components/product";
-import React from "react";
+import { ProductShowcaseGrid, ProductGrid } from "@/components/product";
+import { useDocumentTitle, useScrollTop } from "@/hooks";
 import { useSeason } from "@/hooks";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
+import React, { useMemo } from "react";
 
 const FeaturedProducts = () => {
   const seasonal = useSeason();
   useDocumentTitle(`${seasonal} Collection | Urbanfit`);
   useScrollTop();
 
-  const { seasonalProducts, fetchSeasonalProducts, isLoading, error } =
-    useSeasonalProducts();
+  const { products, fetchProducts, isLoading, error } = useProductsV2();
+
+  const seasonalProducts = useMemo(
+    () => products.filter((p) => p.isSeasonal).flatMap((p) => expandProductForDisplay(p)),
+    [products]
+  );
 
   return (
     <main className="content">
@@ -25,7 +30,7 @@ const FeaturedProducts = () => {
           {error && !isLoading ? (
             <MessageDisplay
               message={error}
-              action={fetchSeasonalProducts}
+              action={fetchProducts}
               buttonLabel="Try Again"
             />
           ) : (

@@ -1,24 +1,31 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
-import React, { useState } from "react";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
+import React, { useMemo, useState, useEffect } from "react";
 import { SortModel } from "@/components/common";
-import { useProducts } from "@/hooks";
+import { MessageDisplay } from "@/components/common";
 
 const Shop = () => {
-  const { products, fetchProducts, error, isLoading } = useProducts();
-  const [filteredProducts, setFilterdProducts] = useState(products || []);
-  const sortProducts = (products) => {
-    setFilterdProducts(products);
-  };
+  useDocumentTitle("Shop | Urbanfit");
+  useScrollTop();
+  const { products, fetchProducts, isLoading, error } = useProductsV2();
+
+  const expandedProducts = useMemo(
+    () => products.flatMap((p) => expandProductForDisplay(p)),
+    [products]
+  );
+  const [filteredProducts, setFilteredProducts] = useState(expandedProducts);
+  useEffect(() => {
+    setFilteredProducts(expandedProducts);
+  }, [expandedProducts]);
+
   return (
     <main className="content">
       <section className="product-list-wrapper">
         <h2 style={{ textAlign: "center" }}> Products</h2>
         <p style={{ color: "#343a40", textAlign: "center" }}>
-          {products.length} products
+          {expandedProducts.length} products
         </p>
         <br />
         {error && !isLoading ? (
@@ -29,8 +36,8 @@ const Shop = () => {
           />
         ) : (
           <>
-            <SortModel setProducts={sortProducts} products={filteredProducts} />
-            <ProductGrid products={filteredProducts} skeletonCount={6} />
+            <SortModel setProducts={setFilteredProducts} products={filteredProducts} />
+            <ProductGrid products={filteredProducts} isLoading={isLoading} />
           </>
         )}
       </section>

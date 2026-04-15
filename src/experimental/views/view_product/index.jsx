@@ -27,7 +27,7 @@ import CustomDots from "@/components/product/CustomDotes";
 import InfoBox from "@/components/product/InfoBox";
 import QuantitySelector from "@/components/product/QuantitySelecter";
 import { BasketToggle } from "@/components/basket";
-import { getProductVariant } from "@/experimental/helpers/getProductVariant";
+import { getProductVariant, expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
 
 const ViewProductV2 = () => {
   const slider = useRef();
@@ -134,10 +134,7 @@ const ViewProductV2 = () => {
 
   const normalizedRelatedProducts = relatedProduct
     .filter((item) => item.id !== id)
-    .map((item) => {
-      const itemVariant = getProductVariant(item, item.colors?.[0]?.color);
-      return itemVariant || item;
-    });
+    .flatMap((item) => expandProductForDisplay(item));
 
   return (
     <>

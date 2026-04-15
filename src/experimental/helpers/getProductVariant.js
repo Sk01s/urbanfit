@@ -47,3 +47,23 @@ export function getVariantStock(activeVariant, selectedSize) {
   if (!activeVariant || !activeVariant.quantities || !selectedSize) return 0;
   return activeVariant.quantities[selectedSize] || 0;
 }
+
+export function expandProductForDisplay(product) {
+  if (!product || !product.colors || !product.colors.length) return [];
+
+  if (product.splitByColor) {
+    return product.colors.map((colorVariant) => {
+      const variant = getProductVariant(product, colorVariant.color);
+      return {
+        ...variant,
+        name: `${product.name} \u2014 ${colorVariant.name || colorVariant.color}`,
+        displayColor: colorVariant.color,
+        _displayKey: `${product.id}_${colorVariant.color}`,
+      };
+    });
+  }
+
+  const variant = getProductVariant(product, product.colors[0].color);
+  if (!variant) return [];
+  return [{ ...variant, _displayKey: product.id }];
+}

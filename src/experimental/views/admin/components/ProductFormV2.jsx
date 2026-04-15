@@ -47,6 +47,7 @@ const FormSchema = Yup.object().shape({
   isNewMen: Yup.boolean(),
   isNewWomen: Yup.boolean(),
   isBestSeller: Yup.boolean(),
+  splitByColor: Yup.boolean(),
 });
 
 const defaultColorVariant = () => ({
@@ -362,6 +363,7 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
     isLuxuryMen: product?.isLuxuryMen || false,
     isLuxuryWomen: product?.isLuxuryWomen || false,
     isBestSeller: product?.isBestSeller || false,
+    splitByColor: product?.splitByColor || false,
   };
 
   return (
@@ -427,6 +429,16 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
                 <button type="button" onClick={addColorVariant} className="button" style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
                   + Add Color Variant
                 </button>
+              </div>
+
+              <div className="d-flex" style={{ marginBottom: "1rem" }}>
+                <div className="product-form-field">
+                  <input checked={values.splitByColor} id="splitByColor" onChange={(e) => setValues({ ...values, splitByColor: e.target.checked })} type="checkbox" />
+                  <label htmlFor="splitByColor"><h5>&nbsp; Split by Color &nbsp;</h5></label>
+                </div>
+                <p style={{ color: "#666", fontSize: "0.8rem", alignSelf: "center", marginLeft: "0.5rem" }}>
+                  Show each color variant as a separate product card in the shop
+                </p>
               </div>
 
               {/* Shared Images Section */}
@@ -578,6 +590,7 @@ ProductFormV2.propTypes = {
     isLuxuryMen: PropType.bool,
     isLuxuryWomen: PropType.bool,
     isBestSeller: PropType.bool,
+    splitByColor: PropType.bool,
     colors: PropType.array,
     sharedImages: PropType.array,
   }),

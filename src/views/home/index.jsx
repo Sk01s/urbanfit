@@ -1,86 +1,55 @@
-import { ArrowRightOutlined } from "@ant-design/icons";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
+import { useDocumentTitle, useSeasonalProducts, useEssentialProducts, useScrollTop, useSeason, useSiteTexts } from "@/hooks";
 import { MessageDisplay } from "@/components/common";
 import { ProductShowcaseGrid } from "@/components/product";
-import {
-  SEASONAL_PRODUCTS,
-  ESSENTIAL_PRODUCTS,
-  SHOP,
-} from "@/constants/routes";
-import {
-  useDocumentTitle,
-  useSeasonalProducts,
-  useEssentialProducts,
-  useScrollTop,
-  useSeason,
-  useSiteTexts,
-} from "@/hooks";
-import React from "react";
+import { SEASONAL_PRODUCTS, ESSENTIAL_PRODUCTS, SHOP } from "@/constants/routes";
+import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
-import { AppliedFilters } from "@/components/product";
-import { ProductGrid, ProductList } from "@/components/product";
-import { categories } from "@/constants/constants";
 import { Landing } from "@/components/common";
-import { useEffect } from "react";
-import firebase from "@/services/firebase";
 import { CategoryCards } from "@/components/common";
+import { useEffect } from "react";
 
 const Home = () => {
   useDocumentTitle("Urbanfit | Home");
   useScrollTop();
   const { getCategoryTitle } = useSiteTexts();
-  const store = useSelector(
-    (state) => ({
-      filteredProducts: selectFilter(state.products.items, state.filter),
-      products: state.products,
-      requestStatus: state.app.requestStatus,
-      isLoading: state.app.loading,
-    }),
-    shallowEqual
-  );
   const season = useSeason();
 
+  const { products: allProducts, isLoading: isLoadingV2 } = useProductsV2();
+
   const {
-    seasonalProducts,
+    seasonalProducts: rawSeasonal,
     fetchSeasonalProducts,
     isLoading: isLoadingSeasonal,
     error: errorSeasonal,
   } = useSeasonalProducts(6);
   const {
-    essentialProducts,
+    essentialProducts: rawEssential,
     fetchEssentialProducts,
     isLoading: isLoadingEssential,
     error: errorEssentail,
   } = useEssentialProducts(6);
+
+  const seasonalProducts = useMemo(
+    () => allProducts.filter((p) => p.isSeasonal).flatMap((p) => expandProductForDisplay(p)),
+    [allProducts]
+  );
+  const essentialProducts = useMemo(
+    () => allProducts.filter((p) => p.isEssential).flatMap((p) => expandProductForDisplay(p)),
+    [allProducts]
+  );
 
   useEffect(() => {
     return () =>
       (document.getElementsByClassName("content")[0].style.padding =
         "10rem 2rem");
   }, []);
+
   return (
     <main className="content" style={{ padding: 0 }}>
       <div className="home">
-        {/* <div className="banner">
-          <div className="banner-desc">
-            <h1 className="text-thin">
-              Welcome to <span className="text-thin-light">Urbanfit</span>
-            </h1>
-            <p>
-              Our collection features unique designs that are sure to make you
-              stand out from the crowd. Whether you’re looking for a casual
-              t-shrit or a cozy hoodie, we’ve got you covered.
-            </p>
-            <br />
-            <Link to={SHOP} className="button">
-              Shop Now &nbsp;
-              <ArrowRightOutlined />
-            </Link>
-          </div>
-        </div> */}
         <Landing />
-
         <div
           className="display product-display-grid"
           style={{
@@ -99,14 +68,12 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
-              title={
-                season === "End of season" ? season : season + " collection"
-              }
+              title={season === "End of season" ? season : season + " collection"}
               products={seasonalProducts}
               skeletonCount={6}
               to={SEASONAL_PRODUCTS}
               high
-              isLoading={isLoadingSeasonal}
+              isLoading={isLoadingV2 || isLoadingSeasonal}
             />
           )}
         </div>
@@ -135,7 +102,7 @@ const Home = () => {
               skeletonCount={6}
               to={ESSENTIAL_PRODUCTS}
               high
-              isLoading={isLoadingEssential}
+              isLoading={isLoadingV2 || isLoadingEssential}
             />
           )}
         </div>

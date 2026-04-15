@@ -1,30 +1,27 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
 import { useDocumentTitle, useScrollTop, useSiteImages } from "@/hooks";
-import { SiteImageLabel } from "@/components/common";
-import React from "react";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
-import { SortModel } from "@/components/common";
+import { SiteImageLabel, SortModel, MessageDisplay } from "@/components/common";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 
 const CategoryDisplay = () => {
   useDocumentTitle("Jackets | Urbanfit");
   useScrollTop();
   const { getImageUrl, getLabelOverlay } = useSiteImages();
-
   const { pathname } = useLocation();
-  const { products, fetchProducts, error, isLoading } = useProducts();
 
-  const [filteredProducts, setFilterdProducts] = useState(products);
-  const sortProducts = (products) => {
-    setFilterdProducts(products);
-  };
+  const { products, fetchProducts, error, isLoading } = useProductsV2();
 
+  const filteredProducts = useMemo(
+    () => products.filter((p) => p.categories === "Jackets").flatMap((p) => expandProductForDisplay(p)),
+    [products]
+  );
+  const [sortedProducts, setSortedProducts] = useState(filteredProducts);
   useEffect(() => {
-    setFilterdProducts(
-      products.filter((product) => product.categories === "Jackets")
-    );
-  }, [pathname, products]);
+    setSortedProducts(filteredProducts);
+  }, [filteredProducts]);
 
   return (
     <main className="content" style={{ display: "block" }}>
@@ -46,8 +43,8 @@ const CategoryDisplay = () => {
           />
         ) : (
           <>
-            <SortModel setProducts={sortProducts} products={filteredProducts} />
-            <ProductGrid products={filteredProducts} skeletonCount={6} />
+            <SortModel setProducts={setSortedProducts} products={sortedProducts} />
+            <ProductGrid products={sortedProducts} skeletonCount={6} isLoading={isLoading} />
           </>
         )}
       </section>

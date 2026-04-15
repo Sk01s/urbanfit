@@ -21,6 +21,7 @@ import CheckOutStep2V2 from "@/experimental/views/checkout/step2";
 import CheckOutStep3V2 from "@/experimental/views/checkout/step3";
 import V2AddProduct from "@/experimental/views/admin/add_product";
 import V2EditProduct from "@/experimental/views/admin/edit_product";
+import SearchV2 from "@/experimental/views/search";
 
 export const history = createBrowserHistory();
 
@@ -35,7 +36,7 @@ const AppRouter = () => {
         {v2Enabled ? <BasketV2 /> : <Basket />}
         {!accepeted && <Terms setAccepeted={setAccepeted} />}
         <Switch>
-          <Route component={view.Search} exact path={ROUTES.SEARCH} />
+          <Route component={v2Enabled ? SearchV2 : view.Search} exact path={ROUTES.SEARCH} />
           <Route component={view.About} exact path={ROUTES.ABOUT_US} />
           <Route component={view.Home} exact path={ROUTES.HOME} />
           <Route component={v2Enabled ? ShopV2 : view.Shop} exact path={ROUTES.SHOP} />

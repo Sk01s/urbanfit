@@ -1,23 +1,10 @@
-import React from "react";
-import {
-  useLocation,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useEffect, useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { AppliedFilters, ProductGrid, ProductList } from "@/components/product";
-import {
-  useDocumentTitle,
-  useSeasonalProducts,
-  useEssentialProducts,
-  useScrollTop,
-  useSeason,
-  useSiteTexts,
-} from "@/hooks";
-import { shallowEqual, useSelector } from "react-redux";
-import { selectFilter } from "@/selectors/selector";
-import { SortModel } from "@/components/common";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useProducts } from "@/hooks";
+import { useDocumentTitle, useScrollTop, useSiteTexts } from "@/hooks";
+import { SortModel, MessageDisplay } from "@/components/common";
+import { useProductsV2 } from "@/experimental/hooks";
+import { expandProductForDisplay } from "@/experimental/helpers/getProductVariant";
 
 const Category = (props) => {
   const { pathname } = useLocation();
@@ -27,62 +14,23 @@ const Category = (props) => {
   useDocumentTitle("Shop | Urbanfit");
   const { getCategoryTitle } = useSiteTexts();
 
-  const { products, fetchProducts, error, isLoading } = useProducts();
-  let [filteredProducts, setFilterdProducts] = useState(() =>
-    products?.filter(
-      (product) =>
-        product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
-        product.categories.toLocaleLowerCase() === category.toLocaleLowerCase()
-    )
-  );
-  useEffect(() => {
-    setFilterdProducts(
-      products?.filter(
-        (product) =>
-          product?.sex?.toLocaleLowerCase() === sex.toLocaleLowerCase() &&
-          product.categories.toLocaleLowerCase() ===
-            category.toLocaleLowerCase()
-      )
-    );
-  }, [pathname, products]);
-  const sortProducts = (products) => {
-    setFilterdProducts(products);
-  };
-  const {
-    seasonalProducts,
-    fetchSeasonalProducts,
-    isLoading: isLoadingSeasonal,
-    error: errorSeasonal,
-  } = useSeasonalProducts(6);
-  const {
-    essentialProducts,
-    fetchEssentialProducts,
-    isLoading: isLoadingEssential,
-    error: errorEssentail,
-  } = useEssentialProducts(6);
-  useEffect(() => {
-    if (category === "seasonal-collection") {
-      setFilterdProducts(
-        seasonalProducts.filter(
-          (product) =>
-            product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-        )
-      );
-    }
-    if (category === "essential") {
-      setName(getCategoryTitle("essential").toLowerCase());
-      setFilterdProducts(
-        essentialProducts.filter(
-          (product) =>
-            product.sex.toLocaleLowerCase() === sex.toLocaleLowerCase()
-        )
-      );
-    }
+  const { products, fetchProducts, error, isLoading } = useProductsV2();
 
-    // return () => {
-    //   second;
-    // };
-  }, [essentialProducts, seasonalProducts, pathname]);
+  const filteredProducts = useMemo(
+    () =>
+      products
+        .filter(
+          (p) =>
+            p?.sex?.toLocaleLowerCase() === sex?.toLocaleLowerCase() &&
+            p.categories?.toLocaleLowerCase() === category?.toLocaleLowerCase()
+        )
+        .flatMap((p) => expandProductForDisplay(p)),
+    [products, sex, category]
+  );
+  const [sortedProducts, setSortedProducts] = useState(filteredProducts);
+  useEffect(() => {
+    setSortedProducts(filteredProducts);
+  }, [filteredProducts]);
 
   return (
     <main className="content">
@@ -101,8 +49,8 @@ const Category = (props) => {
           />
         ) : (
           <>
-            <SortModel setProducts={sortProducts} products={filteredProducts} />
-            <ProductGrid products={filteredProducts} skeletonCount={6} />
+            <SortModel setProducts={setSortedProducts} products={sortedProducts} />
+            <ProductGrid products={sortedProducts} skeletonCount={6} isLoading={isLoading} />
           </>
         )}
       </section>

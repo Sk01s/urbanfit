@@ -1,4 +1,3 @@
-import { ImageLoader } from "@/components/common";
 import { EDIT_PRODUCT } from "@/constants/routes";
 import {
   displayActionMessage,
@@ -11,6 +10,9 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useDispatch } from "react-redux";
 import { useHistory, withRouter } from "react-router-dom";
 import { removeProduct } from "@/redux/actions/productActions";
+import firebaseV2 from "@/experimental/services/firebaseV2";
+import { setAllProductsV2 } from "@/experimental/redux/actions/productV2Actions";
+import v2Enabled from "@/experimental/featureFlag";
 
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
@@ -25,9 +27,20 @@ const ProductItem = ({ product }) => {
     productRef.current.classList.toggle("item-active");
   };
 
-  const onConfirmDelete = () => {
-    dispatch(removeProduct(product.id));
-    displayActionMessage("Item successfully deleted");
+  const onConfirmDelete = async () => {
+    if (v2Enabled) {
+      try {
+        await firebaseV2.deleteProductV2(product.id);
+        dispatch(setAllProductsV2([]));
+        localStorage.removeItem("productsV2");
+        displayActionMessage("Item successfully deleted");
+      } catch (err) {
+        displayActionMessage("Failed to delete item", "error");
+      }
+    } else {
+      dispatch(removeProduct(product.id));
+      displayActionMessage("Item successfully deleted");
+    }
     productRef.current.classList.remove("item-active");
   };
 
