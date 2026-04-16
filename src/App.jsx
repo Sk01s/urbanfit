@@ -10,11 +10,15 @@ import "slick-carousel/slick/slick-theme.css";
 import { useEffect } from "react";
 import { SiteImagesProvider, LandingSlidesProvider, SiteTextsProvider } from "@/hooks";
 
+const STORAGE_VERSION = "v1";
+
 const App = ({ store, persistor }) => {
   useEffect(() => {
-    localStorage.setItem("products", JSON.stringify([]));
-    localStorage.setItem("essentials", JSON.stringify([]));
-    localStorage.setItem("seasonals", JSON.stringify([]));
+    const currentVersion = localStorage.getItem("storageVersion");
+    if (currentVersion !== STORAGE_VERSION) {
+      localStorage.clear();
+      localStorage.setItem("storageVersion", STORAGE_VERSION);
+    }
   }, []);
   return (
     <StrictMode>
