@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import firebaseV2 from "@/experimental/services/firebaseV2";
@@ -64,7 +64,10 @@ const useProductV2 = (id) => {
     };
   }, [id, storeProduct, colorFromUrl]);
 
-  const variant = product ? getProductVariant(product, selectedColor) : null;
+  const variant = useMemo(
+    () => (product ? getProductVariant(product, selectedColor) : null),
+    [product, selectedColor]
+  );
 
   return {
     product,

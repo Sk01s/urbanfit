@@ -5,6 +5,8 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import firebase from "@/services/firebase";
+import firebaseV2 from "@/experimental/services/firebaseV2";
+import v2Enabled from "@/experimental/featureFlag";
 import Skeleton from "react-loading-skeleton";
 import {
   displayMoney,
@@ -70,9 +72,9 @@ const OrderView = () => {
 
   useEffect(() => {
     async function getOrder() {
-      const data = await firebase.getOrder(id);
-      const order = await data?.data();
-      // console.log(data, order);
+      const data = v2Enabled ? await firebaseV2.getOrderV2(id) : await firebase.getOrder(id);
+      const order = data?.data ? data.data() : data;
+      order.id = id;
       setOrderDetails(order);
     }
     getOrder();
@@ -301,7 +303,7 @@ const OrderView = () => {
               <strong>Order's Date : </strong>
               <span>
                 {orderDetails?.date ? (
-                  displayDate(orderDetails?.date.toDate())
+                  displayDate(orderDetails?.date.toDate ? orderDetails.date.toDate() : new Date(orderDetails.date))
                 ) : (
                   <Skeleton width={30} />
                 )}
@@ -398,23 +400,20 @@ const OrderView = () => {
                 gap: "1rem",
               }}
               onClick={async () => {
-                // currentTarget.disabled = true;
-                // firebase.requestPhoneOtp(orderDetails.address.mobile.value);
                 setLoading(true);
-                await firebase
-                  .removeOrder(id, orderDetails)
-                  .then((e) => {
-                    history.push("/");
-                    displayActionMessage("Order has been canceled");
-                    return e;
-                  })
-                  .catch((e) => {
-                    displayActionMessage("Error happend");
-                    return e;
-                  })
-                  .finally(() => {
-                    setLoading(true);
-                  });
+                try {
+                  if (v2Enabled) {
+                    await firebaseV2.removeOrderV2(id, orderDetails);
+                  } else {
+                    await firebase.removeOrder(id, orderDetails);
+                  }
+                  displayActionMessage("Order has been canceled");
+                  history.push("/");
+                } catch (e) {
+                  displayActionMessage("Error happened");
+                } finally {
+                  setLoading(false);
+                }
               }}
             >
               Yes

@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from "react";
 import firebase from "@/services/firebase";
-import { useDispatch } from "react-redux";
-import { BasketItem } from "@/components/basket";
+import firebaseV2 from "@/experimental/services/firebaseV2";
+import v2Enabled from "@/experimental/featureFlag";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const UserOrdersTab = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState();
-  const dispatch = useDispatch();
+
   useEffect(() => {
     const get = async () => {
       setLoading(true);
-      await firebase
-        .getUserOrders()
-        .then((res) => res.docs.map((doc) => doc.data()))
-        .then((orders) => setOrders(orders));
+      try {
+        const res = v2Enabled
+          ? await firebaseV2.getUserOrdersV2()
+          : await firebase.getUserOrders();
+        const ordersData = res.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setOrders(ordersData);
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      }
       setLoading(false);
     };
     get();
   }, []);
+
   return (
     <div className="loader" style={{ minHeight: "80dvh" }}>
       <h3>My Orders</h3>
@@ -37,10 +46,10 @@ const UserOrdersTab = () => {
                   justifyContent: "center",
                   alignItems: "center",
                 }}
-                key={index}
+                key={item.id || index}
               >
                 <h4 style={{ fontWeight: 400 }}>
-                  {index + 1}. Order Id : #{item.id.split("-")[0]}
+                  {index + 1}. Order Id : #{String(item.id).split("-")[0]}
                 </h4>
                 <Link
                   style={{
@@ -50,7 +59,6 @@ const UserOrdersTab = () => {
                     borderRadius: "1.5rem",
                     padding: "1rem 1.4rem",
                     fontSize: "1.3rem",
-                    // maxHeight: "5rem",
                   }}
                   to={`/order/${item.id}`}
                 >

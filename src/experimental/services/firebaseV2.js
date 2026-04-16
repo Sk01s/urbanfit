@@ -29,6 +29,15 @@ class FirebaseV2 {
   getSingleProductV2 = (id) =>
     this.db.collection("products_v2").doc(id).get();
 
+  getOrderV2 = (id) =>
+    this.db.collection("orders_v2").doc(id).get();
+
+  getUserOrdersV2 = () =>
+    this.db
+      .collection("orders_v2")
+      .where("uid", "==", this.auth.currentUser.uid)
+      .get();
+
   addProductV2 = (id, data) =>
     this.db.collection("products_v2").doc(id).set(data);
 
@@ -45,96 +54,58 @@ class FirebaseV2 {
       .set({ basketV2: items }, { merge: true });
 
   addOrderV2 = async (id, order) => {
-    const snapshot = await this.getProductsV2All();
-    const products = snapshot.docs.map((doc) => ({
-      id: doc.ref.id,
-      ...doc.data(),
-    }));
+    const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3001";
+    const user = this.auth.currentUser;
+    if (!user) throw new Error("You must be signed in to place an order");
 
-    const items = order.items.map((item) => {
-      const product = products.find(({ id }) => id === item.id);
-      return { ...item, ...product };
+    const idToken = await user.getIdToken();
+
+    const response = await fetch(`${BACKEND_API_URL}/api/orders/v2`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({ ...order, id }),
     });
 
-    if (order.promo && order.promo.code) {
-      order.promo.uses = (order.promo.uses || 0) + 1;
-      await this.db
-        .collection("promo")
-        .doc(order.promo.code)
-        .update({ uses: order.promo.uses });
+    const data = await response.json();
+
+    if (!response.ok) {
+      if (response.status === 409) {
+        const error = new Error(data.error || "Product is out of stock");
+        error.item = data.item;
+        throw error;
+      }
+      throw new Error(data.error || data.message || "Failed to create order");
     }
 
-    await this.db
-      .collection("orders_v2")
-      .doc(id)
-      .set({ ...order, otp: false, items });
-
-    for (const item of order.items) {
-      const product = products.find(({ id }) => id === item.id);
-      if (!product || !product.colors) continue;
-
-      const colorIndex = product.colors.findIndex(
-        (c) => c.color === item.selectedColor
-      );
-      if (colorIndex === -1) {
-        throw new Error(
-          `Color ${item.selectedColor} not found in product ${item.id}`
-        );
-      }
-
-      const variant = product.colors[colorIndex];
-      const sizeKey = item.selectedSize;
-
-      if (!variant.quantities) continue;
-
-      const currentStock = variant.quantities[sizeKey] || 0;
-      if (currentStock < item.quantity) {
-        throw new Error("Product is out of stock");
-      }
-
-      variant.quantities[sizeKey] = currentStock - item.quantity;
-
-      product.totalQuantity = product.colors.reduce(
-        (sum, c) =>
-          sum +
-          Object.values(c.quantities || {}).reduce((a, b) => a + b, 0),
-        0
-      );
-
-      await this.db.collection("products_v2").doc(item.id).set(product);
-    }
+    return data.order;
   };
 
-  removeOrderV2 = (id, order) => {
-    order.items.map(async (item) => {
-      const doc = await this.getSingleProductV2(item.id);
-      if (!doc.exists) return;
+  removeOrderV2 = async (id, order) => {
+    const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3001";
+    const user = this.auth.currentUser;
+    if (!user) throw new Error("You must be signed in to delete an order");
 
-      const product = { id: doc.ref.id, ...doc.data() };
-      if (!product.colors) return;
+    const idToken = await user.getIdToken();
 
-      const colorIndex = product.colors.findIndex(
-        (c) => c.color === item.selectedColor
-      );
-      if (colorIndex === -1) return;
-
-      const variant = product.colors[colorIndex];
-      const sizeKey = item.selectedSize;
-
-      if (variant.quantities && variant.quantities[sizeKey] !== undefined) {
-        variant.quantities[sizeKey] += item.quantity;
-      }
-
-      product.totalQuantity = product.colors.reduce(
-        (sum, c) =>
-          sum +
-          Object.values(c.quantities || {}).reduce((a, b) => a + b, 0),
-        0
-      );
-
-      await this.db.collection("products_v2").doc(item.id).set(product);
+    const response = await fetch(`${BACKEND_API_URL}/api/orders/v2/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({ items: order.items }),
     });
-    return this.db.collection("orders_v2").doc(id).delete();
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || data.message || "Failed to delete order");
+    }
+
+    return data;
   };
 
   uploadProductImageV2 = (file) => {

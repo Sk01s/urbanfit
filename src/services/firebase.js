@@ -798,7 +798,7 @@ getSiteImages = () => this.db.collection("siteImages").get();
 
   getUserOrders = () =>
     this.db
-      .collection("order")
+      .collection(V2_ENABLED ? "orders_v2" : "order")
       .where("uid", "==", this.auth.currentUser.uid)
       .get();
 

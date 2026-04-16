@@ -32,20 +32,22 @@ const OrderItem = ({ order, index }) => {
     orderRef.current.classList.toggle("item-active");
   };
 
-  const onConfirmDelete = () => {
-    const removeFn = v2Enabled
-      ? firebaseV2.removeOrderV2(order.id, order)
-      : firebase.removeOrder(order.id, order);
-
-    removeFn
-      .then(() => {
-        displayActionMessage("order has been deleted successfully ");
-        orderRef.current.remove();
-        orderRef.current.classList.remove("item-active");
-      })
-      .catch((error) => {
-        displayActionMessage("failed to delete", error);
-      });
+  const onConfirmDelete = async () => {
+    try {
+      if (v2Enabled) {
+        await firebaseV2.removeOrderV2(order.id, order);
+      } else {
+        await firebase.removeOrder(order.id, order);
+      }
+      displayActionMessage("Order has been deleted successfully");
+      orderRef.current.remove();
+      orderRef.current.classList.remove("item-active");
+    } catch (error) {
+      displayActionMessage(
+        `Failed to delete: ${error?.message || error}`,
+        "error"
+      );
+    }
   };
   const onCancelDelete = () => {
     orderRef.current.classList.remove("item-active");
@@ -85,7 +87,7 @@ const OrderItem = ({ order, index }) => {
           <div className="grid-col">
             <span>
               {order.date ? (
-                displayDate(order.date.toDate())
+                displayDate(order.date.toDate ? order.date.toDate() : new Date(order.date))
               ) : (
                 <Skeleton width={30} />
               )}

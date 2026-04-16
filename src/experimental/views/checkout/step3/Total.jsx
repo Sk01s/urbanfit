@@ -129,13 +129,13 @@ const TotalV2 = ({ isInternational, subtotal, order, paymentType }) => {
       if (!order.uid) {
         order.uid = firebaseInstance.getCurrentUser();
       }
-      await firebaseV2.addOrderV2(order.id, order);
+      const createdOrder = await firebaseV2.addOrderV2(order.id, order);
 
       try {
         await fetch(`${BACKEND_API_URL}/api/email/order-confirmation`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order }),
+          body: JSON.stringify({ order: createdOrder || order }),
         });
       } catch (emailError) {
         console.error("Failed to send order confirmation emails:", emailError);
@@ -143,9 +143,14 @@ const TotalV2 = ({ isInternational, subtotal, order, paymentType }) => {
 
       dispatch(clearBasketV2());
       dispatch(setPromo({ percentage: 0 }));
-      history.push(`/order-completed/${order.id}`, order);
+      history.push(`/order-completed/${order.id}`, { ...order, ...createdOrder });
     } catch (error) {
-      displayActionMessage(error, "error");
+      const message = error?.item
+        ? `${error.message} (${error.item.name || "item"} - ${error.item.selectedSize || ""})`
+        : error?.message || error;
+      displayActionMessage(message, "error");
+    } finally {
+      setLoading(false);
     }
   };
 

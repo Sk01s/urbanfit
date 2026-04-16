@@ -131,7 +131,7 @@ const EditProduct = () => {
               <strong>Order's Date : </strong>
               <span>
                 {orderDetails.date ? (
-                  displayDate(orderDetails.date.toDate())
+                  displayDate(orderDetails.date.toDate ? orderDetails.date.toDate() : new Date(orderDetails.date))
                 ) : (
                   <Skeleton width={30} />
                 )}
@@ -142,8 +142,8 @@ const EditProduct = () => {
               <span>
                 {orderDetails.date ? (
                   <>
-                    {new Date(orderDetails.date.toDate()).getHours()} :{" "}
-                    {new Date(orderDetails.date.toDate()).getMinutes()}
+                    {new Date(orderDetails.date.toDate ? orderDetails.date.toDate() : new Date(orderDetails.date)).getHours()} :{" "}
+                    {new Date(orderDetails.date.toDate ? orderDetails.date.toDate() : new Date(orderDetails.date)).getMinutes()}
                   </>
                 ) : (
                   <Skeleton width={30} />
