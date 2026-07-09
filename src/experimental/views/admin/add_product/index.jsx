@@ -62,6 +62,7 @@ const V2AddProduct = ({ history }) => {
             isCool: false,
             isNew: false,
             isLuxury: false,
+            splitByColor: false,
             colors: [],
             sharedImages: [],
           }}

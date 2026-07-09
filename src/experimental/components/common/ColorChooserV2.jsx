@@ -16,12 +16,13 @@ const ColorChooserV2 = ({ colors, selectedColor, onSelectedColorChange }) => {
           style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", margin: "0 8px", cursor: "pointer" }}
         >
           <div
+          className={"color-circle"}
             style={{
               backgroundColor: color,
               width: "32px",
               height: "32px",
               borderRadius: "50%",
-              border: selectedColor === color ? "2px solid #000" : "2px solid transparent",
+              border: selectedColor === color ? "3px solid #000" : "2px solid transparent",
               transition: "border-color 0.2s",
             }}
           />

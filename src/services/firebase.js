@@ -785,15 +785,16 @@ getSiteImages = () => this.db.collection("siteImages").get();
         .set(item, { merge: true });
     });
     
+    const cancelledData = { cancelled: true, cancelledAt: new Date() };
     return this.db
       .collection("order")
       .doc(id)
       .get()
       .then((doc) => {
-        if (doc.exists) return this.db.collection("order").doc(id).delete();
-        return this.db.collection("orders_v2").doc(id).delete();
+        if (doc.exists) return this.db.collection("order").doc(id).update(cancelledData);
+        return this.db.collection("orders_v2").doc(id).update(cancelledData);
       })
-      .catch(() => this.db.collection("orders_v2").doc(id).delete());
+      .catch(() => this.db.collection("orders_v2").doc(id).update(cancelledData));
   };
   removePromo = (id) => this.db.collection("promo").doc(id).delete();
 
@@ -826,11 +827,13 @@ getSiteImages = () => this.db.collection("siteImages").get();
     }
   };
 
-  getUserOrders = () =>
-    this.db
-      .collection("order")
-      .where("uid", "==", this.auth.currentUser.uid)
-      .get();
+  getUserOrders = async () => {
+    const [v1, v2] = await Promise.all([
+      this.db.collection("order").where("uid", "==", this.auth.currentUser.uid).get(),
+      this.db.collection("orders_v2").where("uid", "==", this.auth.currentUser.uid).get(),
+    ]);
+    return { docs: [...v1.docs, ...v2.docs], size: v1.size + v2.size };
+  };
 
   updateOrder = async (id, order) => {
     const v1 = await this.db.collection("order").doc(id).get();

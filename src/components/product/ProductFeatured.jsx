@@ -72,11 +72,19 @@ const ProductFeatured = ({
 
   const imageDimensions = getImageDimensions();
   const history = useHistory();
+  const getProductUrl = () => {
+    const params = new URLSearchParams();
+    if (product.selectedColor) params.set("color", product.selectedColor);
+    if (product.selectedSize) params.set("size", product.selectedSize);
+    const qs = params.toString();
+    return `/product/${product.id}${qs ? `?${qs}` : ""}`;
+  };
+
   const onClickItem = (onClickToggle, e) => {
     if (!product) return;
     onClick?.();
     document.body.classList.remove("is-basket-open");
-    history.push(`/product/${product.id}`);
+    history.push(getProductUrl());
   };
   return (
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">

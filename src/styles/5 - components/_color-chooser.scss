@@ -19,16 +19,16 @@
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
-  &:hover {
+  &:hover .color-circle {
     cursor: pointer;
     border: 2px solid #f1f1f1;
   }
 }
 
-.color-item-selected,
+.color-item-selected ,
 .color-item-deletable {
-  flex-shrink: 0;
-  //box-shadow: 0 0px 0px 5px white, 0 0 0 6px black;
+  //flex-shrink: 0;
+  // box-shadow: 0 0px 0px 5px white, 0 0 0 6px black;
 
   //   content: "✓";
   //   position: absolute;

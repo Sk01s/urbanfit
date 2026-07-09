@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { BasketToggle } from "@/components/basket";
 import { HighProducts } from "@/helpers/utils";
+import { expandSplitProducts } from "@/experimental/helpers/expandSplitProducts";
 const ProductShowcase = ({
   products,
   skeletonCount,
@@ -29,6 +30,7 @@ const ProductShowcase = ({
     slidesToScroll: 1,
   };
   const filteredProducts = high ? HighProducts(products) : products;
+  const displayProducts = expandSplitProducts(filteredProducts);
 
   const sliderRef = useRef(null);
 
@@ -134,11 +136,11 @@ const ProductShowcase = ({
         </Link>
       )}
       <Slider ref={sliderRef} {...settings}>
-        {!isLoading && filteredProducts.length === 0 ? (
+        {!isLoading && displayProducts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem 0', color: '#888' }}>
             <p style={{ fontSize: '1.2rem' }}>No products found.</p>
           </div>
-        ) : isLoading && filteredProducts.length === 0
+        ) : isLoading && displayProducts.length === 0
           ? new Array(skeletonCount).fill({}).map((product, index) => (
               <FeaturedProduct
                 // eslint-disable-next-line react/no-array-index-key
@@ -150,7 +152,7 @@ const ProductShowcase = ({
                 // onClick={close}
               />
             ))
-          : filteredProducts.map((product, index) => (
+          : displayProducts.map((product, index) => (
               <FeaturedProduct
                 key={product.id + index}
                 product={product}

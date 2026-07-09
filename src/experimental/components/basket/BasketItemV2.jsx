@@ -49,7 +49,7 @@ const BasketItemV2 = ({ product, display = false }) => {
             }}
           >
             <Link
-              to={`/product/${product.id}`}
+              to={`/product/${product.id}${(product.selectedColor || product.selectedSize) ? `?color=${encodeURIComponent(product.selectedColor || "")}&size=${product.selectedSize || ""}` : ""}`}
               onClick={() => document.body.classList.remove("is-basket-open")}
               style={{ maxWidth: "30vw" }}
             >

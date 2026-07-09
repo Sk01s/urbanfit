@@ -30,6 +30,8 @@ const OrderView = () => {
     getOrder();
   }, [orderId]);
 
+  const isCancelled = orderDetails?.cancelled;
+
   if (!orderId) return null;
 
   return (
@@ -71,11 +73,11 @@ const OrderView = () => {
                   borderRadius: "20px",
                   fontSize: "0.85rem",
                   fontWeight: 600,
-                  background: orderDetails.fulfillment ? "#e8f5e9" : "#fff3e0",
-                  color: orderDetails.fulfillment ? "#2e7d32" : "#e65100",
+                  background: isCancelled ? "#fce4ec" : orderDetails.fulfillment ? "#e8f5e9" : "#fff3e0",
+                  color: isCancelled ? "#c62828" : orderDetails.fulfillment ? "#2e7d32" : "#e65100",
                 }}
               >
-                {orderDetails.fulfillment ? "Delivered" : "Pending"}
+                {isCancelled ? "Cancelled" : orderDetails.fulfillment ? "Delivered" : "Pending"}
               </div>
             </div>
 
@@ -324,31 +326,35 @@ const OrderView = () => {
                   Fulfillment Status
                 </h4>
                 <p style={{ margin: "0.3rem 0 0", fontSize: "0.85rem", color: "#6f6f6f" }}>
-                  {orderDetails.fulfillment
-                    ? "This order has been marked as delivered"
-                    : "This order has not been delivered yet"}
+                  {isCancelled
+                    ? "This order was cancelled"
+                    : orderDetails.fulfillment
+                      ? "This order has been marked as delivered"
+                      : "This order has not been delivered yet"}
                 </p>
               </div>
-              <button
-                onClick={() => {
-                  const updated = { ...orderDetails, fulfillment: !orderDetails.fulfillment };
-                  setOrderDetails(updated);
-                  firebase.updateOrder(orderDetails.id, updated);
-                }}
-                style={{
-                  padding: "0.6rem 1.5rem",
-                  borderRadius: "8px",
-                  border: "1px solid #343120",
-                  background: orderDetails.fulfillment ? "#fff" : "#343120",
-                  color: orderDetails.fulfillment ? "#343120" : "#fff",
-                  fontWeight: 500,
-                  fontSize: "0.85rem",
-                  cursor: "pointer",
-                  transition: "all 0.15s",
-                }}
-              >
-                Mark as {orderDetails.fulfillment ? "Pending" : "Delivered"}
-              </button>
+              {!isCancelled && (
+                <button
+                  onClick={() => {
+                    const updated = { ...orderDetails, fulfillment: !orderDetails.fulfillment };
+                    setOrderDetails(updated);
+                    firebase.updateOrder(orderDetails.id, updated);
+                  }}
+                  style={{
+                    padding: "0.6rem 1.5rem",
+                    borderRadius: "8px",
+                    border: "1px solid #343120",
+                    background: orderDetails.fulfillment ? "#fff" : "#343120",
+                    color: orderDetails.fulfillment ? "#343120" : "#fff",
+                    fontWeight: 500,
+                    fontSize: "0.85rem",
+                    cursor: "pointer",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  Mark as {orderDetails.fulfillment ? "Pending" : "Delivered"}
+                </button>
+              )}
             </div>
           </div>
         )}

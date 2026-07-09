@@ -16,7 +16,7 @@ import {
   useWish,
 } from "@/hooks";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useHistory } from "react-router-dom";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import Skeleton from "react-loading-skeleton";
@@ -32,11 +32,15 @@ const ViewProductV2 = () => {
   const slider = useRef();
   const sizesBtnsEl = useRef([]);
   const { id } = useParams();
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const urlColor = urlParams.get("color");
+  const urlSize = urlParams.get("size");
   const { product, variant, selectedColor, setSelectedColor, isLoading, error } = useProductV2(id);
   const { addToBasket, isItemOnBasket } = useBasketV2();
   const { wish, addToWish, isItemOnWish } = useWish();
+  const history = useHistory();
   useScrollTop();
-  useDocumentTitle(`${product?.name || ""}`);
 
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantitiy] = useState(1);
@@ -59,6 +63,21 @@ const ViewProductV2 = () => {
   const galleryImages = variant?.imageCollection?.length ? variant.imageCollection : sharedImages;
   const colors = product?.colors || [];
   const selectedColorName = variant?.activeColorName || "";
+  useDocumentTitle(
+    `${product?.name || ""}${selectedColorName ? ` -- ${selectedColorName}` : ""}`
+  );
+
+  const urlColorApplied = useRef(false);
+  useEffect(() => {
+    if (!product || urlColorApplied.current) return;
+    if (urlColor) {
+      const colorExists = product.colors?.find((c) => c.color === urlColor);
+      if (colorExists) {
+        setSelectedColor(urlColor);
+        urlColorApplied.current = true;
+      }
+    }
+  }, [product, urlColor, setSelectedColor]);
 
   useEffect(() => {
     if (allProductsV2.length > 0 && product?.relative) {
@@ -97,9 +116,21 @@ const ViewProductV2 = () => {
     }
   }, [selectedSize, variant]);
 
+  const urlSizeApplied = useRef(false);
   useEffect(() => {
-    console.log('[ViewProductV2] EFFECT auto-size:', { selectedSize, variant: variant ? { smQ: variant.smQuantity, mdQ: variant.mdQuantity, lgQ: variant.lgQuantity, xlQ: variant.xlQuantity } : null });
     if (!variant) return;
+    if (urlSize && !urlSizeApplied.current) {
+      if (variant[`${urlSize}Quantity`] > 0) {
+        setSelectedSize(urlSize);
+        urlSizeApplied.current = true;
+        const sizeIndex = { xs: 4, sm: 3, md: 2, lg: 1, xl: 0 };
+        const idx = sizeIndex[urlSize];
+        sizesBtnsEl.current.forEach((el, i) => {
+          if (el) el.classList.toggle("active", i === idx);
+        });
+        return;
+      }
+    }
     if (selectedSize && variant[`${selectedSize}Quantity`] > 0) return;
     const sizePriority = ['xs', 'sm', 'md', 'lg', 'xl'];
     const sizeIndex = { xs: 4, sm: 3, md: 2, lg: 1, xl: 0 };
@@ -112,6 +143,20 @@ const ViewProductV2 = () => {
       });
     }
   }, [variant, selectedSize]);
+
+  const initialSyncDone = useRef(false);
+  useEffect(() => {
+    if (!selectedColor && !selectedSize) return;
+    if (!initialSyncDone.current) {
+      initialSyncDone.current = true;
+      return;
+    }
+    const params = new URLSearchParams();
+    if (selectedColor) params.set("color", selectedColor);
+    if (selectedSize) params.set("size", selectedSize);
+    const qs = params.toString();
+    history.replace(`/product/${id}${qs ? `?${qs}` : ""}`);
+  }, [selectedColor, selectedSize, id, history]);
 
   const onSelectedSizeChange = (index, newValue) => {
     console.log('[ViewProductV2] onSelectedSizeChange:', { index, newValue, elExists: !!sizesBtnsEl.current[index] });

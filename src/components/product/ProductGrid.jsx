@@ -2,17 +2,19 @@ import { useBasket } from '@/hooks';
 import PropType from 'prop-types';
 import React from 'react';
 import ProductItem from './ProductItem';
+import { expandSplitProducts } from '@/experimental/helpers/expandSplitProducts';
 
 const ProductGrid = ({ products, isLoading }) => {
   const { addToBasket, isItemOnBasket } = useBasket();
+  const displayProducts = expandSplitProducts(products);
 
   return (
     <div className="product-grid">
-      {!isLoading && products.length === 0 ? (
+      {!isLoading && displayProducts.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '3rem 0', color: '#888' }}>
           <p style={{ fontSize: '1.2rem' }}>No products found.</p>
         </div>
-      ) : isLoading && products.length === 0 ? (
+      ) : isLoading && displayProducts.length === 0 ? (
         new Array(12).fill({}).map((product, index) => (
           <ProductItem
             key={`product-skeleton ${index}`}
@@ -21,9 +23,9 @@ const ProductGrid = ({ products, isLoading }) => {
           />
         ))
       ) : (
-        products.map((product) => (
+        displayProducts.map((product) => (
           <ProductItem
-            key={product.id}
+            key={product.id + (product.selectedColor || '')}
             isItemOnBasket={isItemOnBasket}
             addToBasket={addToBasket}
             product={product}

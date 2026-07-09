@@ -44,6 +44,7 @@ const FormSchema = Yup.object().shape({
   isCool: Yup.boolean(),
   isLuxury: Yup.boolean(),
   isNew: Yup.boolean(),
+  splitByColor: Yup.boolean(),
 });
 
 const defaultColorVariant = () => ({
@@ -356,6 +357,7 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
     isCool: product?.isCool || false,
     isNew: product?.isNew || false,
     isLuxury: product?.isLuxury || false,
+    splitByColor: product?.splitByColor || false,
   };
 
   return (
@@ -499,6 +501,12 @@ const ProductFormV2 = ({ product, onSubmit, isLoading, isEditing }) => {
                 <div className="product-form-field">
                   <input checked={values.isNew} id="new" onChange={(e) => setValues({ ...values, isNew: e.target.checked })} type="checkbox" />
                   <label htmlFor="new"><h5>&nbsp; Add to {getCategoryTitle("new-none")} &nbsp;</h5></label>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="product-form-field">
+                  <input checked={values.splitByColor} id="splitByColor" onChange={(e) => setValues({ ...values, splitByColor: e.target.checked })} type="checkbox" />
+                  <label htmlFor="splitByColor"><h5>&nbsp; Split by Color (show each color as separate product) &nbsp;</h5></label>
                 </div>
               </div>
               <br /><br /><br />

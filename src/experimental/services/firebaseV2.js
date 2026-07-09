@@ -142,7 +142,7 @@ class FirebaseV2 {
 
       await this.db.collection("products_v2").doc(item.id).set(product);
     });
-    return this.db.collection("orders_v2").doc(id).delete();
+    return this.db.collection("orders_v2").doc(id).update({ cancelled: true, cancelledAt: new Date() });
   };
 
   uploadProductImageV2 = (file) => {

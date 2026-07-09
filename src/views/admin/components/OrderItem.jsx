@@ -27,21 +27,22 @@ const OrderItem = ({ order, index }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const orderRef = useRef(null);
+  const isCancelled = order.cancelled;
+
   const onDeleteProduct = () => {
     orderRef.current.classList.toggle("item-active");
   };
 
   const onConfirmDelete = () => {
-    // dispatch(removeProduct(order.id));
     firebase
       .removeOrder(order.id, order)
       .then(() => {
-        displayActionMessage("order has been deleted successfully ");
+        displayActionMessage("Order has been cancelled");
         orderRef.current.remove();
         orderRef.current.classList.remove("item-active");
       })
       .catch((error) => {
-        displayActionMessage("failed to delete", error);
+        displayActionMessage("Failed to cancel", error);
       });
   };
   const onCancelDelete = () => {
@@ -69,7 +70,9 @@ const OrderItem = ({ order, index }) => {
           <div className="grid-col">
             <span>
               {order?.items ? (
-                order?.fulfillment ? (
+                isCancelled ? (
+                  <span style={{ color: "#e65100", fontWeight: 600 }}>Cancelled</span>
+                ) : order?.fulfillment ? (
                   "Yes"
                 ) : (
                   "No"
@@ -93,17 +96,17 @@ const OrderItem = ({ order, index }) => {
               <Link to={`/admin/orders/${order.id}`}>View details</Link>
             )}
           </div>
-          {
+          {!isCancelled && (
             <div className="item-action">
               <button
                 className="button button-border button-small button-danger"
                 onClick={onDeleteProduct}
                 type="button"
               >
-                Delete
+                Cancel
               </button>
               <div className="item-action-confirm">
-                <h5>Are you sure you want to delete this?</h5>
+                <h5>Cancel this order?</h5>
                 <button
                   className="button button-small button-border"
                   onClick={onCancelDelete}
@@ -121,7 +124,7 @@ const OrderItem = ({ order, index }) => {
                 </button>
               </div>
             </div>
-          }
+          )}
         </div>
       </div>
     </SkeletonTheme>

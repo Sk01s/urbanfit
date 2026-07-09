@@ -11,11 +11,19 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket, skeleton }) => {
   const { wish, addToWish, isItemOnWish } = useWish(product.id);
   const history = useHistory();
 
+  const getProductUrl = () => {
+    const params = new URLSearchParams();
+    if (product.selectedColor) params.set("color", product.selectedColor);
+    if (product.selectedSize) params.set("size", product.selectedSize);
+    const qs = params.toString();
+    return `/product/${product.id}${qs ? `?${qs}` : ""}`;
+  };
+
   const onClickItem = () => {
     if (!product) return;
 
     if (product.id) {
-      history.push(`/product/${product.id}`);
+      history.push(getProductUrl());
     }
   };
 
