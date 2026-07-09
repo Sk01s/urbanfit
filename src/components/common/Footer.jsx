@@ -3,10 +3,11 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSiteImages } from "@/hooks";
+import SiteImageLabel from "./SiteImageLabel";
 
 const Footer = () => {
   const { pathname } = useLocation();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
 
   function isVisable() {
     return !pathname.startsWith("/admin");
@@ -224,11 +225,14 @@ const Footer = () => {
           alignItems: "center",
         }}
       >
-        <img
-          alt="Footer logo"
-          className="footer-logo"
-          src={getImageUrl("logo-full")}
-        />
+        <div style={{ position: "relative", display: "inline-block" }}>
+          <img
+            alt="Footer logo"
+            className="footer-logo"
+            src={getImageUrl("logo-full")}
+          />
+          <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
+        </div>
         <h5>
           &copy;&nbsp;
           {new Date().getFullYear()}

@@ -4,13 +4,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserAvatar from "@/views/account/components/UserAvatar";
 import { useSiteImages } from "@/hooks";
+import SiteImageLabel from "./SiteImageLabel";
 
 const AdminNavigation = () => {
   const { isAuthenticating, profile } = useSelector((state) => ({
     isAuthenticating: state.app.isAuthenticating,
     profile: state.profile,
   }));
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
 
   return (
     <nav className="navigation navigation-admin">
@@ -19,7 +20,10 @@ const AdminNavigation = () => {
           to={ADMIN_DASHBOARD}
           style={{ display: "flex", alignItems: "center" }}
         >
-          <img alt="Logo" src={getImageUrl("logo-full")} />
+          <div style={{ position: "relative", width: "15rem", height: "5rem", marginRight: "0.5rem" }}>
+            <img alt="Logo" src={getImageUrl("logo-full")} />
+            <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
+          </div>
           <h3>ADMIN PANEL</h3>
         </Link>
       </div>

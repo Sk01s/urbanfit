@@ -1,4 +1,5 @@
 import { Boundary } from "@/components/common";
+import SiteImageLabel from "@/components/common/SiteImageLabel";
 import { displayActionMessage } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop, useSiteImages, useSiteTexts } from "@/hooks";
 import firebase from "@/services/firebase";
@@ -17,7 +18,7 @@ const CATEGORY_CARDS = [
 const AdminCategories = () => {
   useDocumentTitle("Categories | Urbanfit Admin");
   useScrollTop();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
   const { categoryTitles, isLoading, refreshTitles } = useSiteTexts();
   const [editingKey, setEditingKey] = useState(null);
   const [editValue, setEditValue] = useState("");
@@ -112,11 +113,14 @@ const AdminCategories = () => {
                     }}
                   >
                     {imageUrl ? (
-                      <img
-                        src={imageUrl}
-                        alt={card.label}
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                      />
+                      <div style={{ position: "relative" }}>
+                        <img
+                          src={imageUrl}
+                          alt={card.label}
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                        <SiteImageLabel labelOverlay={getLabelOverlay(card.key)} />
+                      </div>
                     ) : (
                       <span style={{ color: "#999" }}>No image</span>
                     )}

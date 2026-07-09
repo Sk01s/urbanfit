@@ -11,6 +11,7 @@ import FiltersToggle from "./FiltersToggle";
 import MobileNavigation from "./MobileNavigation";
 import SearchBar from "./SearchBar";
 import { ProductShowcaseGrid } from "@/components/product";
+import SiteImageLabel from "./SiteImageLabel";
 import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
 import v2Enabled from "@/experimental/featureFlag";
 
@@ -38,7 +39,7 @@ const Navigation = () => {
   const { essentialProducts, fetchEssentialProducts, isLoading, error } =
     useEssentialProducts();
   const { specialPages } = useSpecialPages();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
   const { typesForSex, slugify } = useTypes();
   const womenTypes = typesForSex("women");
   const menTypes = typesForSex("men");
@@ -222,7 +223,7 @@ const Navigation = () => {
               </ul>
             </div>
 
-            <div>
+            <div style={{ position: "relative" }}>
               <Link to={"/shop"}>
                 <img
                   src={getImageUrl("nav-women-1")}
@@ -230,6 +231,7 @@ const Navigation = () => {
                   style={{ width: "20rem" }}
                 />
               </Link>
+              <SiteImageLabel labelOverlay={getLabelOverlay("nav-women-1")} />
             </div>
           </div>
         </li>
@@ -407,10 +409,14 @@ const Navigation = () => {
           </div>
         </li>
       </ul>
-      <div className="logo">
+      <div className="logo" >
+        <div style={{postion: "relative"}}>
+
         <Link onClick={onClickLink} to="/">
           <img alt="Logo" src={getImageUrl("logo-full")} />
         </Link>
+        <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
+        </div>
       </div>
       <div style={{ display: "flex" }}>
         <ul className="navigation-menu">

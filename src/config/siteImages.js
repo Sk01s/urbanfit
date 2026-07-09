@@ -181,6 +181,18 @@ export const SITE_IMAGE_DEFAULTS = SITE_IMAGES.reduce((acc, image) => {
   return acc;
 }, {});
 
+export const getStoredLabelOverlay = (key) => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  try {
+    const stored = JSON.parse(localStorage.getItem("siteImageLabels") || "{}");
+    return stored[key] || null;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getStoredSiteImageUrl = (key) => {
   if (typeof window === "undefined") {
     return SITE_IMAGE_DEFAULTS[key] || "";

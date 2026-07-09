@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { SHOP } from "@/constants/routes";
 import { useSiteImages, useLandingSlides } from "@/hooks";
+import SiteImageLabel from "./SiteImageLabel";
 
 const parseColor = (hex) => {
   if (!hex || typeof hex !== "string") return { r: 0, g: 0, b: 0 };
@@ -50,7 +51,7 @@ const VideoSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const playerRef = useRef(null);
   const timerArray = useRef([]);
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
   const { slides: allSlides, draftSlides } = useLandingSlides();
 
   const isPreview = useMemo(() => {
@@ -109,6 +110,7 @@ const VideoSlider = () => {
           img: true,
         },
         label: { enabled: false, text: "" },
+        adminLabelOverlay: getLabelOverlay("landing-video-1"),
       },
       {
         desktop: {
@@ -120,9 +122,10 @@ const VideoSlider = () => {
           img: true,
         },
         label: { enabled: false, text: "" },
+        adminLabelOverlay: getLabelOverlay("landing-bg"),
       },
     ],
-    [getImageUrl]
+    [getImageUrl, getLabelOverlay]
   );
 
   const slides = dynamicSlides || fallbackSlides;
@@ -235,6 +238,7 @@ const VideoSlider = () => {
               )}
 
               <LabelOverlay label={slide.label} isSmall={isSmall} />
+              <SiteImageLabel labelOverlay={slide.adminLabelOverlay} />
 
               <div
                 style={{

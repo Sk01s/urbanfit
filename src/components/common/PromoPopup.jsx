@@ -4,6 +4,7 @@ import { setPromo } from "@/redux/actions/checkoutActions";
 import { hidePromoPopup } from "@/redux/actions/miscActions";
 import firebaseInstance from "@/services/firebase";
 import { useSiteImages } from "@/hooks";
+import SiteImageLabel from "./SiteImageLabel";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -29,7 +30,7 @@ const dismiss = (s) => {
 
 const PromoPopup = () => {
   const dispatch = useDispatch();
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
   const { pathname } = useLocation();
   const promoPopupVisible = useSelector((state) => state.app.promoPopupVisible);
   const auth = useSelector((state) => state.auth);
@@ -121,11 +122,14 @@ const PromoPopup = () => {
           &times;
         </button>
 
-        <img
-          src={getImageUrl("logo-full")}
-          alt="Logo"
-          style={{ maxWidth: "180px", height: "auto" ,textAlign: "center", marginInline: "auto"}}
-        />
+        <div style={{ position: "relative", display: "inline-block" }}>
+          <img
+            src={getImageUrl("logo-full")}
+            alt="Logo"
+            style={{ maxWidth: "180px", height: "auto", textAlign: "center", marginInline: "auto" }}
+          />
+          <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
+        </div>
 
         {settings?.text && (
           <p style={{ fontSize: "1.1rem", color: "#333", margin: 0, lineHeight: 1.5, whiteSpace: "pre-wrap" }}>

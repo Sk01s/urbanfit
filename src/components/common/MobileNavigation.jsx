@@ -14,6 +14,7 @@ import * as Route from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
 import { ProductGrid } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
+import SiteImageLabel from "./SiteImageLabel";
 import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
 import v2Enabled from "@/experimental/featureFlag";
@@ -32,7 +33,7 @@ const Navigation = (props) => {
   const { isAuthenticating, basketLength, disabledPaths, user } = props;
   const { pathname } = useLocation();
   const [isSearching, setIsSearching] = useState(false);
-  const { getImageUrl } = useSiteImages();
+  const { getImageUrl, getLabelOverlay } = useSiteImages();
   const { specialPages } = useSpecialPages();
   const { typesForSex, slugify } = useTypes();
   const womenTypes = typesForSex("women");
@@ -131,13 +132,16 @@ const Navigation = (props) => {
             style={{ position: "relative", left: "0" }}
           />
         </div>
-        <Link
-          className="mobile-navigation-logo"
-          onClick={onClickLink}
-          to={HOME}
-        >
-          <img alt="Logo" src={getImageUrl("logo-full")} />
-        </Link>
+        <div style={{ position: "relative" }}>
+          <Link
+            className="mobile-navigation-logo"
+            onClick={onClickLink}
+            to={HOME}
+          >
+            <img alt="Logo" src={getImageUrl("logo-full")} />
+          </Link>
+          <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
+        </div>
         <ul className="mobile-navigation-menu">
           <li className="mobile-navigation-item">
             <UserNav isSigned={!!user} />
@@ -259,11 +263,14 @@ const Navigation = (props) => {
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           ) : (
-            <img
-              alt="Logo"
-              src={getImageUrl("logo-full")}
-              style={{ width: "12rem", height: "4rem", objectFit: "cover" }}
-            />
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <img
+                alt="Logo"
+                src={getImageUrl("logo-full")}
+                style={{ width: "12rem", height: "4rem", objectFit: "cover" }}
+              />
+              <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
+            </div>
           )}{" "}
           <button
             onClick={closeMenu}

@@ -80,7 +80,13 @@ export const SiteImagesProvider = ({ children }) => {
         }
         return mergedImages;
       });
-      setLabelOverlays((prev) => ({ ...prev, ...loadedLabels }));
+      setLabelOverlays((prev) => {
+        const merged = { ...prev, ...loadedLabels };
+        if (typeof window !== "undefined") {
+          localStorage.setItem("siteImageLabels", JSON.stringify(merged));
+        }
+        return merged;
+      });
       setError(null);
     } catch (err) {
       setError(err?.message || "Failed to load site images.");
