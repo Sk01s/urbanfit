@@ -45,6 +45,14 @@ class FirebaseV2 {
       .set({ basketV2: items }, { merge: true });
 
   addOrderV2 = async (id, order) => {
+    if (order.isTestOrder) {
+      await this.db
+        .collection("test_orders_v2")
+        .doc(id)
+        .set({ ...order, otp: false });
+      return;
+    }
+
     const snapshot = await this.getProductsV2All();
     const products = snapshot.docs.map((doc) => ({
       id: doc.ref.id,

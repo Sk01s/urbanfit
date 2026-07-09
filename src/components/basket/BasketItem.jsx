@@ -50,78 +50,70 @@ const BasketItem = ({ product, display = false }) => {
                 {product.name}
               </h3>
             </Link>
-            {display ? (
-              <></>
-            ) : (
-              <div className="basket-item-price">
-                {product.onSale ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: ".7rem",
-                      letterSpacing: ".055rem",
-                      fontSize: "1.4rem",
-                    }}
-                  >
-                    <div className="m-0">
-                      {product.price ? (
-                        ` ${displayMoney(
-                          Number(product.price) *
-                            (1 - Number(product.percentage) / 100)
-                        )}  `
-                      ) : (
-                        <Skeleton width={40} />
-                      )}
-                    </div>
-                    <div
-                      className="m-0"
-                      style={{
-                        marginTop: ".5rem",
-                        textDecoration: "line-through",
-                        color: "rgb(52, 58, 64)",
-                        fontSize: "1.1rem",
-                      }}
-                    >
-                      {product.price ? (
-                        ` ${displayMoney(product.price)} `
-                      ) : (
-                        <Skeleton width={40} />
-                      )}
-                    </div>
-                  </div>
-                ) : (
+            <div className="basket-item-price">
+              {product.onSale ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: ".3rem",
+                    letterSpacing: ".055rem",
+                    fontSize: "1.4rem",
+                  }}
+                >
                   <div className="m-0">
                     {product.price ? (
-                      ` ${displayMoney(product.price)}  `
+                      ` ${displayMoney(
+                        Number(product.price) *
+                          (1 - Number(product.percentage) / 100)
+                      )}  `
                     ) : (
                       <Skeleton width={40} />
                     )}
                   </div>
-                )}
-              </div>
-            )}
+                  <div
+                    className="m-0"
+                    style={{
+                      textDecoration: "line-through",
+                      color: "rgb(52, 58, 64)",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {product.price ? (
+                      ` ${displayMoney(product.price)} `
+                    ) : (
+                      <Skeleton width={40} />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="m-0">
+                  {product.price ? (
+                    ` ${displayMoney(product.price)}  `
+                  ) : (
+                    <Skeleton width={40} />
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="basket-item-specs">
             <div>
-              {display ? (
-                <></>
-              ) : (
-                <div style={{ display: "flex", gap: "0.8rem" }}>
-                  <span className="spec-title">Color : </span>
-                  <div
-                    style={{
-                      backgroundColor:
-                        product.selectedColor || product.availableColors[0],
-                      width: "11px",
-                      height: "11px",
-                      borderRadius: "50%",
-                      translate: " -3px 1.5px",
-                    }}
-                  />
-                </div>
-              )}
+              <div style={{ display: "flex", gap: "0.8rem" }}>
+                <span className="spec-title">Color : </span>
+                <div
+                  style={{
+                    backgroundColor:
+                      product.selectedColor || product.availableColors?.[0],
+                    width: "12px",
+                    height: "12px",
+                    borderRadius: "50%",
+                    translate: " -3px 1.5px",
+                    border: "1px solid #ccc",
+                  }}
+                />
+              </div>
               <div
                 style={{ display: "flex", gap: "0.8rem", marginBlock: ".6rem" }}
               >
@@ -130,13 +122,11 @@ const BasketItem = ({ product, display = false }) => {
                   {displaySizeForOmar(product.selectedSize)}{" "}
                 </h5>
               </div>
-              {display && (
-                <div className="spec-title">
-                  <div className="my-0" style={{ fontSize: "1.125rem" }}>
-                    Quantity : {product.quantity}
-                  </div>
+              <div className="spec-title">
+                <div className="my-0" style={{ fontSize: "1.125rem" }}>
+                  Qty : {product.quantity}
                 </div>
-              )}
+              </div>
               {product[`${product.selectedSize}Quantity`] <= 9 && !display && (
                 <div
                   style={{

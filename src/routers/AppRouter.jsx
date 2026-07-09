@@ -1,4 +1,4 @@
-import { Footer, Navigation, NewsDisplay } from "@/components/common";
+import { Footer, Navigation, NewsDisplay, PromoPopup } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 import { createBrowserHistory } from "history";
 import React, { useState } from "react";
@@ -34,6 +34,7 @@ const AppRouter = () => {
         <Navigation />
         {v2Enabled ? <BasketV2 /> : <Basket />}
         {!accepeted && <Terms setAccepeted={setAccepeted} />}
+        <PromoPopup />
         <Switch>
           <Route component={view.Search} exact path={ROUTES.SEARCH} />
           <Route component={view.About} exact path={ROUTES.ABOUT_US} />
@@ -166,6 +167,11 @@ const AppRouter = () => {
           <AdminRoute
             component={v2Enabled ? V2EditProduct : view.EditProduct}
             path={`${ROUTES.EDIT_PRODUCT}/:id`}
+          />
+          <AdminRoute
+            component={view.AdminPromoPopup}
+            exact
+            path={ROUTES.ADMIN_PROMO_POPUP}
           />
           <AdminRoute
             component={view.AdminSettings}

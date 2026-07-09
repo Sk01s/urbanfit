@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { clearBasketV2, setBasketV2Items } from "@/experimental/redux/actions/basketV2Actions";
+import { showPromoPopup } from "@/redux/actions/miscActions";
 
 const getItemKey = (id, selectedColor, selectedSize) =>
   `${id}_${selectedColor || ""}_${selectedSize || ""}`;
@@ -51,8 +52,9 @@ const BasketV2 = () => {
 
   const onCheckOut = () => {
     if (basketV2.length !== 0 && user) {
+      dispatch(showPromoPopup());
       document.body.classList.remove("is-basket-open");
-history.push(CHECKOUT_STEP_1);
+      history.push(CHECKOUT_STEP_1);
     } else {
       onOpenModal();
     }

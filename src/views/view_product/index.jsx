@@ -93,6 +93,20 @@ const ViewProduct = () => {
     setSelectedImage(product?.image);
   }, [product]);
 
+  useEffect(() => {
+    if (!product) return;
+    const sizePriority = ['sm', 'md', 'lg', 'xl'];
+    const sizeIndex = { sm: 3, md: 2, lg: 1, xl: 0 };
+    const smallestAvail = sizePriority.find(s => product?.[`${s}Quantity`] > 0);
+    if (smallestAvail) {
+      setSelectedSize(smallestAvail);
+      const idx = sizeIndex[smallestAvail];
+      sizesBtnsEl.current.forEach((el, i) => {
+        if (el) el.classList.toggle("active", i === idx);
+      });
+    }
+  }, [product]);
+
   const onSelectedSizeChange = (index, newValue) => {
     setSelectedSize(newValue);
     sizesBtnsEl.current.map((el, i) => {

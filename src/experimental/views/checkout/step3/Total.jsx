@@ -12,7 +12,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { setPaymentDetails } from "@/redux/actions/checkoutActions";
-import firebaseV2 from "@/experimental/services/firebaseV2";
 import { clearBasketV2 } from "@/experimental/redux/actions/basketV2Actions";
 import { OrderPaymentSummery } from "@/components/common";
 import { PromoBox } from "@/views/checkout/components";
@@ -125,20 +124,36 @@ const TotalV2 = ({ isInternational, subtotal, order, paymentType }) => {
       setLoading(true);
       order.date = new Date();
       order.otp = false;
+      order.isTestOrder = import.meta.env.VITE_TEST_ORDER === "true";
       order.shippingRate = shippingRate;
       if (!order.uid) {
-        order.uid = firebaseInstance.getCurrentUser();
+        order.uid = firebaseInstance.auth.currentUser?.uid || null;
       }
-      await firebaseV2.addOrderV2(order.id, order);
 
-      try {
-        await fetch(`${BACKEND_API_URL}/api/email/order-confirmation`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order }),
-        });
-      } catch (emailError) {
-        console.error("Failed to send order confirmation emails:", emailError);
+      const token = await firebaseInstance.auth.currentUser.getIdToken();
+      const response = await fetch(`${BACKEND_API_URL}/api/orders/v2`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(order),
+      });
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.error || result.message || "Failed to place order");
+      }
+
+      if (!order.isTestOrder) {
+        try {
+          await fetch(`${BACKEND_API_URL}/api/email/order-confirmation`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ order }),
+          });
+        } catch (emailError) {
+          console.error("Failed to send order confirmation emails:", emailError);
+        }
       }
 
       dispatch(clearBasketV2());

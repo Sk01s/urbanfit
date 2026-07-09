@@ -14,6 +14,7 @@ import firebaseInstance from "@/services/firebase";
 import { useProducts } from "@/hooks";
 import { useState } from "react";
 import { setBasketItems } from "@/redux/actions/basketActions";
+import { showPromoPopup } from "@/redux/actions/miscActions";
 
 const Basket = () => {
   const { isOpenModal, onOpenModal, onCloseModal } = useModal();
@@ -54,6 +55,7 @@ const Basket = () => {
 
   const onCheckOut = () => {
     if (basket.length !== 0 && user) {
+      dispatch(showPromoPopup());
       document.body.classList.remove("is-basket-open");
       history.push(CHECKOUT_STEP_1);
     } else {

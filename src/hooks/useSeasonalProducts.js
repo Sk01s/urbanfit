@@ -8,7 +8,7 @@ const useSeasonalProducts = (itemsCount) => {
   const [seasonalProducts, setSeasonalProducts] = useState(
     JSON.parse(localStorage.getItem("seasonals")) ||
       products.filter((item) => item.isSeasonal) ||
-      []
+      [products]
   );
 
   const [seasonalError, setError] = useState(error);

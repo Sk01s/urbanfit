@@ -1,5 +1,5 @@
 import {
-  IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS
+  HIDE_PROMO_POPUP, IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS, SHOW_PROMO_POPUP
 } from '@/constants/constants';
 
 export const setLoading = (bool = true) => ({
@@ -21,4 +21,12 @@ export const setRequestStatus = (status) => ({
 export const setAuthStatus = (status = null) => ({
   type: SET_AUTH_STATUS,
   payload: status
+});
+
+export const showPromoPopup = () => ({
+  type: SHOW_PROMO_POPUP,
+});
+
+export const hidePromoPopup = () => ({
+  type: HIDE_PROMO_POPUP,
 });

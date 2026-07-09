@@ -7,6 +7,7 @@ import {
   ADMIN_CATEGORIES,
   ADMIN_TYPES,
   PROMO,
+  ADMIN_PROMO_POPUP,
 } from "@/constants/routes";
 
 import React from "react";
@@ -76,6 +77,15 @@ const SideNavigation = () => (
           className="sidenavigation-menu my-0"
         >
           Promo
+        </NavLink>
+      </div>
+      <div className="sidenavigation-item">
+        <NavLink
+          to={ADMIN_PROMO_POPUP}
+          activeClassName="sidenavigation-menu-active"
+          className="sidenavigation-menu my-0"
+        >
+          Promo Popup
         </NavLink>
       </div>
       <div className="sidenavigation-item">

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 
 const QuantitySelector = ({ setQuantity, quantity, maxQuantity = 10 }) => {
   const handleIncrement = () => {
+    console.log('[QuantitySelector] INCREMENT:', { quantity, maxQuantity, condition: quantity === maxQuantity });
     if (quantity === maxQuantity) return;
     const newQuantity = quantity + 1;
+    console.log('[QuantitySelector] INCREMENT ->', { newQuantity });
     setQuantity(newQuantity);
   };
 
   const handleDecrement = () => {
+    console.log('[QuantitySelector] DECREMENT:', { quantity, condition: quantity > 1 });
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);

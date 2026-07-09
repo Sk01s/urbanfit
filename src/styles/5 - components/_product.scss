@@ -321,9 +321,10 @@
 
 .product-modal-image-collection-wrapper {
   width: 100%;
-  margin-bottom: 5px;
+  margin-block: 5px;
   position: relative;
   aspect-ratio: 9/16;
+
   width: 6rem;
   &:hover {
     cursor: pointer;

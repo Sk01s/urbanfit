@@ -13,3 +13,4 @@ b2-image-migration-status.json
 migration-status.json
 new/backend/
 backend/
+firestore.rules

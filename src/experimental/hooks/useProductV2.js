@@ -24,7 +24,7 @@ const useProductV2 = (id) => {
             if (doc.exists) {
               const data = { ...doc.data(), id: doc.ref.id };
               setProduct(data);
-              if (data.colors && data.colors.length > 0) {
+              if (data.colors?.length) {
                 setSelectedColor(data.colors[0].color);
               }
               setLoading(false);
@@ -35,7 +35,7 @@ const useProductV2 = (id) => {
           }
         } else {
           setProduct(storeProduct);
-          if (storeProduct.colors && storeProduct.colors.length > 0) {
+          if (storeProduct.colors?.length) {
             setSelectedColor(storeProduct.colors[0].color);
           }
           setLoading(false);

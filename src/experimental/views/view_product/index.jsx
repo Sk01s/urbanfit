@@ -41,6 +41,7 @@ const ViewProductV2 = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantitiy] = useState(1);
   const [maxQuantity, setMaxQuantity] = useState(10);
+  const prevSizeRef = useRef(selectedSize);
   const [relatedProduct, setRelatedProduct] = useState([]);
   const { products: allProductsV2 } = useProductsV2();
 
@@ -54,9 +55,9 @@ const ViewProductV2 = () => {
   const colorOverlay = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const galleryImages = variant ? (variant.imageCollection || []) : [];
-  const colors = product?.colors || [];
   const sharedImages = product?.sharedImages || [];
+  const galleryImages = variant?.imageCollection?.length ? variant.imageCollection : sharedImages;
+  const colors = product?.colors || [];
   const selectedColorName = variant?.activeColorName || "";
 
   useEffect(() => {
@@ -70,7 +71,10 @@ const ViewProductV2 = () => {
     };
   }, [product, allProductsV2]);
 
+  console.log('[ViewProductV2] RENDER:', { selectedColor, selectedSize, quantity, maxQuantity, variantKeys: variant ? Object.keys(variant) : null, smQ: variant?.smQuantity, mdQ: variant?.mdQuantity, lgQ: variant?.lgQuantity, xlQ: variant?.xlQuantity });
+
   useEffect(() => {
+    console.log('[ViewProductV2] EFFECT selectedColor changed:', { selectedColor });
     setQuantitiy(1);
     setSelectedSize("");
     setCurrentIndex(0);
@@ -80,15 +84,37 @@ const ViewProductV2 = () => {
   }, [selectedColor]);
 
   useEffect(() => {
-    setQuantitiy(1);
-    if (selectedSize && variant?.activeVariant?.quantities) {
-      setMaxQuantity(variant.activeVariant.quantities[selectedSize] || 10);
+    const sizeChanged = prevSizeRef.current !== selectedSize;
+    prevSizeRef.current = selectedSize;
+    console.log('[ViewProductV2] EFFECT qty calc:', { selectedSize, sizeChanged, hasVariant: !!variant, smQ: variant?.smQuantity, accessResult: selectedSize && variant ? variant[`${selectedSize}Quantity`] : 'N/A', finalMax: selectedSize && variant ? (variant[`${selectedSize}Quantity`] || 10) : 10 });
+    if (sizeChanged) {
+      setQuantitiy(1);
+    }
+    if (selectedSize && variant) {
+      setMaxQuantity(variant[`${selectedSize}Quantity`] || 10);
     } else {
       setMaxQuantity(10);
     }
   }, [selectedSize, variant]);
 
+  useEffect(() => {
+    console.log('[ViewProductV2] EFFECT auto-size:', { selectedSize, variant: variant ? { smQ: variant.smQuantity, mdQ: variant.mdQuantity, lgQ: variant.lgQuantity, xlQ: variant.xlQuantity } : null });
+    if (!variant) return;
+    if (selectedSize && variant[`${selectedSize}Quantity`] > 0) return;
+    const sizePriority = ['xs', 'sm', 'md', 'lg', 'xl'];
+    const sizeIndex = { xs: 4, sm: 3, md: 2, lg: 1, xl: 0 };
+    const smallestAvail = sizePriority.find(s => variant[`${s}Quantity`] > 0);
+    if (smallestAvail) {
+      setSelectedSize(smallestAvail);
+      const idx = sizeIndex[smallestAvail];
+      sizesBtnsEl.current.forEach((el, i) => {
+        if (el) el.classList.toggle("active", i === idx);
+      });
+    }
+  }, [variant, selectedSize]);
+
   const onSelectedSizeChange = (index, newValue) => {
+    console.log('[ViewProductV2] onSelectedSizeChange:', { index, newValue, elExists: !!sizesBtnsEl.current[index] });
     setSelectedSize(newValue);
     sizesBtnsEl.current.map((el, i) => {
       i === index ? el.classList.add("active") : el.classList.remove("active");
@@ -157,7 +183,7 @@ const ViewProductV2 = () => {
           </div>
         )}
         {error && <MessageDisplay message={error} />}
-        {product && variant && !isLoading && (
+        {product && !isLoading && (
           <div className="product-view">
             <div className="product-modal">
               <div className="product-image-wrapper">
@@ -303,6 +329,16 @@ const ViewProductV2 = () => {
                       Size (UK)
                     </div>
                     <div className="product-sizes-container">
+                      <button
+                        ref={(el) => (sizesBtnsEl.current[4] = el)}
+                        className={`product-size  ${
+                          variant.xsQuantity || "not-available"
+                        }`}
+                        disabled={variant.xsQuantity > 0 ? false : true}
+                        onClick={(e) => onSelectedSizeChange(4, "xs")}
+                      >
+                        XS
+                      </button>
                       <button
                         ref={(el) => (sizesBtnsEl.current[3] = el)}
                         className={`product-size  ${

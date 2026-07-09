@@ -238,24 +238,40 @@ const summery = () => `
       setLoading(true);
       order.date = new Date();
       order.otp = false;
+      order.isTestOrder = import.meta.env.VITE_TEST_ORDER === "true";
       order.shippingRate = shippingRate; // Store the shipping rate with the order
       if (!order.uid) {
-        order.uid = firebaseInstance.getCurrentUser();
+        order.uid = firebaseInstance.auth.currentUser?.uid || null;
       }
-      await firebase.addOrder(order.id, order);
-      
-      // Send order confirmation emails via backend
-      try {
-        await fetch(`${BACKEND_API_URL}/api/email/order-confirmation`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ order }),
-        });
-      } catch (emailError) {
-        console.error("Failed to send order confirmation emails:", emailError);
-        // Don't fail the order if email fails
+
+      const token = await firebaseInstance.auth.currentUser.getIdToken();
+      const response = await fetch(`${BACKEND_API_URL}/api/orders/v2`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(order),
+      });
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.error || result.message || "Failed to place order");
+      }
+
+      if (!order.isTestOrder) {
+        // Send order confirmation emails via backend
+        try {
+          await fetch(`${BACKEND_API_URL}/api/email/order-confirmation`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ order }),
+          });
+        } catch (emailError) {
+          console.error("Failed to send order confirmation emails:", emailError);
+          // Don't fail the order if email fails
+        }
       }
       
       dispatch(clearBasket());

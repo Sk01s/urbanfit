@@ -1,7 +1,5 @@
 import {
-  IS_AUTHENTICATING, LOADING,
-  SET_AUTH_STATUS,
-  SET_REQUEST_STATUS
+  HIDE_PROMO_POPUP, IS_AUTHENTICATING, LOADING, SET_AUTH_STATUS, SET_REQUEST_STATUS, SHOW_PROMO_POPUP
 } from '@/constants/constants';
 
 const initState = {
@@ -9,7 +7,8 @@ const initState = {
   isAuthenticating: false,
   authStatus: null,
   requestStatus: null,
-  theme: 'light'
+  theme: 'light',
+  promoPopupVisible: false,
 };
 
 export default (state = initState, action) => {
@@ -33,6 +32,16 @@ export default (state = initState, action) => {
       return {
         ...state,
         authStatus: action.payload
+      };
+    case SHOW_PROMO_POPUP:
+      return {
+        ...state,
+        promoPopupVisible: true,
+      };
+    case HIDE_PROMO_POPUP:
+      return {
+        ...state,
+        promoPopupVisible: false,
       };
     default:
       return state;

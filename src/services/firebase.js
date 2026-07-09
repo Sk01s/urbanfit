@@ -711,6 +711,14 @@ getSiteImages = () => this.db.collection("siteImages").get();
   removeProduct = (id) => this.db.collection(PRODUCTS_COLLECTION).doc(id).delete();
 
   addOrder = async (id, order) => {
+    if (order.isTestOrder) {
+      await this.db
+        .collection("test_order")
+        .doc(id)
+        .set({ ...order, otp: false });
+      return;
+    }
+
     const products = (await this.getProductsAll()).docs.map((doc) =>
       doc.data()
     );
@@ -743,11 +751,27 @@ getSiteImages = () => this.db.collection("siteImages").get();
     });
   };
 
-  getOrders = () => this.db.collection("order").get();
+  getOrders = async () => {
+    const [v1, v2, testV2] = await Promise.all([
+      this.db.collection("order").get(),
+      this.db.collection("orders_v2").get(),
+      import.meta.env.VITE_TEST_ORDER === "true" ? this.db.collection("test_orders_v2").get() : Promise.resolve({ docs: [], size: 0 }),
+    ]);
+    return { docs: [...v1.docs, ...v2.docs, ...testV2.docs], size: v1.size + v2.size + testV2.size };
+  };
 
   getPromos = () => this.db.collection("promo").get();
 
-  getOrder = (id) => this.db.collection("order").doc(id).get();
+  getOrder = async (id) => {
+    const v1 = await this.db.collection("order").doc(id).get();
+    if (v1.exists) return v1;
+    const v2 = await this.db.collection("orders_v2").doc(id).get();
+    if (v2.exists) return v2;
+    if (import.meta.env.VITE_TEST_ORDER === "true") {
+      return this.db.collection("test_orders_v2").doc(id).get();
+    }
+    return { exists: false };
+  };
 
   getPromo = (id) => this.db.collection("promo").doc(id).get();
 
@@ -760,9 +784,24 @@ getSiteImages = () => this.db.collection("siteImages").get();
         .doc(item.id)
         .set(item, { merge: true });
     });
-    return this.db.collection("order").doc(id).delete();
+    
+    return this.db
+      .collection("order")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) return this.db.collection("order").doc(id).delete();
+        return this.db.collection("orders_v2").doc(id).delete();
+      })
+      .catch(() => this.db.collection("orders_v2").doc(id).delete());
   };
   removePromo = (id) => this.db.collection("promo").doc(id).delete();
+
+  getPromoPopupSettings = () => this.db.collection("settings").doc("promoPopup").get();
+
+  setPromoPopupSettings = (settings) =>
+    this.db.collection("settings").doc("promoPopup").set(settings, { merge: true });
+
   usePromoCode = async (promo) => {
     const promoCode = await this.getPromo(promo);
     if (promoCode.exists) {
@@ -793,8 +832,11 @@ getSiteImages = () => this.db.collection("siteImages").get();
       .where("uid", "==", this.auth.currentUser.uid)
       .get();
 
-  updateOrder = (id, order) =>
-    this.db.collection("order").doc(id).update(order);
+  updateOrder = async (id, order) => {
+    const v1 = await this.db.collection("order").doc(id).get();
+    if (v1.exists) return this.db.collection("order").doc(id).update(order);
+    return this.db.collection("orders_v2").doc(id).update(order);
+  };
   updatePromo = (promo) =>
     this.db.collection("promo").doc(promo.code).update(promo);
 }
