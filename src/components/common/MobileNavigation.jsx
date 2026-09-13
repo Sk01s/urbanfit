@@ -15,7 +15,7 @@ import { selectFilter } from "@/selectors/selector";
 import { ProductGrid } from "@/components/product";
 import { ProductShowcaseGrid } from "@/components/product";
 import SiteImageLabel from "./SiteImageLabel";
-import { useEssentialProducts, useSiteImages, useSpecialPages, useTypes } from "@/hooks";
+import { useEssentialProducts, useSiteImages, useSiteSettings, useSpecialPages, useTypes } from "@/hooks";
 import InfoBox from "@/components/product/InfoBox";
 import v2Enabled from "@/experimental/featureFlag";
 
@@ -34,6 +34,7 @@ const Navigation = (props) => {
   const { pathname } = useLocation();
   const [isSearching, setIsSearching] = useState(false);
   const { getImageUrl, getLabelOverlay } = useSiteImages();
+  const { whatsappEnabled, whatsappLink } = useSiteSettings();
   const { specialPages } = useSpecialPages();
   const { typesForSex, slugify } = useTypes();
   const womenTypes = typesForSex("women");
@@ -637,13 +638,16 @@ const Navigation = (props) => {
               </a>
             </li>
 
+            {/* WhatsApp link — controlled from Admin Settings (Firestore settings/general).
+                NOTE: href intentionally uses whatsappLink; do not hardcode the number here. */}
+            {whatsappEnabled && (
             <li>
               <a
                 aria-label="WhatsApp"
                 class="whatsapp"
                 target="_blank"
                 rel="noopener"
-                href="https://api.whatsapp.com/send?phone=96176875941"
+                href={whatsappLink}
               >
                 <svg
                   aria-hidden="true"
@@ -657,6 +661,7 @@ const Navigation = (props) => {
                 </svg>
               </a>
             </li>
+            )}
           </ul>
         </div>
       </nav>

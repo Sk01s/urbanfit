@@ -4,6 +4,7 @@ export { default as AddProduct } from "./admin/add_product";
 export { default as Dashboard } from "./admin/dashboard";
 export { default as Orders } from "./admin/orders";
 export { default as OrderView } from "./admin/orderView";
+export { SinglePackingSlip, BulkPackingSlips } from "./admin/packingSlip";
 export { default as EditProduct } from "./admin/edit_product";
 export { default as Products } from "./admin/products";
 export { default as AdminImages } from "./admin/images";

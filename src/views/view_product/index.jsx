@@ -20,6 +20,7 @@ import { autoPlay } from "react-swipeable-views-utils";
 import Dotdotdot from "react-dotdotdot";
 
 import { Helmet } from "react-helmet";
+import { trackAddToCart, trackAddToWishlist, trackViewContent } from "@/services/metaPixel";
 import CustomDots from "@/components/product/CustomDotes";
 import InfoBox from "@/components/product/InfoBox";
 import QuantitySelector from "@/components/product/QuantitySelecter";
@@ -93,6 +94,13 @@ const ViewProduct = () => {
     setSelectedImage(product?.image);
   }, [product]);
 
+  // Meta Pixel: ViewContent when product data is available
+  useEffect(() => {
+    if (product?.id) {
+      trackViewContent(product);
+    }
+  }, [product?.id]);
+
   useEffect(() => {
     if (!product) return;
     const sizePriority = ['sm', 'md', 'lg', 'xl'];
@@ -122,6 +130,7 @@ const ViewProduct = () => {
   };
 
   const handleAddToBasket = (onClickToggle, e) => {
+    const wasOnBasket = isItemOnBasket(product.id);
     addToBasket(
       {
         ...product,
@@ -131,6 +140,10 @@ const ViewProduct = () => {
       },
       onClickToggle
     );
+    // Meta Pixel: only fire AddToCart when actually adding (not removing)
+    if (!wasOnBasket) {
+      trackAddToCart(product, quantity);
+    }
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -197,7 +210,11 @@ const ViewProduct = () => {
                     padding: "1rem",
                   }}
                   onClick={() => {
+                    const wasWished = isItemOnWish(product.id);
                     addToWish(product);
+                    if (!wasWished) {
+                      trackAddToWishlist(product);
+                    }
                   }}
                 >
                   {isItemOnWish(product.id) ? (

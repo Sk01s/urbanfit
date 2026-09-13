@@ -1,7 +1,7 @@
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, PrinterOutlined } from "@ant-design/icons";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import firebase from "@/services/firebase";
 import Skeleton from "react-loading-skeleton";
 import { displayMoney, displayDate, calculateSubtotal } from "@/helpers/utils";
@@ -36,7 +36,24 @@ const OrderView = () => {
 
   return (
     <section className="product-form-container">
-      <h2>Order</h2>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "1rem",
+          flexWrap: "wrap",
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Order</h2>
+        <Link
+          to={`/admin/orders/${orderId}/packing-slip`}
+          className="button button-small"
+          style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+        >
+          <PrinterOutlined /> Print packing slip
+        </Link>
+      </div>
 
         {!orderDetails ? (
           <div className="loader" style={{ minHeight: "40dvh" }}>

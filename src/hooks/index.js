@@ -13,6 +13,7 @@ export { default as useProducts } from "./useProducts";
 export { default as useSpecialPages } from "./useSpecialPages";
 export { default as useFeatureFlag } from "./useFeatureFlag";
 export { SiteImagesProvider, useSiteImages } from "./useSiteImages";
+export { SiteSettingsProvider, useSiteSettings } from "./useSiteSettings";
 export { LandingSlidesProvider, useLandingSlides } from "./useLandingSlides";
 export { SiteTextsProvider, useSiteTexts } from "./useSiteTexts";
 export { default as useTypes } from "./useTypes";

@@ -19,18 +19,40 @@ const ProductShowcase = ({
   high,
   isLoading,
 }) => {
-  const settings = {
-    infinite: true,
-    centerMode: center,
-    centerPadding: "0",
-    slidesToShow: 1,
-    speed: 500,
-    arrows: false,
-    variableWidth: true,
-    slidesToScroll: 1,
-  };
   const filteredProducts = high ? HighProducts(products) : products;
   const displayProducts = expandSplitProducts(filteredProducts);
+
+  // Fixed slides-per-view (responsive) instead of variableWidth.
+  // variableWidth measured each slide from its live content, so tiles rendered
+  // at different sizes depending on what had loaded when slick initialized —
+  // and the layout changed from one page load to the next. With slidesToShow,
+  // every tile gets an identical width no matter the loading state.
+  const isCartSlider = !!cart;
+  const slideCount = Math.max(displayProducts.length, 1);
+  const capped = (n) => Math.max(1, Math.min(n, slideCount));
+  const slidesToShow = capped(isCartSlider ? 2 : 4);
+  // Looping with fewer slides than visible produces duplicated/blank slides.
+  const infinite = displayProducts.length > slidesToShow;
+  const settings = {
+    infinite,
+    centerMode: center && infinite,
+    centerPadding: "0",
+    slidesToShow,
+    speed: 500,
+    arrows: false,
+    variableWidth: false,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: capped(isCartSlider ? 2 : 3) },
+      },
+      {
+        breakpoint: 768,
+        settings: { slidesToShow: capped(isCartSlider ? 1 : 2) },
+      },
+    ],
+  };
 
   const sliderRef = useRef(null);
 

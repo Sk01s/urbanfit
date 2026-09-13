@@ -17,60 +17,15 @@ const ProductFeatured = ({
 }) => {
   const { wish, addToWish, isItemOnWish } = useWish(product.id);
 
-  // Responsive dimensions for slider vs non-slider contexts
-  const getImageDimensions = () => {
-    if (!isSlider) {
-      // Default dimensions for non-slider (grid layouts, etc.)
-      return {
-        minWidth: "100%",
-        minHeight: "auto",
-        aspectRatio: "250/444",
-      };
-    }
-
-    // Cart slider (inside basket) - smaller dimensions
-    if (cart) {
-      const isMobile =
-        typeof window !== "undefined" && window.innerWidth <= 480;
-      if (isMobile) {
-        return {
-          minWidth: "120px",
-          minHeight: "160px",
-          aspectRatio: "250/444",
-        };
-      }
-      return {
-        minWidth: "150px",
-        minHeight: "200px",
-        aspectRatio: "250/444",
-      };
-    }
-
-    // Regular slider - responsive based on screen width
-    const isMobile = typeof window !== "undefined" && window.innerWidth <= 480;
-    const isTablet = typeof window !== "undefined" && window.innerWidth <= 768;
-
-    if (isMobile) {
-      return {
-        minWidth: "150px",
-        minHeight: "200px",
-        aspectRatio: "250/444",
-      };
-    } else if (isTablet) {
-      return {
-        minWidth: "200px",
-        minHeight: "267px",
-        aspectRatio: "250/444",
-      };
-    }
-    return {
-      minWidth: "250px",
-      minHeight: "333px",
-      aspectRatio: "250/444",
-    };
+  // Fixed image box: always fills the card width with a locked aspect ratio,
+  // so loading placeholders and loaded images occupy the exact same space.
+  // (Deliberately not derived from window.innerWidth at render time — that
+  // produced different sizes between first paint and later re-renders.)
+  const imageDimensions = {
+    minWidth: "100%",
+    minHeight: "280px",
+    aspectRatio: "250/444",
   };
-
-  const imageDimensions = getImageDimensions();
   const history = useHistory();
   const getProductUrl = () => {
     const params = new URLSearchParams();
@@ -132,7 +87,7 @@ const ProductFeatured = ({
                         )}
                     </>
                   ) : (
-                    <Skeleton width="50vw" height="100%" />
+                    <Skeleton width="100%" height="100%" />
                   )}
                 </div>
                 <div className="product-display-details">
@@ -272,7 +227,7 @@ const ProductFeatured = ({
                   )}
                 </>
               ) : (
-                <Skeleton width="50vw" height="100%" />
+                <Skeleton width="100%" height="100%" />
               )}
             </div>
             <div className="product-display-details">

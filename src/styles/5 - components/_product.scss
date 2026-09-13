@@ -753,3 +753,14 @@
 .show-case {
   overflow: hidden;
 }
+// Showcase slider tiles must be identical regardless of image load state.
+// Slick assigns equal widths via slidesToShow; the card fills its slide
+// (no content-driven min-width) so loading placeholders and loaded images
+// occupy the exact same box.
+.show-case .slick-slide > div {
+  width: 100%;
+}
+.show-case .product-display {
+  min-width: 0;
+  width: auto;
+}

@@ -3,16 +3,22 @@ import { BasketItemV2 } from "@/experimental/components/basket";
 import { displayMoney } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
 import PropType from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { PromoBox, StepTracker } from "@/views/checkout/components";
 import withCheckoutV2 from "../hoc/withCheckoutV2";
 import { OrderPaymentSummery } from "@/components/common";
+import { trackInitiateCheckout } from "@/services/metaPixel";
 
 const OrderSummaryV2 = ({ basket, subtotal }) => {
   useDocumentTitle("Check Out Step 1 | Urbanfit");
   useScrollTop();
+  // Meta Pixel: user started checkout
+  useEffect(() => {
+    trackInitiateCheckout(basket, subtotal);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const promo = useSelector((store) => store.checkout.promo);
   const history = useHistory();
 

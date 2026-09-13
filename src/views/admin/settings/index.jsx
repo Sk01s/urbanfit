@@ -7,9 +7,11 @@ import {
   CarOutlined,
   PlusOutlined,
   DeleteOutlined,
+  WhatsAppOutlined,
 } from "@ant-design/icons";
 import { displayActionMessage } from "@/helpers/utils";
 import { useDocumentTitle, useScrollTop } from "@/hooks";
+import firebaseInstance from "@/services/firebase";
 
 const BACKEND_API_URL =
   import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3001";
@@ -27,6 +29,11 @@ const AdminSettings = () => {
     defaultRate: 5,
     enabled: true,
   });
+  const [whatsappSettings, setWhatsappSettings] = useState({
+    number: "96176875941",
+    enabled: true,
+  });
+  const [savingWhatsapp, setSavingWhatsapp] = useState(false);
   const [newCity, setNewCity] = useState("");
   const [newRate, setNewRate] = useState("");
 
@@ -56,6 +63,23 @@ const AdminSettings = () => {
             defaultRate: shippingData.data.defaultRate ?? 5,
             enabled: shippingData.data.enabled !== false,
           });
+        }
+
+        // WhatsApp number lives in Firestore settings/general (frontend-readable)
+        try {
+          const generalSnap = await firebaseInstance.getGeneralSettings();
+          if (generalSnap.exists) {
+            const generalData = generalSnap.data() || {};
+            setWhatsappSettings({
+              number: String(generalData.whatsappNumber || "96176875941").replace(
+                /\D/g,
+                ""
+              ),
+              enabled: generalData.whatsappEnabled !== false,
+            });
+          }
+        } catch (generalErr) {
+          console.error("Failed to fetch WhatsApp settings:", generalErr);
         }
       } catch (err) {
         console.error("Failed to fetch settings:", err);
@@ -125,6 +149,32 @@ const AdminSettings = () => {
       displayActionMessage(err.message, "error");
     } finally {
       setSavingShipping(false);
+    }
+  };
+
+  const handleSaveWhatsapp = async () => {
+    const digits = String(whatsappSettings.number || "").replace(/\D/g, "");
+    if (!digits || digits.length < 7 || digits.length > 15) {
+      displayActionMessage(
+        "Please enter a valid WhatsApp number (7-15 digits, e.g. 96176875941)",
+        "error"
+      );
+      return;
+    }
+    setSavingWhatsapp(true);
+    try {
+      await firebaseInstance.setGeneralSettings({
+        whatsappNumber: digits,
+        whatsappEnabled: whatsappSettings.enabled,
+        updatedAt: Date.now(),
+      });
+      setWhatsappSettings({ number: digits, enabled: whatsappSettings.enabled });
+      displayActionMessage("WhatsApp settings saved!", "success");
+    } catch (err) {
+      console.error("Failed to save WhatsApp settings:", err);
+      displayActionMessage(err.message || "Failed to save WhatsApp settings", "error");
+    } finally {
+      setSavingWhatsapp(false);
     }
   };
 
@@ -540,6 +590,219 @@ const AdminSettings = () => {
           ) : (
             <>
               <SaveOutlined /> Save Shipping Rates
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* WhatsApp Settings — stored in Firestore settings/general */}
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: "12px",
+          padding: "24px",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+          marginBottom: "24px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            marginBottom: "20px",
+          }}
+        >
+          <WhatsAppOutlined style={{ fontSize: "20px", color: "#059669" }} />
+          <div>
+            <h3 style={{ margin: "0", fontSize: "18px", fontWeight: "600" }}>
+              WhatsApp Contact
+            </h3>
+            <p
+              style={{ margin: "4px 0 0", color: "#6b7280", fontSize: "14px" }}
+            >
+              Change the number or hide it from the footer, menu, and contact
+              page. Saved to Firestore settings/general.
+            </p>
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "#f9fafb",
+            borderRadius: "8px",
+            padding: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "20px",
+              paddingBottom: "20px",
+              borderBottom: "1px solid #e5e7eb",
+            }}
+          >
+            <div>
+              <label
+                style={{
+                  fontWeight: "500",
+                  fontSize: "15px",
+                  color: "#111827",
+                  background: "transparent",
+                  border: "none",
+                }}
+              >
+                Show WhatsApp links
+              </label>
+              <p
+                style={{
+                  margin: "4px 0 0",
+                  color: "#6b7280",
+                  fontSize: "13px",
+                }}
+              >
+                Turn off to hide WhatsApp everywhere on the site
+              </p>
+            </div>
+            <label
+              style={{
+                position: "relative",
+                display: "inline-block",
+                width: "52px",
+                height: "28px",
+                borderRadius: "28px",
+                border: "none",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={whatsappSettings.enabled}
+                onChange={(e) =>
+                  setWhatsappSettings({
+                    ...whatsappSettings,
+                    enabled: e.target.checked,
+                  })
+                }
+                style={{ opacity: 0, width: 0, height: 0 }}
+              />
+              <span
+                style={{
+                  position: "absolute",
+                  cursor: "pointer",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: whatsappSettings.enabled
+                    ? "#059669"
+                    : "#d1d5db",
+                  transition: "0.3s",
+                  borderRadius: "1.25rem",
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    height: "22px",
+                    width: "22px",
+                    left: whatsappSettings.enabled ? "27px" : "3px",
+                    bottom: "3px",
+                    backgroundColor: "white",
+                    transition: "0.3s",
+                    borderRadius: "50%",
+                  }}
+                />
+              </span>
+            </label>
+          </div>
+
+          <div>
+            <label
+              style={{
+                display: "block",
+                fontWeight: "500",
+                fontSize: "15px",
+                color: "#111827",
+                marginBottom: "8px",
+                background: "transparent",
+                border: "none",
+              }}
+            >
+              WhatsApp number (digits only)
+            </label>
+            <p
+              style={{ margin: "0 0 12px", color: "#6b7280", fontSize: "13px" }}
+            >
+              Country code + number without spaces or +. Current links use this
+              number automatically.
+            </p>
+            <input
+              type="tel"
+              inputMode="numeric"
+              placeholder="e.g. 96176875941"
+              value={whatsappSettings.number}
+              onChange={(e) =>
+                setWhatsappSettings({
+                  ...whatsappSettings,
+                  number: e.target.value.replace(/\D/g, ""),
+                })
+              }
+              disabled={!whatsappSettings.enabled}
+              style={{
+                width: "100%",
+                maxWidth: "300px",
+                padding: "10px 14px",
+                fontSize: "16px",
+                fontWeight: "500",
+                border: "2px solid #e5e7eb",
+                borderRadius: "8px",
+                outline: "none",
+                opacity: whatsappSettings.enabled ? 1 : 0.5,
+              }}
+            />
+            {whatsappSettings.number && (
+              <p
+                style={{
+                  margin: "12px 0 0",
+                  color: "#6b7280",
+                  fontSize: "13px",
+                }}
+              >
+                Preview:{" "}
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${whatsappSettings.number}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  https://api.whatsapp.com/send?phone={whatsappSettings.number}
+                </a>
+              </p>
+            )}
+          </div>
+        </div>
+
+        <button
+          className="button"
+          onClick={handleSaveWhatsapp}
+          disabled={savingWhatsapp}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "12px 24px",
+            fontSize: "15px",
+          }}
+        >
+          {savingWhatsapp ? (
+            <>
+              <LoadingOutlined /> Saving...
+            </>
+          ) : (
+            <>
+              <SaveOutlined /> Save WhatsApp Settings
             </>
           )}
         </button>

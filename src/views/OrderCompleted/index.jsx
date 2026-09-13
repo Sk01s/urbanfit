@@ -6,11 +6,32 @@ import { Link } from "react-router-dom";
 import { displayActionMessage, calculateSubtotal } from "@/helpers/utils";
 import { useScrollTop, useFeatureFlag, useSiteImages } from "@/hooks";
 import { OrderPaymentSummery } from "@/components/common";
+import { trackPurchase } from "@/services/metaPixel";
 const OrderCompleted = () => {
   useScrollTop();
   const location = useLocation();
-  const { getImageUrl } = useSiteImages();
   const { id } = useParams();
+  // Meta Pixel: Purchase (fires once per order — deduped via sessionStorage)
+  useEffect(() => {
+    const items = location.state?.items || [];
+    if (items.length === 0) return;
+    const orderId = location.state?.id || id;
+    const dedupeKey = `fb_purchase_${orderId || items.length}`;
+    try {
+      if (sessionStorage.getItem(dedupeKey)) return;
+      const subtotal = calculateSubtotal(items);
+      const promoPct = Number(location.state?.promo?.percentage) || 0;
+      const value = subtotal - (subtotal * promoPct) / 100;
+      trackPurchase({ items, total: value }, value);
+      sessionStorage.setItem(dedupeKey, "1");
+    } catch (e) {
+      // storage unavailable (private mode) — still fire once per mount
+      const subtotal = calculateSubtotal(items);
+      trackPurchase({ items, total: subtotal }, subtotal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const { getImageUrl } = useSiteImages();
   const isOtpEnabled = useFeatureFlag("ENABLE_OTP_VERIFICATION");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");

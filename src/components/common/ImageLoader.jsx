@@ -59,9 +59,12 @@ const ImageLoader = ({
     setLoaded(true);
   };
 
-  // Container styles to prevent layout shift
+  // Container styles to prevent layout shift.
+  // Width always fills the parent and aspectRatio reserves the exact final
+  // height up-front, so the box is identical before and after the image loads.
   const containerStyles = {
     position: "relative",
+    width: "100%",
     minHeight: aspectRatio ? "auto" : minHeight,
     minWidth: minWidth,
     aspectRatio: aspectRatio || undefined,
@@ -70,22 +73,38 @@ const ImageLoader = ({
     justifyContent: "center",
     backgroundColor: loaded ? "transparent" : "#f5f5f5",
     overflow: "hidden",
+    flexShrink: 0,
     ...style,
   };
 
   return (
     <div ref={containerRef} style={containerStyles}>
       {!loaded && (
-        <LoadingOutlined
+        <div
           style={{
             position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            fontSize: "24px",
-            color: "#999",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#f5f5f5",
           }}
-        />
+        >
+          {/* NOTE: the spinner icon itself must not carry any CSS transform.
+              Ant Design animates it with a rotate keyframe, which would
+              override translate(-50%, -50%) and make it orbit instead of
+              spinning in place. Centering is handled by the flex wrapper. */}
+          <LoadingOutlined
+            spin
+            style={{
+              fontSize: "30px",
+              color: "#999",
+            }}
+          />
+        </div>
       )}
       {isInView && (
         <img

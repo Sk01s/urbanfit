@@ -1,0 +1,56 @@
+// Packing slip printing.
+// Screen: slips look like clean cards. Print: only the slips are printed
+// (all nav/sidebars/footers/popups hidden), one slip per page for bulk runs.
+
+.packing-slip-sheet {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+@media print {
+  @page {
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  // Hide everything except the packing slips.
+  body * {
+    visibility: hidden;
+  }
+  .packing-slip-print,
+  .packing-slip-print * {
+    visibility: visible;
+  }
+  .packing-slip-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 !important;
+  }
+
+  // Screen-only controls (titles, print buttons) never reach paper.
+  .no-print {
+    display: none !important;
+  }
+
+  .packing-slip-sheet {
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: always;
+  }
+  .packing-slip-sheet:last-child {
+    page-break-after: auto;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000 !important;
+  }
+}

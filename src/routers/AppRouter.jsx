@@ -1,7 +1,7 @@
 import { Footer, Navigation, NewsDisplay, PromoPopup } from "@/components/common";
 import * as ROUTES from "@/constants/routes";
 import { createBrowserHistory } from "history";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Router, Switch } from "react-router-dom";
 import * as view from "@/views";
 import AdminRoute from "./AdminRoute";
@@ -13,6 +13,8 @@ import v2Enabled from "@/experimental/featureFlag";
 
 import { Basket } from "@/components/basket";
 import BasketV2 from "@/experimental/components/basket/BasketV2";
+
+import { initMetaPixel, trackPageView } from "@/services/metaPixel";
 
 import ViewProductV2 from "@/experimental/views/view_product";
 import ShopV2 from "@/experimental/views/shop";
@@ -26,6 +28,18 @@ export const history = createBrowserHistory();
 
 const AppRouter = () => {
   const [accepeted, setAccepeted] = useState(localStorage.getItem("terms"));
+
+  // Meta Pixel: re-init (applies real VITE_META_PIXEL_ID over the index.html
+  // placeholder) and track PageView on every SPA navigation. This is required
+  // because the base <script> in index.html only fires once on initial load.
+  useEffect(() => {
+    initMetaPixel();
+    trackPageView();
+    const unlisten = history.listen(() => {
+      trackPageView();
+    });
+    return () => unlisten();
+  }, []);
   return (
     <Router history={history}>
       <>
@@ -162,6 +176,18 @@ const AppRouter = () => {
             path={ROUTES.ADD_PRODUCT}
           />
           <AdminRoute component={view.AddPromo} path={ROUTES.ADD_PROMO} />
+          {/* Packing slips must come before ORDER_DETAILS ("/admin/orders/:orderId"
+              would otherwise prefix-match the single-slip URL). */}
+          <AdminRoute
+            component={view.BulkPackingSlips}
+            exact
+            path={ROUTES.PACKING_SLIPS_BULK}
+          />
+          <AdminRoute
+            component={view.SinglePackingSlip}
+            exact
+            path={ROUTES.PACKING_SLIP}
+          />
           <AdminRoute component={view.OrderView} path={ROUTES.ORDER_DETAILS} />
           <AdminRoute component={view.Promo} path={ROUTES.PROMO} />
           <AdminRoute

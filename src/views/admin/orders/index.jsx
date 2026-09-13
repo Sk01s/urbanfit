@@ -6,12 +6,14 @@ import { setOrders } from "@/redux/actions/ordersActions";
 import { Boundary } from "@/components/common";
 import { AppliedFilters, ProductList } from "@/components/product";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { PACKING_SLIPS_BULK } from "@/constants/routes";
 import { selectFilter } from "@/selectors/selector";
 import { ProductsNavbar } from "../components";
 import ProductsTable from "../components/ProductsTable";
 import { OrderItem } from "@/views/admin/components";
 import { FiltersToggle, SearchBar } from "@/components/common";
-import { FilterOutlined, PlusOutlined } from "@ant-design/icons";
+import { FilterOutlined, PlusOutlined, PrinterOutlined } from "@ant-design/icons";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
@@ -25,12 +27,33 @@ const Orders = () => {
     getOrders();
   }, []);
   useDocumentTitle(" Orders | Urbanfit");
+  const pendingCount = orders.filter(
+    (order) => !order.cancelled && !order.fulfillment && order.items
+  ).length;
   return (
     <Boundary>
-      <div className="product-admin-header">
+      <div
+        className="product-admin-header"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "1rem",
+          flexWrap: "wrap",
+        }}
+      >
         <h3 className="product-admin-header-title">
           Orders &nbsp; ({`${orders.length} / ${0}`})
         </h3>
+        {pendingCount > 0 && (
+          <Link
+            to={PACKING_SLIPS_BULK}
+            className="button button-small"
+            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+          >
+            <PrinterOutlined /> Print pending ({pendingCount})
+          </Link>
+        )}
         &nbsp;
       </div>
       <div className="product-admin-items">

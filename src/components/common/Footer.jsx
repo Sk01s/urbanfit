@@ -2,12 +2,13 @@ import * as Route from "@/constants/routes";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useSiteImages } from "@/hooks";
+import { useSiteImages, useSiteSettings } from "@/hooks";
 import SiteImageLabel from "./SiteImageLabel";
 
 const Footer = () => {
   const { pathname } = useLocation();
   const { getImageUrl, getLabelOverlay } = useSiteImages();
+  const { whatsappEnabled, whatsappLink } = useSiteSettings();
 
   function isVisable() {
     return !pathname.startsWith("/admin");
@@ -99,13 +100,16 @@ const Footer = () => {
                 </a>
               </li>
 
+              {/* WhatsApp social link — controlled from Admin Settings (Firestore settings/general).
+                  NOTE: href intentionally uses whatsappLink; do not hardcode the number here. */}
+              {whatsappEnabled && (
               <li>
                 <a
                   aria-label="WhatsApp"
                   className="whatsapp"
                   target="_blank"
                   rel="noopener"
-                  href="https://api.whatsapp.com/send?phone=96176875941"
+                  href={whatsappLink}
                 >
                   <svg
                     aria-hidden="true"
@@ -119,6 +123,7 @@ const Footer = () => {
                   </svg>
                 </a>
               </li>
+              )}
             </ul>
           </div>
         </div>

@@ -22,6 +22,7 @@ import { autoPlay } from "react-swipeable-views-utils";
 import Skeleton from "react-loading-skeleton";
 
 import { Helmet } from "react-helmet";
+import { trackAddToCart, trackAddToWishlist, trackViewContent } from "@/services/metaPixel";
 import CustomDots from "@/components/product/CustomDotes";
 import InfoBox from "@/components/product/InfoBox";
 import QuantitySelector from "@/components/product/QuantitySelecter";
@@ -68,6 +69,13 @@ const ViewProductV2 = () => {
   );
 
   const urlColorApplied = useRef(false);
+  // Meta Pixel: ViewContent when product loads
+  useEffect(() => {
+    if (product?.id) {
+      trackViewContent({ ...product, price: variant?.price || product.price });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id]);
   useEffect(() => {
     if (!product || urlColorApplied.current) return;
     if (urlColor) {
@@ -174,6 +182,7 @@ const ViewProductV2 = () => {
   };
 
   const handleAddToBasket = (onClickToggle, e) => {
+    const wasOnBasket = isItemOnBasket(product.id);
     addToBasket(
       {
         ...product,
@@ -188,6 +197,12 @@ const ViewProductV2 = () => {
       },
       onClickToggle
     );
+    if (!wasOnBasket) {
+      trackAddToCart(
+        { ...product, ...variant, price: variant?.price || product.price },
+        quantity
+      );
+    }
   };
 
   const handleChangeIndex = (index) => {
@@ -262,7 +277,11 @@ const ViewProductV2 = () => {
                     padding: "1rem",
                   }}
                   onClick={() => {
+                    const wasWished = isItemOnWish(product.id);
                     addToWish(product);
+                    if (!wasWished) {
+                      trackAddToWishlist(product);
+                    }
                   }}
                 >
                   {isItemOnWish(product.id) ? (

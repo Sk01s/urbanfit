@@ -9,6 +9,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "@/redux/actions/authActions";
 import { setAuthenticating, setAuthStatus } from "@/redux/actions/miscActions";
+import { trackCompleteRegistration } from "@/services/metaPixel";
 import * as Yup from "yup";
 
 const SignInSchema = Yup.object().shape({
@@ -44,6 +45,13 @@ const SignUp = ({ history }) => {
     },
     []
   );
+
+  // Meta Pixel: CompleteRegistration on successful sign-up
+  useEffect(() => {
+    if (authStatus?.success) {
+      trackCompleteRegistration();
+    }
+  }, [authStatus?.success]);
 
   const onClickSignIn = () => history.push(SIGNIN);
 

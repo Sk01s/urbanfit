@@ -803,6 +803,11 @@ getSiteImages = () => this.db.collection("siteImages").get();
   setPromoPopupSettings = (settings) =>
     this.db.collection("settings").doc("promoPopup").set(settings, { merge: true });
 
+  getGeneralSettings = () => this.db.collection("settings").doc("general").get();
+
+  setGeneralSettings = (settings) =>
+    this.db.collection("settings").doc("general").set(settings, { merge: true });
+
   usePromoCode = async (promo) => {
     const promoCode = await this.getPromo(promo);
     if (promoCode.exists) {

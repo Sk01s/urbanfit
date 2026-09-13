@@ -2,10 +2,12 @@ import React from "react";
 import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useScrollTop, useSiteImages } from "@/hooks";
+import { useScrollTop, useSiteImages, useSiteSettings } from "@/hooks";
+import { trackContact } from "@/services/metaPixel";
 import { SiteImageLabel } from "@/components/common";
 const Contact = () => {
   useScrollTop();
+  const { whatsappEnabled, whatsappLink, whatsappDisplay } = useSiteSettings();
   const [error, setError] = useState();
   const { getImageUrl, getLabelOverlay } = useSiteImages();
   const [loading, setLoading] = useState(false);
@@ -22,6 +24,7 @@ const Contact = () => {
       )
       .then(() => {
         setMessage("We will reply ASAP");
+        trackContact();
         e.target.reset();
       })
       .catch(() => setError("Try Again"))
@@ -134,12 +137,15 @@ const Contact = () => {
             style={{ textAlign: "center", fontSize: "1.3rem" }}
           >
             <div className="rte">
+              {/* WhatsApp line — controlled from Admin Settings (Firestore settings/general) */}
+              {whatsappEnabled && (
               <p>
                 WhatsApp -{" "}
-                <a href="https://api.whatsapp.com/send?phone=96176875941">
-                  +961 76 875 941
+                <a href={whatsappLink}>
+                  {whatsappDisplay}
                 </a>
               </p>
+              )}
               <p>
                 <a
                   href="mailto:customer-service@urbanfitlb.com"
