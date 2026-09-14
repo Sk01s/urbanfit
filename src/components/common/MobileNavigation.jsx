@@ -133,15 +133,19 @@ const Navigation = (props) => {
             style={{ position: "relative", left: "0" }}
           />
         </div>
-        <div style={{ position: "relative" }}>
+        {/* Wrapper must stay position: static so the absolutely-positioned
+            logo centers against .mobile-navigation-main (full width).
+            A positioned wrapper would collapse to 0 width and push the
+            logo off-screen, leaving a blank white header. */}
+        <div>
           <Link
             className="mobile-navigation-logo"
             onClick={onClickLink}
             to={HOME}
           >
             <img alt="Logo" src={getImageUrl("logo-full")} />
+            <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
           </Link>
-          <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
         </div>
         <ul className="mobile-navigation-menu">
           <li className="mobile-navigation-item">
@@ -268,7 +272,7 @@ const Navigation = (props) => {
               <img
                 alt="Logo"
                 src={getImageUrl("logo-full")}
-                style={{ width: "12rem", height: "4rem", objectFit: "cover" }}
+                style={{ width: "12rem", height: "4rem", objectFit: "contain" }}
               />
               <SiteImageLabel labelOverlay={getLabelOverlay("logo-full")} />
             </div>
