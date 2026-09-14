@@ -11,39 +11,49 @@ const useProduct = (id) => {
   const [isLoading, setLoading] = useState(!storeProduct);
   const [error, setError] = useState(null);
 
-  console.log("[useProduct] DEBUG:", {
-    id,
-    storeProduct: storeProduct ? { name: storeProduct.name, hasImageCollection: !!storeProduct.imageCollection, hasAvailableColors: !!storeProduct.availableColors } : null,
-    product: product ? { name: product.name, hasImageCollection: !!product.imageCollection, hasAvailableColors: !!product.availableColors } : null,
-    isLoading,
-    error,
-  });
-
   useEffect(() => {
     let cancelled = false;
+    // Always revalidate against Firestore (stale-while-revalidate):
+    // show the cached store product instantly, then overwrite with fresh
+    // data so price/image edits become visible on every device.
+    setError(null);
+    if (storeProduct) {
+      setProduct((prev) =>
+        prev?.id === storeProduct.id &&
+        JSON.stringify(prev) === JSON.stringify(storeProduct)
+          ? prev
+          : storeProduct
+      );
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
     (async () => {
       try {
-        if (!storeProduct) {
-          setLoading(true);
-          const doc = await firebase.getSingleProduct(id);
-          if (!cancelled) {
-            if (doc.exists) {
-              const data = { ...doc.data(), id: doc.ref.id };
-              setProduct(data);
-              setLoading(false);
-            } else {
-              setLoading(false);
-              setError("Product not found.");
-            }
+        const doc = await firebase.getSingleProduct(id);
+        if (!cancelled) {
+          if (doc.exists) {
+            const data = { ...doc.data(), id: doc.ref.id };
+            setProduct((prev) =>
+              JSON.stringify(prev) === JSON.stringify(data) ? prev : data
+            );
+            setLoading(false);
+          } else if (!storeProduct) {
+            setLoading(false);
+            setError("Product not found.");
+          } else {
+            setLoading(false);
           }
-        } else {
-          setProduct(storeProduct);
-          setLoading(false);
         }
       } catch (err) {
         if (!cancelled) {
-          setLoading(false);
-          setError(err?.message || "Something went wrong.");
+          // Keep showing cached product on network failure.
+          if (!storeProduct) {
+            setLoading(false);
+            setError(err?.message || "Something went wrong.");
+          } else {
+            setLoading(false);
+          }
         }
       }
     })();

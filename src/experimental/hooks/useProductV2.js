@@ -13,37 +13,61 @@ const useProductV2 = (id) => {
   const [isLoading, setLoading] = useState(!storeProduct);
   const [error, setError] = useState(null);
 
+  // Reset color selection when navigating to another product.
+  useEffect(() => {
+    setSelectedColor(null);
+  }, [id]);
+
   useEffect(() => {
     let cancelled = false;
+    // Stale-while-revalidate: show cached product instantly, then always
+    // fetch fresh so price/image edits show on every device.
+    const applyProduct = (data, isFresh) => {
+      setProduct((prev) =>
+        JSON.stringify(prev) === JSON.stringify(data) ? prev : data
+      );
+      if (data.colors?.length) {
+        const defaultColor = data.colors[0].color;
+        if (!isFresh) {
+          // Initial cached render: default only if nothing selected yet.
+          setSelectedColor((prev) => prev ?? defaultColor);
+        } else {
+          // Background revalidation: keep the user's choice when it still
+          // exists, otherwise fall back to the default color.
+          setSelectedColor((prev) =>
+            prev && data.colors.some((c) => c.color === prev)
+              ? prev
+              : defaultColor
+          );
+        }
+      }
+      setLoading(false);
+    };
+    setError(null);
+    if (storeProduct) {
+      applyProduct(storeProduct, false);
+    } else {
+      setLoading(true);
+    }
     (async () => {
       try {
-        if (!storeProduct) {
-          setLoading(true);
-          const doc = await firebaseV2.getSingleProductV2(id);
-          if (!cancelled) {
-            if (doc.exists) {
-              const data = { ...doc.data(), id: doc.ref.id };
-              setProduct(data);
-              if (data.colors?.length) {
-                setSelectedColor(data.colors[0].color);
-              }
-              setLoading(false);
-            } else {
-              setLoading(false);
-              setError("Product not found.");
-            }
+        const doc = await firebaseV2.getSingleProductV2(id);
+        if (!cancelled) {
+          if (doc.exists) {
+            applyProduct({ ...doc.data(), id: doc.ref.id }, true);
+          } else if (!storeProduct) {
+            setLoading(false);
+            setError("Product not found.");
+          } else {
+            setLoading(false);
           }
-        } else {
-          setProduct(storeProduct);
-          if (storeProduct.colors?.length) {
-            setSelectedColor(storeProduct.colors[0].color);
-          }
-          setLoading(false);
         }
       } catch (err) {
         if (!cancelled) {
           setLoading(false);
-          setError(err?.message || "Something went wrong.");
+          if (!storeProduct) {
+            setError(err?.message || "Something went wrong.");
+          }
         }
       }
     })();

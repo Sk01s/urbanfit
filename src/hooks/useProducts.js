@@ -54,10 +54,14 @@ const useProducts = () => {
   };
 
   useEffect(() => {
-    if (products.length === 0 && didMount) {
-      fetchProducts();
-    } else if (products.length > 0 && reduxProducts.length === 0) {
+    // Stale-while-revalidate: seed redux instantly from the localStorage
+    // snapshot, then always fetch fresh so every device converges to the
+    // latest price/images instead of showing per-device stale data.
+    if (products.length > 0 && reduxProducts.length === 0) {
       dispatch(setAllProducts(products));
+    }
+    if (didMount && !hasFetched.current) {
+      fetchProducts();
     }
   }, []);
 

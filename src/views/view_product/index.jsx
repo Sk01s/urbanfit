@@ -45,13 +45,6 @@ const ViewProduct = () => {
   useScrollTop();
   useDocumentTitle(`${product?.name || ""}`);
 
-  console.log("[ViewProduct] DEBUG:", {
-    id,
-    product: product ? { name: product.name, imageCollection: product.imageCollection, availableColors: product.availableColors, relative: product.relative } : null,
-    isLoading,
-    error,
-  });
-
   const [selectedImage, setSelectedImage] = useState(product?.image || "");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
@@ -89,10 +82,23 @@ const ViewProduct = () => {
     error: errorSeasonal,
   } = useEssentialProducts(6);
   const colorOverlay = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     setSelectedImage(product?.image);
-  }, [product]);
+  }, [product?.id, product?.image]);
+
+  // Reset per-product UI state when navigating to another product so the
+  // previous product's image index / size / color never leaks into the view.
+  useEffect(() => {
+    setCurrentIndex(0);
+    setSelectedSize("");
+    setSelectedColor("");
+    setQuantitiy(1);
+    sizesBtnsEl.current.forEach((el) => {
+      if (el) el.classList.remove("active");
+    });
+  }, [id]);
 
   // Meta Pixel: ViewContent when product data is available
   useEffect(() => {
@@ -113,7 +119,10 @@ const ViewProduct = () => {
         if (el) el.classList.toggle("active", i === idx);
       });
     }
-  }, [product]);
+    // Only auto-select on product change — not on background revalidation,
+    // otherwise the user's chosen size would be reset when fresh data arrives.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id]);
 
   const onSelectedSizeChange = (index, newValue) => {
     setSelectedSize(newValue);
@@ -145,8 +154,6 @@ const ViewProduct = () => {
       trackAddToCart(product, quantity);
     }
   };
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleChangeIndex = (index) => {
     setCurrentIndex(index);
@@ -191,7 +198,7 @@ const ViewProduct = () => {
                     <ImageLoader
                       className="product-modal-image"
                       src={image.url}
-                      key={index}
+                      key={image.url || index}
                       draggable={false}
                       minWidth="100%"
                       minHeight="auto"

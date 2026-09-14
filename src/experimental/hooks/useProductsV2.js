@@ -46,10 +46,12 @@ const useProductsV2 = () => {
   };
 
   useEffect(() => {
-    if (products.length === 0) {
-      fetchProducts();
-    } else if (products.length > 0 && reduxProducts.length === 0) {
+    // Stale-while-revalidate: seed redux instantly, then always fetch fresh.
+    if (products.length > 0 && reduxProducts.length === 0) {
       dispatch(setAllProductsV2(products));
+    }
+    if (!hasFetched.current) {
+      fetchProducts();
     }
   }, []);
 

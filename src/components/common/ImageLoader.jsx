@@ -23,6 +23,13 @@ const ImageLoader = ({
   const imgRef = useRef(null);
   const containerRef = useRef(null);
 
+  // Reset loaded state when the source changes so a reused instance never
+  // shows a previous product's image as already-loaded (or vice versa).
+  useEffect(() => {
+    setLoaded(loadedImagesCache.has(src));
+    setIsInView(!lazy);
+  }, [src, lazy]);
+
   // Intersection Observer for lazy loading
   useEffect(() => {
     if (!lazy) {

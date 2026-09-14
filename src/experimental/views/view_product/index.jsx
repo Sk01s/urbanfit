@@ -69,6 +69,11 @@ const ViewProductV2 = () => {
   );
 
   const urlColorApplied = useRef(false);
+  // Reset per-product UI when navigating to another product.
+  useEffect(() => {
+    urlColorApplied.current = false;
+    setCurrentIndex(0);
+  }, [id]);
   // Meta Pixel: ViewContent when product loads
   useEffect(() => {
     if (product?.id) {
@@ -258,7 +263,7 @@ const ViewProductV2 = () => {
                     <ImageLoader
                       className="product-modal-image"
                       src={image.url}
-                      key={index}
+                      key={image.url || index}
                       draggable={false}
                       minWidth="100%"
                       minHeight="auto"
